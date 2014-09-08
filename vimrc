@@ -32,4 +32,8 @@ let g:solarized_termcolors=256
 colorscheme solarized
 
 "vim-markdown
-    let g:vim_markdown_folding_disabled=1
+let g:vim_markdown_folding_disabled=1
+
+"CtrlP.vim
+let g:ctrlp_cmd = 'CtrlPMixed'
+set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.pyc
