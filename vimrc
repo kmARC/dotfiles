@@ -9,12 +9,17 @@ set sw=4
 set et
 set ai
 set nu
+set nowrap
 
-map <C-Tab> :bnext<CR>
-map <C-S-Tab> :bprev<CR>
+map <Leader><Tab> :bnext!<CR>
+map <Leader><S-Tab> :bprev!<CR>
+map <Leader>w :bn!<CR>:bd #<CR>
 
 if has('gui_running')
     set guifont=Ubuntu\ Mono\ 12
+    set guioptions-=T
+    set guioptions-=L
+    set guioptions-=r
 endif
 
 "NERDTree
@@ -23,12 +28,13 @@ autocmd VimEnter * wincmd p
 map <F9> :NERDTreeToggle<CR>
 
 "vim-powerline
+let g:Powerline_symbols = 'fancy'
 let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#enabled = 1
 
 "vim-solarized
 set background=dark
-let g:solarized_termcolors=256
+"let g:solarized_termcolors=256
 colorscheme solarized
 
 "vim-markdown
