@@ -31,3 +31,5 @@ set background=dark
 let g:solarized_termcolors=256
 colorscheme solarized
 
+"vim-markdown
+    let g:vim_markdown_folding_disabled=1

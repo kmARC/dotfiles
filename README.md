@@ -12,8 +12,9 @@ README
 ### Installing new module
 
 Example: vim-fugitive
-    
+
     cd ~/.vim
     git submodule add git://github.com/tpope/vim-fugitive.git bundle/vim-fugitive
     git commit -m 'Added vim-fugitive'
     git push
+

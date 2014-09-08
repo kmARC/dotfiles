@@ -7,3 +7,6 @@
 [submodule "bundle/vim-colors-solarized.git"]
 	path = bundle/vim-colors-solarized.git
 	url = git://github.com/altercation/vim-colors-solarized.git
+[submodule "bundle/vim-markdown"]
+	path = bundle/vim-markdown
+	url = https://github.com/plasticboy/vim-markdown
