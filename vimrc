@@ -27,8 +27,8 @@ au BufWritePost *.py silent! !find -name '*.py' -exec ctags {} + &
 au BufWritePost *.java silent! !find -name '*.java' -exec ctags {} + &
 au BufWritePost *.c,*.cpp,*.h silent! !find -name '*.c' -or -name '*.cpp' -or -name '*.h'  -exec ctags {} + &
 
-map <Leader><Tab> :bn!<CR>
-map <Leader><S-Tab> :bp!<CR>
+map <C-L> :bn!<CR>
+map <C-H> :bp!<CR>
 map <Leader>w :bp!<CR>:bd #<CR>
 
 if has('gui_running')
@@ -67,4 +67,5 @@ let g:ctrlp_cmd = 'CtrlPMixed'
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.pyc
 map <C-B> :CtrlPBuffer<CR>
 map <Leader>. :CtrlPTag<CR>
+map <F8> :TagbarToggle<CR>
 
