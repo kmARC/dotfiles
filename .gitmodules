@@ -22,3 +22,6 @@
 [submodule "bundle/vim-fugitive"]
 	path = bundle/vim-fugitive
 	url = https://github.com/tpope/vim-fugitive
+[submodule "bundle/tabular.git"]
+	path = bundle/tabular.git
+	url = git://github.com/godlygeek/tabular.git
