@@ -28,3 +28,6 @@
 [submodule "bundle/emmet-vim.git"]
 	path = bundle/emmet-vim.git
 	url = https://github.com/mattn/emmet-vim.git
+[submodule "bundle/syntastic"]
+	path = bundle/syntastic
+	url = https://github.com/scrooloose/syntastic

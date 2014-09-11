@@ -27,6 +27,11 @@ au BufWritePost *.py silent! !find -name '*.py' -exec ctags {} + &
 au BufWritePost *.java silent! !find -name '*.java' -exec ctags {} + &
 au BufWritePost *.c,*.cpp,*.h silent! !find -name '*.c' -or -name '*.cpp' -or -name '*.h'  -exec ctags {} + &
 
+
+
+au BufNewFile,BufRead *.html set filetype=htmldjango
+
+
 map <C-L> :bn!<CR>
 map <C-H> :bp!<CR>
 map <Leader>w :bp!<CR>:bd #<CR>
