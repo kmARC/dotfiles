@@ -25,3 +25,6 @@
 [submodule "bundle/tabular.git"]
 	path = bundle/tabular.git
 	url = git://github.com/godlygeek/tabular.git
+[submodule "bundle/emmet-vim.git"]
+	path = bundle/emmet-vim.git
+	url = https://github.com/mattn/emmet-vim.git
