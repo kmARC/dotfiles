@@ -22,55 +22,71 @@ set scrolloff=3
 "set colorcolumn=81
 set list
 set listchars=trail:·
+set hidden
+set cursorline
 
 au BufWritePost *.py silent! !find -name '*.py' -exec ctags {} + &
 au BufWritePost *.java silent! !find -name '*.java' -exec ctags {} + &
 au BufWritePost *.c,*.cpp,*.h silent! !find -name '*.c' -or -name '*.cpp' -or -name '*.h'  -exec ctags {} + &
-
-
-
 au BufNewFile,BufRead *.html set filetype=htmldjango
-
 
 map <C-L> :bn!<CR>
 map <C-H> :bp!<CR>
 map <Leader>w :bp!<CR>:bd #<CR>
 
 if has('gui_running')
-    set guifont=Ubuntu\ Mono\ 12
+    set guifont=Ubuntu\ Mono\ derivative\ Powerline\ 12
     set guioptions-=T
     set guioptions-=L
     set guioptions-=r
 endif
 
 
+"----------
 "NERDTree
-autocmd vimenter * NERDTree
+"----------
 autocmd vimenter * wincmd p
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
-map <F9> :NERDTreeToggle<CR>
+map <F7> :NERDTreeToggle<CR>
 let NERDTreeIgnore = ['\.pyc$']
 
+"----------
+"Tagbar
+"----------
+map <F8> :TagbarToggle<CR>
 
+"----------
 "vim-powerline
+"----------
 set laststatus=2
 let g:Powerline_symbols = 'fancy'
 let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#fnamemod = ':t'
 
-"vim-solarized
-set background=dark
-"let g:solarized_termcolors=256
-colorscheme solarized
+"----------
+"vim-molokai
+"----------
+let g:molokai_original = 1
+let g:rehash256 = 1
+colors molokai
 
+"----------
 "vim-markdown
+"----------
 let g:vim_markdown_folding_disabled=1
 
+"----------
 "CtrlP.vim
+"----------
 let g:ctrlp_cmd = 'CtrlPMixed'
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.pyc
-map <C-B> :CtrlPBuffer<CR>
-map <Leader>. :CtrlPTag<CR>
-map <F8> :TagbarToggle<CR>
+map <Leader>b :CtrlPBuffer<CR>
+map <Leader>. :CtrlPBufTag<CR>
+map <Leader>> :CtrlPTag<CR>
 
+"----------
+"syntastic
+"----------
+let g:syntastic_auto_loc_list=1
+let g:syntastic_always_populate_loc_list=1
