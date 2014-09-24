@@ -25,9 +25,9 @@ set listchars=trail:·
 set hidden
 set cursorline
 
-au BufWritePost *.py silent! !find -name '*.py' -exec ctags {} + &
-au BufWritePost *.java silent! !find -name '*.java' -exec ctags {} + &
-au BufWritePost *.c,*.cpp,*.h silent! !find -name '*.c' -or -name '*.cpp' -or -name '*.h'  -exec ctags {} + &
+au BufWritePost *.py silent! !ctags -R &
+au BufWritePost *.java silent! !ctags -R &
+au BufWritePost *.c,*.cpp,*.h silent! !ctags -R &
 au BufNewFile,BufRead *.html set filetype=htmldjango
 
 map <C-L> :bn!<CR>
