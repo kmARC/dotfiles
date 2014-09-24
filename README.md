@@ -7,8 +7,12 @@ README
     cd ~/.vim
     git submodule init
     git submodule update --recursive
-    git pull --recurse-submodules
     ln -s ~/.vim/vimrc ~/.vimrc
+
+### Update a host
+
+    cd ~/.vim
+    git pull --recurse-submodules
 
 ### Installing new module
 
@@ -18,4 +22,13 @@ Example: vim-fugitive
     git submodule add git://github.com/tpope/vim-fugitive.git bundle/vim-fugitive
     git commit -m 'Added vim-fugitive'
     git push
+
+### Required software
+
+    # Needed by default
+    sudo apt-get install exuberant-ctags
+    # Optional for Syntastic
+    sudo apt-get install pylint
+    sudo apt-get install npm
+    npm install jshint
 
