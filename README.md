@@ -29,6 +29,5 @@ Example: vim-fugitive
     sudo apt-get install exuberant-ctags
     # Optional for Syntastic
     sudo apt-get install pylint
-    sudo apt-get install npm
-    npm install jshint
-
+    sudo apt-get install npm nodejs-legacy
+    sudo npm install -g jshint
