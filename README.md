@@ -12,6 +12,7 @@ README
 ### Update a host
 
     cd ~/.vim
+    git submodule init
     git pull --recurse-submodules
 
 ### Installing new module
@@ -31,3 +32,4 @@ Example: vim-fugitive
     sudo apt-get install pylint
     sudo apt-get install npm nodejs-legacy
     sudo npm install -g jshint
+
