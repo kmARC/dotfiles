@@ -12,6 +12,7 @@ README
 ### Update a host
 
     cd ~/.vim
+    git submodule init
     git pull --recurse-submodules
 
 ### Installing new module
@@ -36,4 +37,3 @@ Example: vim-fugitive
     cabal update
     cabal install ghc-mod
     cabal install hasktags
-
