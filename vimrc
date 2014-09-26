@@ -25,9 +25,6 @@ set listchars=trail:·
 set hidden
 set cursorline
 
-au BufWritePost *.py silent! !ctags -R &
-au BufWritePost *.java silent! !ctags -R &
-au BufWritePost *.c,*.cpp,*.h silent! !ctags -R &
 au BufNewFile,BufRead *.html set filetype=htmldjango
 
 map <C-L> :bn!<CR>
@@ -127,3 +124,17 @@ let g:ctrlp_buftag_types = {
 let g:syntastic_auto_loc_list=1
 let g:syntastic_always_populate_loc_list=1
 
+
+"----------
+"vim-easytags
+"----------
+let g:easytags_dynamic_files = 2
+let g:easytags_languages = {
+    \ 'haskell': {
+        \ 'cmd': "hasktags",
+        \ 'args': ["-c"],
+        \ 'fileoutput_opt': '-f',
+        \ 'stdout_opt': '-f-',
+        \ 'recurse_flag': ''
+    \ }
+\ }

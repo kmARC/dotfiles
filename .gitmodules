@@ -37,3 +37,9 @@
 [submodule "bundle/vdebug"]
 	path = bundle/vdebug
 	url = https://github.com/joonty/vdebug
+[submodule "bundle/vim-easytags"]
+	path = bundle/vim-easytags
+	url = https://github.com/xolox/vim-easytags
+[submodule "bundle/vim-misc"]
+	path = bundle/vim-misc
+	url = https://github.com/xolox/vim-misc
