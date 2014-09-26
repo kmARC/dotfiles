@@ -31,3 +31,9 @@ Example: vim-fugitive
     sudo apt-get install pylint
     sudo apt-get install npm nodejs-legacy
     sudo npm install -g jshint
+    # Optional for haskell
+    sudo apt-get install cabal-install
+    cabal update
+    cabal install ghc-mod
+    cabal install hasktags
+
