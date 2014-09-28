@@ -24,6 +24,7 @@ set list
 set listchars=trail:·
 set hidden
 set cursorline
+set t_ut=
 
 au BufNewFile,BufRead *.html set filetype=htmldjango
 
