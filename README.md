@@ -38,3 +38,8 @@ Example: vim-fugitive
     cabal update
     cabal install ghc-mod
     cabal install hasktags
+    # Optional for YouCompleteMe
+    sudo apt-get install cmake
+    cd ~/.vim/bundle/YouCompleteMe
+    git submodule update --init --recursive
+    ./install.sh
