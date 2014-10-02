@@ -5,7 +5,7 @@ syntax on
 filetype plugin indent on
 
 set modeline
-
+set nocompatible
 set mouse=a
 set ts=4
 set sw=4
@@ -21,10 +21,11 @@ set hlsearch
 set scrolloff=3
 "set colorcolumn=81
 set list
-set listchars=trail:·
+set listchars=trail:·,tab:»\ 
 set hidden
 set cursorline
 set t_ut=
+set wildmenu
 
 au BufNewFile,BufRead *.html set filetype=htmldjango
 
@@ -139,3 +140,7 @@ let g:easytags_languages = {
         \ 'recurse_flag': ''
     \ }
 \ }
+
+
+set exrc
+set secure
