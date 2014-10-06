@@ -33,8 +33,15 @@ map <C-L> :bn!<CR>
 map <C-H> :bp!<CR>
 map <Leader>w :bp!<CR>:bd #<CR>
 map <Leader>f :call Togglefold()<CR>
+map [[ ?{<CR>w99[{
+map ][ /}<CR>b99]}
+map ]] j0[[%/{<CR>
+map [] k$][%?}<CR>
+autocmd bufenter *.c,*.cpp nmap <buffer> gd :let varname = '\<<C-R><C-W>\>'<CR>[[^/<C-R>=varname<CR><CR>
+autocmd bufenter *.py nmap <buffer> gd :let varname = '\<<C-R><C-W>\>'<CR>?\<def\><CR>/<C-R>=varname<CR><CR>
 
-function Togglefold()
+
+function! Togglefold()
     if &l:foldmethod == "manual"
         set foldmethod=indent
         set foldcolumn=1
