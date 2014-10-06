@@ -32,6 +32,18 @@ au BufNewFile,BufRead *.html set filetype=htmldjango
 map <C-L> :bn!<CR>
 map <C-H> :bp!<CR>
 map <Leader>w :bp!<CR>:bd #<CR>
+map <Leader>f :call Togglefold()<CR>
+
+function Togglefold()
+    if &l:foldmethod == "manual"
+        set foldmethod=indent
+        set foldcolumn=1
+    else
+        set foldmethod=manual
+        set foldcolumn=0
+        normal zE
+    endif
+endfunction
 
 if has('gui_running')
     set guifont=Ubuntu\ Mono\ derivative\ Powerline\ 12
