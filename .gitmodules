@@ -46,3 +46,6 @@
 [submodule "bundle/YouCompleteMe"]
 	path = bundle/YouCompleteMe
 	url = https://github.com/Valloric/YouCompleteMe
+[submodule "bundle/jellybeans.vim"]
+	path = bundle/jellybeans.vim
+	url = https://github.com/nanotech/jellybeans.vim

@@ -21,7 +21,7 @@ set hlsearch
 set scrolloff=3
 "set colorcolumn=81
 set list
-set listchars=trail:·,tab:»\ 
+set listchars=trail:·,tab:»\ "
 set hidden
 set cursorline
 set t_ut=
@@ -33,13 +33,12 @@ map <C-L> :bn!<CR>
 map <C-H> :bp!<CR>
 map <Leader>w :bp!<CR>:bd #<CR>
 map <Leader>f :call Togglefold()<CR>
-map [[ ?{<CR>w99[{
-map ][ /}<CR>b99]}
-map ]] j0[[%/{<CR>
-map [] k$][%?}<CR>
+autocmd bufread *.c,*.cpp map [[ ?{<CR>w99[{
+autocmd bufread *.c,*.cpp map ][ /}<CR>b99]}
+autocmd bufread *.c,*.cpp map ]] j0[[%/{<CR>
+autocmd bufread *.c,*.cpp map [] k$][%?}<CR>
 autocmd bufenter *.c,*.cpp nmap <buffer> gd :let varname = '\<<C-R><C-W>\>'<CR>[[^/<C-R>=varname<CR><CR>
 autocmd bufenter *.py nmap <buffer> gd :let varname = '\<<C-R><C-W>\>'<CR>?\<def\><CR>/<C-R>=varname<CR><CR>
-
 
 function! Togglefold()
     if &l:foldmethod == "manual"
@@ -59,17 +58,30 @@ if has('gui_running')
     set guioptions-=r
 endif
 
-"----------
-"NERDTree
-"----------
+"--- ctrlp.vim ---
+let g:ctrlp_cmd = 'CtrlPMixed'
+set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.pyc
+map <Leader>b :CtrlPBuffer<CR>
+map <Leader>. :CtrlPBufTag<CR>
+map <Leader>> :CtrlPTag<CR>
+let g:ctrlp_buftag_types = {
+    \ 'haskell' : {
+        \ 'bin': 'hasktags',
+        \ 'args': '-x -c -o-',
+    \ },
+\ }
+
+"--- nerdtree ---
 autocmd vimenter * wincmd p
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
 map <F7> :NERDTreeToggle<CR>
 let NERDTreeIgnore = ['\.pyc$']
 
-"----------
-"Tagbar
-"----------
+"--- syntastic ---
+let g:syntastic_auto_loc_list=1
+let g:syntastic_always_populate_loc_list=1
+
+"--- tagbar ---
 map <F8> :TagbarToggle<CR>
 let g:tagbar_type_haskell = {
     \ 'ctagsbin'  : 'hasktags',
@@ -103,52 +115,17 @@ let g:tagbar_type_haskell = {
     \ }
 \ }
 
-"----------
-"vim-powerline
-"----------
+"--- vim-airline ---
 set laststatus=2
 let g:Powerline_symbols = 'fancy'
 let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#fnamemod = ':t'
+let g:airline_left_sep=' '
+let g:airline_right_sep=' '
+let g:airline_theme='murmur'
 
-"----------
-"vim-molokai
-"----------
-"let g:molokai_original = 1
-let g:rehash256 = 1
-colors molokai
-
-"----------
-"vim-markdown
-"----------
-let g:vim_markdown_folding_disabled=1
-
-"----------
-"CtrlP.vim
-"----------
-let g:ctrlp_cmd = 'CtrlPMixed'
-set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.pyc
-map <Leader>b :CtrlPBuffer<CR>
-map <Leader>. :CtrlPBufTag<CR>
-map <Leader>> :CtrlPTag<CR>
-let g:ctrlp_buftag_types = {
-    \ 'haskell' : {
-        \ 'bin': 'hasktags',
-        \ 'args': '-x -c -o-',
-    \ },
-\ }
-
-"----------
-"syntastic
-"----------
-let g:syntastic_auto_loc_list=1
-let g:syntastic_always_populate_loc_list=1
-
-
-"----------
-"vim-easytags
-"----------
+"--- vim-easytags ---
 let g:easytags_dynamic_files = 2
 let g:easytags_languages = {
     \ 'haskell': {
@@ -160,6 +137,10 @@ let g:easytags_languages = {
     \ }
 \ }
 
+"--- vim-markdown ---
+let g:vim_markdown_folding_disabled=1
 
+
+colors jellybeans
 set exrc
 set secure
