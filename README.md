@@ -7,7 +7,6 @@ README
     cd ~/.vim
     git submodule update --init --recursive
     ln -s ~/.vim/vimrc ~/.vimrc
-    ln -s ~/.vim/ctags ~/.ctags
     ln -s ~/.vim/tmux.conf ~/.tmux.conf
 
 ### Update a host
