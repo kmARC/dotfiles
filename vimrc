@@ -148,6 +148,9 @@ let g:easytags_languages = {
 "--- vim-markdown ---
 let g:vim_markdown_folding_disabled=1
 
+"--- YouCompleteMe ---
+let g:ycm_autoclose_preview_window_after_insertion=1
+
 
 colors jellybeans
 set exrc
