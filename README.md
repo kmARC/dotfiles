@@ -13,7 +13,9 @@ README
 ### Update a host
 
     cd ~/.vim
+    git pull
     git submodule init
+    git submodule update
     git pull --recurse-submodules
 
 ### Installing new module
