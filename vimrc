@@ -71,6 +71,10 @@ let g:ctrlp_buftag_types = {
     \ },
 \ }
 
+
+"--- delimitMate ---
+let delimitMate_expand_cr = 1
+
 "--- nerdtree ---
 autocmd vimenter * wincmd p
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
