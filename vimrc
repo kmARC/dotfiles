@@ -58,6 +58,8 @@ if has('gui_running')
     set guioptions-=r
 endif
 
+runtime macros/matchit.vim
+
 "--- ctrlp.vim ---
 let g:ctrlp_cmd = 'CtrlPMixed'
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.pyc
