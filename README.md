@@ -3,7 +3,7 @@ README
 
 ### Setting up on a new host
 
-    sudo apt-get install git
+    sudo apt-get install git vim-full tmux
     git clone git@bitbucket.org:kmARC/vim.git ~/.vim
     cd ~/.vim
     git submodule update --init --recursive
