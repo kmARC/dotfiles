@@ -3,7 +3,7 @@ README
 
 ### Setting up on a new host
 
-    sudo apt-get install git vim-full tmux
+    sudo apt-get install git vim tmux
     git clone git@bitbucket.org:kmARC/vim.git ~/.vim
     cd ~/.vim
     git submodule update --init --recursive
@@ -30,7 +30,7 @@ Example: vim-fugitive
 ### Required software
 
     # Needed by default
-    sudo apt-get install exuberant-ctags cmake
+    sudo apt-get install exuberant-ctags cmake python-dev
     cd ~/.vim/bundle/YouCompleteMe
     git submodule update --init --recursive
     ./install.sh
