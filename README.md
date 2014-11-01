@@ -3,6 +3,7 @@ README
 
 ### Setting up on a new host
 
+    sudo apt-get install git
     git clone git@bitbucket.org:kmARC/vim.git ~/.vim
     cd ~/.vim
     git submodule update --init --recursive
@@ -29,18 +30,17 @@ Example: vim-fugitive
 ### Required software
 
     # Needed by default
-    sudo apt-get install exuberant-ctags
-    # Optional for Syntastic
+    sudo apt-get install exuberant-ctags cmake
+    cd ~/.vim/bundle/YouCompleteMe
+    git submodule update --init --recursive
+    ./install.sh
+    # Optional for Python
     sudo apt-get install pylint
+    # Optional for JavaScript
     sudo apt-get install npm nodejs-legacy
     sudo npm install -g jshint
-    # Optional for haskell
+    # Optional for Haskell
     sudo apt-get install cabal-install
     cabal update
     cabal install ghc-mod
     cabal install hasktags
-    # Optional for YouCompleteMe
-    sudo apt-get install cmake
-    cd ~/.vim/bundle/YouCompleteMe
-    git submodule update --init --recursive
-    ./install.sh
