@@ -30,7 +30,7 @@ Example: vim-fugitive
 ### Required software
 
     # Needed by default
-    sudo apt-get install exuberant-ctags cmake python-dev
+    sudo apt-get install exuberant-ctags cmake python-dev silversearcher-ag
     cd ~/.vim/bundle/YouCompleteMe
     git submodule update --init --recursive
     ./install.sh
