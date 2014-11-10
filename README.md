@@ -39,6 +39,8 @@ Example: vim-fugitive
     # Optional for JavaScript
     sudo apt-get install npm nodejs-legacy
     sudo npm install -g jshint
+    cd ~/.vim/bundle/tern_for_vim
+    npm install
     # Optional for Haskell
     sudo apt-get install cabal-install
     cabal update
