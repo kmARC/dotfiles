@@ -26,6 +26,8 @@ set hidden
 set cursorline
 set t_ut=
 set wildmenu
+set directory=~/.vim/backup
+set backupdir=~/.vim/backup
 
 au BufNewFile,BufRead *.html set filetype=htmldjango
 
