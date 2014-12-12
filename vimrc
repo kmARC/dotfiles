@@ -45,7 +45,7 @@ autocmd bufenter *.py nmap <buffer> gd :let varname = '\<<C-R><C-W>\>'<CR>?\<def
 function! Togglefold()
     if &l:foldmethod == "manual"
         set foldmethod=indent
-        set foldcolumn=1
+        set foldcolumn=2
     else
         set foldmethod=manual
         set foldcolumn=0
