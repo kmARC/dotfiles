@@ -63,6 +63,10 @@ endif
 
 runtime macros/matchit.vim
 
+"--- ag.vim ---
+nnoremap <Leader>g :Ag! --<C-R>=expand("%:e")<CR> 
+nnoremap <Leader>G :Ag! --<C-R>=expand("%:e")<CR> <C-R><C-W><CR>
+
 "--- ctrlp.vim ---
 let g:ctrlp_cmd = 'CtrlPMixed'
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.pyc
