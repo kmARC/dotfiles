@@ -41,6 +41,7 @@ autocmd bufread *.c,*.cpp map ]] j0[[%/{<CR>
 autocmd bufread *.c,*.cpp map [] k$][%?}<CR>
 autocmd bufenter *.c,*.cpp nmap <buffer> gd :let varname = '\<<C-R><C-W>\>'<CR>[[^/<C-R>=varname<CR><CR>
 autocmd bufenter *.py nmap <buffer> gd :let varname = '\<<C-R><C-W>\>'<CR>?\<def\><CR>/<C-R>=varname<CR><CR>
+autocmd bufenter *.js nmap <buffer> gd :TernDef<CR>
 
 function! Togglefold()
     if &l:foldmethod == "manual"
@@ -138,7 +139,7 @@ let g:airline#extensions#tabline#right_alt_sep = '|'
 let g:airline_theme='murmur'
 
 "--- vim-easytags ---
-let g:easytags_dynamic_files = 2
+set tags=~/.vimtags
 let g:easytags_languages = {
     \ 'haskell': {
         \ 'cmd': "hasktags",
