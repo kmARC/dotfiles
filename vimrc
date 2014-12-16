@@ -74,6 +74,9 @@ map <Leader>b :CtrlPBuffer<CR>
 map <Leader>. :CtrlPBufTag<CR>
 map <Leader>> :CtrlPTag<CR>
 let g:ctrlp_buftag_types = {
+    \ 'javascript' : {
+        \ 'bin': 'ctags',
+    \ },
     \ 'haskell' : {
         \ 'bin': 'hasktags',
         \ 'args': '-x -c -o-',
@@ -96,6 +99,16 @@ let g:syntastic_always_populate_loc_list=1
 
 "--- tagbar ---
 map <F8> :TagbarToggle<CR>
+let g:tagbar_type_javascript = {
+    \ 'ctagstype' : 'JavaScript',
+    \ 'ctagsbin'  : '/usr/bin/ctags',
+    \ 'kinds'     : [
+        \ 'o:objects',
+        \ 'f:functions',
+        \ 'a:arrays',
+        \ 's:strings'
+    \ ]
+\ }
 let g:tagbar_type_haskell = {
     \ 'ctagsbin'  : 'hasktags',
     \ 'ctagsargs' : '-x -c -o-',
@@ -145,6 +158,9 @@ let g:airline_theme='murmur'
 "--- vim-easytags ---
 set tags=~/.vimtags
 let g:easytags_languages = {
+    \ 'javascript': {
+        \ 'cmd': "ctags"
+    \ },
     \ 'haskell': {
         \ 'cmd': "hasktags",
         \ 'args': ["-c"],
