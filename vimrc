@@ -173,6 +173,9 @@ let g:easytags_languages = {
 "--- vim-markdown ---
 let g:vim_markdown_folding_disabled=1
 
+"--- vim-vebugger ---
+let g:vebugger_leader='<Leader>'
+
 "--- YouCompleteMe ---
 let g:ycm_autoclose_preview_window_after_insertion=1
 

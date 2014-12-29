@@ -35,9 +35,13 @@ Example: vim-fugitive
     sudo apt-get install exuberant-ctags cmake python-dev silversearcher-ag
     # OR
     sudo yum install ctags cmake python-devel the_silver_searcher
+    # YouCompleteMe
     cd ~/.vim/bundle/YouCompleteMe
     git submodule update --init --recursive
     ./install.sh
+    # Vebugger
+    cd ~/.vim/bundle/vimproc.vim
+    make
 
     # Optional for Python
     sudo apt-get install pylint
@@ -59,3 +63,4 @@ Example: vim-fugitive
     cabal update
     cabal install ghc-mod
     cabal install hasktags
+

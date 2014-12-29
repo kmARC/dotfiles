@@ -82,3 +82,9 @@
 [submodule "bundle/vim-vinegar.git"]
 	path = bundle/vim-vinegar.git
 	url = git://github.com/tpope/vim-vinegar.git
+[submodule "bundle/vimproc.vim"]
+	path = bundle/vimproc.vim
+	url = https://github.com/Shougo/vimproc.vim
+[submodule "bundle/vim-vebugger"]
+	path = bundle/vim-vebugger
+	url = https://github.com/idanarye/vim-vebugger
