@@ -88,3 +88,9 @@
 [submodule "bundle/vim-vebugger"]
 	path = bundle/vim-vebugger
 	url = https://github.com/idanarye/vim-vebugger
+[submodule "bundle/vim-multiple-cursors"]
+	path = bundle/vim-multiple-cursors
+	url = https://github.com/terryma/vim-multiple-cursors
+[submodule "bundle/vim-gitgutter"]
+	path = bundle/vim-gitgutter
+	url = https://github.com/airblade/vim-gitgutter
