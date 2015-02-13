@@ -1,3 +1,4 @@
 backup/*
 !*/.gitkeep
 tags
+plugged
