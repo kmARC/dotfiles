@@ -1,4 +1,6 @@
-backup/*
+vimbackup/*
+vimswap/*
+vimundo/*
+spell/*
 !*/.gitkeep
-tags
 plugged

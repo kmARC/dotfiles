@@ -57,8 +57,11 @@ set hidden
 set cursorline
 set t_ut=
 set wildmenu
-set directory=~/.vim/backup
-set backupdir=~/.vim/backup
+set backup
+set undofile
+set directory=~/.vim/vimswap//
+set backupdir=~/.vim/vimbackup//
+set undodir=~/.vim/vimundo//
 let base16colorspace=256  " Access colors present in 256 colorspace
 autocmd WinEnter * call UpdateLineNumbering("rnu")
 autocmd WinLeave * call UpdateLineNumbering("nornu")
