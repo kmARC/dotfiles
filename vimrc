@@ -1,5 +1,35 @@
-execute pathogen#infect()
-execute pathogen#helptags()
+call plug#begin('~/.vim/plugged')
+
+Plug 'bling/vim-airline'
+Plug 'chriskempson/base16-vim'
+Plug 'godlygeek/tabular', { 'on': 'Tabularize'}
+Plug 'junegunn/vim-peekaboo'
+Plug 'kien/ctrlp.vim', { 'on': 'CtrlPMixed'}
+Plug 'majutsushi/tagbar'
+Plug 'plasticboy/vim-markdown'
+Plug 'Raimondi/delimitMate'
+Plug 'rking/ag.vim'
+Plug 'scrooloose/nerdcommenter'
+Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
+Plug 'scrooloose/syntastic'
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-unimpaired'
+Plug 'Valloric/YouCompleteMe', { 'do': './install.sh' }
+Plug 'mattn/emmet-vim',   {'for': 'html'}
+Plug 'othree/html5.vim',  {'for': 'html'}
+Plug 'groenewege/vim-less',  {'for': 'css'}
+Plug 'jelera/vim-javascript-syntax',            {'for': 'javascript'}
+Plug 'marijnh/tern_for_vim',                    {'for': 'javascript'}
+Plug 'othree/javascript-libraries-syntax.vim',  {'for': 'javascript'}
+"Plug 'joonty/vdebug', {'for': 'python'}
+"Plug 'xolox/vim-easytags'
+"Plug 'jceb/vim-orgmode'
+"Plug 'tpope/vim-vinegar'
+"Plug 'idanarye/vim-vebugger'
+"Plug 'airblade/vim-gitgutter'
+"Plug 'terryma/vim-multiple-cursors'
+call plug#end()
 
 syntax on
 filetype plugin indent on
@@ -7,11 +37,12 @@ filetype plugin indent on
 set modeline
 set nocompatible
 set mouse=a
+map <ScrollWheelUp> <C-Y>
+map <ScrollWheelDown> <C-E>
 set ts=4
 set sw=4
 set et
 set ai
-set nu
 set nowrap
 set ignorecase
 set smartcase
@@ -28,7 +59,20 @@ set t_ut=
 set wildmenu
 set directory=~/.vim/backup
 set backupdir=~/.vim/backup
+let base16colorspace=256  " Access colors present in 256 colorspace
+autocmd WinEnter * call UpdateLineNumbering("rnu")
+autocmd WinLeave * call UpdateLineNumbering("nornu")
+set nu rnu
+set path+=$PWD
 
+function! UpdateLineNumbering(to)
+    if &buftype == ""
+        execute "set nu " . a:to
+    endif
+endfunction
+
+set bg=dark
+colors base16-flat
 au BufNewFile,BufRead *.html set filetype=htmldjango
 
 map <C-L> :bn!<CR>
@@ -45,7 +89,7 @@ autocmd bufenter *.js nmap <buffer> gd :TernDef<CR>
 
 function! Togglefold()
     if &l:foldmethod == "manual"
-        set foldmethod=indent
+        set foldmethod=syntax
         set foldcolumn=2
     else
         set foldmethod=manual
@@ -55,10 +99,11 @@ function! Togglefold()
 endfunction
 
 if has('gui_running')
-"    set guifont=Ubuntu\ Mono\ derivative\ Powerline\ 12
+    set guifont=Droid\ Sans\ Mono\ 9
     set guioptions-=T
     set guioptions-=L
     set guioptions-=r
+    set guioptions-=m
 endif
 
 runtime macros/matchit.vim
@@ -99,16 +144,16 @@ let g:syntastic_always_populate_loc_list=1
 
 "--- tagbar ---
 map <F8> :TagbarToggle<CR>
-let g:tagbar_type_javascript = {
-    \ 'ctagstype' : 'JavaScript',
-    \ 'ctagsbin'  : '/usr/bin/ctags',
-    \ 'kinds'     : [
-        \ 'o:objects',
-        \ 'f:functions',
-        \ 'a:arrays',
-        \ 's:strings'
-    \ ]
-\ }
+"let g:tagbar_type_javascript = {
+"    \ 'ctagstype' : 'JavaScript',
+"    \ 'ctagsbin'  : '/usr/bin/ctags',
+"    \ 'kinds'     : [
+"        \ 'o:objects',
+"        \ 'f:functions',
+"        \ 'a:arrays',
+"        \ 's:strings'
+"    \ ]
+"\ }
 let g:tagbar_type_haskell = {
     \ 'ctagsbin'  : 'hasktags',
     \ 'ctagsargs' : '-x -c -o-',
@@ -153,10 +198,10 @@ let g:airline#extensions#tabline#left_sep = ' '
 let g:airline#extensions#tabline#right_sep = ' '
 let g:airline#extensions#tabline#left_alt_sep = '|'
 let g:airline#extensions#tabline#right_alt_sep = '|'
-let g:airline_theme='murmur'
+let g:airline_theme='base16'
+let g:airline#extensions#whitespace#enabled = 0
 
 "--- vim-easytags ---
-set tags=~/.vimtags
 let g:easytags_languages = {
     \ 'javascript': {
         \ 'cmd': "ctags"
@@ -180,6 +225,5 @@ let g:vebugger_leader='<Leader>'
 let g:ycm_autoclose_preview_window_after_insertion=1
 
 
-colors jellybeans
 set exrc
 set secure
