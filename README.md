@@ -35,13 +35,13 @@ To persist the change, commit.
 
 ### Required software
 
-Optional for *Python*
+Optional for **Python**
 
     sudo apt-get install pylint
     # OR
     sudo yum install pylint
 
-Optional for *JavaScript*
+Optional for **JavaScript**
 
     sudo apt-get install npm nodejs-legacy
     # OR
@@ -51,7 +51,7 @@ Optional for *JavaScript*
     cd ~/.vim/plugged/tern_for_vim
     npm install
 
-Optional for *Haskell*
+Optional for **Haskell**
 
     sudo apt-get install cabal-install
     # OR
