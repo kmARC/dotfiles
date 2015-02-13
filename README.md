@@ -35,12 +35,14 @@ To persist the change, commit.
 
 ### Required software
 
-    # Optional for Python
+Optional for _Python_
+
     sudo apt-get install pylint
-    # OR 
+    # OR
     sudo yum install pylint
 
-    # Optional for JavaScript
+Optional for _JavaScript_
+
     sudo apt-get install npm nodejs-legacy
     # OR
     sudo yum install npm
@@ -49,7 +51,8 @@ To persist the change, commit.
     cd ~/.vim/plugged/tern_for_vim
     npm install
 
-    # Optional for Haskell
+Optional for _Haskell_
+
     sudo apt-get install cabal-install
     # OR
     sudo yum install cabal-install
