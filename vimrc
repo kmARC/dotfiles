@@ -1,10 +1,12 @@
 call plug#begin('~/.vim/plugged')
 
+
+Plug 'airblade/vim-gitgutter'
 Plug 'bling/vim-airline'
 Plug 'chriskempson/base16-vim'
 Plug 'godlygeek/tabular', { 'on': 'Tabularize'}
 Plug 'junegunn/vim-peekaboo'
-Plug 'kien/ctrlp.vim', { 'on': 'CtrlPMixed'}
+Plug 'kien/ctrlp.vim'
 Plug 'majutsushi/tagbar'
 Plug 'plasticboy/vim-markdown'
 Plug 'Raimondi/delimitMate'
@@ -27,9 +29,9 @@ Plug 'othree/javascript-libraries-syntax.vim',  {'for': 'javascript'}
 "Plug 'jceb/vim-orgmode'
 "Plug 'tpope/vim-vinegar'
 "Plug 'idanarye/vim-vebugger'
-"Plug 'airblade/vim-gitgutter'
 "Plug 'terryma/vim-multiple-cursors'
 call plug#end()
+runtime macros/matchit.vim
 
 syntax on
 filetype plugin indent on
@@ -62,11 +64,14 @@ set undofile
 set directory=~/.vim/vimswap//
 set backupdir=~/.vim/vimbackup//
 set undodir=~/.vim/vimundo//
-let base16colorspace=256  " Access colors present in 256 colorspace
+let g:netrw_home=expand("~/.vim/misc")
 autocmd WinEnter * call UpdateLineNumbering("rnu")
 autocmd WinLeave * call UpdateLineNumbering("nornu")
 set nu rnu
 set path+=$PWD
+set laststatus=2
+set wildignore+=*/tmp/*,*.so,*.a,*.swp,*.zip,*.pyc
+set timeoutlen=0
 
 function! UpdateLineNumbering(to)
     if &buftype == ""
@@ -75,6 +80,7 @@ function! UpdateLineNumbering(to)
 endfunction
 
 set bg=dark
+let base16colorspace=256  " Access colors present in 256 colorspace
 colors base16-flat
 au BufNewFile,BufRead *.html set filetype=htmldjango
 
@@ -102,35 +108,21 @@ function! Togglefold()
 endfunction
 
 if has('gui_running')
-    set guifont=Droid\ Sans\ Mono\ 9
+    set guifont=Dejavu\ Sans\ Mono\ for\ Powerline\ 9
     set guioptions-=T
     set guioptions-=L
     set guioptions-=r
     set guioptions-=m
 endif
 
-runtime macros/matchit.vim
 
 "--- ag.vim ---
-nnoremap <Leader>g :Ag! --<C-R>=expand("%:e")<CR> 
-nnoremap <Leader>G :Ag! --<C-R>=expand("%:e")<CR> <C-R><C-W><CR>
+nnoremap <Leader>ag :Ag! --<C-R>=expand("%:e")<CR> 
+nnoremap <Leader>aG :Ag! --<C-R>=expand("%:e")<CR> <C-R><C-W><CR>
 
 "--- ctrlp.vim ---
 let g:ctrlp_cmd = 'CtrlPMixed'
-set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.pyc
-map <Leader>b :CtrlPBuffer<CR>
-map <Leader>. :CtrlPBufTag<CR>
-map <Leader>> :CtrlPTag<CR>
-let g:ctrlp_buftag_types = {
-    \ 'javascript' : {
-        \ 'bin': 'ctags',
-    \ },
-    \ 'haskell' : {
-        \ 'bin': 'hasktags',
-        \ 'args': '-x -c -o-',
-    \ },
-\ }
-
+map <Leader>t :CtrlPTag<CR>
 
 "--- delimitMate ---
 let delimitMate_expand_cr = 1
@@ -139,7 +131,6 @@ let delimitMate_expand_cr = 1
 autocmd vimenter * wincmd p
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
 map <F7> :NERDTreeToggle<CR>
-let NERDTreeIgnore = ['\.pyc$']
 
 "--- syntastic ---
 let g:syntastic_auto_loc_list=1
@@ -147,86 +138,20 @@ let g:syntastic_always_populate_loc_list=1
 
 "--- tagbar ---
 map <F8> :TagbarToggle<CR>
-"let g:tagbar_type_javascript = {
-"    \ 'ctagstype' : 'JavaScript',
-"    \ 'ctagsbin'  : '/usr/bin/ctags',
-"    \ 'kinds'     : [
-"        \ 'o:objects',
-"        \ 'f:functions',
-"        \ 'a:arrays',
-"        \ 's:strings'
-"    \ ]
-"\ }
-let g:tagbar_type_haskell = {
-    \ 'ctagsbin'  : 'hasktags',
-    \ 'ctagsargs' : '-x -c -o-',
-    \ 'kinds'     : [
-        \  'm:modules:0:1',
-        \  'd:data: 0:1',
-        \  'd_gadt: data gadt:0:1',
-        \  't:type names:0:1',
-        \  'nt:new types:0:1',
-        \  'c:classes:0:1',
-        \  'cons:constructors:1:1',
-        \  'c_gadt:constructor gadt:1:1',
-        \  'c_a:constructor accessors:1:1',
-        \  'ft:function types:1:1',
-        \  'fi:function implementations:0:1',
-        \  'o:others:0:1'
-    \ ],
-    \ 'sro'        : '.',
-    \ 'kind2scope' : {
-        \ 'm' : 'module',
-        \ 'c' : 'class',
-        \ 'd' : 'data',
-        \ 't' : 'type'
-    \ },
-    \ 'scope2kind' : {
-        \ 'module' : 'm',
-        \ 'class'  : 'c',
-        \ 'data'   : 'd',
-        \ 'type'   : 't'
-    \ }
-\ }
 
 "--- vim-airline ---
-set laststatus=2
 let g:Powerline_symbols = 'fancy'
 let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#fnamemod = ':t'
-let g:airline_left_sep=' '
-let g:airline_right_sep=' '
-let g:airline#extensions#tabline#left_sep = ' '
-let g:airline#extensions#tabline#right_sep = ' '
-let g:airline#extensions#tabline#left_alt_sep = '|'
-let g:airline#extensions#tabline#right_alt_sep = '|'
 let g:airline_theme='base16'
 let g:airline#extensions#whitespace#enabled = 0
-
-"--- vim-easytags ---
-let g:easytags_languages = {
-    \ 'javascript': {
-        \ 'cmd': "ctags"
-    \ },
-    \ 'haskell': {
-        \ 'cmd': "hasktags",
-        \ 'args': ["-c"],
-        \ 'fileoutput_opt': '-f',
-        \ 'stdout_opt': '-f-',
-        \ 'recurse_flag': ''
-    \ }
-\ }
 
 "--- vim-markdown ---
 let g:vim_markdown_folding_disabled=1
 
-"--- vim-vebugger ---
-let g:vebugger_leader='<Leader>'
-
 "--- YouCompleteMe ---
 let g:ycm_autoclose_preview_window_after_insertion=1
-
 
 set exrc
 set secure

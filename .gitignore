@@ -2,5 +2,6 @@ vimbackup/*
 vimswap/*
 vimundo/*
 spell/*
+misc/*
 !*/.gitkeep
 plugged
