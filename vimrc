@@ -68,9 +68,9 @@ let g:netrw_home=expand("~/.vim/misc")
 autocmd WinEnter * call UpdateLineNumbering("rnu")
 autocmd WinLeave * call UpdateLineNumbering("nornu")
 set nu rnu
-set path+=$PWD
+set path+=**
 set laststatus=2
-set wildignore+=*/tmp/*,*.so,*.a,*.swp,*.zip,*.pyc
+set wildignore+=*.so,*.a,*.swp,*.zip,*.pyc
 set timeoutlen=0
 
 function! UpdateLineNumbering(to)
@@ -121,7 +121,7 @@ nnoremap <Leader>ag :Ag! --<C-R>=expand("%:e")<CR>
 nnoremap <Leader>aG :Ag! --<C-R>=expand("%:e")<CR> <C-R><C-W><CR>
 
 "--- ctrlp.vim ---
-let g:ctrlp_cmd = 'CtrlPMixed'
+let g:ctrlp_cmd = 'CtrlP'
 map <Leader>t :CtrlPTag<CR>
 
 "--- delimitMate ---
