@@ -7,3 +7,4 @@ misc/*
 plugged
 eclim
 plugin
+autoload/plug.vim.old
