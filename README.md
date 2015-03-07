@@ -73,6 +73,7 @@ Optional for **JavaScript**
     npm install
 
 Optional for **C/C++**
+
 *Unfortunately this needs to be done after each :PlugUpdate if YouCompleteMe updated*
 
     sudo apt-get install libclang-3.5-dev
