@@ -1,36 +1,48 @@
 call plug#begin('~/.vim/plugged')
-
-
-Plug 'airblade/vim-gitgutter'
-Plug 'bling/vim-airline'
-Plug 'chriskempson/base16-vim'
-Plug 'godlygeek/tabular', { 'on': 'Tabularize'}
+"--- Tools ---
 Plug 'junegunn/vim-peekaboo'
 Plug 'kien/ctrlp.vim'
-Plug 'majutsushi/tagbar'
-Plug 'plasticboy/vim-markdown'
-Plug 'Raimondi/delimitMate'
-Plug 'rking/ag.vim'
-Plug 'scrooloose/nerdcommenter'
-Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
-Plug 'scrooloose/syntastic'
-Plug 'tpope/vim-fugitive'
-Plug 'tpope/vim-surround'
+Plug 'scrooloose/nerdtree',                     { 'on': 'NERDTreeToggle' }
 Plug 'tpope/vim-unimpaired'
-Plug 'Valloric/YouCompleteMe', { 'do': './install.sh' }
-Plug 'mattn/emmet-vim',   {'for': 'html'}
-Plug 'othree/html5.vim',  {'for': 'html'}
-Plug 'groenewege/vim-less',  {'for': 'css'}
+Plug 'tpope/vim-repeat'
+"--- Editing ---
+Plug 'godlygeek/tabular',                       { 'on': 'Tabularize'}
+Plug 'Lokaltog/vim-easymotion'
+Plug 'Raimondi/delimitMate'
+Plug 'tpope/vim-surround'
+"--- Look&Feel ---
+Plug 'bling/vim-airline'
+Plug 'chriskempson/base16-vim'
+"--- Git ---
+Plug 'airblade/vim-gitgutter'
+Plug 'tpope/vim-fugitive'
+"--- Programming ---
+Plug 'honza/vim-snippets'
+Plug 'majutsushi/tagbar'
+Plug 'rking/ag.vim'
+Plug 'jeetsukumaran/vim-indentwise'
+Plug 'scrooloose/syntastic'
+Plug 'SirVer/ultisnips'
+Plug 'tpope/vim-commentary'
+Plug 'Valloric/YouCompleteMe',                  { 'do': './install.sh' }
+"--- Markdown ---
+Plug 'plasticboy/vim-markdown',                 {'for': 'mkd'}
+"--- HTML ---
+Plug 'mattn/emmet-vim',                         {'for': 'html'}
+Plug 'othree/html5.vim',                        {'for': 'html'}
+"--- CSS ---
+Plug 'ap/vim-css-color',                        {'for': 'css'}
+Plug 'groenewege/vim-less',                     {'for': 'css'}
+"--- JavaScript ---
 Plug 'jelera/vim-javascript-syntax',            {'for': 'javascript'}
-Plug 'marijnh/tern_for_vim',                    {'for': 'javascript'}
+Plug 'marijnh/tern_for_vim',                    {'for': 'javascript',       'do': 'npm install'}
 Plug 'othree/javascript-libraries-syntax.vim',  {'for': 'javascript'}
-"Plug 'joonty/vdebug', {'for': 'python'}
-"Plug 'xolox/vim-easytags'
-"Plug 'jceb/vim-orgmode'
-"Plug 'tpope/vim-vinegar'
-"Plug 'idanarye/vim-vebugger'
-"Plug 'terryma/vim-multiple-cursors'
+Plug 'pangloss/vim-javascript',                 {'for': 'javascript'}
+"--- C/C++ ---
+Plug 'vim-scripts/a.vim'
+Plug 'octol/vim-cpp-enhanced-highlight'
 call plug#end()
+
 runtime macros/matchit.vim
 
 syntax on
@@ -39,12 +51,11 @@ filetype plugin indent on
 set modeline
 set nocompatible
 set mouse=a
-map <ScrollWheelUp> <C-Y>
-map <ScrollWheelDown> <C-E>
 set ts=4
 set sw=4
 set et
 set ai
+set smartindent
 set nowrap
 set ignorecase
 set smartcase
@@ -64,45 +75,40 @@ set undofile
 set directory=~/.vim/vimswap//
 set backupdir=~/.vim/vimbackup//
 set undodir=~/.vim/vimundo//
-let g:netrw_home=expand("~/.vim/misc")
-autocmd WinEnter * call UpdateLineNumbering("rnu")
-autocmd WinLeave * call UpdateLineNumbering("nornu")
+autocmd WinEnter * if &buftype == "" | set nu rnu
+autocmd WinLeave * if &buftype == "" | set nu nornu
 set nu rnu
 set path+=**
 set laststatus=2
-set wildignore+=*.so,*.a,*.swp,*.zip,*.pyc
-set timeoutlen=0
-
-function! UpdateLineNumbering(to)
-    if &buftype == ""
-        execute "set nu " . a:to
-    endif
-endfunction
+set wildignore+=*.o,*.so,*.a,*.swp,*.zip,*.pyc,tags
 
 set bg=dark
-let base16colorspace=256  " Access colors present in 256 colorspace
+let base16colorspace=256
 colors base16-flat
+
 au BufNewFile,BufRead *.html set filetype=htmldjango
 
-map <C-L> :bn!<CR>
-map <C-H> :bp!<CR>
-map <Leader>w :bp!<CR>:bd #<CR>
-map <Leader>f :call Togglefold()<CR>
-autocmd bufread *.c,*.cpp map [[ ?{<CR>w99[{
-autocmd bufread *.c,*.cpp map ][ /}<CR>b99]}
-autocmd bufread *.c,*.cpp map ]] j0[[%/{<CR>
-autocmd bufread *.c,*.cpp map [] k$][%?}<CR>
-autocmd bufenter *.c,*.cpp nmap <buffer> gd :let varname = '\<<C-R><C-W>\>'<CR>[[^/<C-R>=varname<CR><CR>
-autocmd bufenter *.py nmap <buffer> gd :let varname = '\<<C-R><C-W>\>'<CR>?\<def\><CR>/<C-R>=varname<CR><CR>
-autocmd bufenter *.js nmap <buffer> gd :TernDef<CR>
+nnoremap <C-L> :bn<CR>
+nnoremap <C-H> :bp<CR>
+nnoremap <Leader>w :bp!<CR>:bd #<CR>
+nnoremap <Leader>f :call Togglefold()<CR>
+nnoremap <Leader>ag :Ag! --<C-R>=expand("%:e")<CR> 
+nnoremap <Leader>aG :Ag! --<C-R>=expand("%:e")<CR> <C-R><C-W><CR>
+nnoremap <Leader>pt :CtrlPTag<CR>
+nnoremap <Leader>pb :CtrlPBuffer<CR>
+nnoremap <F7> :NERDTreeToggle<CR>
+nnoremap <F8> :TagbarToggle<CR>
+nnoremap <ScrollWheelUp> <C-Y>
+nnoremap <ScrollWheelDown> <C-E>
+autocmd bufenter *.c,*.cpp,*.h,*.hpp  nmap <Leader>] :YcmCompleter GoTo<CR>
+autocmd bufenter *.py                 nmap <Leader>] :YcmCompleter GoTo<CR>
+autocmd bufenter *.js                 nmap <Leader>] :TernDef<CR>
 
 function! Togglefold()
     if &l:foldmethod == "manual"
-        set foldmethod=syntax
-        set foldcolumn=2
+        set foldmethod=indent foldcolumn=2
     else
-        set foldmethod=manual
-        set foldcolumn=0
+        set foldmethod=manual foldcolumn=0
         normal zE
     endif
 endfunction
@@ -115,14 +121,8 @@ if has('gui_running')
     set guioptions-=m
 endif
 
-
-"--- ag.vim ---
-nnoremap <Leader>ag :Ag! --<C-R>=expand("%:e")<CR> 
-nnoremap <Leader>aG :Ag! --<C-R>=expand("%:e")<CR> <C-R><C-W><CR>
-
 "--- ctrlp.vim ---
-let g:ctrlp_cmd = 'CtrlP'
-map <Leader>t :CtrlPTag<CR>
+let g:ctrlp_working_path_mode = 0
 
 "--- delimitMate ---
 let delimitMate_expand_cr = 1
@@ -130,14 +130,13 @@ let delimitMate_expand_cr = 1
 "--- nerdtree ---
 autocmd vimenter * wincmd p
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
-map <F7> :NERDTreeToggle<CR>
+
+"--- netrw ---
+let g:netrw_home=expand("~/.vim/misc")
 
 "--- syntastic ---
 let g:syntastic_auto_loc_list=1
 let g:syntastic_always_populate_loc_list=1
-
-"--- tagbar ---
-map <F8> :TagbarToggle<CR>
 
 "--- vim-airline ---
 let g:Powerline_symbols = 'fancy'
@@ -152,6 +151,11 @@ let g:vim_markdown_folding_disabled=1
 
 "--- YouCompleteMe ---
 let g:ycm_autoclose_preview_window_after_insertion=1
+let g:EclimCompletionMethod = 'omnifunc'
+
+"--- UltiSnips ---
+let g:UltiSnipsExpandTrigger="<c-j>"
+let g:UltiSnipsSnippetDirectories=["plugged/vim-snippets/UltiSnips"]
 
 set exrc
 set secure
