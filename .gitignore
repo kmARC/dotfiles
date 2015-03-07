@@ -5,3 +5,5 @@ spell/*
 misc/*
 !*/.gitkeep
 plugged
+eclim
+plugin
