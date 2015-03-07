@@ -10,8 +10,9 @@ Setting up on a new host
     sudo yum install git vim
     sudo yum install ctags cmake python-devel the_silver_searcher
 
-    git clone git@bitbucket.org:kmARC/vim.git ~/.vim
+    git clone https://kmARC@bitbucket.org/kmARC/vim.git ~/.vim
     vim -c ':PlugInstall' -c ':qa'
+    # Ignore error message by pressing enter
 
 At this point, plugins will automatically installed inside vim. After finished, you can startup vim with all plugins installed.
 
@@ -103,4 +104,3 @@ To persist the change, commit.
 
     git commit -m 'Added vim-fugitive'
     git push
-
