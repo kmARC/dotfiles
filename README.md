@@ -68,7 +68,8 @@ Optional for **JavaScript**
     # Make nvm loaded automatically in bash
     echo "nvm use 0.12 > /dev/null" >> ~/.bashrc
 
-    sudo npm install -g jshint
+    npm install -g jshint
+    npm install -g git://github.com/ramitos/jsctags.git
     cd ~/.vim/plugged/tern_for_vim
     npm install
 
