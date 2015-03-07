@@ -76,6 +76,8 @@ Optional for **C/C++**
 
 *Unfortunately this needs to be done after each :PlugUpdate if YouCompleteMe updated*
 
+For semantic C/C++ completion to work, you'd neet to set up a `.ycm_extra_conf.py` file. Refer to [this example](https://raw.githubusercontent.com/Valloric/ycmd/master/cpp/ycm/.ycm_extra_conf.py) and [YouCompleteMe](https://github.com/Valloric/YouCompleteMe#c-family-semantic-completion-engine-usage) help.
+
     sudo apt-get install libclang-3.5-dev
     # OR
     sudo yum install clang-devel
@@ -98,6 +100,10 @@ Optional for **Haskell**
     cabal update
     cabal install ghc-mod
     cabal install hasktags
+
+Optional for **Java**
+
+Java support is usable with [eclim](elim.org). It comes with it's own set of installer, daemon etc.
 
 Installing new modules
 ----------------------
