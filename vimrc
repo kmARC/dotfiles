@@ -24,7 +24,7 @@ Plug 'jeetsukumaran/vim-indentwise'
 Plug 'scrooloose/syntastic'
 Plug 'SirVer/ultisnips'
 Plug 'tpope/vim-commentary'
-Plug 'Valloric/YouCompleteMe',                  { 'do': './install.sh' }
+Plug 'Valloric/YouCompleteMe',                  { 'do': './install.sh --clang-completer' }
 "--- Markdown ---
 Plug 'plasticboy/vim-markdown',                 {'for': 'mkd'}
 "--- HTML ---
