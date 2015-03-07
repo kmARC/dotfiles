@@ -41,6 +41,9 @@ Plug 'pangloss/vim-javascript',                 {'for': 'javascript'}
 "--- C/C++ ---
 Plug 'vim-scripts/a.vim'
 Plug 'octol/vim-cpp-enhanced-highlight'
+"--- Haskell ---
+Plug 'Shougo/vimproc.vim',                      {'do':  'make'}
+Plug 'eagletmt/neco-ghc',                       {'for': 'haskell'}
 call plug#end()
 
 runtime macros/matchit.vim
@@ -127,6 +130,7 @@ let g:ctrlp_working_path_mode = 0
 "--- delimitMate ---
 let delimitMate_expand_cr = 1
 
+
 "--- nerdtree ---
 autocmd vimenter * wincmd p
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
@@ -137,6 +141,39 @@ let g:netrw_home=expand("~/.vim/misc")
 "--- syntastic ---
 let g:syntastic_auto_loc_list=1
 let g:syntastic_always_populate_loc_list=1
+
+"--- tagbar ---
+let g:tagbar_type_haskell = {
+    \ 'ctagsbin'  : 'hasktags',
+    \ 'ctagsargs' : '-x -c -o-',
+    \ 'kinds'     : [
+        \  'm:modules:0:1',
+        \  'd:data: 0:1',
+        \  'd_gadt: data gadt:0:1',
+        \  't:type names:0:1',
+        \  'nt:new types:0:1',
+        \  'c:classes:0:1',
+        \  'cons:constructors:1:1',
+        \  'c_gadt:constructor gadt:1:1',
+        \  'c_a:constructor accessors:1:1',
+        \  'ft:function types:1:1',
+        \  'fi:function implementations:0:1',
+        \  'o:others:0:1'
+    \ ],
+    \ 'sro'        : '.',
+    \ 'kind2scope' : {
+        \ 'm' : 'module',
+        \ 'c' : 'class',
+        \ 'd' : 'data',
+        \ 't' : 'type'
+    \ },
+    \ 'scope2kind' : {
+        \ 'module' : 'm',
+        \ 'class'  : 'c',
+        \ 'data'   : 'd',
+        \ 'type'   : 't'
+    \ }
+\ }
 
 "--- vim-airline ---
 let g:Powerline_symbols = 'fancy'
@@ -149,9 +186,13 @@ let g:airline#extensions#whitespace#enabled = 0
 "--- vim-markdown ---
 let g:vim_markdown_folding_disabled=1
 
+"--- neco-ghc ---
+autocmd bufread *.hs setlocal omnifunc=necoghc#omnifunc
+
 "--- YouCompleteMe ---
 let g:ycm_autoclose_preview_window_after_insertion=1
 let g:EclimCompletionMethod = 'omnifunc'
+let g:ycm_semantic_triggers = {'haskell' : ['.']}
 
 "--- UltiSnips ---
 let g:UltiSnipsExpandTrigger="<c-j>"
