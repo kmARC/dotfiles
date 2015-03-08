@@ -44,6 +44,7 @@ Plug 'octol/vim-cpp-enhanced-highlight'
 "--- Haskell ---
 Plug 'Shougo/vimproc.vim',                      {'do':  'make'}
 Plug 'eagletmt/neco-ghc',                       {'for': 'haskell'}
+Plug 'raichoo/haskell-vim',                     {'for': 'haskell'}
 call plug#end()
 
 runtime macros/matchit.vim

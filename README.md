@@ -99,6 +99,7 @@ Optional for **Haskell**
     sudo yum install cabal-install
 
     cabal update
+    cabal install cabal-install
     cabal install ghc-mod
     cabal install hasktags
 
