@@ -2,11 +2,11 @@ call plug#begin('~/.vim/plugged')
 "--- Tools ---
 Plug 'junegunn/vim-peekaboo'
 Plug 'kien/ctrlp.vim'
-Plug 'scrooloose/nerdtree',                     { 'on': 'NERDTreeToggle' }
+Plug 'scrooloose/nerdtree',                     {'on': 'NERDTreeToggle' }
 Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-repeat'
 "--- Editing ---
-Plug 'godlygeek/tabular',                       { 'on': 'Tabularize'}
+Plug 'godlygeek/tabular',                       {'on': 'Tabularize'}
 Plug 'Lokaltog/vim-easymotion'
 Plug 'Raimondi/delimitMate'
 Plug 'tpope/vim-surround'
@@ -24,7 +24,7 @@ Plug 'jeetsukumaran/vim-indentwise'
 Plug 'scrooloose/syntastic'
 Plug 'SirVer/ultisnips'
 Plug 'tpope/vim-commentary'
-Plug 'Valloric/YouCompleteMe',                  { 'do': './install.sh --clang-completer' }
+Plug 'Valloric/YouCompleteMe',                  {'do':  './install.sh --clang-completer' }
 "--- Markdown ---
 Plug 'plasticboy/vim-markdown',                 {'for': 'mkd'}
 "--- HTML ---
@@ -35,7 +35,7 @@ Plug 'ap/vim-css-color',                        {'for': 'css'}
 Plug 'groenewege/vim-less',                     {'for': 'css'}
 "--- JavaScript ---
 Plug 'jelera/vim-javascript-syntax',            {'for': 'javascript'}
-Plug 'marijnh/tern_for_vim',                    {'for': 'javascript',       'do': 'npm install'}
+Plug 'marijnh/tern_for_vim',                    {'for': 'javascript', 'do': 'npm install'}
 Plug 'othree/javascript-libraries-syntax.vim',  {'for': 'javascript'}
 Plug 'pangloss/vim-javascript',                 {'for': 'javascript'}
 "--- C/C++ ---
