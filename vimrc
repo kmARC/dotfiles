@@ -54,63 +54,62 @@ runtime macros/matchit.vim
 syntax on
 filetype plugin indent on
 
-set modeline
 set nocompatible
 set mouse=a
-set ts=4
-set sw=4
-set et
-set ai
+set tabstop=4
+set shiftwidth=4
+set softtabstop=4
+set smarttab
+set expandtab
+set autoindent
 set smartindent
 set nowrap
 set ignorecase
 set smartcase
-set smarttab
 set incsearch
 set hlsearch
 set scrolloff=3
-"set colorcolumn=81
+set cursorline
 set list
 set listchars=trail:·,tab:»\ "
 set hidden
-set cursorline
-set t_ut=
 set wildmenu
 set backup
 set undofile
 set directory=~/.vim/vimswap//
 set backupdir=~/.vim/vimbackup//
 set undodir=~/.vim/vimundo//
-autocmd WinEnter * if &buftype == "" | set nu rnu
-autocmd WinLeave * if &buftype == "" | set nu nornu
-set nu rnu
+set number relativenumber
 set path+=**
 set laststatus=2
 set wildignore+=*.o,*.so,*.a,*.swp,*.zip,*.pyc,tags
 
-set bg=dark
+set background=dark
+set t_ut=
 let base16colorspace=256
 colors base16-flat
 
-au BufNewFile,BufRead *.html set filetype=htmldjango
-
-nnoremap <C-L> :bn<CR>
-nnoremap <C-H> :bp<CR>
-nnoremap <Leader>w :bp!<CR>:bd #<CR>
-nnoremap <Leader>f :call Togglefold()<CR>
-nnoremap <Leader>ag :Ag! --<C-R>=expand("%:e")<CR> 
-nnoremap <Leader>aG :Ag! --<C-R>=expand("%:e")<CR> <C-R><C-W><CR>
-nnoremap <Leader>pt :CtrlPTag<CR>
-nnoremap <Leader>pb :CtrlPBuffer<CR>
-nnoremap <F7> :NERDTreeToggle<CR>
-nnoremap <F8> :TagbarToggle<CR>
-nnoremap <ScrollWheelUp> <C-Y>
-nnoremap <ScrollWheelDown> <C-E>
+nnoremap <C-L>             :bn<CR>
+nnoremap <C-H>             :bp<CR>
+nnoremap <Leader>w         :conf bd<CR>
+nnoremap <Leader>f         :call ToggleFold()<CR>
+nnoremap <Leader>ag        :Ag! --<C-R>=expand("%:e")<CR>
+nnoremap <Leader>aG        :Ag! --<C-R>=expand("%:e")<CR> <C-R><C-W><CR>
+nnoremap <Leader>pt        :CtrlPTag<CR>
+nnoremap <Leader>pb        :CtrlPBuffer<CR>
+nnoremap <F7>              :NERDTreeToggle<CR>
+nnoremap <F8>              :TagbarToggle<CR>
+nnoremap <ScrollWheelUp>   2<C-Y>
+nnoremap <ScrollWheelDown> 2<C-E>
 autocmd bufenter *.c,*.cpp,*.h,*.hpp  nmap <Leader>] :YcmCompleter GoTo<CR>
 autocmd bufenter *.py                 nmap <Leader>] :YcmCompleter GoTo<CR>
 autocmd bufenter *.js                 nmap <Leader>] :TernDef<CR>
 
-function! Togglefold()
+autocmd winenter *                    if &buftype == "" | set nu rnu
+autocmd winleave *                    if &buftype == "" | set nu nornu
+autocmd bufnewfile,bufread *.html     set filetype=htmldjango
+
+function! ToggleFold()
     if &l:foldmethod == "manual"
         set foldmethod=indent foldcolumn=2
     else
@@ -121,10 +120,7 @@ endfunction
 
 if has('gui_running')
     set guifont=Dejavu\ Sans\ Mono\ for\ Powerline\ 9
-    set guioptions-=T
-    set guioptions-=L
-    set guioptions-=r
-    set guioptions-=m
+    set guioptions=agit
 endif
 
 "--- ctrlp.vim ---
@@ -201,5 +197,6 @@ let g:ycm_semantic_triggers = {'haskell' : ['.']}
 let g:UltiSnipsExpandTrigger="<c-j>"
 let g:UltiSnipsSnippetDirectories=["plugged/vim-snippets/UltiSnips"]
 
+set modeline
 set exrc
 set secure
