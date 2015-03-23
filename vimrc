@@ -91,7 +91,7 @@ colors base16-flat
 
 nnoremap <C-L>             :bn<CR>
 nnoremap <C-H>             :bp<CR>
-nnoremap <Leader>w         :conf bd<CR>
+nnoremap <Leader>w         :bp!<CR>:bd #<CR>
 nnoremap <Leader>f         :call ToggleFold()<CR>
 nnoremap <Leader>ag        :Ag! --<C-R>=expand("%:e")<CR> 
 nnoremap <Leader>aG        :Ag! --<C-R>=expand("%:e")<CR> <C-R><C-W><CR>
