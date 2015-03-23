@@ -7,10 +7,7 @@ Setting up on a new host
 ### Install prerequisites
 
     sudo apt-get install git vim
-    sudo apt-get install curl build-essential exuberant-ctags cmake ruby python-dev silversearcher-ag
-    # OR
-    sudo yum install git vim
-    sudo yum install ctags cmake python-devel the_silver_searcher
+    sudo apt-get install curl build-essential exuberant-ctags cmake ruby python-dev python-unidecode silversearcher-ag
 
 ### Set up vim with plugins
 
@@ -55,8 +52,6 @@ Programming languages
 Optional for **Python**
 
     sudo apt-get install pylint
-    # OR
-    sudo yum install pylint
 
 Optional for **JavaScript**
 
@@ -80,8 +75,6 @@ Optional for **C/C++**
 For semantic C/C++ completion to work, you'd neet to set up a `.ycm_extra_conf.py` file. Refer to [this example](https://raw.githubusercontent.com/Valloric/ycmd/master/cpp/ycm/.ycm_extra_conf.py) and [YouCompleteMe](https://github.com/Valloric/YouCompleteMe#c-family-semantic-completion-engine-usage) help.
 
     sudo apt-get install libclang-3.5-dev
-    # OR
-    sudo yum install clang-devel
 
     cd ~/.vim/misc
     mkdir ycm_build
@@ -95,8 +88,6 @@ For semantic C/C++ completion to work, you'd neet to set up a `.ycm_extra_conf.p
 Optional for **Haskell**
 
     sudo apt-get install cabal-install
-    # OR
-    sudo yum install cabal-install
 
     cabal update
     cabal install cabal-install
@@ -120,3 +111,4 @@ To persist the change, commit.
 
     git commit -m 'Added vim-fugitive'
     git push
+
