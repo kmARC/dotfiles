@@ -5,6 +5,8 @@ Plug 'kien/ctrlp.vim'
 Plug 'scrooloose/nerdtree',                     {'on': 'NERDTreeToggle' }
 Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-repeat'
+Plug 'epeli/slimux'
+Plug 'christoomey/vim-tmux-navigator'
 "--- Editing ---
 Plug 'godlygeek/tabular',                       {'on': 'Tabularize'}
 Plug 'Lokaltog/vim-easymotion'
@@ -27,6 +29,8 @@ Plug 'tpope/vim-commentary'
 Plug 'Valloric/YouCompleteMe',                  {'do':  './install.sh --clang-completer' }
 "--- Markdown ---
 Plug 'plasticboy/vim-markdown',                 {'for': 'mkd'}
+"--- Python ---
+Plug 'davidhalter/jedi-vim',                    {'for': 'python'}
 "--- HTML ---
 Plug 'mattn/emmet-vim',                         {'for': 'html'}
 Plug 'othree/html5.vim',                        {'for': 'html'}
@@ -89,25 +93,29 @@ set t_ut=
 let base16colorspace=256
 colors base16-flat
 
-nnoremap <C-L>             :bn<CR>
-nnoremap <C-H>             :bp<CR>
 nnoremap <Leader>w         :bp!<CR>:bd #<CR>
 nnoremap <Leader>f         :call ToggleFold()<CR>
 nnoremap <Leader>ag        :Ag! --<C-R>=expand("%:e")<CR> 
 nnoremap <Leader>aG        :Ag! --<C-R>=expand("%:e")<CR> <C-R><C-W><CR>
 nnoremap <Leader>pt        :CtrlPTag<CR>
 nnoremap <Leader>pb        :CtrlPBuffer<CR>
+vnoremap <Leader>ss        :SlimuxREPLSendSelection<CR>
+nnoremap <Leader>sl        :SlimuxREPLSendLine<CR>
+nnoremap <Leader>sb        :SlimuxREPLSendBuffer<CR>
 nnoremap <F7>              :NERDTreeToggle<CR>
 nnoremap <F8>              :TagbarToggle<CR>
 nnoremap <ScrollWheelUp>   2<C-Y>
 nnoremap <ScrollWheelDown> 2<C-E>
-autocmd bufenter *.c,*.cpp,*.h,*.hpp  nmap <Leader>] :YcmCompleter GoTo<CR>
-autocmd bufenter *.py                 nmap <Leader>] :YcmCompleter GoTo<CR>
-autocmd bufenter *.js                 nmap <Leader>] :TernDef<CR>
+autocmd bufnewfile,bufread *.c,*.cpp,*.h,*.hpp  nnoremap <buffer> <Leader>] :YcmCompleter GoTo<CR>
+autocmd bufnewfile,bufread *.py                 nnoremap <buffer> <Leader>] :YcmCompleter GoTo<CR>
+autocmd bufnewfile,bufread *.js                 nnoremap <buffer> <Leader>] :TernDef<CR>
+autocmd bufnewfile,bufread *.md                 nnoremap <buffer> <F8> :Toc<CR>
+autocmd bufnewfile,bufread *.md,*.tex,*.txt     setlocal tw=80 fo+=awn cc=81
+autocmd bufnewfile,bufread *.md,*.tex           setlocal spell
+autocmd bufnewfile,bufread *.html               setlocal filetype=htmldjango
 
 autocmd winenter *                    if &buftype == "" | set nu rnu
 autocmd winleave *                    if &buftype == "" | set nu nornu
-autocmd bufnewfile,bufread *.html     set filetype=htmldjango
 
 function! ToggleFold()
     if &l:foldmethod == "manual"
@@ -129,6 +137,11 @@ let g:ctrlp_working_path_mode = 0
 "--- delimitMate ---
 let delimitMate_expand_cr = 1
 
+"--- fugitive.vim ---
+autocmd BufReadPost fugitive://* set bufhidden=delete
+
+"--- jedi-vim ---
+let g:jedi#use_tabs_not_buffers = 1
 
 "--- nerdtree ---
 autocmd vimenter * wincmd p
@@ -185,6 +198,9 @@ let g:airline#extensions#whitespace#enabled = 0
 "--- vim-markdown ---
 let g:vim_markdown_folding_disabled=1
 
+"--- vim-gitgutter ---
+let g:gitgutter_max_signs=2000
+
 "--- neco-ghc ---
 autocmd bufread *.hs setlocal omnifunc=necoghc#omnifunc
 
@@ -195,7 +211,7 @@ let g:ycm_semantic_triggers = {'haskell' : ['.']}
 
 "--- UltiSnips ---
 let g:UltiSnipsExpandTrigger="<c-j>"
-let g:UltiSnipsSnippetDirectories=["plugged/vim-snippets/UltiSnips"]
+let g:UltiSnipsSnippetDirectories=["plugged/vim-snippets/UltiSnips","UltiSnips"]
 
 set modeline
 set exrc
