@@ -29,8 +29,6 @@ Plug 'tpope/vim-commentary'
 Plug 'Valloric/YouCompleteMe',                  {'do':  './install.sh --clang-completer' }
 "--- Markdown ---
 Plug 'plasticboy/vim-markdown',                 {'for': 'mkd'}
-"--- Python ---
-Plug 'davidhalter/jedi-vim',                    {'for': 'python'}
 "--- HTML ---
 Plug 'mattn/emmet-vim',                         {'for': 'html'}
 Plug 'othree/html5.vim',                        {'for': 'html'}
@@ -140,9 +138,6 @@ let delimitMate_expand_cr = 1
 "--- fugitive.vim ---
 autocmd BufReadPost fugitive://* set bufhidden=delete
 
-"--- jedi-vim ---
-let g:jedi#use_tabs_not_buffers = 1
-
 "--- nerdtree ---
 autocmd vimenter * wincmd p
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
@@ -193,7 +188,7 @@ let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#fnamemod = ':t'
 let g:airline_theme='base16'
-let g:airline#extensions#whitespace#enabled = 0
+let g:airline#extensions#whitespace#enabled = 1
 
 "--- vim-markdown ---
 let g:vim_markdown_folding_disabled=1
