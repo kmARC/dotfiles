@@ -1,17 +1,18 @@
 call plug#begin('~/.vim/plugged')
 "--- Tools ---
+Plug 'christoomey/vim-tmux-navigator'
+Plug 'epeli/slimux'
 Plug 'junegunn/vim-peekaboo'
 Plug 'kien/ctrlp.vim'
 Plug 'scrooloose/nerdtree',                     {'on': 'NERDTreeToggle' }
 Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-repeat'
-Plug 'epeli/slimux'
-Plug 'christoomey/vim-tmux-navigator'
 "--- Editing ---
 Plug 'godlygeek/tabular',                       {'on': 'Tabularize'}
 Plug 'Lokaltog/vim-easymotion'
 Plug 'Raimondi/delimitMate'
 Plug 'tpope/vim-surround'
+Plug 'michaeljsmith/vim-indent-object'
 "--- Look&Feel ---
 Plug 'bling/vim-airline'
 Plug 'chriskempson/base16-vim'
@@ -41,8 +42,8 @@ Plug 'marijnh/tern_for_vim',                    {'for': 'javascript', 'do': 'npm
 Plug 'othree/javascript-libraries-syntax.vim',  {'for': 'javascript'}
 Plug 'pangloss/vim-javascript',                 {'for': 'javascript'}
 "--- C/C++ ---
-Plug 'vim-scripts/a.vim'
-Plug 'octol/vim-cpp-enhanced-highlight'
+Plug 'vim-scripts/a.vim',                       {'for': ['cpp', 'c'] }
+Plug 'octol/vim-cpp-enhanced-highlight',        {'for': ['cpp', 'c'] }
 "--- Haskell ---
 Plug 'Shougo/vimproc.vim',                      {'do':  'make'}
 Plug 'eagletmt/ghcmod-vim',                     {'for': 'haskell'}
@@ -85,13 +86,18 @@ set number relativenumber
 set path+=**
 set laststatus=2
 set wildignore+=*.o,*.so,*.a,*.swp,*.zip,*.pyc,tags
+set completeopt-=preview
+set clipboard=autoselect,unnamedplus
 
 set background=dark
 set t_ut=
 let base16colorspace=256
 colors base16-flat
 
-nnoremap <Leader>w         :bp!<CR>:bd #<CR>
+nnoremap <Space>           :bn<CR>
+nnoremap <Backspace>       :bp<CR>
+nnoremap <Leader>w         :bp<CR>:bd #<CR>
+nnoremap <Leader>W         :bufdo bd<CR>
 nnoremap <Leader>f         :call ToggleFold()<CR>
 nnoremap <Leader>ag        :Ag! --<C-R>=expand("%:e")<CR> 
 nnoremap <Leader>aG        :Ag! --<C-R>=expand("%:e")<CR> <C-R><C-W><CR>
@@ -104,13 +110,12 @@ nnoremap <F7>              :NERDTreeToggle<CR>
 nnoremap <F8>              :TagbarToggle<CR>
 nnoremap <ScrollWheelUp>   2<C-Y>
 nnoremap <ScrollWheelDown> 2<C-E>
-autocmd bufnewfile,bufread *.c,*.cpp,*.h,*.hpp  nnoremap <buffer> <Leader>] :YcmCompleter GoTo<CR>
-autocmd bufnewfile,bufread *.py                 nnoremap <buffer> <Leader>] :YcmCompleter GoTo<CR>
-autocmd bufnewfile,bufread *.js                 nnoremap <buffer> <Leader>] :TernDef<CR>
-autocmd bufnewfile,bufread *.md                 nnoremap <buffer> <F8> :Toc<CR>
-autocmd bufnewfile,bufread *.md,*.tex,*.txt     setlocal tw=80 fo+=awn cc=81
-autocmd bufnewfile,bufread *.md,*.tex           setlocal spell
-autocmd bufnewfile,bufread *.html               setlocal filetype=htmldjango
+autocmd FileType c,cpp              nnoremap <buffer> <Leader>] :YcmCompleter GoTo<CR>
+autocmd FileType python             nnoremap <buffer> <Leader>] :YcmCompleter GoTo<CR>
+autocmd FileType javascript         nnoremap <buffer> <Leader>] :TernDef<CR>
+autocmd FileType mkd                nnoremap <buffer> <F8> :Toc<CR>
+autocmd FileType mkd,plaintex,text  setlocal tw=80 fo+=awn cc=81 spell
+autocmd FileType html               setlocal filetype=htmldjango
 
 autocmd winenter *                    if &buftype == "" | set nu rnu
 autocmd winleave *                    if &buftype == "" | set nu nornu
@@ -144,6 +149,9 @@ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTree
 
 "--- netrw ---
 let g:netrw_home=expand("~/.vim/misc")
+
+"--- slimux ---
+let g:slimux_select_from_current_window = 1
 
 "--- syntastic ---
 let g:syntastic_auto_loc_list=1
