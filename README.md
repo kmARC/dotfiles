@@ -7,7 +7,8 @@ Setting up on a new host
 ### Install prerequisites
 
     sudo apt-get install git vim
-    sudo apt-get install curl build-essential exuberant-ctags cmake ruby python-dev python-unidecode silversearcher-ag
+    sudo apt-get install curl build-essential exuberant-ctags cmake ruby \
+        python-dev python-unidecode silversearcher-ag
 
 ### Set up vim with plugins
 
@@ -15,7 +16,8 @@ Setting up on a new host
     vim -c ':PlugInstall' -c ':qa'
     # Ignore error message by pressing enter
 
-At this point, plugins will automatically installed inside vim. After finished, you can startup vim with all plugins installed.
+At this point,plugins will automatically installed inside vim. After finished, 
+you can startup vim with all plugins installed.
 
 ### Configure look&feel
 
@@ -24,18 +26,23 @@ At this point, plugins will automatically installed inside vim. After finished, 
     cd base16-builder
     ./base16
 
-Put the following configuration in your `~/.bashrc`. This shows an example of using the *flat* colorscheme.
+Put the following configuration in your `~/.bashrc`. This shows an example of 
+using the *flat* colorscheme.
 
     export TERM="xterm-256color"
     # Base16 Shell
     BASE16_SHELL="$HOME/.vim/misc/base16-builder/output/shell/base16-flat.dark.sh"
     [[ -s $BASE16_SHELL ]] && source $BASE16_SHELL
 
-If you want to change the colors, choose one from the [Base16 presets](chriskempson.github.io/base16/), and replace `flat` in both `~/.bashrc` and `~/.vim/vimrc`
+If you want to change the colors, choose one from the [Base16 
+presets](chriskempson.github.io/base16/), and replace `flat` in both `~/.bashrc` 
+and `~/.vim/vimrc`
 
 ### Configure font
 
-*vim-airline* is configured to use some nice line drawing characters, arrows, branch icons, etc. To use these, install a [powerline-enabled terminal font](https://github.com/powerline/fonts).
+*vim-airline* is configured to use some nice line drawing characters, arrows, 
+branch icons, etc. To use these, install a [powerline-enabled terminal 
+font](https://github.com/powerline/fonts).
 
 
 Update a host
@@ -49,6 +56,10 @@ Programming languages
 ---------------------
 *TODO: These could be written as shell scripts*
 
+Optional fo **Shell scripting***
+
+    apt-get install shellcheck
+
 Optional for **Python**
 
     sudo apt-get install pylint
@@ -56,7 +67,8 @@ Optional for **Python**
 Optional for **JavaScript**
 
     # Install nvm
-    curl https://raw.githubusercontent.com/creationix/nvm/v0.24.0/install.sh | bash
+    curl https://raw.githubusercontent.com/creationix/nvm/v0.24.0/install.sh \
+        | bash
     # Install node v0.12
     source ~/.nvm/nvm.sh
     nvm install 0.12
@@ -70,16 +82,20 @@ Optional for **JavaScript**
 
 Optional for **C/C++**
 
-*Unfortunately this needs to be done after each :PlugUpdate if YouCompleteMe updated*
+*Unfortunately this needs to be done after each :PlugUpdate if YouCompleteMe 
+updated*
 
-For semantic C/C++ completion to work, you'd neet to set up a `.ycm_extra_conf.py` file. Refer to [this example](https://raw.githubusercontent.com/Valloric/ycmd/master/cpp/ycm/.ycm_extra_conf.py) and [YouCompleteMe](https://github.com/Valloric/YouCompleteMe#c-family-semantic-completion-engine-usage) help.
+For semantic C/C++ completion to work, you'd need to set up a 
+`.ycm_extra_conf.py` file. Refer to [this example][1] and [YouCompleteMe][2] 
+help.
 
     sudo apt-get install libclang-3.5-dev
 
     cd ~/.vim/misc
     mkdir ycm_build
     cd ycm_build
-    cmake -G "Unix Makefiles" -DUSE_SYSTEM_LIBCLANG=ON . ~/.vim/plugged/YouCompleteMe/third_party/ycmd/cpp
+    cmake -G "Unix Makefiles" -DUSE_SYSTEM_LIBCLANG=ON . \
+        ~/.vim/plugged/YouCompleteMe/third_party/ycmd/cpp
     make ycm_support_libs
     cd ..
     rm -rf ycm_build
@@ -96,7 +112,8 @@ Optional for **Haskell**
 
 Optional for **Java**
 
-Java support is usable with [eclim](elim.org). It comes with it's own set of installer, daemon etc.
+Java support is usable with [eclim](elim.org). It comes with it's own set of 
+installer, daemon etc.
 
 Installing new modules
 ----------------------
@@ -112,3 +129,7 @@ To persist the change, commit.
     git commit -m 'Added vim-fugitive'
     git push
 
+[1]: 
+(https://raw.githubusercontent.com/Valloric/ycmd/master/cpp/ycm/.ycm_extra_conf.py)
+[2]: 
+(https://github.com/Valloric/YouCompleteMe#c-family-semantic-completion-engine-usage)
