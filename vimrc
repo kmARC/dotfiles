@@ -4,6 +4,7 @@ Plug 'christoomey/vim-tmux-navigator'
 Plug 'epeli/slimux'
 Plug 'junegunn/vim-peekaboo'
 Plug 'kien/ctrlp.vim'
+Plug 'romainl/vim-qf'
 Plug 'scrooloose/nerdtree',                     {'on': 'NERDTreeToggle' }
 Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-repeat'
