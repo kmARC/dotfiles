@@ -130,7 +130,7 @@ function! ToggleFold()
 endfunction
 
 if has('gui_running')
-    set guifont=Dejavu\ Sans\ Mono\ for\ Powerline\ 9
+    set guifont=Dejavu\ Sans\ Mono\ for\ Powerline\ Bold\ 9
     set guioptions=agit
 endif
 
