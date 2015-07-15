@@ -2,6 +2,7 @@ call plug#begin('~/.vim/plugged')
 "--- Tools ---
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'epeli/slimux'
+Plug 'freitass/todo.txt-vim',                   {'for': 'todo'}
 Plug 'junegunn/vim-peekaboo'
 Plug 'kien/ctrlp.vim'
 Plug 'romainl/vim-qf'
@@ -16,7 +17,7 @@ Plug 'tpope/vim-surround'
 Plug 'michaeljsmith/vim-indent-object'
 "--- Look&Feel ---
 Plug 'bling/vim-airline'
-Plug 'chriskempson/base16-vim'
+Plug 'notpratheek/vim-luna'
 "--- Git ---
 Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-fugitive'
@@ -92,8 +93,7 @@ set clipboard=autoselect,unnamedplus
 
 set background=dark
 set t_ut=
-let base16colorspace=256
-colors base16-flat
+colors luna-term
 
 nnoremap <Space>           :bn<CR>
 nnoremap <Backspace>       :bp<CR>
@@ -133,6 +133,7 @@ endfunction
 if has('gui_running')
     set guifont=Dejavu\ Sans\ Mono\ for\ Powerline\ Bold\ 9
     set guioptions=agit
+    colors luna
 endif
 
 "--- ctrlp.vim ---
@@ -197,7 +198,7 @@ let g:Powerline_symbols = 'fancy'
 let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#fnamemod = ':t'
-let g:airline_theme='base16'
+let g:airline_theme='luna'
 let g:airline#extensions#whitespace#enabled = 1
 let g:airline#extensions#tabline#show_close_button = 1
 let g:airline#extensions#tabline#buffer_idx_mode = 1
@@ -210,6 +211,9 @@ nmap <leader>6 <Plug>AirlineSelectTab6
 nmap <leader>7 <Plug>AirlineSelectTab7
 nmap <leader>8 <Plug>AirlineSelectTab8
 nmap <leader>9 <Plug>AirlineSelectTab9
+
+"--- vim-easymotion ---
+nmap s <Plug>(easymotion-bd-W)
 
 "--- vim-markdown ---
 let g:vim_markdown_folding_disabled=1

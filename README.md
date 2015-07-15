@@ -21,22 +21,9 @@ you can startup vim with all plugins installed.
 
 ### Configure look&feel
 
-    cd ~/.vim/misc
-    git clone https://github.com/chriskempson/base16-builder
-    cd base16-builder
-    ./base16
-
-Put the following configuration in your `~/.bashrc`. This shows an example of 
-using the *flat* colorscheme.
+Put the following configuration in your `~/.bashrc`.
 
     export TERM="xterm-256color"
-    # Base16 Shell
-    BASE16_SHELL="$HOME/.vim/misc/base16-builder/output/shell/base16-flat.dark.sh"
-    [[ -s $BASE16_SHELL ]] && source $BASE16_SHELL
-
-If you want to change the colors, choose one from the [Base16 
-presets](chriskempson.github.io/base16/), and replace `flat` in both `~/.bashrc` 
-and `~/.vim/vimrc`
 
 ### Configure font
 
