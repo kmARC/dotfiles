@@ -20,6 +20,7 @@ Plug 'bling/vim-airline'
 Plug 'nanotech/jellybeans.vim'
 "--- Git ---
 Plug 'airblade/vim-gitgutter'
+Plug 'shumphrey/fugitive-gitlab.vim'
 Plug 'tpope/vim-fugitive'
 "--- Programming ---
 Plug 'honza/vim-snippets'
@@ -47,11 +48,12 @@ Plug 'pangloss/vim-javascript',                 {'for': 'javascript'}
 Plug 'vim-scripts/a.vim',                       {'for': ['cpp', 'c'] }
 Plug 'octol/vim-cpp-enhanced-highlight',        {'for': ['cpp', 'c'] }
 "--- Haskell ---
-Plug 'Shougo/vimproc.vim',                      {'do':  'make'}
 Plug 'eagletmt/ghcmod-vim',                     {'for': 'haskell'}
 Plug 'eagletmt/neco-ghc',                       {'for': 'haskell'}
 Plug 'raichoo/haskell-vim',                     {'for': 'haskell'}
 Plug 'Twinside/vim-hoogle',                     {'for': 'haskell'}
+"--- Dependencies
+Plug 'Shougo/vimproc.vim',                      {'do':  'make'}     " ghcmod-vim
 call plug#end()
 
 runtime macros/matchit.vim
@@ -109,18 +111,21 @@ nnoremap <Leader>sl        :SlimuxREPLSendLine<CR>
 nnoremap <Leader>sb        :SlimuxREPLSendBuffer<CR>
 nnoremap <F7>              :NERDTreeToggle<CR>
 nnoremap <F8>              :TagbarToggle<CR>
+nnoremap <F9>              :lclose<CR>:cclose<CR>
 nnoremap <ScrollWheelUp>   2<C-Y>
 nnoremap <ScrollWheelDown> 2<C-E>
 autocmd FileType c,cpp              nnoremap <buffer> <Leader>] :YcmCompleter GoTo<CR>
 autocmd FileType python             nnoremap <buffer> <Leader>] :YcmCompleter GoTo<CR>
 autocmd FileType javascript         nnoremap <buffer> <Leader>] :TernDef<CR>
 autocmd FileType mkd                nnoremap <buffer> <F8> :Toc<CR>
-" autocmd FileType mkd,plaintex,text  setlocal tw=80 fo+=awn cc=81 spell
-autocmd FileType mkd,plaintex,text  setlocal tw=80 cc=81 spell
+autocmd FileType mkd                setlocal tw=80 cc=81
+autocmd FileType plaintex,text      setlocal tw=80 cc=81 fo+=awn cc=81
 autocmd FileType html               setlocal filetype=htmldjango
+autocmd FileType todo               help todo.txt
 
-autocmd winenter *                    if &buftype == "" | set nu rnu
-autocmd winleave *                    if &buftype == "" | set nu nornu
+autocmd BufRead,BufEnter */doc/*    wincmd L | 80 wincmd |
+autocmd WinEnter *                  if &buftype == "" | set nu rnu
+autocmd WinLeave *                  if &buftype == "" | set nu nornu
 
 function! ToggleFold()
     if &l:foldmethod == "manual"
@@ -146,6 +151,11 @@ let delimitMate_expand_cr = 1
 
 "--- fugitive.vim ---
 autocmd BufReadPost fugitive://* set bufhidden=delete
+
+"--- fugitive-gitlab.vim ---
+let g:fugitive_gitlab_domains = [
+    \ 'http://gitlab.zurich.ibm.com'
+\ ]
 
 "--- nerdtree ---
 autocmd vimenter * wincmd p
