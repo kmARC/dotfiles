@@ -17,7 +17,7 @@ Plug 'tpope/vim-surround'
 Plug 'michaeljsmith/vim-indent-object'
 "--- Look&Feel ---
 Plug 'bling/vim-airline'
-Plug 'notpratheek/vim-luna'
+Plug 'nanotech/jellybeans.vim'
 "--- Git ---
 Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-fugitive'
@@ -93,7 +93,7 @@ set clipboard=autoselect,unnamedplus
 
 set background=dark
 set t_ut=
-colors luna-term
+colors jellybeans
 
 nnoremap <Space>           :bn<CR>
 nnoremap <Backspace>       :bp<CR>
@@ -115,7 +115,8 @@ autocmd FileType c,cpp              nnoremap <buffer> <Leader>] :YcmCompleter Go
 autocmd FileType python             nnoremap <buffer> <Leader>] :YcmCompleter GoTo<CR>
 autocmd FileType javascript         nnoremap <buffer> <Leader>] :TernDef<CR>
 autocmd FileType mkd                nnoremap <buffer> <F8> :Toc<CR>
-autocmd FileType mkd,plaintex,text  setlocal tw=80 fo+=awn cc=81 spell
+" autocmd FileType mkd,plaintex,text  setlocal tw=80 fo+=awn cc=81 spell
+autocmd FileType mkd,plaintex,text  setlocal tw=80 cc=81 spell
 autocmd FileType html               setlocal filetype=htmldjango
 
 autocmd winenter *                    if &buftype == "" | set nu rnu
@@ -198,7 +199,7 @@ let g:Powerline_symbols = 'fancy'
 let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#fnamemod = ':t'
-let g:airline_theme='luna'
+let g:airline_theme='jellybeans'
 let g:airline#extensions#whitespace#enabled = 1
 let g:airline#extensions#tabline#show_close_button = 1
 let g:airline#extensions#tabline#buffer_idx_mode = 1
