@@ -49,7 +49,7 @@ Optional fo **Shell scripting***
 
 Optional for **Python**
 
-    sudo apt-get install pylint
+    sudo apt-get install pylint ipython
 
 Optional for **JavaScript**
 
