@@ -2,7 +2,6 @@ call plug#begin('~/.vim/plugged')
 "--- Tools ---
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'jpalardy/vim-slime'
-Plug 'freitass/todo.txt-vim',                   {'for': 'todo'}
 Plug 'junegunn/vim-peekaboo'
 Plug 'kien/ctrlp.vim'
 Plug 'romainl/vim-qf'
@@ -52,6 +51,8 @@ Plug 'eagletmt/ghcmod-vim',                     {'for': 'haskell'}
 Plug 'eagletmt/neco-ghc',                       {'for': 'haskell'}
 Plug 'raichoo/haskell-vim',                     {'for': 'haskell'}
 Plug 'Twinside/vim-hoogle',                     {'for': 'haskell'}
+"--- todo.txt
+Plug 'freitass/todo.txt-vim',                   {'for': 'todo'}
 "--- Dependencies
 Plug 'Shougo/vimproc.vim',                      {'do':  'make'}     " ghcmod-vim
 call plug#end()
@@ -106,15 +107,15 @@ nnoremap <Leader>ag        :Ag! --<C-R>=expand("%:e")<CR>
 nnoremap <Leader>aG        :Ag! --<C-R>=expand("%:e")<CR> <C-R><C-W><CR>
 nnoremap <Leader>pt        :CtrlPTag<CR>
 nnoremap <Leader>pb        :CtrlPBuffer<CR>
-nnoremap <leader>1         <Plug>AirlineSelectTab1
-nnoremap <leader>2         <Plug>AirlineSelectTab2
-nnoremap <leader>3         <Plug>AirlineSelectTab3
-nnoremap <leader>4         <Plug>AirlineSelectTab4
-nnoremap <leader>5         <Plug>AirlineSelectTab5
-nnoremap <leader>6         <Plug>AirlineSelectTab6
-nnoremap <leader>7         <Plug>AirlineSelectTab7
-nnoremap <leader>8         <Plug>AirlineSelectTab8
-nnoremap <leader>9         <Plug>AirlineSelectTab9
+nmap <leader>1             <Plug>AirlineSelectTab1
+nmap <leader>2             <Plug>AirlineSelectTab2
+nmap <leader>3             <Plug>AirlineSelectTab3
+nmap <leader>4             <Plug>AirlineSelectTab4
+nmap <leader>5             <Plug>AirlineSelectTab5
+nmap <leader>6             <Plug>AirlineSelectTab6
+nmap <leader>7             <Plug>AirlineSelectTab7
+nmap <leader>8             <Plug>AirlineSelectTab8
+nmap <leader>9             <Plug>AirlineSelectTab9
 nnoremap <F7>              :NERDTreeToggle<CR>
 nnoremap <F8>              :TagbarToggle<CR>
 nnoremap <F9>              :lclose<CR>:cclose<CR>
