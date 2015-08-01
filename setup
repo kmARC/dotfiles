@@ -2,7 +2,7 @@
 
 if ! which git >/dev/null; then
     echo "You need to install git to user this dotfiles repo. EXITING..."
-    return -1
+    exit -1
 fi
 
 echo -n "Updating dotfiles... "
@@ -16,7 +16,7 @@ if [ -e "$HOME/.dotfiles" ]; then
     else
         echo ""
         echo ".dotfiles directory exists and is not kmarc's. EXITING..."
-        return -1
+        exit -1
     fi
 else
     echo ""
