@@ -12,7 +12,7 @@ Setting up on a new host
 
 ### Set up vim with plugins
 
-    git clone https://kmARC@bitbucket.org/kmARC/vim.git ~/.vim
+    git clone https://github.com/kmARC11/vim.git ~/.vim
     vim -c ':PlugInstall' -c ':qa'
     # Ignore error message by pressing enter
 
@@ -116,7 +116,5 @@ To persist the change, commit.
     git commit -m 'Added vim-fugitive'
     git push
 
-[1]: 
-(https://raw.githubusercontent.com/Valloric/ycmd/master/cpp/ycm/.ycm_extra_conf.py)
-[2]: 
-(https://github.com/Valloric/YouCompleteMe#c-family-semantic-completion-engine-usage)
+[1]: (https://raw.githubusercontent.com/Valloric/ycmd/master/cpp/ycm/.ycm_extra_conf.py)
+[2]: (https://github.com/Valloric/YouCompleteMe#c-family-semantic-completion-engine-usage)
