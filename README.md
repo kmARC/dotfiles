@@ -2,4 +2,4 @@
 
 Oneliner setup:
 
-    curl -s https://raw.githubusercontent.com/kmARC11/dotfiles/master/setup | bash
+    curl -s https://raw.githubusercontent.com/kmARC/dotfiles/master/setup | bash
