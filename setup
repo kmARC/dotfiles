@@ -1,5 +1,10 @@
 #!/usr/bin/env bash
 
+if ! which git >/dev/null; then
+    echo "You need to install git to user this dotfiles repo. EXITING..."
+    return -1
+fi
+
 echo -n "Updating dotfiles... "
 if [ -e "$HOME/.dotfiles" ]; then
     if [ -e "$HOME/.dotfiles/.repo.kmarc" ]; then
@@ -11,11 +16,11 @@ if [ -e "$HOME/.dotfiles" ]; then
     else
         echo ""
         echo ".dotfiles directory exists and is not kmarc's. EXITING..."
-        echo -1
+        return -1
     fi
 else
     echo ""
-    echo -n ".dotfiles directory not found. Installing... "
+    echo ".dotfiles directory not found. Installing... "
     git clone https://github.com/kmARC11/dotfiles.git "$HOME/.dotfiles"
     echo "DONE"
 fi
