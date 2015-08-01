@@ -65,7 +65,9 @@ fi
 # Node.js
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
-nvm use 0.12 > /dev/null
+if which nvm >/dev/null; then
+    nvm use 0.12 > /dev/null
+fi
 
 # Haskell
 export PATH=~/.cabal/bin:$PATH
