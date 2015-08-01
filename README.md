@@ -12,7 +12,7 @@ Setting up on a new host
 
 ### Set up vim with plugins
 
-    git clone https://github.com/kmARC11/vim.git ~/.vim
+    git clone https://github.com/kmARC/vim.git ~/.vim
     vim -c ':PlugInstall' -c ':qa'
     # Ignore error message by pressing enter
 
