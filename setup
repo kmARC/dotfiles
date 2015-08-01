@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+
+echo -n "Setting up bash... "
+SRC="source $HOME/.dotfiles/bashrc"
+if ! grep -Fxq "$SRC" "$HOME/.bashrc"; then
+    echo "$SRC" >> "$HOME/.bashrc"
+    echo "DONE"
+else
+    echo "ALREADY SET UP"
+fi
+
+echo -n "Setting up tmux... "
+if [ ! -e "$HOME/.tmux.conf" ]; then
+    ln -s "$HOME/.dotfiles/tmux.conf" "$HOME/.tmux.conf"
+    echo "DONE"
+else
+    echo "ALREADY SET UP"
+fi
