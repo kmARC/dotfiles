@@ -1,5 +1,25 @@
 #!/usr/bin/env bash
 
+echo -n "Updating dotfiles... "
+if [ -e "$HOME/.dotfiles" ]; then
+    if [ -e "$HOME/.dotfiles/.repo.kmarc" ]; then
+        (
+        cd .dotfiles
+        git pull
+        )
+        echo "DONE"
+    else
+        echo ""
+        echo ".dotfiles directory exists and is not kmarc's. EXITING..."
+        echo -1
+    fi
+else
+    echo ""
+    echo -n ".dotfiles directory not found. Installing... "
+    git clone https://github.com/kmARC11/dotfiles.git "$HOME/.dotfiles"
+    echo "DONE"
+fi
+
 echo -n "Setting up bash... "
 SRC="source $HOME/.dotfiles/bashrc"
 if ! grep -Fxq "$SRC" "$HOME/.bashrc"; then
