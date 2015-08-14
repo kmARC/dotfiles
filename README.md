@@ -16,7 +16,7 @@ Setting up on a new host
     vim -c ':PlugInstall' -c ':qa'
     # Ignore error message by pressing enter
 
-At this point,plugins will automatically installed inside vim. After finished, 
+At this point, plugins will automatically installed inside vim. After finished, 
 you can startup vim with all plugins installed.
 
 ### Configure look&feel
@@ -99,7 +99,7 @@ Optional for **Haskell**
 
 Optional for **Java**
 
-Java support is usable with [eclim](elim.org). It comes with it's own set of 
+Java support is usable with [eclim](http://eclim.org). It comes with it's own set of 
 installer, daemon etc.
 
 Installing new modules
