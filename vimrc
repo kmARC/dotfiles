@@ -3,7 +3,7 @@ call plug#begin('~/.vim/plugged')
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'jpalardy/vim-slime'
 Plug 'junegunn/vim-peekaboo'
-Plug 'kien/ctrlp.vim'
+Plug 'ctrlpvim/ctrlp.vim'
 Plug 'romainl/vim-qf'
 Plug 'scrooloose/nerdtree',                     {'on': 'NERDTreeToggle' }
 Plug 'tpope/vim-unimpaired'
@@ -90,9 +90,8 @@ set undodir=~/.vim/vimundo//
 set number relativenumber
 set path+=**
 set laststatus=2
-set wildignore+=*.o,*.so,*.a,*.swp,*.zip,*.pyc,tags
+set wildignore+=*.o,*.so,*.a,*.swp,*.zip,*.pyc,tags,.git/*,.env/*
 set completeopt-=preview
-set clipboard=autoselect,unnamedplus
 
 set background=dark
 set t_ut=
@@ -151,7 +150,8 @@ endif
 
 "--- ctrlp.vim ---
 let g:ctrlp_working_path_mode = 0
-let g:ctrlp_user_command = ['.git/', 'git --git-dir=%s/.git ls-files -oc --exclude-standard']
+let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn)$'
+let g:ctrlp_user_command = ['.git/', 'cd %s && git ls-files -oc --exclude-standard']
 
 "--- delimitMate ---
 let delimitMate_expand_cr = 1
