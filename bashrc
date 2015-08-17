@@ -65,7 +65,7 @@ fi
 # Node.js
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
-if which nvm >/dev/null; then
+if which nvm >/dev/null 2>&1; then
     nvm use 0.12 > /dev/null
 fi
 
