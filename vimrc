@@ -92,15 +92,19 @@ set path+=**
 set laststatus=2
 set wildignore+=*.o,*.so,*.a,*.swp,*.zip,*.pyc,tags,.git/*,.env/*
 set completeopt-=preview
+set splitbelow
+set splitright
 
 set background=dark
 set t_ut=
 colors jellybeans
 
-nnoremap <Space>           :bn<CR>
-nnoremap <Backspace>       :bp<CR>
+nnoremap +                 :bn<CR>
+nnoremap _                 :bp<CR>
 nnoremap <Leader>w         :bp<CR>:bd #<CR>
 nnoremap <Leader>W         :bufdo bd<CR>
+nnoremap n                 nzz
+nnoremap N                 Nzz
 nnoremap <Leader>f         :call ToggleFold()<CR>
 nnoremap <Leader>ag        :Ag! --<C-R>=expand("%:e")<CR> 
 nnoremap <Leader>aG        :Ag! --<C-R>=expand("%:e")<CR> <C-R><C-W><CR>
@@ -118,6 +122,8 @@ nmap <leader>9             <Plug>AirlineSelectTab9
 nnoremap <F7>              :NERDTreeToggle<CR>
 nnoremap <F8>              :TagbarToggle<CR>
 nnoremap <F9>              :lclose<CR>:cclose<CR>
+nnoremap <C-e>   2<C-E>
+nnoremap <C-y>   2<C-y>
 nnoremap <ScrollWheelUp>   2<C-Y>
 nnoremap <ScrollWheelDown> 2<C-E>
 autocmd FileType c,cpp              nnoremap <buffer> <Leader>] :YcmCompleter GoTo<CR>
@@ -167,6 +173,7 @@ let g:fugitive_gitlab_domains = [
 "--- nerdtree ---
 autocmd vimenter * wincmd p
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
+let NERDTreeRespectWildIgnore = 1
 
 "--- netrw ---
 let g:netrw_home=expand("~/.vim/misc")
