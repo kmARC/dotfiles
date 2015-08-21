@@ -10,6 +10,10 @@ Setting up on a new host
     sudo apt-get install curl build-essential exuberant-ctags cmake ruby \
         python-dev python-unidecode silversearcher-ag
 
+    sudo pacman -S git vim
+    sudo pacman -S curl make clang ctags cmake ruby \
+        python python2-unidecode the_silver_searcher
+
 ### Set up vim with plugins
 
     git clone https://github.com/kmARC/vim.git ~/.vim
@@ -45,11 +49,15 @@ Programming languages
 
 Optional fo **Shell scripting***
 
-    apt-get install shellcheck
+    sudo apt-get install shellcheck
+
+    yaourt -S shellcheck
 
 Optional for **Python**
 
     sudo apt-get install pylint ipython
+
+    sudo pacman -S python2-pylint python3-pylint ipython
 
 Optional for **JavaScript**
 
@@ -91,6 +99,8 @@ help.
 Optional for **Haskell**
 
     sudo apt-get install cabal-install
+
+    sudo pacman -S cabal-install
 
     cabal update
     cabal install cabal-install
