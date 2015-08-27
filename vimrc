@@ -130,6 +130,7 @@ autocmd FileType c,cpp              nnoremap <buffer> <Leader>] :YcmCompleter Go
 autocmd FileType python             nnoremap <buffer> <Leader>] :YcmCompleter GoTo<CR>
 autocmd FileType javascript         nnoremap <buffer> <Leader>] :TernDef<CR>
 autocmd FileType mkd                nnoremap <buffer> <F8> :Toc<CR>
+autocmd FileType vim                nnoremap <F1> :help <C-R><C-W><CR>
 autocmd FileType mkd                setlocal tw=80 cc=81
 autocmd FileType plaintex,text      setlocal tw=80 cc=81 fo+=awn cc=81
 autocmd FileType html               setlocal filetype=htmldjango
