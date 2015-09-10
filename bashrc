@@ -65,9 +65,8 @@ fi
 # Node.js
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
-if which nvm >/dev/null 2>&1; then
-    nvm use 0.12 > /dev/null
-fi
+[ -s "$NVM_DIR/nvm.sh" ] && nvm use 0.12 > /dev/null
+[ -r "$NVM_DIR/bash_completion" ] && . $NVM_DIR/bash_completion
 
 # Haskell
 export PATH=~/.cabal/bin:$PATH
