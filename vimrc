@@ -16,6 +16,7 @@ Plug 'tpope/vim-surround'
 Plug 'michaeljsmith/vim-indent-object'
 "--- Look&Feel ---
 Plug 'bling/vim-airline'
+Plug 'chriskempson/base16-vim'
 Plug 'nanotech/jellybeans.vim'
 "--- Git ---
 Plug 'airblade/vim-gitgutter'
@@ -33,13 +34,14 @@ Plug 'Valloric/YouCompleteMe',                  {'do':  './install.sh --clang-co
 "--- Markdown ---
 Plug 'plasticboy/vim-markdown',                 {'for': 'mkd'}
 "--- HTML ---
-Plug 'mattn/emmet-vim',                         {'for': 'html'}
-Plug 'othree/html5.vim',                        {'for': 'html'}
+Plug 'mattn/emmet-vim',                         {'for': ['html', 'htmldjango']}
+Plug 'othree/html5.vim',                        {'for': ['html', 'htmldjango']}
 "--- CSS ---
 Plug 'ap/vim-css-color',                        {'for': 'css'}
 Plug 'groenewege/vim-less',                     {'for': 'css'}
 "--- JavaScript ---
 Plug 'jelera/vim-javascript-syntax',            {'for': 'javascript'}
+Plug 'moll/vim-node'
 Plug 'marijnh/tern_for_vim',                    {'for': 'javascript', 'do': 'npm install'}
 Plug 'othree/javascript-libraries-syntax.vim',  {'for': 'javascript'}
 Plug 'pangloss/vim-javascript',                 {'for': 'javascript'}
@@ -97,7 +99,8 @@ set splitright
 
 set background=dark
 set t_ut=
-colors jellybeans
+let base16colorspace=256
+colors base16-flat
 
 nnoremap +                 :bn<CR>
 nnoremap _                 :bp<CR>
@@ -186,6 +189,7 @@ let g:slime_python_ipython = 1
 "--- syntastic ---
 let g:syntastic_auto_loc_list=1
 let g:syntastic_always_populate_loc_list=1
+let g:syntastic_javascript_checkers = ['jsxhint']
 
 "--- tagbar ---
 let g:tagbar_type_haskell = {
@@ -225,10 +229,11 @@ let g:Powerline_symbols = 'fancy'
 let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#fnamemod = ':t'
-let g:airline_theme='jellybeans'
+let g:airline_theme='base16'
 let g:airline#extensions#whitespace#enabled = 1
 let g:airline#extensions#tabline#show_close_button = 1
 let g:airline#extensions#tabline#buffer_idx_mode = 1
+
 
 "--- vim-markdown ---
 let g:vim_markdown_folding_disabled=1
