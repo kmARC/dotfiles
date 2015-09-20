@@ -12,7 +12,6 @@ if [ -e "$HOME/.dotfiles" ]; then
         cd .dotfiles
         git pull
         )
-        echo "DONE"
     else
         echo ""
         echo ".dotfiles directory exists and is not kmarc's. EXITING..."
@@ -37,6 +36,14 @@ fi
 echo -n "Setting up tmux... "
 if [ ! -e "$HOME/.tmux.conf" ]; then
     ln -s "$HOME/.dotfiles/tmux.conf" "$HOME/.tmux.conf"
+    echo "DONE"
+else
+    echo "ALREADY SET UP"
+fi
+
+echo -n "Setting up Xresources..."
+if [ ! -e "$HOME/.Xresources" ]; then
+    ln -s "$HOME/.dotfiles/Xresources" "$HOME/.Xresources"
     echo "DONE"
 else
     echo "ALREADY SET UP"

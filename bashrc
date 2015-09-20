@@ -10,42 +10,42 @@ function __ps1() {
     fi
     case $COLOR in
         "black")
-            local EM="\[\033[1;30m\]"
+            # local EM="\[\033[1;30m\]"
             local BG="\[\033[40m\]"
             local FG="\[\033[30m\]"
             ;;
         "red")
-            local EM="\[\033[1;31m\]"
+            # local EM="\[\033[1;31m\]"
             local BG="\[\033[41m\]"
             local FG="\[\033[31m\]"
             ;;
         "green")
-            local EM="\[\033[1;32m\]"
+            # local EM="\[\033[1;32m\]"
             local BG="\[\033[42m\]"
             local FG="\[\033[32m\]"
             ;;
         "yellow")
-            local EM="\[\033[1;33m\]"
+            # local EM="\[\033[1;33m\]"
             local BG="\[\033[43m\]"
             local FG="\[\033[33m\]"
             ;;
         "blue")
-            local EM="\[\033[1;34m\]"
+            # local EM="\[\033[1;34m\]"
             local BG="\[\033[44m\]"
             local FG="\[\033[34m\]"
             ;;
         "magenta")
-            local EM="\[\033[1;35m\]"
+            # local EM="\[\033[1;35m\]"
             local BG="\[\033[45m\]"
             local FG="\[\033[35m\]"
             ;;
         "cyan")
-            local EM="\[\033[1;36m\]"
+            # local EM="\[\033[1;36m\]"
             local BG="\[\033[46m\]"
             local FG="\[\033[36m\]"
             ;;
         "white")
-            local EM="\[\033[1;37m\]"
+            # local EM="\[\033[1;37m\]"
             local BG="\[\033[47m\]"
             local FG="\[\033[37m\]"
             ;;
@@ -53,20 +53,25 @@ function __ps1() {
     PS1="$BG$EMW[$BG$EMW\h$BG$EMW]$RS$FG[$EMW\u$FG][$EMW\w$FG][$EMW\$$FG]\$(__git_ps1 \(%s\))$RS "
 }
 
+# Prompt
 __ps1 "blue"
 
-# tmux
+# Tmux
 if [[ $TMUX = "" ]]; then
     export TERM="xterm-256color"
 else
     export TERM="screen-256color"
 fi
 
+# Base16 Shell
+BASE16_SHELL="$HOME/.vim/misc/base16-builder/output/shell/base16-flat.dark.sh"
+[[ -s $BASE16_SHELL ]] && source "$BASE16_SHELL"
+
 # Node.js
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/nvm.sh" ] && nvm use 0.12 > /dev/null
-[ -r "$NVM_DIR/bash_completion" ] && . $NVM_DIR/bash_completion
+[ -s "$NVM_DIR/nvm.sh" ] && nvm use 4.0 > /dev/null
+[ -r "$NVM_DIR/bash_completion" ] && . "$NVM_DIR/bash_completion"
 
 # Haskell
 export PATH=~/.cabal/bin:$PATH
