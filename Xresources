@@ -20,3 +20,5 @@ XTerm*faceSize6:            13.5
 xterm*borderWidth:          0
 xterm.disallowedWindowOps:  20,21,SetXprop
 xterm*activeIcon:           true
+
+*.highlightColor: black
