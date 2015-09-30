@@ -10,7 +10,9 @@ if [ -e "$HOME/.dotfiles" ]; then
     if [ -e "$HOME/.dotfiles/.repo.kmarc" ]; then
         (
         cd .dotfiles
-        git pull
+        git stash
+        git pull --rebase
+        git stash pop
         )
     else
         echo ""
@@ -36,6 +38,14 @@ fi
 echo -n "Setting up tmux... "
 if [ ! -e "$HOME/.tmux.conf" ]; then
     ln -s "$HOME/.dotfiles/tmux.conf" "$HOME/.tmux.conf"
+    echo "DONE"
+else
+    echo "ALREADY SET UP"
+fi
+
+echo -n "Setting up top... "
+if [ ! -e "$HOME/.toprc" ]; then
+    ln -s "$HOME/.dotfiles/toprc" "$HOME/.toprc"
     echo "DONE"
 else
     echo "ALREADY SET UP"
