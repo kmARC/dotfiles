@@ -53,6 +53,17 @@ function __ps1() {
     PS1="$BG$EMW[$BG$EMW\h$BG$EMW]$RS$FG[$EMW\u$FG][$EMW\w$FG][$EMW\$$FG]\$(__git_ps1 \(%s\))$RS "
 }
 
+function man() {
+    env LESS_TERMCAP_mb=$'\E[01;31m' \
+    LESS_TERMCAP_md=$'\E[01;38;5;10m' \
+    LESS_TERMCAP_me=$'\E[0m' \
+    LESS_TERMCAP_se=$'\E[0m' \
+    LESS_TERMCAP_so=$'\E[38;5;4m' \
+    LESS_TERMCAP_ue=$'\E[0m' \
+    LESS_TERMCAP_us=$'\E[04;38;5;11m' \
+    man "$@"
+}
+
 # Prompt
 __ps1 "blue"
 
@@ -64,7 +75,7 @@ else
 fi
 
 # Base16 Shell
-BASE16_SHELL="$HOME/.vim/misc/base16-builder/output/shell/base16-flat.dark.sh"
+BASE16_SHELL="$HOME/.vim/misc/base16-builder/output/shell/base16-${BASE16_THEME}.dark.sh"
 [[ -s $BASE16_SHELL ]] && source "$BASE16_SHELL"
 
 # Node.js

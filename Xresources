@@ -10,19 +10,23 @@ Xft.rgba:       rgb
 XTerm*activeIcon:           true
 XTerm*borderWidth:          0
 XTerm*disallowedWindowOps:  20,21,SetXprop
-XTerm*faceName:             DejaVu Sans Mono for Powerline:antialias=true:style=bold
+XTerm*faceName:             DejaVu Sans Mono for Powerline
 XTerm*faceSize1:            5.0
-XTerm*faceSize2:            7.5
-XTerm*faceSize3:            9.0
-XTerm*faceSize4:            10.5
+XTerm*faceSize2:            6.0
+XTerm*faceSize3:            7.0
+XTerm*faceSize4:            10.0
 XTerm*faceSize5:            12.0
-XTerm*faceSize6:            13.5
-XTerm*faceSize:             9.0
+XTerm*faceSize6:            14.0
+XTerm*faceSize:             8.0
 XTerm*highlightColor:       black
+XTerm*internalBorder:       0
+!XTerm*italicULMode:         true
 XTerm*metaSendsEscape:      true
 XTerm*renderFont:           true
 
+! *VT100.veryBoldColors:      15
+
 ! Urxvt settings
 URxvt.letterSpace: -2
-URxvt.font: xft:DejaVu Sans Mono for Powerline:bold:size=9
+URxvt.font: xft:DejaVu Sans Mono for Powerline:size=9
 
