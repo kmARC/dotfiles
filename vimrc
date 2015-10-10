@@ -1,11 +1,12 @@
 call plug#begin('~/.vim/plugged')
 "--- Tools ---
 Plug 'christoomey/vim-tmux-navigator'
+Plug 'ctrlpvim/ctrlp.vim'
 Plug 'jpalardy/vim-slime'
 Plug 'junegunn/vim-peekaboo'
-Plug 'ctrlpvim/ctrlp.vim'
 Plug 'romainl/vim-qf'
 Plug 'scrooloose/nerdtree',                     {'on': 'NERDTreeToggle' }
+Plug 'tmux-plugins/vim-tmux'
 Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-repeat'
 "--- Editing ---
@@ -34,17 +35,19 @@ Plug 'Valloric/YouCompleteMe',                  {'do':  './install.sh --clang-co
 "--- Markdown ---
 Plug 'plasticboy/vim-markdown',                 {'for': 'mkd'}
 "--- HTML ---
-Plug 'mattn/emmet-vim',                         {'for': ['html', 'htmldjango']}
-Plug 'othree/html5.vim',                        {'for': ['html', 'htmldjango']}
+Plug 'mattn/emmet-vim',                         {'for': ['html', 'htmldjango', 'javascript.jsx']}
+Plug 'othree/html5.vim',                        {'for': ['html', 'htmldjango', 'javascript.jsx']}
 "--- CSS ---
 Plug 'ap/vim-css-color',                        {'for': 'css'}
 Plug 'groenewege/vim-less',                     {'for': 'css'}
 "--- JavaScript ---
-Plug 'jelera/vim-javascript-syntax',            {'for': 'javascript'}
+" Plug 'jelera/vim-javascript-syntax',            {'for': ['javascript', 'javascript.jsx']}
 Plug 'moll/vim-node'
-Plug 'marijnh/tern_for_vim',                    {'for': 'javascript', 'do': 'npm install'}
-Plug 'othree/javascript-libraries-syntax.vim',  {'for': 'javascript'}
-Plug 'pangloss/vim-javascript',                 {'for': 'javascript'}
+Plug 'marijnh/tern_for_vim',                    {'for': ['javascript', 'javascript.jsx'], 'do': 'npm install'}
+Plug 'mxw/vim-jsx',                             {'for': ['javascript', 'javascript.jsx']}
+" Plug 'othree/javascript-libraries-syntax.vim',  {'for': ['javascript', 'javascript.jsx']}
+Plug 'othree/yajs.vim',                         {'for': ['javascript', 'javascript.jsx']}
+Plug 'pangloss/vim-javascript',                 {'for': ['javascript', 'javascript.jsx']}
 "--- C/C++ ---
 Plug 'vim-scripts/a.vim',                       {'for': ['cpp', 'c'] }
 Plug 'octol/vim-cpp-enhanced-highlight',        {'for': ['cpp', 'c'] }
@@ -93,17 +96,22 @@ set number relativenumber
 set path+=**
 set laststatus=2
 set wildignore+=*.o,*.so,*.a,*.swp,*.zip,*.pyc,tags,.git/*,.env/*
-set completeopt-=preview
+set completeopt=preview
 set splitbelow
 set splitright
 
 set background=dark
 set t_ut=
 let base16colorspace=256
-colors base16-flat
 
-nnoremap +                 :bn<CR>
-nnoremap _                 :bp<CR>
+if exists('$BASE16_THEME')
+    colors base16-$BASE16_THEME
+else
+    colors base16-default
+endif
+
+nnoremap <tab>             :bn<CR>
+nnoremap <s-tab>           :bp<CR>
 nnoremap <Leader>w         :bp<CR>:bd #<CR>
 nnoremap <Leader>W         :bufdo bd<CR>
 nnoremap n                 nzz
@@ -132,12 +140,14 @@ nnoremap <ScrollWheelDown> 2<C-E>
 autocmd FileType c,cpp              nnoremap <buffer> <Leader>] :YcmCompleter GoTo<CR>
 autocmd FileType python             nnoremap <buffer> <Leader>] :YcmCompleter GoTo<CR>
 autocmd FileType javascript         nnoremap <buffer> <Leader>] :TernDef<CR>
+autocmd FileType javascript.jsx     nnoremap <buffer> <Leader>] :TernDef<CR>
 autocmd FileType mkd                nnoremap <buffer> <F8> :Toc<CR>
 autocmd FileType vim                nnoremap <F1> :help <C-R><C-W><CR>
 autocmd FileType mkd                setlocal tw=80 cc=81
 autocmd FileType plaintex,text      setlocal tw=80 cc=81 fo+=awn cc=81
 autocmd FileType html               setlocal filetype=htmldjango
 autocmd FileType todo               help todo.txt
+autocmd FileType javascript setlocal omnifunc=tern#Complete
 
 autocmd BufRead,BufEnter */doc/*    wincmd L | 80 wincmd |
 autocmd WinEnter *                  if &buftype == "" | set nu rnu
@@ -153,9 +163,8 @@ function! ToggleFold()
 endfunction
 
 if has('gui_running')
-    set guifont=Dejavu\ Sans\ Mono\ for\ Powerline\ Bold\ 9
+    set guifont=Dejavu\ Sans\ Mono\ for\ Powerline\ 8
     set guioptions=agit
-    colors luna
 endif
 
 "--- ctrlp.vim ---
@@ -189,7 +198,7 @@ let g:slime_python_ipython = 1
 "--- syntastic ---
 let g:syntastic_auto_loc_list=1
 let g:syntastic_always_populate_loc_list=1
-let g:syntastic_javascript_checkers = ['jsxhint']
+let g:syntastic_javascript_checkers = ['jsxhint', 'eslint']
 
 "--- tagbar ---
 let g:tagbar_type_haskell = {
@@ -225,14 +234,15 @@ let g:tagbar_type_haskell = {
 \ }
 
 "--- vim-airline ---
-let g:Powerline_symbols = 'fancy'
+"let g:Powerline_symbols = 'fancy'
+let g:airline_inactive_collapse = 0
 let g:airline_powerline_fonts = 1
+let g:airline_theme='base16'
+let g:airline#extensions#tabline#buffer_idx_mode = 1
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#fnamemod = ':t'
-let g:airline_theme='base16'
-let g:airline#extensions#whitespace#enabled = 1
 let g:airline#extensions#tabline#show_close_button = 1
-let g:airline#extensions#tabline#buffer_idx_mode = 1
+let g:airline#extensions#whitespace#enabled = 0
 
 
 "--- vim-markdown ---
@@ -245,7 +255,8 @@ let g:gitgutter_max_signs=2000
 autocmd FileType haskell setlocal omnifunc=necoghc#omnifunc
 
 "--- YouCompleteMe ---
-let g:ycm_autoclose_preview_window_after_insertion=1
+" let g:ycm_autoclose_preview_window_after_insertion=1
+" let g:ycm_autoclose_preview_window_after_completion=1
 let g:EclimCompletionMethod = 'omnifunc'
 let g:ycm_semantic_triggers = {'haskell' : ['.']}
 
