@@ -45,18 +45,20 @@ else
     echo "ALREADY SET UP"
 fi
 
-echo -n "Setting up top... "
-if [ ! -e "$HOME/.toprc" ]; then
-    ln -s "$HOME/.dotfiles/toprc" "$HOME/.toprc"
-    echo "DONE"
-else
-    echo "ALREADY SET UP"
-fi
+# @param dotfile name
+# @param Human readable name
+function _setupDotfile() {
+    echo -n "Setting up ${2}..."
+    if [ ! -e "$HOME/.${1}" ]; then
+        ln -s "$HOME/.dotfiles/${1}" "$HOME/.${1}"
+        echo "DONE"
+    else
+        echo "ALREADY SET UP"
+    fi
+}
 
-echo -n "Setting up Xresources..."
-if [ ! -e "$HOME/.Xresources" ]; then
-    ln -s "$HOME/.dotfiles/Xresources" "$HOME/.Xresources"
-    echo "DONE"
-else
-    echo "ALREADY SET UP"
-fi
+_setupDotfile Xresources   Xresources
+_setupDotfile vimperatorrc Vimperator
+_setupDotfile toprc        top
+
+unset _setupDotfile

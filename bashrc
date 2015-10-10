@@ -39,7 +39,7 @@ function __ps1() {
             local BG="\[\033[45m\]"
             local FG="\[\033[35m\]"
             ;;
-        "cyan")
+        "cyan") 
             # local EM="\[\033[1;36m\]"
             local BG="\[\033[46m\]"
             local FG="\[\033[36m\]"
@@ -53,7 +53,7 @@ function __ps1() {
     PS1="$BG$EMW[$BG$EMW\h$BG$EMW]$RS$FG[$EMW\u$FG][$EMW\w$FG][$EMW\$$FG]\$(__git_ps1 \(%s\))$RS "
 }
 
-function man() {
+function color_less() {
     env LESS_TERMCAP_mb=$'\E[01;31m' \
     LESS_TERMCAP_md=$'\E[01;38;5;10m' \
     LESS_TERMCAP_me=$'\E[0m' \
@@ -61,7 +61,15 @@ function man() {
     LESS_TERMCAP_so=$'\E[38;5;4m' \
     LESS_TERMCAP_ue=$'\E[0m' \
     LESS_TERMCAP_us=$'\E[04;38;5;11m' \
-    man "$@"
+    "$@"
+}
+
+function pydoc() {
+    color_less pydoc "$@"
+}
+
+function man() {
+    color_less man "$@"
 }
 
 # Prompt
