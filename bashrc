@@ -83,13 +83,13 @@ else
 fi
 
 # Base16 Shell
-BASE16_SHELL="$HOME/.vim/misc/base16-builder/output/shell/base16-${BASE16_THEME}.dark.sh"
+BASE16_SHELL="$HOME/.local/src/base16-builder/output/shell/base16-${BASE16_THEME}.dark.sh"
 [[ -s $BASE16_SHELL ]] && source "$BASE16_SHELL"
 
 # Node.js
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/nvm.sh" ] && nvm use 4.0 > /dev/null
+[ -s "$NVM_DIR/nvm.sh" ] && nvm use 4.2 > /dev/null
 [ -r "$NVM_DIR/bash_completion" ] && . "$NVM_DIR/bash_completion"
 
 # Haskell
