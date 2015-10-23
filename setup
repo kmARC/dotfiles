@@ -38,7 +38,7 @@ fi
 echo -n "Setting up tmux... "
 if [ ! -e "$HOME/.tmux.conf" -a ! -e "$HOME/.tmux"  ]; then
     mkdir -p "$HOME/.tmux/plugins"
-    git clone https://github.com/tmux-plugins/tpm "$HOME/.tmux/plugins"
+    git clone https://github.com/tmux-plugins/tpm "$HOME/.tmux/plugins/tpm"
     ln -s "$HOME/.dotfiles/tmux.conf" "$HOME/.tmux.conf"
     echo "DONE"
 else
