@@ -5,6 +5,10 @@ if ! which git >/dev/null; then
     exit -1
 fi
 
+if [[ $(tmux -V) != 'tmux 2.0' ]]; then
+    echo "This dotfiles repository is compatible with tmux 2.0 only. EXITING..."
+fi
+
 echo -n "Updating dotfiles... "
 if [ -e "$HOME/.dotfiles" ]; then
     if [ -e "$HOME/.dotfiles/.repo.kmarc" ]; then
@@ -40,6 +44,7 @@ if [ ! -e "$HOME/.tmux.conf" -a ! -e "$HOME/.tmux"  ]; then
     mkdir -p "$HOME/.tmux/plugins"
     git clone https://github.com/tmux-plugins/tpm "$HOME/.tmux/plugins/tpm"
     ln -s "$HOME/.dotfiles/tmux.conf" "$HOME/.tmux.conf"
+    tmux run-shell "$HOME/.tmux/plugins/tpm/bindings/install_plugins"
     echo "DONE"
 else
     echo "ALREADY SET UP"
