@@ -54,13 +54,13 @@ function __ps1() {
 }
 
 function color_less() {
-    env LESS_TERMCAP_mb=$'\E[01;31m' \
-    LESS_TERMCAP_md=$'\E[01;38;5;10m' \
+    env LESS_TERMCAP_mb=$'\E[1;31m' \
+    LESS_TERMCAP_md=$'\E[1;32m' \
     LESS_TERMCAP_me=$'\E[0m' \
     LESS_TERMCAP_se=$'\E[0m' \
-    LESS_TERMCAP_so=$'\E[38;5;4m' \
+    LESS_TERMCAP_so=$'\E[7;34m' \
     LESS_TERMCAP_ue=$'\E[0m' \
-    LESS_TERMCAP_us=$'\E[04;38;5;11m' \
+    LESS_TERMCAP_us=$'\E[4;33m' \
     "$@"
 }
 
