@@ -43,6 +43,6 @@ else
 fi
 
 echo "Using rcup to set up dotfiles..."
-env RCRC="$HOME/.dotfiles/rcrc rcup"
+env RCRC="$HOME/.dotfiles/rcrc" rcup
 
 echo "DONE"
