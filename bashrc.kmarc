@@ -89,7 +89,7 @@ BASE16_SHELL="$HOME/.local/src/base16-builder/output/shell/base16-${BASE16_THEME
 # Node.js
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/nvm.sh" ] && nvm use 4.2 > /dev/null
+#[ -s "$NVM_DIR/nvm.sh" ] && nvm use 4.2 > /dev/null
 [ -r "$NVM_DIR/bash_completion" ] && . "$NVM_DIR/bash_completion"
 
 # Haskell
