@@ -93,5 +93,7 @@ export NVM_DIR="$HOME/.nvm"
 [ -r "$NVM_DIR/bash_completion" ] && . "$NVM_DIR/bash_completion"
 
 # Haskell
-export PATH=~/.cabal/bin:$PATH
+export PATH=~/.cabal/bin:~/bin:$PATH
 
+# Aliases
+alias zc2="ssh zc2.ibm.com -t 'tmux attach -t oro || tmux new -s oro'"
