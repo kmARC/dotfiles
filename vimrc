@@ -4,6 +4,8 @@ Plug 'christoomey/vim-tmux-navigator'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'jpalardy/vim-slime'
 Plug 'junegunn/vim-peekaboo'
+Plug 'junegunn/fzf',                            { 'dir': '~/.fzf', 'do': 'yes \| ./install' }
+Plug 'junegunn/fzf.vim'
 Plug 'romainl/vim-qf'
 Plug 'scrooloose/nerdtree',                     {'on': 'NERDTreeToggle' }
 Plug 'tmux-plugins/vim-tmux'
@@ -15,8 +17,10 @@ Plug 'Lokaltog/vim-easymotion'
 Plug 'Raimondi/delimitMate'
 Plug 'tpope/vim-surround'
 Plug 'michaeljsmith/vim-indent-object'
+Plug 'jeetsukumaran/vim-indentwise'
 "--- Look&Feel ---
-Plug 'bling/vim-airline'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
 Plug 'chriskempson/base16-vim'
 Plug 'nanotech/jellybeans.vim'
 "--- Git ---
@@ -27,13 +31,12 @@ Plug 'tpope/vim-fugitive'
 Plug 'honza/vim-snippets'
 Plug 'majutsushi/tagbar'
 Plug 'rking/ag.vim'
-Plug 'jeetsukumaran/vim-indentwise'
 Plug 'scrooloose/syntastic'
 Plug 'SirVer/ultisnips'
 Plug 'tpope/vim-commentary'
-Plug 'Valloric/YouCompleteMe',                  {'do':  './install.sh --clang-completer' }
-"--- Markdown ---
-Plug 'plasticboy/vim-markdown',                 {'for': 'mkd'}
+Plug 'Valloric/YouCompleteMe',                  {'do':  './install.sh --clang-completer --tern-completer' }
+"--- Documentation ---
+Plug 'plasticboy/vim-markdown'
 "--- HTML ---
 Plug 'mattn/emmet-vim',                         {'for': ['html', 'htmldjango', 'javascript.jsx']}
 Plug 'othree/html5.vim',                        {'for': ['html', 'htmldjango', 'javascript.jsx']}
@@ -41,23 +44,21 @@ Plug 'othree/html5.vim',                        {'for': ['html', 'htmldjango', '
 Plug 'ap/vim-css-color',                        {'for': 'css'}
 Plug 'groenewege/vim-less',                     {'for': 'css'}
 "--- JavaScript ---
-" Plug 'jelera/vim-javascript-syntax',            {'for': ['javascript', 'javascript.jsx']}
 Plug 'moll/vim-node'
-Plug 'marijnh/tern_for_vim',                    {'for': ['javascript', 'javascript.jsx'], 'do': 'npm install'}
-Plug 'mxw/vim-jsx',                             {'for': ['javascript', 'javascript.jsx']}
-" Plug 'othree/javascript-libraries-syntax.vim',  {'for': ['javascript', 'javascript.jsx']}
-Plug 'othree/yajs.vim',                         {'for': ['javascript', 'javascript.jsx']}
-Plug 'pangloss/vim-javascript',                 {'for': ['javascript', 'javascript.jsx']}
+Plug 'mxw/vim-jsx',                             {'for': ['typescript', 'javascript*']}
+Plug 'othree/yajs.vim',                         {'for': ['typescript', 'javascript*']}
+Plug 'othree/javascript-libraries-syntax.vim',  {'for': ['typescript', 'javascript*']}
+Plug 'pangloss/vim-javascript',                 {'for': ['typescript', 'javascript*']}
+Plug 'leafgarland/typescript-vim',
 "--- C/C++ ---
 Plug 'vim-scripts/a.vim',                       {'for': ['cpp', 'c'] }
 Plug 'octol/vim-cpp-enhanced-highlight',        {'for': ['cpp', 'c'] }
+Plug 'rdnetto/YCM-Generator',                   {'for': ['cpp', 'c'], 'branch': 'stable'}
 "--- Haskell ---
 Plug 'eagletmt/ghcmod-vim',                     {'for': 'haskell'}
 Plug 'eagletmt/neco-ghc',                       {'for': 'haskell'}
 Plug 'raichoo/haskell-vim',                     {'for': 'haskell'}
 Plug 'Twinside/vim-hoogle',                     {'for': 'haskell'}
-"--- todo.txt
-Plug 'freitass/todo.txt-vim',                   {'for': 'todo'}
 "--- Dependencies
 Plug 'Shougo/vimproc.vim',                      {'do':  'make'}     " ghcmod-vim
 call plug#end()
@@ -77,6 +78,7 @@ set expandtab
 set autoindent
 set smartindent
 set nowrap
+set pastetoggle=<F12>
 set ignorecase
 set smartcase
 set incsearch
@@ -92,16 +94,19 @@ set undofile
 set directory=~/.vim/vimswap//
 set backupdir=~/.vim/vimbackup//
 set undodir=~/.vim/vimundo//
+set viminfo+=n~/.vim/misc/viminfo
 set number relativenumber
 set path+=**
 set laststatus=2
-set wildignore+=*.o,*.so,*.a,*.swp,*.zip,*.pyc,tags,.git/*,.env/*
+set wildignore+=*.o,*.so,*.a,*.swp,*.zip,*.pyc,tags,.git/**,.env/**
 set completeopt=preview
-set splitbelow
 set splitright
+set diffopt+=vertical   " Always vsplit. Helps with fugitive too
+set colorcolumn=81
 
 set background=dark
 set t_ut=
+set t_Co=256
 let base16colorspace=256
 
 if exists('$BASE16_THEME')
@@ -114,6 +119,8 @@ nnoremap <tab>             :bn<CR>
 nnoremap <s-tab>           :bp<CR>
 nnoremap <Leader>w         :bp<CR>:bd #<CR>
 nnoremap <Leader>W         :bufdo bd<CR>
+noremap [h                :GitGutterPrevHunk<CR>
+noremap ]h                :GitGutterNextHunk<CR>
 nnoremap n                 nzz
 nnoremap N                 Nzz
 nnoremap <Leader>f         :call ToggleFold()<CR>
@@ -121,6 +128,9 @@ nnoremap <Leader>ag        :Ag! --<C-R>=expand("%:e")<CR>
 nnoremap <Leader>aG        :Ag! --<C-R>=expand("%:e")<CR> <C-R><C-W><CR>
 nnoremap <Leader>pt        :CtrlPTag<CR>
 nnoremap <Leader>pb        :CtrlPBuffer<CR>
+nnoremap <Leader>t<Space>  Vap:Tabularize /\S\+/l1l0<CR>
+nnoremap <Leader>t=        Vap:Tabularize /=\+/l1c1<CR>
+nnoremap <Leader>t:        Vap:Tabularize /:\zs/l0l1<CR>
 nmap <leader>1             <Plug>AirlineSelectTab1
 nmap <leader>2             <Plug>AirlineSelectTab2
 nmap <leader>3             <Plug>AirlineSelectTab3
@@ -133,25 +143,32 @@ nmap <leader>9             <Plug>AirlineSelectTab9
 nnoremap <F7>              :NERDTreeToggle<CR>
 nnoremap <F8>              :TagbarToggle<CR>
 nnoremap <F9>              :lclose<CR>:cclose<CR>
-nnoremap <C-e>   2<C-E>
-nnoremap <C-y>   2<C-y>
+nnoremap <C-e>             2<C-E>
+nnoremap <C-y>             2<C-y>
 nnoremap <ScrollWheelUp>   2<C-Y>
 nnoremap <ScrollWheelDown> 2<C-E>
 autocmd FileType c,cpp              nnoremap <buffer> <Leader>] :YcmCompleter GoTo<CR>
-autocmd FileType python             nnoremap <buffer> <Leader>] :YcmCompleter GoTo<CR>
-autocmd FileType javascript         nnoremap <buffer> <Leader>] :TernDef<CR>
-autocmd FileType javascript.jsx     nnoremap <buffer> <Leader>] :TernDef<CR>
-autocmd FileType mkd                nnoremap <buffer> <F8> :Toc<CR>
-autocmd FileType vim                nnoremap <F1> :help <C-R><C-W><CR>
-autocmd FileType mkd                setlocal tw=80 cc=81
-autocmd FileType plaintex,text      setlocal tw=80 cc=81 fo+=awn cc=81
 autocmd FileType html               setlocal filetype=htmldjango
+autocmd FileType javascript*        nnoremap <buffer> <Leader>] :YcmCompleter GoTo<CR>
+autocmd FileType javascript*        setlocal sw=2 sts=2 ts=2
+autocmd FileType markdown           nnoremap <buffer> <F8> :Toc<CR>
+autocmd FileType markdown           setlocal tw=80
+autocmd FileType plaintex,text      setlocal tw=80
+autocmd FileType python             nnoremap <buffer> <Leader>] :YcmCompleter GoTo<CR>
 autocmd FileType todo               help todo.txt
-autocmd FileType javascript setlocal omnifunc=tern#Complete
+autocmd FileType vim                nnoremap <F1> :help <C-R><C-W><CR>
 
-autocmd BufRead,BufEnter */doc/*    wincmd L | 80 wincmd |
-autocmd WinEnter *                  if &buftype == "" | set nu rnu
-autocmd WinLeave *                  if &buftype == "" | set nu nornu
+autocmd BufRead,BufEnter */doc/*    wincmd L | 80 wincmd | | normal 0
+autocmd VimResized */doc/*          wincmd L | 80 wincmd | | normal 0
+autocmd WinEnter *                  if &buftype == "" | set nu rnu | endif
+autocmd WinLeave *                  if &buftype == "" | set nu nornu | endif
+
+autocmd BufLeave,BufUnload *.css,*.less,*scss normal! mS
+autocmd BufLeave,BufUnload *.html             normal! mH
+autocmd BufLeave,BufUnload *.js,*.jsx,*.ts    normal! mJ
+autocmd BufLeave,BufUnload *.py               normal! mP
+autocmd BufLeave,BufUnload vimrc,*.vim        normal! mV
+
 
 function! ToggleFold()
     if &l:foldmethod == "manual"
@@ -196,9 +213,11 @@ let g:slime_target = "tmux"
 let g:slime_python_ipython = 1
 
 "--- syntastic ---
-let g:syntastic_auto_loc_list=1
-let g:syntastic_always_populate_loc_list=1
-let g:syntastic_javascript_checkers = ['jsxhint', 'eslint']
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_check_on_wq = 0
+let g:syntastic_javascript_checkers = ['eslint']
+let g:syntastic_javascript_eslint_exec = 'eslint_d'
 
 "--- tagbar ---
 let g:tagbar_type_haskell = {
@@ -255,10 +274,12 @@ let g:gitgutter_max_signs=2000
 autocmd FileType haskell setlocal omnifunc=necoghc#omnifunc
 
 "--- YouCompleteMe ---
-" let g:ycm_autoclose_preview_window_after_insertion=1
-" let g:ycm_autoclose_preview_window_after_completion=1
+let g:ycm_autoclose_preview_window_after_insertion=1
+let g:ycm_autoclose_preview_window_after_completion=1
 let g:EclimCompletionMethod = 'omnifunc'
-let g:ycm_semantic_triggers = {'haskell' : ['.']}
+let g:ycm_semantic_triggers = {'haskell' : ['.'], 'typescript' : ['.'], 'javascript': ['.']}
+let g:ycm_confirm_extra_conf = 0
+"let g:ycm_filetype_blacklist = { 'typescript': 1 }
 
 "--- UltiSnips ---
 let g:UltiSnipsExpandTrigger="<c-j>"
