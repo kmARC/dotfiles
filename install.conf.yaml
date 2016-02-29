@@ -1,10 +1,18 @@
 - clean: ['~']
 
 - link:
-    ~/.config/bspwm/bspwmrc:        config/bspwm/bspwmrc
-    ~/.config/gtk-3.0/settings.ini: config/gtk-3.0/settings.ini
-    ~/.config/htop/htoprc:          config/htop/htoprc
-    ~/.config/sxhkd/sxhkdrc:        config/sxhkd/sxhkdrc
+    ~/.config/bspwm/bspwmrc:
+        create: true
+        path: config/bspwm/bspwmrc
+    ~/.config/gtk-3.0/settings.ini:
+        create: true
+        path: config/gtk-3.0/settings.ini
+    ~/.config/htop/htoprc:
+        create: true
+        path: config/htop/htoprc
+    ~/.config/sxhkd/sxhkdrc:
+        create: true
+        path: config/sxhkd/sxhkdrc
 
     ~/.Xmodmap:      Xmodmap
     ~/.Xresources:   Xresources
