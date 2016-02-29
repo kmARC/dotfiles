@@ -1,0 +1,21 @@
+- clean: ['~']
+
+- link:
+    ~/.config/bspwm/bspwmrc:        config/bspwm/bspwmrc
+    ~/.config/gtk-3.0/settings.ini: config/gtk-3.0/settings.ini
+    ~/.config/htop/htoprc:          config/htop/htoprc
+    ~/.config/sxhkd/sxhkdrc:        config/sxhkd/sxhkdrc
+
+    ~/.Xmodmap:      Xmodmap
+    ~/.Xresources:   Xresources
+    ~/.bashrc.kmarc: bashrc.kmarc
+    ~/.tmux.conf:    tmux.conf
+    ~/.toprc:        toprc
+    ~/.vimperatorrc: vimperatorrc
+
+- shell:
+  - [git submodule update --init --recursive, Installing submodules]
+  - [~/.dotfiles/hooks/bash.sh, Setting up bashrc]
+  - command: ~/.dotfiles/hooks/tmux.sh
+    description: Setting up tmux
+    stdout: true
