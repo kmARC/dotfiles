@@ -97,3 +97,4 @@ export PATH=~/.cabal/bin:~/bin:$PATH
 
 # Aliases
 alias zc2="ssh zc2.ibm.com -t 'tmux attach -t oro || tmux new -s oro'"
+alias ls="ls --color -h --group-directories-first"

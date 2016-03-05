@@ -30,12 +30,26 @@ XTerm*renderFont:           true
 ! *VT100.veryBoldColors:      15
 
 ! Urxvt settings
-URxvt*borderLess:           0
-URxvt*externalBorder:       0
-URxvt*font:                 xft:DejaVu Sans Mono for Powerline:size=8
-URxvt*internalBorder:       0
-URxvt*letterSpace:          -2
-URxvt*scrollBar:            false
-URxvt*transparent:         true
-URxvt*shading:             20
-
+URxvt.perl-ext-common: default,matcher,font-size
+URxvt.keysym.C-Up:     font-size:increase
+URxvt.keysym.C-Down:   font-size:decrease
+URxvt.keysym.C-S-Up:   font-size:incglobal
+URxvt.keysym.C-S-Down: font-size:decglobal
+URxvt.url-launcher:    x-www-browser
+URxvt.matcher.button:  1
+URxvt.matcher.rend.0:  Uline fg6
+URxvt.font-size.step:  2
+URxvt*borderLess:      0
+URxvt*externalBorder:  0
+URxvt*font:            xft: DejaVu Sans Mono for Powerline:size=8
+URxvt*internalBorder:  0
+URxvt*letterSpace:     -2
+URxvt*scrollBar:       false
+URxvt*transparent:     true
+URxvt*shading:         20
+URxvt*keysym.Home:     \033OH
+URxvt*keysym.End:      \033OF
+URxvt*keysym.F1:       \033OP
+URxvt*keysym.F2:       \033OQ
+URxvt*keysym.F3:       \033OR
+URxvt*keysym.F4:       \033OS

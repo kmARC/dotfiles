@@ -84,7 +84,8 @@ super + Return
 	x-terminal-emulator
 
 super + space
-	dmenu_run
+    xfce4-appfinder
+#	dmenu_run
 
 XF86Audio{Raise,Lower}Volume
     amixer -c 1 set Master 5{+,-}; $HOME/.local/bin/panel-mixer.sh
