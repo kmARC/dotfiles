@@ -4,13 +4,13 @@ DIR_TPM="$HOME/.tmux/plugins/tpm"
 
 print_install_help() {
     echo ""
-    echo "Setting up tmux-2.0:"
+    echo "Setting up tmux:"
     echo "    sudo apt-get install build-essential libncurses5-dev libevent1-dev libncurses5 libevent-1.4"
-    echo "    wget https://github.com/tmux/tmux/releases/download/2.0/tmux-2.0.tar.gz"
-    echo "    tar xzf tmux-2.0.tar.gz"
-    echo "    cd tmux-2.0"
+    echo "    git clone https://github.com/tmux/tmux.git"
+    echo "    cd tmux"
+    echo "    ./autogen.sh"
     echo "    ./configure"
-    echo "    make"
+    echo "    make -j3"
     echo "    sudo make install"
 }
 
