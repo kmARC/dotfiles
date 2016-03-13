@@ -13,6 +13,9 @@
     ~/.config/sxhkd/sxhkdrc:
         create: true
         path: config/sxhkd/sxhkdrc
+    ~/.terminfo/x/xterm-256color:
+        create: true
+        path: terminfo/x/xterm-256color
 
     ~/.Xmodmap:      Xmodmap
     ~/.Xresources:   Xresources

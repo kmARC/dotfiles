@@ -3,7 +3,7 @@
 #
 
 super + alt + Escape
-	pkill -x panel; bspc quit
+	xfce4-session-logout
 
 super + w
 	bspc window -c

@@ -23,6 +23,7 @@ XTerm*internalBorder:       0
 !XTerm*italicULMode:         true
 XTerm*metaSendsEscape:      true
 XTerm*renderFont:           true
+xterm*termName:             xterm-256color
 
 *VT100*translations:        #override Meta <Btn1Up>: exec-formatted("x-www-browser '%t'", PRIMARY)
 
@@ -35,13 +36,15 @@ URxvt.keysym.C-Up:     font-size:increase
 URxvt.keysym.C-Down:   font-size:decrease
 URxvt.keysym.C-S-Up:   font-size:incglobal
 URxvt.keysym.C-S-Down: font-size:decglobal
+URxvt.keysym.C-Delete: matcher:select
 URxvt.url-launcher:    x-www-browser
 URxvt.matcher.button:  1
 URxvt.matcher.rend.0:  Uline fg6
-URxvt.font-size.step:  2
+URxvt.matcher.rend.1:  Uline fg6
+URxvt.font-size.step:  1
 URxvt*borderLess:      0
 URxvt*externalBorder:  0
-URxvt*font:            xft: DejaVu Sans Mono for Powerline:size=8
+URxvt*font:            xft:Fira Mono:size=8:autohint=true
 URxvt*internalBorder:  0
 URxvt*letterSpace:     -2
 URxvt*scrollBar:       false
@@ -53,3 +56,6 @@ URxvt*keysym.F1:       \033OP
 URxvt*keysym.F2:       \033OQ
 URxvt*keysym.F3:       \033OR
 URxvt*keysym.F4:       \033OS
+URxvt*fading:  30
+
+URxvt*matcher.pattern.1: \\blocalhost:\\d+
