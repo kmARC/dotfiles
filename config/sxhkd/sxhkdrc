@@ -81,7 +81,7 @@ super + @button{1-3}
 #
 
 super + Return
-	x-terminal-emulator
+    urxvtcd
 
 super + space
     xfce4-appfinder

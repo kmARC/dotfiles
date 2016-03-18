@@ -16,10 +16,14 @@
     ~/.terminfo/x/xterm-256color:
         create: true
         path: terminfo/x/xterm-256color
+    ~/.urxvt/ext/font-size:
+        create: true
+        path: urxvt/ext/font-size
 
     ~/.Xmodmap:      Xmodmap
     ~/.Xresources:   Xresources
     ~/.bashrc.kmarc: bashrc.kmarc
+    ~/.compton.conf: compton.conf
     ~/.tmux.conf:    tmux.conf
     ~/.toprc:        toprc
     ~/.vimperatorrc: vimperatorrc

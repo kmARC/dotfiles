@@ -88,7 +88,7 @@ alias ls="ls --color -h --group-directories-first"
 # Fixed colors for TMUX
 if [[ $TMUX != "" ]]; then
     alias sudo='sudo '
-    for p in htop iptraf nmtui; do
+    for p in htop iptraf mc; do
         alias $p="TERM=screen-256color $p"
     done
 fi
