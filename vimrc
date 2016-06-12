@@ -7,7 +7,8 @@ Plug 'junegunn/vim-peekaboo'
 Plug 'junegunn/fzf',                            { 'dir': '~/.fzf', 'do': 'yes \| ./install' }
 Plug 'junegunn/fzf.vim'
 Plug 'romainl/vim-qf'
-Plug 'scrooloose/nerdtree',                     {'on': 'NERDTreeToggle' }
+"Plug 'scrooloose/nerdtree',                     {'on': 'NERDTreeToggle' }
+Plug 'tpope/vim-vinegar',
 Plug 'tmux-plugins/vim-tmux'
 Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-repeat'
@@ -21,8 +22,13 @@ Plug 'jeetsukumaran/vim-indentwise'
 "--- Look&Feel ---
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
+" Plug 'itchyny/lightline.vim'
 Plug 'chriskempson/base16-vim'
 Plug 'nanotech/jellybeans.vim'
+Plug 'morhetz/gruvbox'
+Plug 'baskerville/bubblegum'
+Plug 'notpratheek/vim-luna'
+Plug 'trevorrjohn/vim-obsidian'
 "--- Git ---
 Plug 'airblade/vim-gitgutter'
 Plug 'shumphrey/fugitive-gitlab.vim'
@@ -34,26 +40,27 @@ Plug 'rking/ag.vim'
 Plug 'scrooloose/syntastic'
 Plug 'SirVer/ultisnips'
 Plug 'tpope/vim-commentary'
-Plug 'Valloric/YouCompleteMe',                  {'do':  './install.sh --clang-completer --tern-completer' }
+Plug 'Valloric/YouCompleteMe',                  {'do':  './install.sh --clang-completer' }
 "--- Documentation ---
 Plug 'plasticboy/vim-markdown'
 "--- HTML ---
-Plug 'mattn/emmet-vim',                         {'for': ['html', 'htmldjango', 'javascript.jsx']}
-Plug 'othree/html5.vim',                        {'for': ['html', 'htmldjango', 'javascript.jsx']}
+Plug 'mattn/emmet-vim'
+Plug 'othree/html5.vim'
 "--- CSS ---
 Plug 'ap/vim-css-color',                        {'for': 'css'}
 Plug 'groenewege/vim-less',                     {'for': 'css'}
 "--- JavaScript ---
 Plug 'moll/vim-node'
-Plug 'mxw/vim-jsx',                             {'for': ['typescript', 'javascript*']}
-Plug 'othree/yajs.vim',                         {'for': ['typescript', 'javascript*']}
-Plug 'othree/javascript-libraries-syntax.vim',  {'for': ['typescript', 'javascript*']}
-Plug 'pangloss/vim-javascript',                 {'for': ['typescript', 'javascript*']}
-Plug 'leafgarland/typescript-vim',
+Plug 'mxw/vim-jsx'
+Plug 'othree/yajs.vim'
+Plug 'othree/javascript-libraries-syntax.vim'
+Plug 'pangloss/vim-javascript'
+Plug 'leafgarland/typescript-vim'
+Plug 'flowtype/vim-flow'
 "--- C/C++ ---
 Plug 'vim-scripts/a.vim',                       {'for': ['cpp', 'c'] }
 Plug 'octol/vim-cpp-enhanced-highlight',        {'for': ['cpp', 'c'] }
-Plug 'rdnetto/YCM-Generator',                   {'for': ['cpp', 'c'], 'branch': 'stable'}
+" Plug 'rdnetto/YCM-Generator',                   {'for': ['cpp', 'c'], 'branch': 'stable'}
 "--- Haskell ---
 Plug 'eagletmt/ghcmod-vim',                     {'for': 'haskell'}
 Plug 'eagletmt/neco-ghc',                       {'for': 'haskell'}
@@ -99,25 +106,39 @@ set number relativenumber
 set path+=**
 set laststatus=2
 set wildignore+=*.o,*.so,*.a,*.swp,*.zip,*.pyc,tags,.git/**,.env/**
-set completeopt=preview
+set completeopt=preview,longest,menuone
 set splitright
 set diffopt+=vertical   " Always vsplit. Helps with fugitive too
 set colorcolumn=81
 
+" set t_ZH=[3m
+" set t_ZH=[23m
 set background=dark
 set t_ut=
 set t_Co=256
-let base16colorspace=256
+" let base16colorspace=256
 
-if exists('$BASE16_THEME')
-    colors base16-$BASE16_THEME
-else
-    colors base16-default
-endif
+" if exists('$BASE16_THEME')
+"     colors base16-$BASE16_THEME
+" else
+"     colors base16-default
+" endif
+
+let g:gruvbox_italic = 1
+" colors gruvbox
+" colors bubblegum-256-dark
+colors luna-term
+let g:airline_theme='luna'
+" hi VertSplit guibg=#a89984 ctermfg=239
+" let g:jellybeans_use_term_italics = 1
+" colors jellybeans
+
 
 nnoremap <tab>             :bn<CR>
 nnoremap <s-tab>           :bp<CR>
-nnoremap <Leader>w         :bp<CR>:bd #<CR>
+nnoremap <c-p>             :CtrlP<CR>
+"nnoremap <s-tab>           :bp<CR>
+nnoremap <Leader>w         :bd %<CR>
 nnoremap <Leader>W         :bufdo bd<CR>
 noremap [h                :GitGutterPrevHunk<CR>
 noremap ]h                :GitGutterNextHunk<CR>
@@ -126,8 +147,7 @@ nnoremap N                 Nzz
 nnoremap <Leader>f         :call ToggleFold()<CR>
 nnoremap <Leader>ag        :Ag! --<C-R>=expand("%:e")<CR> 
 nnoremap <Leader>aG        :Ag! --<C-R>=expand("%:e")<CR> <C-R><C-W><CR>
-nnoremap <Leader>pt        :CtrlPTag<CR>
-nnoremap <Leader>pb        :CtrlPBuffer<CR>
+nnoremap <Leader>p         :CtrlPBuffer<CR>
 nnoremap <Leader>t<Space>  Vap:Tabularize /\S\+/l1l0<CR>
 nnoremap <Leader>t=        Vap:Tabularize /=\+/l1c1<CR>
 nnoremap <Leader>t:        Vap:Tabularize /:\zs/l0l1<CR>
@@ -140,13 +160,16 @@ nmap <leader>6             <Plug>AirlineSelectTab6
 nmap <leader>7             <Plug>AirlineSelectTab7
 nmap <leader>8             <Plug>AirlineSelectTab8
 nmap <leader>9             <Plug>AirlineSelectTab9
-nnoremap <F7>              :NERDTreeToggle<CR>
+"nnoremap <F7>              :NERDTreeToggle<CR>
+nnoremap <F6>              :SyntasticCheck<Cr>
+nnoremap <F7>              :Explore<Cr>
 nnoremap <F8>              :TagbarToggle<CR>
 nnoremap <F9>              :lclose<CR>:cclose<CR>
 nnoremap <C-e>             2<C-E>
 nnoremap <C-y>             2<C-y>
 nnoremap <ScrollWheelUp>   2<C-Y>
 nnoremap <ScrollWheelDown> 2<C-E>
+cmap     w!!               w !sudo tee > /dev/null %
 autocmd FileType c,cpp              nnoremap <buffer> <Leader>] :YcmCompleter GoTo<CR>
 autocmd FileType html               setlocal filetype=htmldjango
 autocmd FileType javascript*        nnoremap <buffer> <Leader>] :YcmCompleter GoTo<CR>
@@ -158,16 +181,17 @@ autocmd FileType python             nnoremap <buffer> <Leader>] :YcmCompleter Go
 autocmd FileType todo               help todo.txt
 autocmd FileType vim                nnoremap <F1> :help <C-R><C-W><CR>
 
-autocmd BufRead,BufEnter */doc/*    wincmd L | 80 wincmd | | normal 0
-autocmd VimResized */doc/*          wincmd L | 80 wincmd | | normal 0
-autocmd WinEnter *                  if &buftype == "" | set nu rnu | endif
-autocmd WinLeave *                  if &buftype == "" | set nu nornu | endif
+autocmd BufRead Vagrantfile         setlocal filetype=ruby
+autocmd BufRead,BufEnter */doc/*    wincmd L | 80 wincmd | | set winfixwidth
+autocmd VimResized */doc/*          wincmd L | 80 wincmd | | set winfixwidth
+autocmd WinEnter *                  if &buftype == "" | setlocal nu rnu | endif
+autocmd WinLeave *                  if &buftype == "" | setlocal nu nornu | endif
 
-autocmd BufLeave,BufUnload *.css,*.less,*scss normal! mS
-autocmd BufLeave,BufUnload *.html             normal! mH
-autocmd BufLeave,BufUnload *.js,*.jsx,*.ts    normal! mJ
-autocmd BufLeave,BufUnload *.py               normal! mP
-autocmd BufLeave,BufUnload vimrc,*.vim        normal! mV
+autocmd VimLeave,BufLeave *.css,*.less,*scss normal! mS
+autocmd VimLeave,BufLeave *.html             normal! mH
+autocmd VimLeave,BufLeave *.js,*.jsx,*.ts    normal! mJ
+autocmd VimLeave,BufLeave *.py               normal! mP
+autocmd VimLeave,BufLeave vimrc,*.vim        normal! mV
 
 
 function! ToggleFold()
@@ -180,17 +204,24 @@ function! ToggleFold()
 endfunction
 
 if has('gui_running')
-    set guifont=Dejavu\ Sans\ Mono\ for\ Powerline\ 8
+    set guifont=Dejavu\ Sans\ Mono\ 9
     set guioptions=agit
+    colors luna
 endif
 
 "--- ctrlp.vim ---
 let g:ctrlp_working_path_mode = 0
 let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn)$'
 let g:ctrlp_user_command = ['.git/', 'cd %s && git ls-files -oc --exclude-standard']
+let g:ctrlp_match_current_file=1
+let g:ctrlp_match_window = 'order:ttb'
+let g:ctrlp_prompt_mappings = { 'PrtSelectMove("j")': ['<tab>'], 'ToggleFocus()': [], 'PrtSelectMove("k")': ['<s-tab>'], 'PrtExpandDir()': [] }
 
 "--- delimitMate ---
 let delimitMate_expand_cr = 1
+
+"--- flow ---
+" let g:flow#enable = 0
 
 "--- fugitive.vim ---
 autocmd BufReadPost fugitive://* set bufhidden=delete
@@ -207,12 +238,17 @@ let NERDTreeRespectWildIgnore = 1
 
 "--- netrw ---
 let g:netrw_home=expand("~/.vim/misc")
+let g:netrw_liststyle=3
 
 "--- vim-slime ---
 let g:slime_target = "tmux"
 let g:slime_python_ipython = 1
 
 "--- syntastic ---
+let g:syntastic_mode_map = {
+            \ "mode": "active",
+            \ "active_filetypes": ['sh'],
+            \ "passive_filetypes": ['javascript'] }
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_check_on_wq = 0
@@ -251,14 +287,18 @@ let g:tagbar_type_haskell = {
         \ 'type'   : 't'
     \ }
 \ }
+let g:tagbar_autoclose=1
+let g:tagbar_autofocus=1
+" let g:tagbar_left=1
 
 "--- vim-airline ---
 "let g:Powerline_symbols = 'fancy'
+let g:airline_left_sep = ''
+let g:airline_right_sep = ''
 let g:airline_inactive_collapse = 0
-let g:airline_powerline_fonts = 1
-let g:airline_theme='base16'
+let g:airline_powerline_fonts = 0
 let g:airline#extensions#tabline#buffer_idx_mode = 1
-let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#enabled = 0
 let g:airline#extensions#tabline#fnamemod = ':t'
 let g:airline#extensions#tabline#show_close_button = 1
 let g:airline#extensions#whitespace#enabled = 0
