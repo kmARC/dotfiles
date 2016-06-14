@@ -7,7 +7,7 @@ Plug 'junegunn/vim-peekaboo'
 Plug 'junegunn/fzf',                            { 'dir': '~/.fzf', 'do': 'yes \| ./install' }
 Plug 'junegunn/fzf.vim'
 Plug 'romainl/vim-qf'
-"Plug 'scrooloose/nerdtree',                     {'on': 'NERDTreeToggle' }
+Plug 'scrooloose/nerdtree',                     {'on': 'NERDTreeToggle' }
 Plug 'tpope/vim-vinegar',
 Plug 'tmux-plugins/vim-tmux'
 Plug 'tpope/vim-unimpaired'
@@ -145,8 +145,8 @@ noremap ]h                :GitGutterNextHunk<CR>
 nnoremap n                 nzz
 nnoremap N                 Nzz
 nnoremap <Leader>f         :call ToggleFold()<CR>
-nnoremap <Leader>ag        :Ag! --<C-R>=expand("%:e")<CR> 
-nnoremap <Leader>aG        :Ag! --<C-R>=expand("%:e")<CR> <C-R><C-W><CR>
+nnoremap <Leader>aG        :Ag! --<C-R>=expand("%:e")<CR> 
+nnoremap <Leader>ag        :Ag! --<C-R>=expand("%:e")<CR> <C-R><C-W><CR>
 nnoremap <Leader>p         :CtrlPBuffer<CR>
 nnoremap <Leader>t<Space>  Vap:Tabularize /\S\+/l1l0<CR>
 nnoremap <Leader>t=        Vap:Tabularize /=\+/l1c1<CR>
@@ -160,9 +160,9 @@ nmap <leader>6             <Plug>AirlineSelectTab6
 nmap <leader>7             <Plug>AirlineSelectTab7
 nmap <leader>8             <Plug>AirlineSelectTab8
 nmap <leader>9             <Plug>AirlineSelectTab9
-"nnoremap <F7>              :NERDTreeToggle<CR>
+nnoremap <F7>              :NERDTreeToggle<CR>
 nnoremap <F6>              :SyntasticCheck<Cr>
-nnoremap <F7>              :Explore<Cr>
+" nnoremap <F7>              :Explore<Cr>
 nnoremap <F8>              :TagbarToggle<CR>
 nnoremap <F9>              :lclose<CR>:cclose<CR>
 nnoremap <C-e>             2<C-E>
@@ -298,7 +298,7 @@ let g:airline_right_sep = ''
 let g:airline_inactive_collapse = 0
 let g:airline_powerline_fonts = 0
 let g:airline#extensions#tabline#buffer_idx_mode = 1
-let g:airline#extensions#tabline#enabled = 0
+let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#fnamemod = ':t'
 let g:airline#extensions#tabline#show_close_button = 1
 let g:airline#extensions#whitespace#enabled = 0
