@@ -1,2 +1,7 @@
 " vim: ft=vim
 set gui=nonavigation
+map-urls .*postfinance.ch.* <Leader>a fAssets<Enter>
+map-urls .*postfinance.ch.* <Leader>d fDownload<Enter>
+map-urls .*postfinance.ch.* <Leader>t fTransfer<Enter>
+
+map-urls .*mail.notes.*verse* c fCompose<Enter>

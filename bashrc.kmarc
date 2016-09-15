@@ -1,5 +1,5 @@
 # Colorized prompt
-function __ps1() {
+function __ps1 {
     source /usr/lib/git-core/git-sh-prompt
 
     local RS='\[\033[0m\]'
@@ -53,7 +53,7 @@ function __ps1() {
     PS1="$BG$EMW[$BG$EMW\h$BG$EMW]$RS$FG[$EMW\u$FG][$EMW\w$FG][$EMW\$$FG]\$(__git_ps1 \(%s\))$RS "
 }
 
-function color_less() {
+function color_less {
     env LESS_TERMCAP_mb=$'\E[1;31m' \
     LESS_TERMCAP_md=$'\E[1;32m' \
     LESS_TERMCAP_me=$'\E[0m' \
@@ -64,32 +64,37 @@ function color_less() {
     "$@"
 }
 
-function pydoc() {
+function pydoc {
     color_less pydoc "$@"
 }
 
-function man() {
+function man {
     color_less man "$@"
 }
+
+#################
+# LOOK AND FEEL #
+#################
 
 # Prompt
 __ps1 "blue"
 
-# Base16 Shell
-BASE16_SHELL="$HOME/.local/src/base16-builder/output/shell/base16-${BASE16_THEME}.dark.sh"
-[[ -s $BASE16_SHELL ]] && source "$BASE16_SHELL"
-
-source "$HOME"/.vim/plugged/gruvbox/gruvbox_256palette.sh
-
-# Aliases
-alias zc2="ssh zc2.ibm.com -t 'tmux attach -t oro || tmux new -s oro'"
-alias ls="ls --color -h --group-directories-first"
+# Base16 shell
+BASE16_SHELL=$HOME/.config/base16-shell/
+[ -n "$PS1" ] && [ -s "$BASE16_SHELL/profile_helper.sh" ] && eval "$($BASE16_SHELL/profile_helper.sh)"
 
 # Fixed colors for TMUX
 if [[ $TMUX != "" ]]; then
-    alias sudo='sudo '
-    for p in htop iptraf mc; do
+    # alias sudo='sudo '
+    for p in fzf htop iptraf mc mutt mutt-patched; do
         alias $p="TERM=screen-256color $p"
     done
 fi
 
+###########
+# Aliases #
+###########
+
+alias zc2="ssh zc2.ibm.com -t 'tmux attach -t oro || tmux new -s oro'"
+alias irc="ssh -X irc.oro.zc2.ibm.com -t 'tmux attach'"
+alias ls="ls --color -h --group-directories-first"

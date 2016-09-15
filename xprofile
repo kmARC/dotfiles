@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+
+# Disable GTK Client Side Decoration
+export GTK_CSD=0
+#export LD_PRELOAD=/usr/lib/gtk3-nocsd/gtk3-nocsd.so
+# Disable reparenting of old awt applications
+# export _JAVA_AWT_WM_NONREPARENTING=1
+
+wmname LG3D &
+compton &
+bspwm -c ~/.config/bspwm/bspwmrc &
+sxhkd -c ~/.config/sxhkd/sxhkdrc &
+
+xrdb -merge ~/.Xresources &
+
+xfce4-panel --disable-wm-check &
+~/bin/mon.sh &
+exec xfce4-session
+
