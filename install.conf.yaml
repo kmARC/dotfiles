@@ -13,9 +13,6 @@
     ~/.config/sxhkd/sxhkdrc:
         create: true
         path: config/sxhkd/sxhkdrc
-    ~/.terminfo/x/xterm-256color:
-        create: true
-        path: terminfo/x/xterm-256color
     ~/.urxvt/ext/font-size:
         create: true
         path: urxvt/ext/font-size
@@ -27,6 +24,7 @@
     ~/.tmux.conf:    tmux.conf
     ~/.toprc:        toprc
     ~/.vimperatorrc: vimperatorrc
+    ~/.xprofile:     xprofile
 
 - shell:
   - [git submodule update --init --recursive, Installing submodules]
