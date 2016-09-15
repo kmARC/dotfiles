@@ -17,14 +17,20 @@
         create: true
         path: urxvt/ext/font-size
 
-    ~/.Xmodmap:      Xmodmap
-    ~/.Xresources:   Xresources
-    ~/.bashrc.kmarc: bashrc.kmarc
-    ~/.compton.conf: compton.conf
-    ~/.tmux.conf:    tmux.conf
-    ~/.toprc:        toprc
-    ~/.vimperatorrc: vimperatorrc
-    ~/.xprofile:     xprofile
+    ~/.Xmodmap:        Xmodmap
+    ~/.Xresources:     Xresources
+    ~/.bashrc.kmarc:   bashrc.kmarc
+    ~/.compton.conf:   compton.conf
+    ~/.gtkrc-2.0:      gtkrc-2.0
+    ~/.mailcap:        mailcap
+    ~/.muttrc:         muttrc
+    ~/.notmuch-config: notmuch-config
+    ~/.offlineimap.py: offlineimap.py
+    ~/.offlineimaprc:  offlineimaprc
+    ~/.tmux.conf:      tmux.conf
+    ~/.toprc:          toprc
+    ~/.vimperatorrc:   vimperatorrc
+    ~/.xprofile:       xprofile
 
 - shell:
   - [git submodule update --init --recursive, Installing submodules]
