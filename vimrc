@@ -4,8 +4,9 @@ Plug 'christoomey/vim-tmux-navigator'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'jpalardy/vim-slime'
 Plug 'junegunn/vim-peekaboo'
-Plug 'junegunn/fzf',                            { 'dir': '~/.fzf', 'do': 'yes \| ./install' }
-Plug 'junegunn/fzf.vim'
+Plug 'freitass/todo.txt-vim'
+"Plug 'junegunn/fzf',                            { 'dir': '~/.fzf', 'do': 'yes \| ./install' }
+"Plug 'junegunn/fzf.vim'
 Plug 'romainl/vim-qf'
 Plug 'scrooloose/nerdtree',                     {'on': 'NERDTreeToggle' }
 Plug 'tpope/vim-vinegar',
@@ -19,16 +20,11 @@ Plug 'Raimondi/delimitMate'
 Plug 'tpope/vim-surround'
 Plug 'michaeljsmith/vim-indent-object'
 Plug 'jeetsukumaran/vim-indentwise'
+Plug 'metakirby5/codi.vim'
 "--- Look&Feel ---
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-" Plug 'itchyny/lightline.vim'
 Plug 'chriskempson/base16-vim'
-Plug 'nanotech/jellybeans.vim'
-Plug 'morhetz/gruvbox'
-Plug 'baskerville/bubblegum'
-Plug 'notpratheek/vim-luna'
-Plug 'trevorrjohn/vim-obsidian'
 "--- Git ---
 Plug 'airblade/vim-gitgutter'
 Plug 'shumphrey/fugitive-gitlab.vim'
@@ -112,26 +108,19 @@ set diffopt+=vertical   " Always vsplit. Helps with fugitive too
 set colorcolumn=81
 
 " set t_ZH=[3m
-" set t_ZH=[23m
+set t_ZH=[23m
 set background=dark
 set t_ut=
 set t_Co=256
-" let base16colorspace=256
 
-" if exists('$BASE16_THEME')
-"     colors base16-$BASE16_THEME
-" else
-"     colors base16-default
-" endif
-
-let g:gruvbox_italic = 1
-" colors gruvbox
-" colors bubblegum-256-dark
-colors luna-term
-let g:airline_theme='luna'
-" hi VertSplit guibg=#a89984 ctermfg=239
-" let g:jellybeans_use_term_italics = 1
-" colors jellybeans
+if filereadable(expand("~/.vimrc_background"))
+    let base16colorspace=256
+    source ~/.vimrc_background
+endif
+if has('gui_running')
+    set guifont=Dejavu\ Sans\ Mono\ 9
+    set guioptions=agit
+endif
 
 
 nnoremap <tab>             :bn<CR>
@@ -162,7 +151,6 @@ nmap <leader>8             <Plug>AirlineSelectTab8
 nmap <leader>9             <Plug>AirlineSelectTab9
 nnoremap <F7>              :NERDTreeToggle<CR>
 nnoremap <F6>              :SyntasticCheck<Cr>
-" nnoremap <F7>              :Explore<Cr>
 nnoremap <F8>              :TagbarToggle<CR>
 nnoremap <F9>              :lclose<CR>:cclose<CR>
 nnoremap <C-e>             2<C-E>
@@ -202,12 +190,6 @@ function! ToggleFold()
         normal zE
     endif
 endfunction
-
-if has('gui_running')
-    set guifont=Dejavu\ Sans\ Mono\ 9
-    set guioptions=agit
-    colors luna
-endif
 
 "--- ctrlp.vim ---
 let g:ctrlp_working_path_mode = 0
@@ -289,14 +271,13 @@ let g:tagbar_type_haskell = {
 \ }
 let g:tagbar_autoclose=1
 let g:tagbar_autofocus=1
-" let g:tagbar_left=1
 
 "--- vim-airline ---
-"let g:Powerline_symbols = 'fancy'
 let g:airline_left_sep = ''
 let g:airline_right_sep = ''
 let g:airline_inactive_collapse = 0
 let g:airline_powerline_fonts = 0
+let g:airline_theme = 'base16'
 let g:airline#extensions#tabline#buffer_idx_mode = 1
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#fnamemod = ':t'
@@ -319,7 +300,7 @@ let g:ycm_autoclose_preview_window_after_completion=1
 let g:EclimCompletionMethod = 'omnifunc'
 let g:ycm_semantic_triggers = {'haskell' : ['.'], 'typescript' : ['.'], 'javascript': ['.']}
 let g:ycm_confirm_extra_conf = 0
-"let g:ycm_filetype_blacklist = { 'typescript': 1 }
+let g:ycm_filetype_blacklist = {}
 
 "--- UltiSnips ---
 let g:UltiSnipsExpandTrigger="<c-j>"
