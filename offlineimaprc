@@ -1,0 +1,31 @@
+[general]
+metadata = ~/.offlineimap
+accounts = korondi.mark@gmail.com
+pythonfile = ~/.offlineimap.py
+
+[mbnames]
+
+[Account korondi.mark@gmail.com]
+localrepository  = korondi.mark@gmail.com-local
+remoterepository = korondi.mark@gmail.com-remote
+autorefresh      = 2
+quick            = 5
+# maxage           = 10
+synclabels       = yes
+postsynchook     = notmuch new
+
+[Repository korondi.mark@gmail.com-local]
+type         = GmailMaildir
+localfolders = ~/.mutt/korondi.mark@gmail.com
+
+[Repository korondi.mark@gmail.com-remote]
+type              = Gmail
+remoteuser        = korondi.mark@gmail.com
+remotepasseval    = get_pass("korondi.mark@gmail.com")
+folderfilter      = lambda foldername: foldername not in ['[Gmail]/All Mail']
+sslcacertfile     = /etc/ssl/certs/ca-certificates.crt
+realdelete        = no
+maxconnections    = 10
+decodefoldernames = yes
+usecompression    = yes
+createfolders     = False
