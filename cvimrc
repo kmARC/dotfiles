@@ -3,3 +3,16 @@ set linkanimations
 set numerichints
 set typelinkhints
 set ignorecase
+
+let blacklists = ["http://digg.com/*","https://mail.google.com/*"]
+
+let qmark w = "https://web.whatsapp.com"
+let qmark e = "https://w3id.sso.ibm.com/auth/sps/samlidp/saml20/logininitial?RequestBinding=HTTPPost&PartnerId=p0012308gu3u&NameIdFormat=persistent&AllowCreate=true&Target=https://www.concursolutions.com/"
+let qmark r = "https://digg.com/reader"
+let qmark t = "https://twitter.com"
+let qmark f = "https://facebook.com"
+let qmark g = "https://gmail.com"
+let qmark h = "https://hup.hu/tracker/3464"
+let qmark v = "https://mail.notes.na.collabserv.com/verse"
+let qmark k = "https://keep.google.com"
+let qmark m = "https://messenger.com"
