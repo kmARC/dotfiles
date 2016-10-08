@@ -2,3 +2,4 @@ set scalehints
 set linkanimations
 set numerichints
 set typelinkhints
+set ignorecase
