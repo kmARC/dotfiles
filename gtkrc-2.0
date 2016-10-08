@@ -1,4 +1,15 @@
-style "vimfix" {
-      bg[NORMAL] = "#1D2021" # this matches my gvim theme 'Normal' bg color.
+# -- THEME AUTO-WRITTEN BY gtk-theme-switch2 DO NOT EDIT
+include "/usr/share/themes/Greybird/gtk-2.0/gtkrc"
+
+style "user-font"
+{
+  font_name="Ubuntu 8"
 }
-widget "vim-main-window.*GtkForm" style "vimfix"
+widget_class "*" style "user-font"
+
+
+include "/home/oro/.gtkrc-2.0.mine"
+
+# -- THEME AUTO-WRITTEN BY gtk-theme-switch2 DO NOT EDIT
+
+gtk-icon-theme-name="elementary-xfce-dark"

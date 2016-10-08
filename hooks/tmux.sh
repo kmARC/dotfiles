@@ -5,7 +5,7 @@ DIR_TPM="$HOME/.tmux/plugins/tpm"
 print_install_help() {
     echo ""
     echo "Setting up tmux:"
-    echo "    sudo apt-get install build-essential libncurses5-dev libevent1-dev libncurses5 libevent-1.4"
+    echo "    sudo apt-get install automake pkg-config build-essential libncurses5-dev libevent1-dev libncurses5 libevent-1.4"
     echo "    git clone https://github.com/tmux/tmux.git"
     echo "    cd tmux"
     echo "    ./autogen.sh"

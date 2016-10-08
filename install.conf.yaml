@@ -7,6 +7,9 @@
     ~/.config/gtk-3.0/settings.ini:
         create: true
         path: config/gtk-3.0/settings.ini
+    ~/.config/gtk-3.0/gtk.css:
+        create: true
+        path: config/gtk-3.0/gtk.css
     ~/.config/htop/htoprc:
         create: true
         path: config/htop/htoprc

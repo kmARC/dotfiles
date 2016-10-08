@@ -1,19 +1,26 @@
 #!/usr/bin/env bash
 
 # Disable GTK Client Side Decoration
-export GTK_CSD=0
+# export GTK_CSD=0
 #export LD_PRELOAD=/usr/lib/gtk3-nocsd/gtk3-nocsd.so
 # Disable reparenting of old awt applications
 # export _JAVA_AWT_WM_NONREPARENTING=1
+# wmname LG3D &
+# ~/bin/mon.sh &
 
-wmname LG3D &
+# Settings
+xrdb -merge ~/.Xresources
+setxkbmap -option 'caps:ctrl_modifier'
+xcape -e 'Caps_Lock=Escape'
+~/.fehbg
+
+# Daemons
 compton &
-bspwm -c ~/.config/bspwm/bspwmrc &
 sxhkd -c ~/.config/sxhkd/sxhkdrc &
-
-xrdb -merge ~/.Xresources &
-
+~/bin/cvim_server.py &
 xfce4-panel --disable-wm-check &
-~/bin/mon.sh &
-exec xfce4-session
+xfce4-session &
+
+# WM
+exec bspwm -c ~/.config/bspwm/bspwmrc
 
