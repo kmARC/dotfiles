@@ -153,8 +153,11 @@ Print
 shift + Print
 	shutter -s
 
-super + space; {b,t,v,m,s}
+super + space; {b,t,p,m,s}
 	{x-www-browser,thunar,/opt/agns/bin/agnclient,spotify,skype}
+
+super + space; v
+	virtualbox
 
 super + space; k
 	slack
@@ -164,9 +167,6 @@ super + space; n
 
 super + space; x
 	urxvtcd -ls -e bash -ci 'tmux attach -t Session || tmux new -s Session'
-
-super + space; i
-	urxvtcd -ls -e bash -ci 'irc'
 
 super + space; z
 	urxvtcd -ls -e bash -ci 'zc2'
