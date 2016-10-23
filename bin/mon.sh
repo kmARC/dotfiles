@@ -29,6 +29,9 @@ if [[ ${#MONS[@]} == 2 && $MODE != 'mirror' ]]; then
     # Detect resolutions
     MOD_PRI=$(largest_res "$PRI")
     MOD_SEC=$(largest_res "$SEC")
+
+    echo "Setting up monitors: primary   - $PRI ($MOD_PRI)"
+    echo "                     secondary - $SEC ($MOD_SEC)"
     # Enable second monitor
     xrandr --output "$SEC" --mode "$MOD_SEC" \
            --output "$PRI" --mode "$MOD_PRI" --left-of "$SEC" --primary
@@ -52,10 +55,13 @@ else
         SEC=${MONS[1]}
         MOD_PRI=$(common_res)
         MOD_SEC=$MOD_PRI
+        echo "Setting up mirrored monitors: - $PRI ($MOD_PRI)"
+        echo "                              - $SEC ($MOD_SEC)"
         xrandr --output "$SEC" --mode "$MOD_SEC" \
                --output "$PRI" --mode "$MOD_PRI" --same-as "$SEC" --primary
     else
         MOD_PRI=$(largest_res "$PRI")
+        echo "Setting up monitor: $PRI ($MOD_PRI)"
         xrandr --output "$PRI" --mode "$MOD_PRI"
     fi
     # Move around desktops
