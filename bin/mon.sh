@@ -3,11 +3,6 @@ MONS=($(xrandr | awk '/\sconnected\s/{print $1}'))
 # NODES=$(bspc query -N | wc -l)
 MODE=$1
 
-# First init
-# if [[ $NODES -eq 0 ]]; then
-#bspc monitor -d 1 2 3 4 5 6 7 8 9 0
-# fi
-
 # Prints largest resolution mode
 function largest_res {
     xrandr | awk -v PAT="$1" '$0 ~ PAT {getline; print $1}'
