@@ -19,6 +19,9 @@
     ~/.urxvt/ext/font-size:
         create: true
         path: urxvt/ext/font-size
+    ~/bin/mon.sh:
+        create: true
+        path: bin/mon.sh
 
     ~/.Xmodmap:        Xmodmap
     ~/.Xresources:     Xresources

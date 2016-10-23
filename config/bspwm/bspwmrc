@@ -26,6 +26,8 @@ bspc rule -a Gimp             desktop=^5 follow=on
 bspc rule -a Transmission-gtk desktop=^8 follow=on
 bspc rule -a Spotify          desktop=^9 follow=on
 
+bspc rule -a *:libreoffice      state=tiled
+
 # Better if floating
 bspc rule -a Keybase            state=floating
 bspc rule -a Orage              state=floating

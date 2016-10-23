@@ -15,10 +15,10 @@ xcape -e 'Caps_Lock=Escape'
 ~/.fehbg
 
 # Daemons
+xfce4-panel --disable-wm-check &
 compton &
 sxhkd -c ~/.config/sxhkd/sxhkdrc &
 ~/bin/cvim_server.py &
-# xfce4-panel --disable-wm-check &
 xfce4-session &
 
 # WM
