@@ -5,7 +5,7 @@ MODE=$1
 
 # Prints largest resolution mode
 function largest_res {
-    xrandr | awk -v PAT="$1" '$0 ~ PAT {getline; print $1}'
+    xrandr | awk -v PAT="^$1" '$0 ~ PAT {getline; print $1}'
 }
 
 # Prints common resolution of multiple monitors
@@ -57,27 +57,35 @@ else
         MOD_SEC=$MOD_PRI
         echo "Setting up mirrored monitors: - $PRI ($MOD_PRI)"
         echo "                              - $SEC ($MOD_SEC)"
-        xrandr --output "$SEC" --mode "$MOD_SEC" \
-               --output "$PRI" --mode "$MOD_PRI" --same-as "$SEC" --primary
+        xrandr --output "$SEC" --off
+        # Move around desktops
+        for desktop in 1 2 3 4 5 6 7 8 9 0; do
+            bspc desktop $desktop -m "$PRI"
+        done
+        # Fix desktop order
+        bspc monitor "$PRI" -o 1 2 3 4 5 6 7 8 9 0
+        xrandr --output "$PRI" --mode "$MOD_PRI" --rate 60 --primary \
+               --output "$SEC" --mode "$MOD_SEC" --rate 60 --same-as "$PRI"
     else
         MOD_PRI=$(largest_res "$PRI")
         echo "Setting up monitor: $PRI ($MOD_PRI)"
-        xrandr --output "$PRI" --mode "$MOD_PRI"
+        xrandr --output "$PRI" --mode "$MOD_PRI" --primary
+        # Move around desktops
+        for desktop in 1 2 3 4 5 6 7 8 9 0; do
+            bspc desktop $desktop -m "$PRI"
+        done
+        # Fix desktop order
+        bspc monitor "$PRI" -o 1 2 3 4 5 6 7 8 9 0
     fi
-    # Move around desktops
-    for desktop in 1 2 3 4 5 6 7 8 9 0; do
-        bspc desktop $desktop -m "$PRI"
-    done
-    # Fix desktop order
-    bspc monitor "$PRI" -o 1 2 3 4 5 6 7 8 9 0
 fi
 
-# Remove auto-created desktops (e.g. their name is not a digit)
-for desktop in $(bspc query -T -m | jq -r '.desktops[].name' \
-                                  | grep -v '^[0-9]$'); do
-    bspc desktop "$desktop" -r
+for monitor in $PRI $SEC; do
+    # Remove auto-created desktops (e.g. their name is not a digit)
+    for desktop in $(bspc query -T -m $monitor | jq -r '.desktops[].name' \
+                                               | grep -v '^[0-9]$'); do
+        bspc desktop "$desktop" -r
+    done
 done
-
 
 # Fix XFCE's workspace numbering
 xfconf-query -c xfwm4 -p /general/workspace_count -s 10
@@ -87,3 +95,6 @@ xfconf-query -c xfwm4 -p /general/workspace_names \
 
 # Add tray space on primary monitor
 bspc config -m "$PRI" top_padding 24
+
+# Set wallpaper
+~/.fehbg
