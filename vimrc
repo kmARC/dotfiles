@@ -1,18 +1,19 @@
 call plug#begin('~/.vim/plugged')
-"--- Tools ---
+""--- Tools ---
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'jpalardy/vim-slime'
 Plug 'junegunn/vim-peekaboo'
 Plug 'freitass/todo.txt-vim'
-"Plug 'junegunn/fzf',                            { 'dir': '~/.fzf', 'do': 'yes \| ./install' }
-"Plug 'junegunn/fzf.vim'
-Plug 'romainl/vim-qf'
+Plug 'junegunn/fzf',                            { 'dir': '~/.fzf', 'do': 'yes \| ./install' }
+Plug 'junegunn/fzf.vim'
+"Plug 'romainl/vim-qf'
 Plug 'scrooloose/nerdtree',                     {'on': 'NERDTreeToggle' }
-Plug 'tpope/vim-vinegar',
 Plug 'tmux-plugins/vim-tmux'
 Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-repeat'
+Plug 'nblock/vim-dokuwiki'
+Plug 'jceb/vim-orgmode'
 "--- Editing ---
 Plug 'godlygeek/tabular',                       {'on': 'Tabularize'}
 Plug 'Lokaltog/vim-easymotion'
@@ -33,7 +34,9 @@ Plug 'tpope/vim-fugitive'
 Plug 'honza/vim-snippets'
 Plug 'majutsushi/tagbar'
 Plug 'rking/ag.vim'
-Plug 'scrooloose/syntastic'
+" Plug 'scrooloose/syntastic'
+" Plug 'maralla/validator.vim'
+Plug 'w0rp/ale'
 Plug 'SirVer/ultisnips'
 Plug 'tpope/vim-commentary'
 Plug 'Valloric/YouCompleteMe',                  {'do':  './install.sh --clang-completer' }
@@ -81,6 +84,8 @@ set expandtab
 set autoindent
 set smartindent
 set nowrap
+set linebreak
+set showbreak=↵
 set pastetoggle=<F12>
 set ignorecase
 set smartcase
@@ -225,6 +230,10 @@ let g:netrw_liststyle=3
 "--- vim-slime ---
 let g:slime_target = "tmux"
 let g:slime_python_ipython = 1
+
+"--- orgmode ---
+let g:org_heading_shade_leading_stars = 0
+let g:org_indent = 1
 
 "--- syntastic ---
 let g:syntastic_mode_map = {
