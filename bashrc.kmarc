@@ -91,3 +91,4 @@ BASE16_SHELL=$HOME/.config/base16-shell/
 alias zc2="ssh zc2.ibm.com -t 'tmux attach -t oro || tmux new -s oro'"
 alias irc="ssh -X irc.oro.zc2.ibm.com -t 'tmux attach'"
 alias ls="ls --color -h --group-directories-first"
+alias p="vim ~/projects.org/projects.org"

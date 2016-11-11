@@ -1,20 +1,22 @@
 ##!/usr/bin/env bash
-#
-## Settings
-#xrdb -merge ~/.Xresources
-#setxkbmap -option 'caps:ctrl_modifier'
-#xcape -e 'Caps_Lock=Escape'
-#
-## Daemons
-#compton &
-#sxhkd -c ~/.config/sxhkd/sxhkdrc &
-#
+
 #~/bin/cvim_server.py &
-## xfce4-panel --disable-wm-check &
-#xfce4-session &
-#
-#
-## Set up monitors
-#~/bin/mon.sh
-#
-#exec bspwm -c ~/.config/bspwm/bspwmrc
+
+xfsettingsd
+xrdb -merge ~/.Xresources
+setxkbmap -option 'caps:ctrl_modifier'
+xcape -t 250 -e 'Caps_Lock=Escape'
+
+xfce4-panel -d &
+compton &
+sxhkd -c ~/.config/sxhkd/sxhkdrc &
+lght-locker &
+
+xfce4-power-manager
+nm-applet &
+skype &
+shutter --min_at_startup &
+insync start
+hp-systray &
+
+exec bspwm

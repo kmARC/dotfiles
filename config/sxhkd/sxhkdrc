@@ -22,8 +22,8 @@ super + Escape
 
 # quit bspwm normally
 super + alt + Escape
-	# bspc quit
-	xfce4-session-logout
+	bspc quit
+	# xfce4-session-logout
 
 # close and kill
 super + {_,shift + }w
@@ -123,22 +123,6 @@ super + alt + shift + {h,j,k,l}
 super + {Left,Down,Up,Right}
 	xdo move {-x -20,-y +20,-y -20,-x +20}
 
-#
-# pointer focus/move/resize
-#
-
-# focus
-~button1
-	bspc pointer -g focus
-
-# start move/resize
-super + button{1-3}
-	; bspc pointer -g {move,resize_side,resize_corner}
-
-# end move/resize
-super + @button{1-3}
-	bspc pointer -u
-
 # Own customizations
 # rotate layout
 super + {+,shift +} r
@@ -171,3 +155,5 @@ super + space; x
 super + space; z
 	urxvtcd -ls -e bash -ci 'zc2'
 
+ctrl + alt + l
+    light-locker-command -l

@@ -45,8 +45,8 @@ URxvt.font-size.step:  1
 URxvt.borderLess:      0
 URxvt.cutchars:        │
 URxvt.externalBorder:  0
-URxvt.font:            xft:DejaVu Sans Mono:size=9
-URxvt.italicFont:      xft:DejaVu Sans Mono:size=9:Italic
+URxvt.font:            xft:DejaVu Sans Mono:size=8
+URxvt.italicFont:      xft:DejaVu Sans Mono:size=8:Italic
 URxvt.internalBorder:  0
 URxvt.letterSpace:     -2
 URxvt.scrollBar:       false
