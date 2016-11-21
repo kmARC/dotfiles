@@ -74,7 +74,7 @@ else
     else
         MOD_PRI=$(largest_res "$PRI")
         echo "Setting up monitor: $PRI ($MOD_PRI)"
-        xrandr --output "$PRI" --mode "$MOD_PRI" --primary
+        xrandr --output "$PRI" --mode "$MOD_PRI" --primary --dpi 75
         # Move around desktops
         for desktop in 1 2 3 4 5 6 7 8 9 0; do
             bspc desktop $desktop -m "$PRI"

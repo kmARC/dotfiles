@@ -13,6 +13,9 @@
     ~/.config/htop/htoprc:
         create: true
         path: config/htop/htoprc
+    ~/.config/mc/ini:
+        create: true
+        path: config/mc/ini
     ~/.config/sxhkd/sxhkdrc:
         create: true
         path: config/sxhkd/sxhkdrc
@@ -33,6 +36,7 @@
     ~/.notmuch-config: notmuch-config
     ~/.offlineimap.py: offlineimap.py
     ~/.offlineimaprc:  offlineimaprc
+    ~/.rtorrent.rc:    rtorrent.rc
     ~/.tmux.conf:      tmux.conf
     ~/.toprc:          toprc
     ~/.vimperatorrc:   vimperatorrc

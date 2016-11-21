@@ -5,14 +5,16 @@ Xft.hintstyle:  hintslight
 Xft.hinting:    1
 Xft.antialias:  1
 Xft.rgba:       rgb
-Xft.dpi:        96
+Xft.dpi:        72
+
+Xcursor.theme: DMZ-White
 
 ! XTerm settings
 XTerm*activeIcon:           true
 XTerm*borderWidth:          0
 XTerm*disallowedWindowOps:  20,21,SetXprop
 XTerm*faceName:             xft:DejaVu Sans Mono:autohint=true
-XTerm*faceSize:             9
+XTerm*faceSize:             10
 XTerm*faceSize1:            4.0
 XTerm*faceSize2:            6.0
 XTerm*faceSize3:            8.0
@@ -45,8 +47,8 @@ URxvt.font-size.step:  1
 URxvt.borderLess:      0
 URxvt.cutchars:        │
 URxvt.externalBorder:  0
-URxvt.font:            xft:DejaVu Sans Mono:size=8
-URxvt.italicFont:      xft:DejaVu Sans Mono:size=8:Italic
+URxvt.font:            xft:DejaVu Sans Mono:size=10
+URxvt.italicFont:      xft:DejaVu Sans Mono:size=10:Italic
 URxvt.internalBorder:  0
 URxvt.letterSpace:     -2
 URxvt.scrollBar:       false
