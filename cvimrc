@@ -4,6 +4,8 @@ set numerichints
 set typelinkhints
 set ignorecase
 
+imap <C-o> editWithVim
+
 let blacklists = ["http://digg.com/*","https://mail.google.com/*"]
 
 let qmark w = "https://web.whatsapp.com"

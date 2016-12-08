@@ -1,0 +1,40 @@
+#!/usr/bin/env bash
+
+export QT_QPA_PLATFORMTHEME="qt5ct"
+
+# X settings
+xrdb -load ~/.Xresources
+xsetroot -cursor_name left_ptr
+xcape -t 250 -e 'Caps_Lock=Escape'
+~/.fehbg
+
+# Daemons
+sxhkd &
+xfsettingsd --sm-client-disable
+xfce4-power-manager
+xfce4-volumed
+gnome-keyring-daemon --daemonize
+ssh-agent -s
+# compton &
+xscreensaver -no-splash &
+xfce4-panel -d --sm-client-disable &
+thunar --daemon &
+#/usr/lib/gvfs/gvfsd &
+#/usr/lib/policykit-1-gnome/polkit-gnome-authentication-agent-1 &
+#~/bin/cvim_server.py &
+
+# Panel applets
+nm-applet &
+blueman-applet &
+skype &
+slack &
+shutter --min_at_startup &
+insync start
+hp-systray &
+system-config-printer-applet &
+
+# IBM Spyware
+#/opt/ibm/ibmsam/bin/ibmsaml -q &
+#/opt/ibm/c4eb/wst/bin/wst-applet &
+
+exec bspwm

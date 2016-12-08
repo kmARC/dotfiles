@@ -86,16 +86,17 @@ fi
 
 for monitor in $PRI $SEC; do
     # Remove auto-created desktops (e.g. their name is not a digit)
-    for desktop in $(bspc query -T -m $monitor | jq -r '.desktops[].name' \
-                                               | grep -v '^[0-9]$'); do
+    for desktop in $(bspc query -T -m "$monitor" | jq -r '.desktops[].name' \
+                                                 | grep -v '^[0-9]$'); do
         bspc desktop "$desktop" -r
     done
 done
 
 # Fix XFCE's workspace numbering
-xfconf-query -c xfwm4 -p /general/workspace_count -s 10
+xfconf-query -c xfwm4 -p /general/workspace_count -r
+xfconf-query -c xfwm4 -p /general/workspace_count -n -t int -s 10
 xfconf-query -c xfwm4 -p /general/workspace_names -r
-xfconf-query -c xfwm4 -p /general/workspace_names \
+xfconf-query -c xfwm4 -p /general/workspace_names --create \
     -s 1 -s 2 -s 3 -s 4 -s 5 -s 6 -s 7 -s 8 -s 9 -s 0
 
 # Add tray space on primary monitor
@@ -103,3 +104,6 @@ bspc config -m "$PRI" top_padding 24
 
 # Set wallpaper
 ~/.fehbg
+
+# Set X keyboard related settings
+setxkbmap -option 'caps:ctrl_modifier'

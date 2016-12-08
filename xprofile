@@ -1,31 +1,4 @@
-##!/usr/bin/env bash
+#!/usr/bin/env bash
 
-#~/bin/cvim_server.py &
-export QT_QPA_PLATFORMTHEME="qt5ct"
+exec ck-launch-session dbus-launch --exit-with-session ~/.xstart
 
-xrdb -load ~/.Xresources
-xsetroot -cursor_name left_ptr
-setxkbmap -option 'caps:ctrl_modifier'
-xcape -t 250 -e 'Caps_Lock=Escape'
-
-xfsettingsd
-xfce4-power-manager
-
-/usr/lib/gvfs/gvfsd &
-xfce4-panel -d &
-compton &
-sxhkd -c ~/.config/sxhkd/sxhkdrc &
-xscreensaver -no-splash &
-gnome-keyring-daemon --daemonize --login &
-Thunar --daemon &
-/usr/lib/policykit-1-gnome/polkit-gnome-authentication-agent-1 &
-
-nm-applet &
-blueman-applet &
-skype &
-shutter --min_at_startup &
-insync start
-hp-systray &
-
-xrdb -load ~/.Xresources
-exec bspwm
