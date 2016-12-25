@@ -22,9 +22,9 @@
     ~/.urxvt/ext/font-size:
         create: true
         path: urxvt/ext/font-size
-    ~/bin/mon.sh:
+    ~/bin:
         create: true
-        path: bin/mon.sh
+        path: bin
 
     ~/.Xresources:     Xresources
     ~/.bashrc.kmarc:   bashrc.kmarc

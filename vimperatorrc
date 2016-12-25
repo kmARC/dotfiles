@@ -30,7 +30,10 @@ qmark m https://messenger.com
 " Mappings
 noremap <silent> <c-[> :tabprevious<CR>
 noremap <silent> <c-]> :tabnext<CR>
+noremap <silent> <Leader>n :set gui=navigation<CR>
 
 " Ignores
+ignorekeys add docs\\.google\\.com
 ignorekeys add mail\\.google\\.com
 ignorekeys add https://digg\\.com/reader
+ignorekeys add https://zc2\\.ibm\\.com:6080/vnc_auto\\.html

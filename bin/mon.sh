@@ -60,28 +60,22 @@ else
         SEC=${MONS[1]}
         MOD_PRI=$(common_res)
         MOD_SEC=$MOD_PRI
-        echo "Setting up mirrored monitors: - $PRI ($MOD_PRI)"
-        echo "                              - $SEC ($MOD_SEC)"
-        xrandr --output "$SEC" --off
-        # Move around desktops
-        for desktop in 1 2 3 4 5 6 7 8 9 0; do
-            bspc desktop $desktop -m "$PRI"
-        done
-        # Fix desktop order
-        bspc monitor "$PRI" -o 1 2 3 4 5 6 7 8 9 0
-        xrandr --output "$PRI" --mode "$MOD_PRI" --rate 60 --primary \
-               --output "$SEC" --mode "$MOD_SEC" --rate 60 --same-as "$PRI"
     else
         MOD_PRI=$(largest_res "$PRI")
-        echo "Setting up monitor: $PRI ($MOD_PRI)"
-        xrandr --output "$PRI" --mode "$MOD_PRI" --primary --dpi 75
-        # Move around desktops
-        for desktop in 1 2 3 4 5 6 7 8 9 0; do
-            bspc desktop $desktop -m "$PRI"
-        done
-        # Fix desktop order
-        bspc monitor "$PRI" -o 1 2 3 4 5 6 7 8 9 0
     fi
+    echo "Setting up monitor: $PRI ($MOD_PRI)"
+    xrandr --output "$PRI" --mode "$MOD_PRI" --primary
+    # Move around desktops
+    for desktop in 1 2 3 4 5 6 7 8 9 0; do
+        bspc desktop $desktop -m "$PRI"
+    done
+    if [[ ${#MONS[@]} == 2 && $MODE == 'mirror' ]]; then
+        xrandr --output "$PRI" --mode "$MOD_PRI" --rate 60 --primary \
+               --output "$SEC" --mode "$MOD_SEC" --rate 60 --same-as "$PRI"
+        bspc monitor "$SEC" -r
+    fi
+    # Fix desktop order
+    bspc monitor "$PRI" -o 1 2 3 4 5 6 7 8 9 0
 fi
 
 for monitor in $PRI $SEC; do
@@ -93,11 +87,12 @@ for monitor in $PRI $SEC; do
 done
 
 # Fix XFCE's workspace numbering
-xfconf-query -c xfwm4 -p /general/workspace_count -r
+xfconf-query -c xfwm4 -p /general/workspace_count -r -R
 xfconf-query -c xfwm4 -p /general/workspace_count -n -t int -s 10
-xfconf-query -c xfwm4 -p /general/workspace_names -r
+xfconf-query -c xfwm4 -p /general/workspace_names -r -R
 xfconf-query -c xfwm4 -p /general/workspace_names --create \
-    -s 1 -s 2 -s 3 -s 4 -s 5 -s 6 -s 7 -s 8 -s 9 -s 0
+    -t int -s 1 -t int -s 2 -t int -s 3 -t int -s 4 -t int -s 5 \
+    -t int -s 6 -t int -s 7 -t int -s 8 -t int -s 9 -t int -s 0
 
 # Add tray space on primary monitor
 bspc config -m "$PRI" top_padding 24
@@ -106,4 +101,14 @@ bspc config -m "$PRI" top_padding 24
 ~/.fehbg
 
 # Set X keyboard related settings
-setxkbmap -option 'caps:ctrl_modifier'
+setxkbmap us,hu ,102_qwerty_dot_dead -option "grp:alt_shift_toggle,caps:ctrl_modifier"
+
+# Set X mouse related settings
+for ID in $(xinput | grep pointer \
+                   | grep -Eiv 'Virtual|Touch|Track' \
+                   | sed 's/^.*id=\([0-9]*\).*$/\1/g'); do
+    xinput set-button-map "$ID" 3 2 1
+done
+
+# Fix Java nonreparenting WM issue
+~/bin/java_nonreparenting_wm_hack.sh

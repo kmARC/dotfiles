@@ -7,7 +7,7 @@ Xft.antialias:  1
 Xft.rgba:       rgb
 Xft.dpi:        72
 
-Xcursor.theme: DMZ-White
+Xcursor.theme: DMZ-Black
 
 ! XTerm settings
 XTerm*activeIcon:           true

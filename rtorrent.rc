@@ -1,1 +1,8 @@
 directory = ~/Torrents/
+session = ~/Torrents/.rtorrent.session
+schedule = watch_directory,5,5,load_start=/home/oro/Downloads/*.torrent
+schedule = low_diskspace,5,60,close_low_diskspace=2000M
+dht = auto
+dht_port = 6881
+peer_exchange = yes
+encryption = allow_incoming,try_outgoing,enable_retry,prefer_plaintext

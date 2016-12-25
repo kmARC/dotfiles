@@ -138,7 +138,7 @@ shift + Print
 	shutter -s
 
 super + space; {b,t,p,m,s}
-	{google-chrome-stable --force-device-scale-factor=0.75,thunar,/opt/cisco/anyconnect/bin/vpnui,spotify,skype}
+	{firefox,thunar,/opt/cisco/anyconnect/bin/vpnui,spotify,skype}
 
 super + space; v
 	virtualbox
@@ -159,5 +159,5 @@ ctrl + alt + l
 	xscreensaver-command -l
 
 XF86AudioMicMute
-	pactl set-source-mute $(pacmd list-sources|awk '/\* index:/{ print $3 }') toggle
+	~/bin/mic-mute-toggle.sh
 

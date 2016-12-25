@@ -1,23 +1,25 @@
 #!/usr/bin/env bash
 
 export QT_QPA_PLATFORMTHEME="qt5ct"
+export _JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=lcd -Dswing.aatext=true -Dswing.crossplatformlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel'
+ssh-add -k
 
 # X settings
 xrdb -load ~/.Xresources
 xsetroot -cursor_name left_ptr
 xcape -t 250 -e 'Caps_Lock=Escape'
 ~/.fehbg
+setxkbmap us,hu ,102_qwerty_dot_dead -option "grp:alt_shift_toggle"
 
 # Daemons
 sxhkd &
-xfsettingsd --sm-client-disable
-xfce4-power-manager
-xfce4-volumed
+# xfsettingsd --sm-client-disable
+# xfce4-volumed
 gnome-keyring-daemon --daemonize
-ssh-agent -s
-# compton &
+compton &
 xscreensaver -no-splash &
 xfce4-panel -d --sm-client-disable &
+xfce4-power-manager
 thunar --daemon &
 #/usr/lib/gvfs/gvfsd &
 #/usr/lib/policykit-1-gnome/polkit-gnome-authentication-agent-1 &
@@ -32,9 +34,5 @@ shutter --min_at_startup &
 insync start
 hp-systray &
 system-config-printer-applet &
-
-# IBM Spyware
-#/opt/ibm/ibmsam/bin/ibmsaml -q &
-#/opt/ibm/c4eb/wst/bin/wst-applet &
 
 exec bspwm
