@@ -28,6 +28,9 @@
     ~/.urxvt/ext/font-size:
         create: true
         path: urxvt/ext/font-size
+    ~/.vimfx:
+        create: true
+        path: vimfx
     ~/bin:
         create: true
         path: bin
@@ -45,11 +48,7 @@
     ~/.rtorrent.rc:    rtorrent.rc
     ~/.tmux.conf:      tmux.conf
     ~/.toprc:          toprc
-    ~/.vimfx:          vimfx
-    ~/.vimperatorrc:   vimperatorrc
     ~/.xsessionrc:     xsessionrc
-    ~/.xprofile:       xprofile
-    ~/.xstart:         xstart
 
 - shell:
   - [git submodule update --init --recursive, Installing submodules]
