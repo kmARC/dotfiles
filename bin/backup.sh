@@ -1,3 +1,13 @@
+DEST_SERVER="backup.oro.zc2.ibm.com"
+DEST_PATH="/var/backups/"
+DEST_USER="ubuntu"
+
+ping -c1 ${DEST_SERVER} > /dev/null 2>&1
+if [ $? != 0 ]; then
+    echo "Destination server (${DEST_SERVER}) currently unreachable"
+    exit -1
+fi
+
 if [ -z "$PASSPHRASE" ]; then
     echo -n "Enter passphrase: "
     read -s PASSPHRASE
@@ -5,7 +15,7 @@ if [ -z "$PASSPHRASE" ]; then
     echo
 fi
 
-DEST="rsync://ubuntu@backup.oro.zc2.ibm.com//var/backups/"
+DEST="rsync://${DEST_USER}@${DEST_SERVER}/${DEST_PATH}"
 
 echo "======"
 echo "    Creating backup @ $(date)"
@@ -33,16 +43,13 @@ duplicity \
     /home/oro/ \
     $DEST
 
-duplicity \
-    remove-older-than 6M \
-    --force \
-    $DEST
+duplicity remove-older-than 6M --force $DEST
 
-duplicity \
-    cleanup \
-    --force \
-    --extra-clean \
-    $DEST
+duplicity cleanup --force --extra-clean $DEST
+
+duplicity remove-all-inc-of-but-n-full 1 --force $DEST
+
+duplicity collection-status $DEST
 
 echo "======"
 echo "    Backup script exiting - $(date)."
