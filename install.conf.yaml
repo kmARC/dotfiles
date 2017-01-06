@@ -24,6 +24,8 @@
         path: config/sxhkd/sxhkdrc
     ~/.config/xfce4/xfconf:
         path: config/xfce4/xfconf
+    ~/.tmux/plugins/tpm:
+        path: tmux/plugins/tpm
     ~/.urxvt/ext/font-size:
         path: urxvt/ext/font-size
     ~/bin:
@@ -49,6 +51,5 @@
 - shell:
   - [git submodule update --init --remote, Installing/updating submodules]
   - [~/.dotfiles/hooks/bash.sh, Setting up bashrc]
-  - command: ~/.dotfiles/hooks/tmux.sh
-    description: Setting up tmux
-    stdout: true
+  - [~/.tmux/plugins/tpm/bin/install_plugins, Installing new TMUX plugins]
+  - [~/.tmux/plugins/tpm/bin/update_plugins all, Upgrading TMUX plugins]
