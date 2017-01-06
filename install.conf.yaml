@@ -26,8 +26,8 @@
         path: config/xfce4/xfconf
     ~/.tmux/plugins/tpm:
         path: tmux/plugins/tpm
-    ~/.urxvt/ext/font-size:
-        path: urxvt/ext/font-size
+    ~/.urxvt/ext:
+        path: urxvt/ext
     ~/bin:
         path: bin
 
