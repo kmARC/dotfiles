@@ -45,7 +45,7 @@
     ~/.xsessionrc:
 
 - shell:
-  - [git submodule update --init --recursive, Installing submodules]
+  - [git submodule update --init --recursive --remote, Installing submodules]
   - [~/.dotfiles/hooks/bash.sh, Setting up bashrc]
   - command: ~/.dotfiles/hooks/tmux.sh
     description: Setting up tmux
