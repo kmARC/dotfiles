@@ -129,7 +129,7 @@ super + {+,shift +} r
 	bspc node @/ -R {90, 270}
 
 XF86Display
-	/home/oro/bin/mon.sh
+	/home/oro/bin/desktop.sh
 
 Print
 	shutter -w
