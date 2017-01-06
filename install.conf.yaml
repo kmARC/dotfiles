@@ -6,6 +6,8 @@
 
 - link:
     # Explicit paths
+    ~/.config/base16-shell:
+        path: config/base16-shell
     ~/.config/bspwm/bspwmrc:
         path: config/bspwm/bspwmrc
     ~/.config/fontconfig:
@@ -45,7 +47,7 @@
     ~/.xsessionrc:
 
 - shell:
-  - [git submodule update --init --recursive --remote, Installing submodules]
+  - [git submodule update --init --remote, Installing/updating submodules]
   - [~/.dotfiles/hooks/bash.sh, Setting up bashrc]
   - command: ~/.dotfiles/hooks/tmux.sh
     description: Setting up tmux
