@@ -91,8 +91,8 @@ xfconf-query -c xfwm4 -p /general/workspace_count -r -R
 xfconf-query -c xfwm4 -p /general/workspace_count -n -t int -s 10
 xfconf-query -c xfwm4 -p /general/workspace_names -r -R
 xfconf-query -c xfwm4 -p /general/workspace_names --create \
-    -t int -s 1 -t int -s 2 -t int -s 3 -t int -s 4 -t int -s 5 \
-    -t int -s 6 -t int -s 7 -t int -s 8 -t int -s 9 -t int -s 0
+    -t string -s 1 -t string -s 2 -t string -s 3 -t string -s 4 -t string -s 5 \
+    -t string -s 6 -t string -s 7 -t string -s 8 -t string -s 9 -t string -s 0
 
 # Add tray space on primary monitor
 bspc config -m "$PRI" top_padding 24
@@ -102,6 +102,7 @@ bspc config -m "$PRI" top_padding 24
 
 # Set X keyboard related settings
 setxkbmap us,hu ,102_qwerty_dot_dead -option "grp:alt_shift_toggle,caps:ctrl_modifier"
+xcape -t 250 -e 'Caps_Lock=Escape'
 
 # Set X mouse related settings
 for ID in $(xinput | grep pointer \
@@ -109,6 +110,10 @@ for ID in $(xinput | grep pointer \
                    | sed 's/^.*id=\([0-9]*\).*$/\1/g'); do
     xinput set-button-map "$ID" 3 2 1
 done
+
+# Configure synaptics touchpad
+synclient HorizTwoFingerScroll=1
+synclient TapButton3=2
 
 # Fix Java nonreparenting WM issue
 ~/bin/java_nonreparenting_wm_hack.sh
