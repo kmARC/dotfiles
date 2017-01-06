@@ -7,24 +7,26 @@ Xft.antialias:  1
 Xft.rgba:       rgb
 Xft.dpi:        82
 
--Xcursor.theme: DMZ-Black
+Xcursor.theme: DMZ-Black
+
 ! XTerm settings
-XTerm*activeIcon:           true
-XTerm*borderWidth:          0
-XTerm*disallowedWindowOps:  20,21,SetXprop
-XTerm*faceName:             xft:DejaVu Sans Mono:autohint=true
-XTerm*faceSize:             9
-XTerm*faceSize1:            4.0
-XTerm*faceSize2:            6.0
-XTerm*faceSize3:            8.0
-XTerm*faceSize4:            11.0
-XTerm*faceSize5:            13.0
-XTerm*faceSize6:            15.0
-XTerm*highlightColor:       black
-XTerm*internalBorder:       0
-XTerm*italicULMode:         true
-XTerm*metaSendsEscape:      true
-XTerm*renderFont:           true
+*xterm*activeIcon:           true
+*xterm*borderWidth:          0
+*xterm*disallowedWindowOps:  20,21,SetXprop
+*xterm*faceName:             xft:DejaVu Sans Mono:autohint=true
+*xterm*faceSize:             9
+*xterm*faceSize1:            4.0
+*xterm*faceSize2:            6.0
+*xterm*faceSize3:            8.0
+*xterm*faceSize4:            11.0
+*xterm*faceSize5:            13.0
+*xterm*faceSize6:            15.0
+*xterm*highlightColor:       black
+*xterm*internalBorder:       0
+*xterm*italicULMode:         true
+*xterm*metaSendsEscape:      true
+*xterm*renderFont:           true
+
 *VT100*translations:        #override Meta <Btn1Up>: exec-formatted("x-www-browser '%t'", PRIMARY)
 
 ! Urxvt settings
@@ -33,6 +35,8 @@ URxvt.keysym.C-Up:     font-size:increase
 URxvt.keysym.C-Down:   font-size:decrease
 URxvt.keysym.C-S-Up:   font-size:incglobal
 URxvt.keysym.C-S-Down: font-size:decglobal
+URxvt.keysym.C-equal:  font-size:reset
+URxvt.keysym.C-slash:  font-size:show
 URxvt.keysym.C-Delete: matcher:select
 URxvt.url-launcher:    x-www-browser
 URxvt.matcher.button:  1
