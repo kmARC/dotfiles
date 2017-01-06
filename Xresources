@@ -1,3 +1,13 @@
+! Xft Font hinting
+Xft.autohint:   0
+Xft.lcdfilter:  lcddefault
+Xft.hintstyle:  hintslight
+Xft.hinting:    1
+Xft.antialias:  1
+Xft.rgba:       rgb
+Xft.dpi:        82
+
+-Xcursor.theme: DMZ-Black
 ! XTerm settings
 XTerm*activeIcon:           true
 XTerm*borderWidth:          0
