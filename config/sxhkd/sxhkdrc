@@ -22,8 +22,8 @@ super + Escape
 
 # quit bspwm normally
 super + alt + Escape
-	bspc quit
-	# xfce4-session-logout
+	xfce4-session-logout
+	# bspc quit
 
 # close and kill
 super + {_,shift + }w
@@ -156,7 +156,7 @@ super + space; z
 	urxvtcd -ls -e bash -ci 'zc2'
 
 ctrl + alt + l
-	xscreensaver-command -l
+	xflock4
 
 XF86AudioMicMute
 	~/bin/mic-mute-toggle.sh

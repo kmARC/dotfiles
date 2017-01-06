@@ -4,6 +4,9 @@
     ~/.config/bspwm/bspwmrc:
         create: true
         path: config/bspwm/bspwmrc
+    ~/.config/fontconfig:
+        create: true
+        path: config/fontconfig
     ~/.config/gtk-3.0/settings.ini:
         create: true
         path: config/gtk-3.0/settings.ini
@@ -19,6 +22,9 @@
     ~/.config/sxhkd/sxhkdrc:
         create: true
         path: config/sxhkd/sxhkdrc
+    ~/.config/xfce4/xfconf:
+        create: true
+        path: config/xfce4/xfconf
     ~/.urxvt/ext/font-size:
         create: true
         path: urxvt/ext/font-size
@@ -30,6 +36,7 @@
     ~/.bashrc.kmarc:   bashrc.kmarc
     ~/.compton.conf:   compton.conf
     ~/.gtkrc-2.0:      gtkrc-2.0
+    ~/.inputrc:        inputrc
     ~/.mailcap:        mailcap
     ~/.muttrc:         muttrc
     ~/.notmuch-config: notmuch-config
@@ -38,7 +45,9 @@
     ~/.rtorrent.rc:    rtorrent.rc
     ~/.tmux.conf:      tmux.conf
     ~/.toprc:          toprc
+    ~/.vimfx:          vimfx
     ~/.vimperatorrc:   vimperatorrc
+    ~/.xsessionrc:     xsessionrc
     ~/.xprofile:       xprofile
     ~/.xstart:         xstart
 

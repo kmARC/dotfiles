@@ -1,4 +1,0 @@
-#!/usr/bin/env bash
-
-exec ck-launch-session dbus-launch --exit-with-session ssh-agent ~/.xstart
-
