@@ -1,54 +1,48 @@
 - clean: ['~']
 
-- link:
-    ~/.config/bspwm/bspwmrc:
+- defaults:
+    link:
         create: true
+
+- link:
+    # Explicit paths
+    ~/.config/bspwm/bspwmrc:
         path: config/bspwm/bspwmrc
     ~/.config/fontconfig:
-        create: true
         path: config/fontconfig
     ~/.config/gtk-3.0/settings.ini:
-        create: true
         path: config/gtk-3.0/settings.ini
     ~/.config/gtk-3.0/gtk.css:
-        create: true
         path: config/gtk-3.0/gtk.css
     ~/.config/htop/htoprc:
-        create: true
         path: config/htop/htoprc
     ~/.config/mc/ini:
-        create: true
         path: config/mc/ini
     ~/.config/sxhkd/sxhkdrc:
-        create: true
         path: config/sxhkd/sxhkdrc
     ~/.config/xfce4/xfconf:
-        create: true
         path: config/xfce4/xfconf
     ~/.urxvt/ext/font-size:
-        create: true
         path: urxvt/ext/font-size
-    ~/.vimfx:
-        create: true
-        path: vimfx
     ~/bin:
-        create: true
         path: bin
 
-    ~/.Xresources:     Xresources
-    ~/.bashrc.kmarc:   bashrc.kmarc
-    ~/.compton.conf:   compton.conf
-    ~/.gtkrc-2.0:      gtkrc-2.0
-    ~/.inputrc:        inputrc
-    ~/.mailcap:        mailcap
-    ~/.muttrc:         muttrc
-    ~/.notmuch-config: notmuch-config
-    ~/.offlineimap.py: offlineimap.py
-    ~/.offlineimaprc:  offlineimaprc
-    ~/.rtorrent.rc:    rtorrent.rc
-    ~/.tmux.conf:      tmux.conf
-    ~/.toprc:          toprc
-    ~/.xsessionrc:     xsessionrc
+    # Top levels
+    ~/.bashrc.kmarc:
+    ~/.compton.conf:
+    ~/.gtkrc-2.0:
+    ~/.inputrc:
+    ~/.mailcap:
+    ~/.muttrc:
+    ~/.notmuch-config:
+    ~/.offlineimap.py:
+    ~/.offlineimaprc:
+    ~/.rtorrent.rc:
+    ~/.tmux.conf:
+    ~/.toprc:
+    ~/.vimfx:
+    ~/.Xresources:
+    ~/.xsessionrc:
 
 - shell:
   - [git submodule update --init --recursive, Installing submodules]
