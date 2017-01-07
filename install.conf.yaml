@@ -35,6 +35,7 @@
     ~/.bashrc.kmarc:
     ~/.compton.conf:
     ~/.gtkrc-2.0:
+    ~/.fzf:
     ~/.inputrc:
     ~/.mailcap:
     ~/.muttrc:
@@ -51,5 +52,6 @@
 - shell:
   - [git submodule update --init --remote, Installing/updating submodules]
   - [~/.dotfiles/hooks/bash.sh, Setting up bashrc]
+  - [~/.fzf/install --all, Installing FZF]
   - [~/.tmux/plugins/tpm/bin/install_plugins, Installing new TMUX plugins]
   - [~/.tmux/plugins/tpm/bin/update_plugins all, Upgrading TMUX plugins]
