@@ -29,7 +29,7 @@ Plug 'tpope/vim-fugitive'
 "--- Programming ---
 Plug 'Shougo/neocomplete.vim'
 Plug 'SirVer/ultisnips'
-"Plug 'Valloric/YouCompleteMe'  , {'do':  './install.sh --clang-completer' }
+Plug 'Valloric/YouCompleteMe'  , {'do':  './install.sh'}
 Plug 'honza/vim-snippets'
 Plug 'majutsushi/tagbar'
 Plug 'tpope/vim-commentary'
