@@ -72,9 +72,19 @@ function man {
     color_less man "$@"
 }
 
+# Based on FZF's __fzf_cd__()
+function __fzf_open__() {
+  local cmd file
+  cmd="${FZF_ALT_O_COMMAND:-"command find -L . \\( -path '*/\\.*' -o -fstype 'devfs' -o -fstype 'devtmpfs' -o -fstype 'proc' \\) -prune \
+    -o -type f -print 2> /dev/null | sed 1d | cut -b3-"}"
+  file=$(eval "$cmd | $(__fzfcmd) +m $FZF_ALT_O_OPTS") && printf '/usr/bin/xdg-open %q/%q' "$PWD" "$file"
+}
+
 #################
 # LOOK AND FEEL #
 #################
+# VI mode
+set -o vi
 
 # Prompt
 __ps1 "blue"
@@ -83,8 +93,15 @@ __ps1 "blue"
 BASE16_SHELL=$HOME/.config/base16-shell/
 [ -n "$PS1" ] && [ -s "$BASE16_SHELL/profile_helper.sh" ] && eval "$($BASE16_SHELL/profile_helper.sh)"
 
-# VI mode
-set -o vi
+# bind \M-o to __fzf_open__()
+if [[ ! -o vi ]]; then
+  # ALT-O - open file
+  bind '"\eo": " \C-e\C-u`__fzf_open__`\e\C-e\er\C-m"'
+else
+  # ALT-O - open file
+  bind '"\eo": "\C-x\C-addi`__fzf_open__`\C-x\C-e\C-x\C-r\C-m"'
+  bind -m vi-command '"\eo": "ddi`__fzf_open__`\C-x\C-e\C-x\C-r\C-m"'
+fi
 
 ###########
 # Aliases #

@@ -38,7 +38,7 @@ URxvt.keysym.C-S-Down: font-size:decglobal
 URxvt.keysym.C-equal:  font-size:reset
 URxvt.keysym.C-slash:  font-size:show
 URxvt.keysym.C-Delete: matcher:select
-URxvt.url-launcher:    x-www-browser
+URxvt.url-launcher:    /usr/bin/xdg-open
 URxvt.matcher.button:  1
 URxvt.matcher.rend.0:  Uline fg6
 URxvt.matcher.rend.1:  Uline fg6
@@ -46,8 +46,9 @@ URxvt.font-size.step:  1
 URxvt.borderLess:      0
 URxvt.cutchars:        │
 URxvt.externalBorder:  0
-URxvt.font:            xft:DejaVu Sans Mono:size=9
-URxvt.italicFont:      xft:DejaVu Sans Mono:size=9:Italic
+URxvt.font:            xft:DejaVu Sans Mono:size=9:hinting=true
+URxvt.boldFont:        xft:DejaVu Sans Mono:size=9:hinting=true:bold
+URxvt.italicFont:      xft:DejaVu Sans Mono:size=9:hinting=true:italic
 URxvt.internalBorder:  0
 URxvt.letterSpace:     -2
 URxvt.scrollBar:       false
