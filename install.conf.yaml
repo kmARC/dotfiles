@@ -24,6 +24,8 @@
         path: config/sxhkd/sxhkdrc
     ~/.config/xfce4/xfconf:
         path: config/xfce4/xfconf
+    ~/.config/xfce4/panel:
+        path: config/xfce4/panel
     ~/.tmux/plugins/tpm:
         path: tmux/plugins/tpm
     ~/.urxvt/ext:
