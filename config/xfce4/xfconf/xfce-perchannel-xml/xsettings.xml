@@ -14,7 +14,7 @@
     <property name="EnableInputFeedbackSounds" type="empty"/>
   </property>
   <property name="Xft" type="empty">
-    <property name="DPI" type="int" value="82"/>
+    <property name="DPI" type="int" value="120"/>
     <property name="Antialias" type="int" value="1"/>
     <property name="Hinting" type="empty"/>
     <property name="HintStyle" type="string" value="hintslight"/>
@@ -24,7 +24,7 @@
   <property name="Gtk" type="empty">
     <property name="CanChangeAccels" type="empty"/>
     <property name="ColorPalette" type="empty"/>
-    <property name="FontName" type="string" value="DejaVu Sans 9"/>
+    <property name="FontName" type="string" value="DejaVu Sans 6"/>
     <property name="IconSizes" type="empty"/>
     <property name="KeyThemeName" type="empty"/>
     <property name="ToolbarStyle" type="empty"/>
@@ -37,6 +37,6 @@
     <property name="DecorationLayout" type="empty"/>
   </property>
   <property name="Xfce" type="empty">
-    <property name="LastCustomDPI" type="int" value="82"/>
+    <property name="LastCustomDPI" type="int" value="120"/>
   </property>
 </channel>

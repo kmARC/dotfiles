@@ -5,7 +5,7 @@ Xft.hintstyle:  hintslight
 Xft.hinting:    1
 Xft.antialias:  1
 Xft.rgba:       rgb
-Xft.dpi:        82
+Xft.dpi:        120
 
 Xcursor.theme: DMZ-Black
 
@@ -14,13 +14,13 @@ Xcursor.theme: DMZ-Black
 *xterm*borderWidth:          0
 *xterm*disallowedWindowOps:  20,21,SetXprop
 *xterm*faceName:             xft:DejaVu Sans Mono:autohint=true
-*xterm*faceSize:             9
-*xterm*faceSize1:            4.0
-*xterm*faceSize2:            6.0
+*xterm*faceSize:             6
+*xterm*faceSize1:            2.0
+*xterm*faceSize2:            4.0
 *xterm*faceSize3:            8.0
-*xterm*faceSize4:            11.0
-*xterm*faceSize5:            13.0
-*xterm*faceSize6:            15.0
+*xterm*faceSize4:            12.0
+*xterm*faceSize5:            14.0
+*xterm*faceSize6:            16.0
 *xterm*highlightColor:       black
 *xterm*internalBorder:       0
 *xterm*italicULMode:         true
@@ -46,9 +46,9 @@ URxvt.font-size.step:  1
 URxvt.borderLess:      0
 URxvt.cutchars:        │
 URxvt.externalBorder:  0
-URxvt.font:            xft:DejaVu Sans Mono:size=9:hinting=true
-URxvt.boldFont:        xft:DejaVu Sans Mono:size=9:hinting=true:bold
-URxvt.italicFont:      xft:DejaVu Sans Mono:size=9:hinting=true:italic
+URxvt.font:            xft:DejaVu Sans Mono:size=6:hinting=true
+URxvt.boldFont:        xft:DejaVu Sans Mono:size=6:hinting=true:bold
+URxvt.italicFont:      xft:DejaVu Sans Mono:size=6:hinting=true:italic
 URxvt.internalBorder:  0
 URxvt.letterSpace:     -2
 URxvt.scrollBar:       false
