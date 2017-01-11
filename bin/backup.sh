@@ -47,7 +47,7 @@ duplicity remove-older-than 6M --force $DEST
 
 duplicity cleanup --force --extra-clean $DEST
 
-duplicity remove-all-inc-of-but-n-full 1 --force $DEST
+duplicity remove-all-inc-of-but-n-full 3 --force $DEST
 
 duplicity collection-status $DEST
 
