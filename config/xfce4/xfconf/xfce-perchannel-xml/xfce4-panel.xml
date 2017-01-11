@@ -3,12 +3,11 @@
 <channel name="xfce4-panel" version="1.0">
   <property name="panels" type="uint" value="1">
     <property name="panel-0" type="empty">
-      <property name="position" type="string" value="p=6;x=0;y=0"/>
+      <property name="position" type="string" value="p=6;x=683;y=12"/>
       <property name="length" type="uint" value="100"/>
       <property name="position-locked" type="bool" value="true"/>
       <property name="plugin-ids" type="array">
         <value type="int" value="6"/>
-        <value type="int" value="9"/>
         <value type="int" value="3"/>
         <value type="int" value="1"/>
         <value type="int" value="4"/>
@@ -25,14 +24,15 @@
       <property name="enter-opacity" type="uint" value="100"/>
       <property name="leave-opacity" type="uint" value="100"/>
       <property name="mode" type="uint" value="0"/>
-      <property name="autohide-behavior" type="uint" value="1"/>
+      <property name="autohide-behavior" type="uint" value="0"/>
       <property name="background-color" type="array">
         <value type="uint" value="0"/>
         <value type="uint" value="0"/>
         <value type="uint" value="0"/>
         <value type="uint" value="65535"/>
       </property>
-      <property name="disable-struts" type="bool" value="true"/>
+      <property name="disable-struts" type="bool" value="false"/>
+      <property name="output-name" type="string" value=""/>
     </property>
   </property>
   <property name="plugins" type="empty">
@@ -49,20 +49,26 @@
         <value type="string" value="networkmanager applet"/>
         <value type="string" value="network"/>
         <value type="string" value="skype"/>
-        <value type="string" value="savtray"/>
+        <value type="string" value="gigolo"/>
         <value type="string" value="-c"/>
         <value type="string" value="ibmsaml"/>
-        <value type="string" value="shutter"/>
+        <value type="string" value="savtray"/>
         <value type="string" value="blueman-applet"/>
         <value type="string" value="steam"/>
+        <value type="string" value="shutter"/>
+        <value type="string" value="notification-daemon"/>
         <value type="string" value="update-notifier"/>
+        <value type="string" value="ekiga softphone"/>
         <value type="string" value="xfce4-power-manager"/>
+        <value type="string" value="notes plugin"/>
+        <value type="string" value="notifications"/>
         <value type="string" value="insync.py"/>
         <value type="string" value="ibm notes"/>
-        <value type="string" value="ibus-ui-gtk3"/>
         <value type="string" value="slack"/>
         <value type="string" value="notes"/>
         <value type="string" value="hp-systray"/>
+        <value type="string" value="scp-dbus-service.py"/>
+        <value type="string" value="ibus-ui-gtk3"/>
       </property>
     </property>
     <property name="plugin-5" type="string" value="power-manager-plugin"/>
@@ -79,12 +85,6 @@
       <property name="workspace-scrolling" type="bool" value="false"/>
     </property>
     <property name="plugin-1" type="string" value="xkb-plugin"/>
-    <property name="plugin-9" type="string" value="windowmenu">
-      <property name="style" type="uint" value="0"/>
-      <property name="workspace-names" type="bool" value="false"/>
-      <property name="workspace-actions" type="bool" value="false"/>
-      <property name="all-workspaces" type="bool" value="true"/>
-    </property>
     <property name="plugin-10" type="string" value="pulseaudio">
       <property name="enable-keyboard-shortcuts" type="bool" value="true"/>
     </property>

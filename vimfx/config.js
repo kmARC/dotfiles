@@ -13,6 +13,7 @@ let QuickMarks = [
   ['g', "https://gmail.com"],
   ['h', "http://hup.hu/tracker/3464"],
   ['k', "https://keep.google.com"],
+  ['z', "https://zc2.ibm.com/horizon/auth/login/?next=/horizon/"],
   ['c', "https://calendar.google.com"],
   ['v', "https://mail.notes.na.collabserv.com/verse"],
   ['b', "https://docs.google.com/spreadsheets/d/1OxnkfzxDTO0KgESQqf2BN6_-hQyLLbjMbMdOoATu0ts/edit"],
