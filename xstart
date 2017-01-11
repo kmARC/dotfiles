@@ -1,0 +1,36 @@
+#!/usr/bin/env bash
+
+export QT_QPA_PLATFORMTHEME="qt5ct"
+export _JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=lcd -Dswing.aatext=true -Dswing.crossplatformlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel'
+ssh-add -k
+
+# X settings
+xrdb -load ~/.Xresources
+xsetroot -cursor_name left_ptr
+~/.fehbg
+
+# Daemons
+sxhkd &
+compton &
+xfsettingsd --sm-client-disable
+xfce4-panel -d --sm-client-disable &
+
+dex /etc/xdg/autostart/xfce4-power-manager.desktop
+dex /etc/xdg/autostart/gnome-keyring-ssh.desktop
+dex /etc/xdg/autostart/gnome-keyring-pkcs11.desktop
+dex /etc/xdg/autostart/gnome-keyring-secrets.desktop
+dex /etc/xdg/autostart/light-locker.desktop
+
+# Panel applets
+dex /etc/xdg/autostart/nm-applet.desktop
+dex /etc/xdg/autostart/blueman.desktop
+dex /etc/xdg/autostart/hplip-systray.desktop
+dex /etc/xdg/autostart/print-applet.desktop
+
+# Applications
+dex /usr/share/applications/skype.desktop
+dex /usr/share/applications/slack.desktop
+dex /usr/share/applications/insync.desktop
+dex "$HOME/.config/autostart/shutter.desktop"
+
+exec bspwm

@@ -49,7 +49,9 @@
     ~/.toprc:
     ~/.vimfx:
     ~/.Xresources:
-    ~/.xsessionrc:
+    ~/.xprofile:
+    ~/.xinitrc:
+        path: xprofile
 
 - shell:
   - [git submodule update --init --remote, Installing/updating submodules]
