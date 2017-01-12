@@ -6,10 +6,9 @@ Setting up on a new host
 
 ### Install prerequisites
 
-    sudo apt-get install git vim
-    sudo apt-get install curl build-essential cmake \
-        python-dev python-unidecode silversearcher-ag
-
+    sudo apt-get -y install git vim
+    sudo apt-get -y install curl build-essential cmake python-dev \
+                            python-unidecode silversearcher-ag nodejs-legacy npm
 
 ### Set up vim with plugins
 
@@ -22,8 +21,8 @@ you can startup vim with all plugins installed.
 ### Configure look&feel
 
 My choice of terminal GUI colors is base16. For more information how to set it
-up, visit [https://github.com/chriskempson/base16-shell](base16-shell on
-GitHub).
+up, visit [base16-shell on
+GitHub](https://github.com/chriskempson/base16-shell).
 
 Update a host
 -------------
@@ -34,15 +33,18 @@ Update a host
 
 Programming languages
 ---------------------
-*TODO: These could be written as shell scripts*
 
-Optional fo **Shell scripting***
+Optional fo **Shell scripting**
 
     sudo apt-get install shellcheck
 
 Optional for **Python**
 
     sudo apt-get install pylint ipython bpython
+
+Optional for **Markdown**
+
+    sudo npm install -g livedown
 
 Installing new modules
 ----------------------

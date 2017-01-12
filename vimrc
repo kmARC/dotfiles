@@ -1,18 +1,22 @@
 call plug#begin('~/.vim/plugged')
 "--- Tools ---
-Plug 'christoomey/vim-tmux-navigator'
-Plug 'jpalardy/vim-slime'
 Plug 'junegunn/fzf'             , {'dir': '~/.fzf', 'frozen': 1 }
 Plug 'junegunn/fzf.vim'
 Plug 'junegunn/vim-peekaboo'
 Plug 'romainl/vim-qf'
 Plug 'scrooloose/nerdtree'      , {'on': 'NERDTreeToggle' }
 Plug 'tpope/vim-unimpaired'
+"--- Git ---
+Plug 'airblade/vim-gitgutter'
+Plug 'shumphrey/fugitive-gitlab.vim'
+Plug 'tpope/vim-fugitive'
+"--- TMUX ---
+Plug 'jpalardy/vim-slime'
+Plug 'christoomey/vim-tmux-navigator'
+Plug 'tmux-plugins/vim-tmux'
 "--- Filetype helpers ---
 Plug 'nblock/vim-dokuwiki'
-Plug 'plasticboy/vim-markdown'
-Plug 'tmux-plugins/vim-tmux'
-" Plug 'jceb/vim-orgmode'
+Plug 'jceb/vim-orgmode'                 , {'for': 'org'}
 "--- Editing ---
 Plug 'Raimondi/delimitMate'
 Plug 'godlygeek/tabular'                , {'on': 'Tabularize'}
@@ -22,24 +26,25 @@ Plug 'tpope/vim-surround'
 Plug 'chriskempson/base16-vim'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-"--- Git ---
-Plug 'airblade/vim-gitgutter'
-Plug 'shumphrey/fugitive-gitlab.vim'
-Plug 'tpope/vim-fugitive'
 "--- Programming ---
-Plug 'Shougo/neocomplete.vim'
 Plug 'SirVer/ultisnips'
-Plug 'Valloric/YouCompleteMe'  , {'do':  './install.sh'}
+Plug 'Valloric/YouCompleteMe'   , {'do':  './install.sh'}
 Plug 'honza/vim-snippets'
 Plug 'majutsushi/tagbar'
 Plug 'tpope/vim-commentary'
 Plug 'w0rp/ale'
+"--- Markdown ---
+Plug 'plasticboy/vim-markdown'  , {'for': 'markdown'}
+Plug 'shime/vim-livedown'       , {'for': 'markdown'}
 "--- HTML ---
-Plug 'mattn/emmet-vim'      , {'for': 'html'}
-Plug 'othree/html5.vim'     , {'for': 'html'}
+Plug 'mattn/emmet-vim'          , {'for': 'html'}
+Plug 'othree/html5.vim'         , {'for': 'html'}
 "--- CSS ---
-Plug 'ap/vim-css-color'     , {'for': 'css'}
-Plug 'groenewege/vim-less'  , {'for': 'css'}
+Plug 'ap/vim-css-color'         , {'for': 'css'}
+Plug 'groenewege/vim-less'      , {'for': 'css'}
+"--- Dependencies
+Plug 'tpope/vim-repeat'
+
 " "--- JavaScript ---
 " Plug 'moll/vim-node'
 " Plug 'mxw/vim-jsx'
@@ -57,9 +62,6 @@ Plug 'groenewege/vim-less'  , {'for': 'css'}
 " Plug 'eagletmt/neco-ghc'      , {'for': 'haskell'}
 " Plug 'raichoo/haskell-vim'    , {'for': 'haskell'}
 " Plug 'Twinside/vim-hoogle'    , {'for': 'haskell'}
-"--- Dependencies
-Plug 'tpope/vim-repeat'
-" Plug 'Shougo/vimproc.vim' , {'do':  'make'}   " ghcmod-vim
 call plug#end()
 
 runtime macros/matchit.vim
@@ -133,6 +135,7 @@ nnoremap <leader>f         :call ToggleFold()<CR>
 nnoremap <leader>t:        Vap:Tabularize /:\zs/l0l1<CR>
 nnoremap <leader>t<Space>  Vap:Tabularize /\S\+/l1l0<CR>
 nnoremap <leader>t=        Vap:Tabularize /=\+/l1c1<CR>
+nnoremap <leader>t<bar>    Vap:Tabularize /<bar>\+/l1c1<CR>
 nnoremap <leader>w         :bd %<CR>
 nnoremap <ScrollWheelDown> 2<C-E>
 nnoremap <ScrollWheelUp>   2<C-Y>
@@ -147,6 +150,7 @@ nnoremap ]h                :GitGutterNextHunk<CR>
 autocmd WinLeave *                            if &buftype == "" | setlocal nu nornu | endif
 autocmd WinEnter *                            if &buftype == "" | setlocal nu rnu | endif
 autocmd FileType vim                          nnoremap <buffer> K :help <C-R><C-W><CR>
+autocmd FileType markdown                     nnoremap <buffer> <F6> :LivedownToggle<CR>
 autocmd FileType markdown                     nnoremap <buffer> <F8> :Toc<CR>
 autocmd FileType c,cpp,python,javascript*     nnoremap <buffer> <Leader>] :YcmCompleter GoTo<CR>
 autocmd VimLeave,BufLeave *.css,*.less,*.scss normal! mC
