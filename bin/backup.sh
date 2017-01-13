@@ -1,6 +1,10 @@
+#!/usr/bin/env bash
+
 DEST_SERVER="backup.oro.zc2.ibm.com"
 DEST_PATH="/var/backups/"
 DEST_USER="ubuntu"
+
+DEST="rsync://${DEST_USER}@${DEST_SERVER}/${DEST_PATH}"
 
 ping -c1 ${DEST_SERVER} > /dev/null 2>&1
 if [ $? != 0 ]; then
@@ -14,8 +18,6 @@ if [ -z "$PASSPHRASE" ]; then
     export PASSPHRASE
     echo
 fi
-
-DEST="rsync://${DEST_USER}@${DEST_SERVER}/${DEST_PATH}"
 
 echo "======"
 echo "    Creating backup @ $(date)"
