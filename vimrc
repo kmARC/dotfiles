@@ -28,7 +28,8 @@ Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 "--- Programming ---
 Plug 'SirVer/ultisnips'
-Plug 'Valloric/YouCompleteMe'   , {'do':  './install.sh'}
+Plug 'Valloric/YouCompleteMe'           , {'do':  './install.sh'}
+Plug 'editorconfig/editorconfig-vim'
 Plug 'honza/vim-snippets'
 Plug 'majutsushi/tagbar'
 Plug 'tpope/vim-commentary'
@@ -127,16 +128,17 @@ nmap <leader>8             <Plug>AirlineSelectTab8
 nmap <leader>9             <Plug>AirlineSelectTab9
 nnoremap <C-e>             2<C-E>
 nnoremap <C-y>             2<C-y>
+nnoremap <C-p>             :Files<CR>
 nnoremap <F7>              :NERDTreeToggle<CR>
 nnoremap <F8>              :TagbarToggle<CR>
 nnoremap <F9>              :lclose<CR>:cclose<CR>
 nnoremap <leader>W         :bufdo bd<CR>
+nnoremap <leader>w         :bp<CR>:bd #<CR>
 nnoremap <leader>f         :call ToggleFold()<CR>
 nnoremap <leader>t:        Vap:Tabularize /:\zs/l0l1<CR>
 nnoremap <leader>t<Space>  Vap:Tabularize /\S\+/l1l0<CR>
 nnoremap <leader>t=        Vap:Tabularize /=\+/l1c1<CR>
 nnoremap <leader>t<bar>    Vap:Tabularize /<bar>\+/l1c1<CR>
-nnoremap <leader>w         :bd %<CR>
 nnoremap <ScrollWheelDown> 2<C-E>
 nnoremap <ScrollWheelUp>   2<C-Y>
 nnoremap <s-tab>           :bp<CR>
@@ -145,6 +147,8 @@ nnoremap N                 Nzz
 nnoremap n                 nzz
 nnoremap [h                :GitGutterPrevHunk<CR>
 nnoremap ]h                :GitGutterNextHunk<CR>
+nnoremap <leader>a         :call fzf#vim#grep('ag --<C-r>=&l:filetype<CR> --nogroup --column --color "(?=.)"', 1)<CR>
+nnoremap <leader>A         :call fzf#vim#grep('ag --<C-r>=&l:filetype<CR> --nogroup --column --color "(?=<C-r><C-w>)"', 1)<CR>
 
 "--- Autocommands ---
 autocmd WinLeave *                            if &buftype == "" | setlocal nu nornu | endif
@@ -153,18 +157,18 @@ autocmd FileType vim                          nnoremap <buffer> K :help <C-R><C-
 autocmd FileType markdown                     nnoremap <buffer> <F6> :LivedownToggle<CR>
 autocmd FileType markdown                     nnoremap <buffer> <F8> :Toc<CR>
 autocmd FileType c,cpp,python,javascript*     nnoremap <buffer> <Leader>] :YcmCompleter GoTo<CR>
-autocmd VimLeave,BufLeave *.css,*.less,*.scss normal! mC
-autocmd VimLeave,BufLeave *.html              normal! mH
-autocmd VimLeave,BufLeave *.js,*.jsx,*.ts     normal! mJ
-autocmd VimLeave,BufLeave *.md                normal! mM
-autocmd VimLeave,BufLeave *.py                normal! mP
-autocmd VimLeave,BufLeave *.sh                normal! mS
-autocmd VimLeave,BufLeave *.vim,vimrc         normal! mV
 autocmd BufRead Vagrantfile                   setlocal filetype=ruby
 autocmd FileType javascript*                  setlocal sw=2 sts=2 ts=2
 autocmd FileType plaintex,text,markdown       setlocal tw=80
 autocmd VimResized */doc/*                    wincmd L | 80 wincmd | | set winfixwidth
 autocmd BufRead,BufEnter */doc/*              wincmd L | 80 wincmd | | set winfixwidth
+autocmd VimLeave,BufLeave,BufUnload *.css,*.less,*.scss normal! mC
+autocmd VimLeave,BufLeave,BufUnload *.html              normal! mH
+autocmd VimLeave,BufLeave,BufUnload *.js,*.jsx,*.ts     normal! mJ
+autocmd VimLeave,BufLeave,BufUnload *.md                normal! mM
+autocmd VimLeave,BufLeave,BufUnload *.py                normal! mP
+autocmd VimLeave,BufLeave,BufUnload *.sh                normal! mS
+autocmd VimLeave,BufLeave,BufUnload *.vim,vimrc         normal! mV
 
 "--- Functions ---
 function! ToggleFold()
@@ -182,6 +186,9 @@ endfunction
 
 "--- delimitMate ---
 let delimitMate_expand_cr = 1
+
+"--- editorconfig-vim ---
+let g:EditorConfig_exclude_patterns = ['fugitive://.*']
 
 "--- flow ---
 let g:flow#enable = 0
