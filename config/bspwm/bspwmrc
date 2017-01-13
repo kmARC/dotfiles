@@ -15,6 +15,7 @@ bspc config remove_unplugged_monitors true
 bspc config single_monocle            true
 bspc config pointer_follows_focus     true
 bspc config pointer_follows_monitor   true
+bspc config honor_size_hints          true
 
 bspc rule -a "Firefox"          desktop=2 follow=on
 bspc rule -a "*:google-chrome"  desktop=2 follow=on
@@ -38,3 +39,4 @@ bspc rule -a "*:vpnui"            state=floating
 
 # Configure desktop
 ~/bin/desktop.sh
+~/.xstart
