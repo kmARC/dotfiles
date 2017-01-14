@@ -147,8 +147,9 @@ nnoremap N                 Nzz
 nnoremap n                 nzz
 nnoremap [h                :GitGutterPrevHunk<CR>
 nnoremap ]h                :GitGutterNextHunk<CR>
-nnoremap <leader>a         :call fzf#vim#grep('ag --<C-r>=&l:filetype<CR> --nogroup --column --color "(?=.)"', 1)<CR>
-nnoremap <leader>A         :call fzf#vim#grep('ag --<C-r>=&l:filetype<CR> --nogroup --column --color "(?=<C-r><C-w>)"', 1)<CR>
+nnoremap <leader>a         :call fzf#vim#grep('ag --<C-r>=&l:filetype<CR> --nogroup --column --color "(?=.)"', 1, {'options':'--exact'})<CR>
+nnoremap <leader>A         :call fzf#vim#grep('ag --<C-r>=&l:filetype<CR> --nogroup --column --color "(?=.)"', 1, {'options':'--exact --query=<C-r><C-w> +i'})<CR>
+nnoremap <leader>t         :call fzf#vim#tags('^<C-r><C-w> ', {'options':'--exact +i'})<CR>
 
 "--- Autocommands ---
 autocmd WinLeave *                            if &buftype == "" | setlocal nu nornu | endif
@@ -162,13 +163,13 @@ autocmd FileType javascript*                  setlocal sw=2 sts=2 ts=2
 autocmd FileType plaintex,text,markdown       setlocal tw=80
 autocmd VimResized */doc/*                    wincmd L | 80 wincmd | | set winfixwidth
 autocmd BufRead,BufEnter */doc/*              wincmd L | 80 wincmd | | set winfixwidth
-autocmd VimLeave,BufLeave,BufUnload *.css,*.less,*.scss normal! mC
-autocmd VimLeave,BufLeave,BufUnload *.html              normal! mH
-autocmd VimLeave,BufLeave,BufUnload *.js,*.jsx,*.ts     normal! mJ
-autocmd VimLeave,BufLeave,BufUnload *.md                normal! mM
-autocmd VimLeave,BufLeave,BufUnload *.py                normal! mP
-autocmd VimLeave,BufLeave,BufUnload *.sh                normal! mS
-autocmd VimLeave,BufLeave,BufUnload *.vim,vimrc         normal! mV
+autocmd BufLeave *.css,*.less,*.scss          normal! mC
+autocmd BufLeave *.html                       normal! mH
+autocmd BufLeave *.js,*.jsx,*.ts              normal! mJ
+autocmd BufLeave *.md                         normal! mM
+autocmd BufLeave *.py                         normal! mP
+autocmd BufLeave *.sh                         normal! mS
+autocmd BufLeave *.vim,vimrc                  normal! mV
 
 "--- Functions ---
 function! ToggleFold()
