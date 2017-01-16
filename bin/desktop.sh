@@ -16,6 +16,12 @@ function common_res {
            | head -1
 }
 
+function is_primary {
+    xrandr | grep "$1" \
+           | grep primary \
+           > /dev/null
+}
+
 if [[ ${#MONS[@]} == 2 && $MODE != 'mirror' ]]; then
     # Choose primary and secondary
     if [[ $MODE == 'reverse' ]]; then
@@ -33,6 +39,9 @@ if [[ ${#MONS[@]} == 2 && $MODE != 'mirror' ]]; then
     echo "Setting up monitors: primary   - $PRI ($MOD_PRI)"
     echo "                     secondary - $SEC ($MOD_SEC)"
     # Enable second monitor
+    if ! is_primary $PRI; then
+        xrandr --output "$PRI" --off
+    fi
     xrandr --output "$SEC" --mode "$MOD_SEC" \
            --output "$PRI" --mode "$MOD_PRI" --left-of "$SEC" --primary
     # Move around desktops

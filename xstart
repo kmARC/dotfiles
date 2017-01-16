@@ -27,9 +27,9 @@ dex /etc/xdg/autostart/gnome-keyring-pkcs11.desktop
 dex /etc/xdg/autostart/gnome-keyring-secrets.desktop
 dex /etc/xdg/autostart/gnome-keyring-ssh.desktop
 dex /etc/xdg/autostart/light-locker.desktop
-dex /etc/xdg/autostart/xfce4-power-manager.desktop
 
 # Panel applets
+dex /etc/xdg/autostart/xfce4-power-manager.desktop
 dex /etc/xdg/autostart/blueman.desktop
 dex /etc/xdg/autostart/hplip-systray.desktop
 dex /etc/xdg/autostart/nm-applet.desktop
@@ -39,4 +39,6 @@ dex /etc/xdg/autostart/print-applet.desktop
 dex /usr/share/applications/insync.desktop
 dex /usr/share/applications/skype.desktop
 dex /usr/share/applications/slack.desktop
-dex "$HOME/.config/autostart/shutter.desktop"
+dex ~/.config/autostart/shutter.desktop
+
+~/bin/desktop.sh

@@ -38,5 +38,4 @@ bspc rule -a "Xfce4-appfinder"    state=floating
 bspc rule -a "*:vpnui"            state=floating
 
 # Configure desktop
-~/bin/desktop.sh
 ~/.xstart
