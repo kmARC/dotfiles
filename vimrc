@@ -112,10 +112,8 @@ set colorcolumn=81
 
 "--- Look & Feel ----
 set background=dark
-if filereadable(expand("~/.vimrc_background"))
-  let base16colorspace=256
-  silent! source ~/.vimrc_background
-endif
+let base16colorspace=256
+silent! source ~/.vimrc_background
 
 "--- Mappings ----
 cmap w!!                   w !sudo tee > /dev/null %
@@ -133,46 +131,46 @@ nnoremap <C-y>             2<C-y>
 nnoremap <C-p>             :Files<CR>
 nnoremap <F7>              :NERDTreeToggle<CR>
 nnoremap <F8>              :TagbarToggle<CR>
-nnoremap <F9>              :lclose<CR>:cclose<CR>
-nnoremap <leader>W         :bufdo bd<CR>
-nnoremap <leader>w         :bp<CR>:bd #<CR>
-nnoremap <leader>f         :call ToggleFold()<CR>
+nnoremap <F9>              :lclose<CR>:cclose<CR>:pclose<CR>
+nnoremap <leader>fa        :call fzf#vim#grep('ag --<C-r>=&l:filetype<CR> --nogroup --column --color "(?=.)"', 1, {'options':'--exact'})<CR>
+nnoremap <leader>fA        :call fzf#vim#grep('ag --<C-r>=&l:filetype<CR> --nogroup --column --color "(?=.)"', 1, {'options':'--exact --query=<C-r><C-w> +i'})<CR>
+nnoremap <leader>ft        :call fzf#vim#tags('', {'options':'--exact +i'})<CR>
+nnoremap <leader>fT        :call fzf#vim#tags('^<C-r><C-w> ', {'options':'--exact +i'})<CR>
+nnoremap <leader>w         :call BufferClose()<CR>
+nnoremap <leader>W         :call BufferCloseAll()<CR>
+nnoremap <leader>F         :call ToggleFold()<CR>
 nnoremap <leader>t:        Vap:Tabularize /:\zs/l0l1<CR>
 nnoremap <leader>t<Space>  Vap:Tabularize /\S\+/l1l0<CR>
 nnoremap <leader>t=        Vap:Tabularize /=\+/l1c1<CR>
 nnoremap <leader>t<bar>    Vap:Tabularize /<bar>\+/l1c1<CR>
+nnoremap <s-tab>           :call BufferPrev()<CR>
+nnoremap <tab>             :call BufferNext()<CR>
 nnoremap <ScrollWheelDown> 2<C-E>
 nnoremap <ScrollWheelUp>   2<C-Y>
-nnoremap <silent><s-tab>   :call BufferPrev()<CR>
-nnoremap <silent><tab>     :call BufferNext()<CR>
-nnoremap N                 Nzz
 nnoremap n                 nzz
+nnoremap N                 Nzz
 nnoremap [h                :GitGutterPrevHunk<CR>
 nnoremap ]h                :GitGutterNextHunk<CR>
-nnoremap <leader>a         :call fzf#vim#grep('ag --<C-r>=&l:filetype<CR> --nogroup --column --color "(?=.)"', 1, {'options':'--exact'})<CR>
-nnoremap <leader>A         :call fzf#vim#grep('ag --<C-r>=&l:filetype<CR> --nogroup --column --color "(?=.)"', 1, {'options':'--exact --query=<C-r><C-w> +i'})<CR>
-nnoremap <leader>t         :call fzf#vim#tags('^<C-r><C-w> ', {'options':'--exact +i'})<CR>
 
 "--- Autocommands ---
-autocmd WinLeave *                            if &l:buftype == "" | setlocal nu nornu
-autocmd WinEnter *                            if &l:buftype == "" | setlocal nu rnu
-autocmd FileType vim                          nnoremap <buffer> K :help <C-R><C-W><CR>
-autocmd FileType markdown                     nnoremap <buffer> <F6> :LivedownToggle<CR>
-autocmd FileType markdown                     nnoremap <buffer> <F8> :Toc<CR>
-autocmd FileType c,cpp,python,javascript*     nnoremap <buffer> <Leader>] :YcmCompleter GoTo<CR>
-autocmd BufRead Vagrantfile                   setlocal filetype=ruby
-autocmd FileType javascript*,vim              setlocal sw=2 sts=2 ts=2
-autocmd FileType plaintex,text,markdown       setlocal tw=80
-autocmd VimResized */doc/*                    wincmd L | 80 wincmd | | set winfixwidth
-autocmd BufRead,BufEnter */doc/*              wincmd L | 80 wincmd | | set winfixwidth
-autocmd BufLeave *.css,*.less,*.scss          normal! mC
-autocmd BufLeave *.html                       normal! mH
-autocmd BufLeave *.js,*.jsx,*.ts              normal! mJ
-autocmd BufLeave *.md                         normal! mM
-autocmd BufLeave *.py                         normal! mP
-autocmd BufLeave *.sh                         normal! mS
-autocmd BufLeave *.vim,vimrc                  normal! mV
-
+autocmd WinLeave *                              if &l:buftype == "" | setlocal nu nornu
+autocmd WinEnter *                              if &l:buftype == "" | setlocal nu rnu
+autocmd FileType vim                            nnoremap <buffer> K :help <C-R><C-W><CR>
+autocmd FileType markdown                       nnoremap <buffer> <F6> :LivedownToggle<CR>
+autocmd FileType markdown                       nnoremap <buffer> <F8> :Toc<CR>
+autocmd FileType c,cpp,python,javascript*       nnoremap <buffer> <Leader>] :YcmCompleter GoTo<CR>
+autocmd BufRead Vagrantfile                     setlocal filetype=ruby
+autocmd FileType vim,javascript*                setlocal sw=2 sts=2 ts=2
+autocmd FileType plaintex,text,markdown         setlocal tw=80
+autocmd VimResized */doc/*                      wincmd L | 80 wincmd | | set winfixwidth
+autocmd BufRead,BufEnter */doc/*                wincmd L | 80 wincmd | | set winfixwidth
+autocmd BufLeave,BufWrite *.css,*.less,*.scss   normal! mC
+autocmd BufLeave,BufWrite *.html                normal! mH
+autocmd BufLeave,BufWrite *.js,*.jsx,*.ts       normal! mJ
+autocmd BufLeave,BufWrite *.md                  normal! mM
+autocmd BufLeave,BufWrite *.py                  normal! mP
+autocmd BufLeave,BufWrite *.sh                  normal! mS
+autocmd BufLeave,BufWrite *.vim,vimrc           normal! mV
 
 "--- Functions ---
 function! ToggleFold()
@@ -197,6 +195,23 @@ function! BufferPrev()
     bp
   endif
 endfunction
+
+function! BufferClose()
+  if &l:buftype != '' || ! &l:buflisted
+    quit
+  elseif len(getbufinfo({'buflisted':1})) == 1
+    bd
+  else
+    bp
+    bd #
+  endif
+endfunction
+
+function! BufferCloseAll()
+  bufdo bd
+endfunction
+
+
 
 "--- Plugin configurations ---
 
