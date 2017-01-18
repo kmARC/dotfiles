@@ -8,6 +8,7 @@ Plug 'scrooloose/nerdtree'      , {'on': 'NERDTreeToggle' }
 Plug 'tpope/vim-unimpaired'
 "--- Git ---
 Plug 'airblade/vim-gitgutter'
+Plug 'mattn/gist-vim'
 Plug 'shumphrey/fugitive-gitlab.vim'
 Plug 'tpope/vim-fugitive'
 "--- TMUX ---
@@ -44,6 +45,7 @@ Plug 'othree/html5.vim'         , {'for': 'html'}
 Plug 'ap/vim-css-color'         , {'for': 'css'}
 Plug 'groenewege/vim-less'      , {'for': 'css'}
 "--- Dependencies
+Plug 'mattn/webapi-vim'
 Plug 'tpope/vim-repeat'
 
 " "--- JavaScript ---
@@ -111,8 +113,8 @@ set colorcolumn=81
 "--- Look & Feel ----
 set background=dark
 if filereadable(expand("~/.vimrc_background"))
-    let base16colorspace=256
-    silent! source ~/.vimrc_background
+  let base16colorspace=256
+  silent! source ~/.vimrc_background
 endif
 
 "--- Mappings ----
@@ -141,8 +143,8 @@ nnoremap <leader>t=        Vap:Tabularize /=\+/l1c1<CR>
 nnoremap <leader>t<bar>    Vap:Tabularize /<bar>\+/l1c1<CR>
 nnoremap <ScrollWheelDown> 2<C-E>
 nnoremap <ScrollWheelUp>   2<C-Y>
-nnoremap <s-tab>           :bp<CR>
-nnoremap <tab>             :bn<CR>
+nnoremap <silent><s-tab>   :call BufferPrev()<CR>
+nnoremap <silent><tab>     :call BufferNext()<CR>
 nnoremap N                 Nzz
 nnoremap n                 nzz
 nnoremap [h                :GitGutterPrevHunk<CR>
@@ -152,14 +154,14 @@ nnoremap <leader>A         :call fzf#vim#grep('ag --<C-r>=&l:filetype<CR> --nogr
 nnoremap <leader>t         :call fzf#vim#tags('^<C-r><C-w> ', {'options':'--exact +i'})<CR>
 
 "--- Autocommands ---
-autocmd WinLeave *                            if &buftype == "" | setlocal nu nornu | endif
-autocmd WinEnter *                            if &buftype == "" | setlocal nu rnu | endif
+autocmd WinLeave *                            if &l:buftype == "" | setlocal nu nornu
+autocmd WinEnter *                            if &l:buftype == "" | setlocal nu rnu
 autocmd FileType vim                          nnoremap <buffer> K :help <C-R><C-W><CR>
 autocmd FileType markdown                     nnoremap <buffer> <F6> :LivedownToggle<CR>
 autocmd FileType markdown                     nnoremap <buffer> <F8> :Toc<CR>
 autocmd FileType c,cpp,python,javascript*     nnoremap <buffer> <Leader>] :YcmCompleter GoTo<CR>
 autocmd BufRead Vagrantfile                   setlocal filetype=ruby
-autocmd FileType javascript*                  setlocal sw=2 sts=2 ts=2
+autocmd FileType javascript*,vim              setlocal sw=2 sts=2 ts=2
 autocmd FileType plaintex,text,markdown       setlocal tw=80
 autocmd VimResized */doc/*                    wincmd L | 80 wincmd | | set winfixwidth
 autocmd BufRead,BufEnter */doc/*              wincmd L | 80 wincmd | | set winfixwidth
@@ -171,16 +173,29 @@ autocmd BufLeave *.py                         normal! mP
 autocmd BufLeave *.sh                         normal! mS
 autocmd BufLeave *.vim,vimrc                  normal! mV
 
+
 "--- Functions ---
 function! ToggleFold()
-    if &l:foldmethod == "manual"
-        let &l:foldmethod='indent'
-        let &l:foldcolumn=&l:tabstop
-    else
-        let &l:foldmethod='manual'
-        let &l:foldcolumn=0
-        normal zE
-    endif
+  if &l:foldmethod == "manual"
+    let &l:foldmethod='indent'
+    let &l:foldcolumn=&l:tabstop
+  else
+    let &l:foldmethod='manual'
+    let &l:foldcolumn=0
+    normal zE
+  endif
+endfunction
+
+function! BufferNext()
+  if &l:buftype == '' && &l:buflisted
+    bn
+  endif
+endfunction
+
+function! BufferPrev()
+  if &l:buftype == '' && &l:buflisted
+    bp
+  endif
 endfunction
 
 "--- Plugin configurations ---
@@ -196,11 +211,12 @@ let g:flow#enable = 0
 
 "--- fugitive.vim ---
 autocmd BufReadPost fugitive://* set bufhidden=delete
+autocmd BufReadPost *.git/index  set nobuflisted
 
 "--- fugitive-gitlab.vim ---
 let g:fugitive_gitlab_domains = [
-    \ 'http://gitlab.zurich.ibm.com'
-\ ]
+      \ 'http://gitlab.zurich.ibm.com'
+      \ ]
 
 "--- nerdtree ---
 autocmd vimenter * wincmd p
