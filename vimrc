@@ -155,6 +155,7 @@ nnoremap ]h                :GitGutterNextHunk<CR>
 "--- Autocommands ---
 autocmd WinLeave *                              if &l:buftype == "" | setlocal nu nornu
 autocmd WinEnter *                              if &l:buftype == "" | setlocal nu rnu
+autocmd BufEnter *                              call ExitIfNoListedBufsDisplayed()
 autocmd FileType vim                            nnoremap <buffer> K :help <C-R><C-W><CR>
 autocmd FileType markdown                       nnoremap <buffer> <F6> :LivedownToggle<CR>
 autocmd FileType markdown                       nnoremap <buffer> <F8> :Toc<CR>
@@ -172,7 +173,7 @@ autocmd BufLeave,BufWrite *.py                  normal! mP
 autocmd BufLeave,BufWrite *.sh                  normal! mS
 autocmd BufLeave,BufWrite *.vim,vimrc           normal! mV
 
-"--- Functions ---
+"--- Functions --- {{{
 function! ToggleFold()
   if &l:foldmethod == "manual"
     let &l:foldmethod='indent'
@@ -208,10 +209,19 @@ function! BufferClose()
 endfunction
 
 function! BufferCloseAll()
-  bufdo bd
+  bufdo if &l:buftype == '' | call BufferClose() | endif
 endfunction
 
-
+function! ExitIfNoListedBufsDisplayed()
+  let wins = 0
+  for buf in getbufinfo({'buflisted':1})
+    let wins += len(buf.windows)
+  endfor
+  if wins == 0
+    qall
+  endif
+endfunction
+" }}}
 
 "--- Plugin configurations ---
 
@@ -234,8 +244,6 @@ let g:fugitive_gitlab_domains = [
       \ ]
 
 "--- nerdtree ---
-autocmd vimenter * wincmd p
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
 let NERDTreeRespectWildIgnore = 1
 
 "--- netrw ---
@@ -286,3 +294,5 @@ let g:UltiSnipsSnippetDirectories=["plugged/vim-snippets/UltiSnips","UltiSnips"]
 set modeline
 set exrc
 set secure
+
+" vim: fdm=marker fdl=0 fen
