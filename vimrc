@@ -136,6 +136,7 @@ nnoremap <leader>fa        :call fzf#vim#grep('ag --<C-r>=&l:filetype<CR> --nogr
 nnoremap <leader>fA        :call fzf#vim#grep('ag --<C-r>=&l:filetype<CR> --nogroup --column --color "(?=.)"', 1, {'options':'--exact --query=<C-r><C-w> +i'})<CR>
 nnoremap <leader>ft        :call fzf#vim#tags('', {'options':'--exact +i'})<CR>
 nnoremap <leader>fT        :call fzf#vim#tags('^<C-r><C-w> ', {'options':'--exact +i'})<CR>
+nnoremap <leader>fb        :Buffers<CR>
 nnoremap <leader>w         :call BufferClose()<CR>
 nnoremap <leader>W         :call BufferCloseAll()<CR>
 nnoremap <leader>F         :call ToggleFold()<CR>
@@ -147,6 +148,8 @@ nnoremap <s-tab>           :call BufferPrev()<CR>
 nnoremap <tab>             :call BufferNext()<CR>
 nnoremap <ScrollWheelDown> 2<C-E>
 nnoremap <ScrollWheelUp>   2<C-Y>
+nnoremap <M-ScrollWheelDown> 4zl
+nnoremap <M-ScrollWheelUp>   4zh
 nnoremap n                 nzz
 nnoremap N                 Nzz
 nnoremap [h                :GitGutterPrevHunk<CR>
@@ -154,8 +157,8 @@ nnoremap ]h                :GitGutterNextHunk<CR>
 
 "--- Autocommands ---
 autocmd WinLeave *                              if &l:buftype == "" | setlocal nu nornu
-autocmd WinEnter *                              if &l:buftype == "" | setlocal nu rnu
-autocmd BufEnter *                              call ExitIfNoListedBufsDisplayed()
+autocmd BufEnter *                              if &l:buftype == "" | setlocal nu rnu
+autocmd WinEnter *                              call ExitIfNoListedBufsDisplayed()
 autocmd FileType vim                            nnoremap <buffer> K :help <C-R><C-W><CR>
 autocmd FileType markdown                       nnoremap <buffer> <F6> :LivedownToggle<CR>
 autocmd FileType markdown                       nnoremap <buffer> <F8> :Toc<CR>
