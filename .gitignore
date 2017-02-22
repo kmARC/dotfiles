@@ -3,6 +3,7 @@ vimswap/*
 vimundo/*
 spell/*
 misc/*
+sessions/*
 !*/.gitkeep
 plugged
 eclim
