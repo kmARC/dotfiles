@@ -138,6 +138,7 @@ nnoremap <leader>fw        :Windows<CR>
 nnoremap <leader>w         :call BufferClose()<CR>
 nnoremap <leader>W         :call BufferCloseAll()<CR>
 nnoremap <leader>z         :call ToggleFold()<CR>
+vnoremap <leader>t,        :Tabularize /,\zs/l0l1<CR>
 vnoremap <leader>t:        :Tabularize /:\zs/l0l1<CR>
 vnoremap <leader>t=        :Tabularize /=\+/l1c1<CR>
 vnoremap <leader>t<Space>  :Tabularize /\S\+/l1l0<CR>
@@ -168,7 +169,7 @@ autocmd FileType javascript*,typescript*        let &l:keywordprg=fnamemodify($M
 autocmd FileType css,less,scss                  let &l:keywordprg=fnamemodify($MYVIMRC, ":h") . "/docsearch.sh"
 "----- mappings
 autocmd FileType markdown                       nnoremap <buffer> <F6> :LivedownToggle<CR>
-autocmd FileType markdown                       nnoremap <buffer> <F8> :Toc<CR>
+autocmd FileType markdown                       nnoremap <buffer> <F8> :Toc<CR><C-w>L<C-w>50<bar>:setlocal winfixwidth<CR>
 autocmd FileType c,cpp                          nnoremap <buffer> <Leader>] :YcmCompleter GoTo<CR>
 autocmd FileType python                         nnoremap <buffer> <Leader>] :YcmCompleter GoTo<CR>
 autocmd FileType javascript*,typescript*        nnoremap <buffer> <Leader>] :YcmCompleter GoTo<CR>
@@ -179,7 +180,7 @@ autocmd FileType css,less,scss                  setlocal sw=2 sts=2 ts=2
 autocmd FileType plaintex,text,markdown         setlocal tw=80 formatprg=par\ -jw80
 "----- filetypes
 autocmd BufReadCmd Vagrantfile                  setlocal filetype=ruby
-autocmd BufReadCmd *.tsx                        setlocal filetype=typescript.jsx
+" autocmd BufReadCmd *.tsx                        setlocal filetype=typescript.jsx
 "----- marks
 autocmd BufWrite *.css,*.less,*.scss            normal! mC
 autocmd BufWrite *.html                         normal! mH
@@ -193,7 +194,7 @@ autocmd WinLeave *                              if &l:buftype == "" | setlocal n
 autocmd BufEnter *                              if &l:buftype == "" | setlocal nu rnu
 autocmd WinEnter *                              call ExitIfNoListedBufsDisplayed()
 autocmd FileType nerdtree                       nnoremap <buffer> <F7> :NERDTreeToggle<CR>
-autocmd BufRead,BufEnter,VimResized */doc/*     wincmd L | 80 wincmd | | setlocal winfixwidth
+autocmd BufWinEnter */doc/*                     wincmd L | 80 wincmd | | setlocal winfixwidth
 
 "--- Functions --- {{{
 function! ToggleFold()
