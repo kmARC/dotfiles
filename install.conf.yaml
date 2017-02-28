@@ -8,6 +8,8 @@
     # Explicit paths
     ~/.config/base16-shell:
         path: config/base16-shell
+    ~/.config/base16-xresources:
+        path: config/base16-shell
     ~/.config/bspwm/bspwmrc:
         path: config/bspwm/bspwmrc
     ~/.config/fontconfig:
@@ -38,7 +40,6 @@
     ~/.compton.conf:
     ~/.gtkrc-2.0:
     ~/.fzf:
-    ~/.inputrc:
     ~/.mailcap:
     ~/.muttrc:
     ~/.notmuch-config:

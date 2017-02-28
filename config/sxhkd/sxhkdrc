@@ -128,8 +128,14 @@ super + {Left,Down,Up,Right}
 super + {+,shift +} r
 	bspc node @/ -R {90, 270}
 
+ctrl + alt + l
+	xflock4
+
 XF86Display
-	/home/oro/bin/desktop.sh
+	bash -x /home/oro/bin/desktop.sh > /tmp/desktopsh.log 2>&1
+
+XF86AudioMicMute
+	~/bin/mic-mute-toggle.sh
 
 Print
 	shutter -w
@@ -137,27 +143,35 @@ Print
 shift + Print
 	shutter -s
 
-super + space; {b,t,p,m,s}
-	{firefox,thunar,/opt/cisco/anyconnect/bin/vpnui,spotify,skype}
+# Desktop apps
+super + space; b
+	dex /usr/share/applications/firefox.desktop
+
+super + space; t
+	dex /usr/share/applications/Thunar.desktop
+
+super + space; p
+	dex /usr/share/applications/cisco-anyconnect.desktop
+
+super + space; m
+	dex ~/.local/share/applications/spotify.desktop
+
+super + space; s
+	dex /usr/share/applications/skype.desktop
 
 super + space; v
-	virtualbox
+	dex /usr/share/applications/virtualbox.desktop
 
 super + space; k
-	slack
+	dex ~/.local/share/application/slack.desktop
 
 super + space; n
-	/opt/ibm/notes/notes
+	dex /usr/share/applications/IBMNotes9.0.desktop
 
+# Terminal apps
 super + space; x
 	urxvtcd -ls -e bash -ci 'tmux attach -t Session || tmux new -s Session'
 
 super + space; z
 	urxvtcd -ls -e bash -ci 'zc2'
-
-ctrl + alt + l
-	xflock4
-
-XF86AudioMicMute
-	~/bin/mic-mute-toggle.sh
 

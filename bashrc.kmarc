@@ -83,9 +83,6 @@ function __fzf_open__() {
 #################
 # LOOK AND FEEL #
 #################
-# VI mode
-set -o vi
-
 # Prompt
 __ps1 "blue"
 

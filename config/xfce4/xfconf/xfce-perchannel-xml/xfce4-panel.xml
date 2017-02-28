@@ -17,7 +17,7 @@
         <value type="int" value="8"/>
       </property>
       <property name="background-style" type="uint" value="1"/>
-      <property name="background-alpha" type="uint" value="65"/>
+      <property name="background-alpha" type="uint" value="60"/>
       <property name="size" type="uint" value="24"/>
       <property name="length-adjust" type="bool" value="true"/>
       <property name="span-monitors" type="bool" value="false"/>
@@ -44,31 +44,36 @@
       <property name="show-frame" type="bool" value="false"/>
       <property name="size-max" type="uint" value="22"/>
       <property name="names-visible" type="array">
+        <value type="string" value="teamviewer"/>
         <value type="string" value="vlc"/>
+        <value type="string" value="kazam"/>
+        <value type="string" value="scp-dbus-service.py"/>
+        <value type="string" value="insync.py"/>
         <value type="string" value="vpnui"/>
         <value type="string" value="networkmanager applet"/>
-        <value type="string" value="network"/>
+        <value type="string" value="hp-systray"/>
         <value type="string" value="skype"/>
-        <value type="string" value="gigolo"/>
-        <value type="string" value="-c"/>
-        <value type="string" value="ibmsaml"/>
-        <value type="string" value="savtray"/>
-        <value type="string" value="blueman-applet"/>
-        <value type="string" value="steam"/>
+        <value type="string" value="netzwerk"/>
         <value type="string" value="shutter"/>
+        <value type="string" value="network"/>
+        <value type="string" value="-c"/>
+        <value type="string" value="savtray"/>
+        <value type="string" value="ibus-ui-gtk3"/>
+        <value type="string" value="gigolo"/>
+        <value type="string" value="ekiga softphone"/>
         <value type="string" value="notification-daemon"/>
         <value type="string" value="update-notifier"/>
-        <value type="string" value="ekiga softphone"/>
-        <value type="string" value="xfce4-power-manager"/>
-        <value type="string" value="notes plugin"/>
+        <value type="string" value="steam"/>
+        <value type="string" value="skypeforlinux"/>
+        <value type="string" value="netzwerk-manager-applet"/>
         <value type="string" value="notifications"/>
-        <value type="string" value="insync.py"/>
-        <value type="string" value="ibm notes"/>
+        <value type="string" value="notes plugin"/>
         <value type="string" value="slack"/>
+        <value type="string" value="xfce4-power-manager"/>
+        <value type="string" value="ibmsaml"/>
+        <value type="string" value="ibm notes"/>
         <value type="string" value="notes"/>
-        <value type="string" value="hp-systray"/>
-        <value type="string" value="scp-dbus-service.py"/>
-        <value type="string" value="ibus-ui-gtk3"/>
+        <value type="string" value="blueman-applet"/>
       </property>
     </property>
     <property name="plugin-5" type="string" value="power-manager-plugin"/>

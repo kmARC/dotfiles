@@ -8,4 +8,3 @@ dht_port = 6881
 peer_exchange = yes
 encryption = allow_incoming,try_outgoing,enable_retry,prefer_plaintext
 method.set_key = event.download.erased, remove_file,"execute={rm,-drf,--,$d.get_base_path=}"
-

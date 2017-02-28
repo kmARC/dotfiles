@@ -17,6 +17,8 @@ xsetroot -cursor_name left_ptr
 # Daemons
 sxhkd &
 compton &
+xcape -t 250 -e 'Caps_Lock=Escape'
+
 
 # XFCE daemons withouth session management
 xfsettingsd --sm-client-disable
@@ -26,7 +28,7 @@ dex /etc/xdg/autostart/polkit-gnome-authentication-agent-1.desktop
 dex /etc/xdg/autostart/gnome-keyring-pkcs11.desktop
 dex /etc/xdg/autostart/gnome-keyring-secrets.desktop
 dex /etc/xdg/autostart/gnome-keyring-ssh.desktop
-dex /etc/xdg/autostart/light-locker.desktop
+dex /etc/xdg/autostart/xscreensaver.desktop
 
 # Panel applets
 dex /etc/xdg/autostart/xfce4-power-manager.desktop
@@ -38,7 +40,12 @@ dex /etc/xdg/autostart/print-applet.desktop
 # Applications
 dex /usr/share/applications/insync.desktop
 dex /usr/share/applications/skype.desktop
-dex /usr/share/applications/slack.desktop
+dex ~/.local/share/applications/slack.desktop
 dex ~/.config/autostart/shutter.desktop
+
+env | grep DBUS_SESSION_BUS_ADDRESS > /tmp/.Xdbus
+echo 'export DBUS_SESSION_BUS_ADDRESS' >> /tmp/.Xdbus
+env | grep XAUTHORITY >> /tmp/.Xdbus
+echo 'export XAUTHORITY' >> /tmp/.Xdbus
 
 ~/bin/desktop.sh

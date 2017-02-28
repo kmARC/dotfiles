@@ -106,7 +106,6 @@ bspc config -m "$PRI" top_padding 24
 
 # Set X keyboard related settings
 setxkbmap us,hu ,102_qwerty_dot_dead -option "grp:alt_shift_toggle,caps:ctrl_modifier"
-xcape -t 250 -e 'Caps_Lock=Escape'
 
 # Set X mouse related settings
 for ID in $(xinput | grep pointer \

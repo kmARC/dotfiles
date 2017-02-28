@@ -5,7 +5,6 @@ Xft.hintstyle:  hintslight
 Xft.hinting:    1
 Xft.antialias:  1
 Xft.rgba:       rgb
-Xft.dpi:        120
 
 Xcursor.theme: DMZ-Black
 
@@ -13,14 +12,14 @@ Xcursor.theme: DMZ-Black
 *xterm*activeIcon:           true
 *xterm*borderWidth:          0
 *xterm*disallowedWindowOps:  20,21,SetXprop
-*xterm*faceName:             xft:DejaVu Sans Mono:autohint=true
-*xterm*faceSize:             6
-*xterm*faceSize1:            2.0
-*xterm*faceSize2:            4.0
-*xterm*faceSize3:            8.0
-*xterm*faceSize4:            12.0
+*xterm*faceName:             xft:DejaVu Sans Mono
+*xterm*faceSize:             9.0
+*xterm*faceSize1:            3.0
+*xterm*faceSize2:            5.0
+*xterm*faceSize3:            7.0
+*xterm*faceSize4:            11.0
 *xterm*faceSize5:            14.0
-*xterm*faceSize6:            16.0
+*xterm*faceSize6:            17.0
 *xterm*highlightColor:       black
 *xterm*internalBorder:       0
 *xterm*italicULMode:         true
@@ -30,34 +29,32 @@ Xcursor.theme: DMZ-Black
 *VT100*translations:        #override Meta <Btn1Up>: exec-formatted("x-www-browser '%t'", PRIMARY)
 
 ! Urxvt settings
-URxvt.perl-ext-common: default,matcher,urxvt-font-size/font-size
-URxvt.keysym.C-Up:     font-size:increase
-URxvt.keysym.C-Down:   font-size:decrease
-URxvt.keysym.C-S-Up:   font-size:incglobal
-URxvt.keysym.C-S-Down: font-size:decglobal
-URxvt.keysym.C-equal:  font-size:reset
-URxvt.keysym.C-slash:  font-size:show
-URxvt.keysym.C-Delete: matcher:select
-URxvt.url-launcher:    /usr/bin/xdg-open
-URxvt.matcher.button:  1
-URxvt.matcher.rend.0:  Uline fg6
-URxvt.matcher.rend.1:  Uline fg6
-URxvt.font-size.step:  1
 URxvt.borderLess:      0
 URxvt.cutchars:        │
 URxvt.externalBorder:  0
-URxvt.font:            xft:DejaVu Sans Mono:size=6:hinting=true
-URxvt.boldFont:        xft:DejaVu Sans Mono:size=6:hinting=true:bold
-URxvt.italicFont:      xft:DejaVu Sans Mono:size=6:hinting=true:italic
+URxvt.font-size.step:  1
 URxvt.internalBorder:  0
-URxvt.letterSpace:     -2
-URxvt.scrollBar:       false
-URxvt.transparent:     true
-URxvt.shading:         35
-URxvt.keysym.KP_Home:  \033OH
-URxvt.keysym.KP_End:   \033OF
+URxvt.font:            xft:DejaVu Sans Mono:medium:size=9
+URxvt.keysym.C-Delete: matcher:select
+URxvt.keysym.C-equal:  font-size:reset
+URxvt.keysym.C-minus:  font-size:decrease
+URxvt.keysym.C-plus:   font-size:increase
+URxvt.keysym.C-slash:  font-size:show
 URxvt.keysym.F1:       \033OP
 URxvt.keysym.F2:       \033OQ
 URxvt.keysym.F3:       \033OR
 URxvt.keysym.F4:       \033OS
+URxvt.keysym.KP_End:   \033OF
+URxvt.keysym.KP_Home:  \033OH
+URxvt.letterSpace:     -2
+URxvt.matcher.button:  1
 URxvt.matcher.pattern.1: \\blocalhost:\\d+
+URxvt.matcher.rend.0:  Uline fg6
+URxvt.matcher.rend.1:  Uline fg6
+URxvt.perl-ext-common: default,matcher,urxvt-font-size/font-size
+URxvt.scrollBar:       false
+URxvt.url-launcher:    /usr/bin/xdg-open
+!URxvt*fading:           50
+!URxvt*fadeColor:        #000000
+URxvt.transparent:   true
+URxvt.shading:       40

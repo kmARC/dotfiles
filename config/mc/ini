@@ -93,7 +93,7 @@ menubar_visible=1
 free_space=1
 horizontal_split=0
 vertical_equal=1
-left_panel_size=133
+left_panel_size=97
 horizontal_equal=1
 top_panel_size=1
 
@@ -119,6 +119,10 @@ linux=
 screen-256color=
 
 xterm=
+
+xterm-256color=
+
+rxvt=
 
 [Panels]
 show_mini_info=true
@@ -147,7 +151,7 @@ file_find_recurs=true
 file_skip_hidden=false
 file_all_charsets=false
 content_use=true
-content_case_sens=true
+content_case_sens=false
 content_regexp=false
 content_first_hit=false
 content_whole_words=false
