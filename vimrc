@@ -42,8 +42,8 @@ Plug 'w0rp/ale'
 Plug 'plasticboy/vim-markdown'  , {'for': 'markdown'}
 Plug 'shime/vim-livedown'       , {'for': 'markdown'}
 "--- HTML ---
-Plug 'mattn/emmet-vim'          , {'for': 'html'}
-Plug 'othree/html5.vim'         , {'for': 'html'}
+Plug 'mattn/emmet-vim'          , {'for': ['html', '*jsx']}
+Plug 'othree/html5.vim'         , {'for': ['html', '*jsx']}
 "--- CSS ---
 Plug 'ap/vim-css-color'         , {'for': 'css'}
 Plug 'groenewege/vim-less'      , {'for': 'css'}
@@ -194,7 +194,7 @@ autocmd WinLeave *                              if &l:buftype == "" | setlocal n
 autocmd BufEnter *                              if &l:buftype == "" | setlocal nu rnu
 autocmd WinEnter *                              call ExitIfNoListedBufsDisplayed()
 autocmd FileType nerdtree                       nnoremap <buffer> <F7> :NERDTreeToggle<CR>
-autocmd BufWinEnter */doc/*                     wincmd L | 80 wincmd | | setlocal winfixwidth
+autocmd BufWinEnter,WinEnter */doc/*            wincmd L | 80 wincmd | | setlocal winfixwidth
 
 "--- Functions --- {{{
 function! ToggleFold()
