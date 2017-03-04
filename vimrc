@@ -78,7 +78,8 @@ syntax on
 filetype plugin indent on
 
 set nocompatible
-set mouse=a
+set mouse+=a
+set ttymouse=xterm2
 set tabstop=4
 set shiftwidth=4
 set softtabstop=4
@@ -88,6 +89,7 @@ set autoindent
 set smartindent
 set nowrap
 set linebreak
+set backspace=indent,eol,start
 set showbreak=↵
 set pastetoggle=<F12>
 set ignorecase
@@ -269,7 +271,7 @@ endfunction
 "--- Plugin configurations ---
 
 "--- delimitMate ---
-let delimitMate_expand_cr = 1
+let delimitMate_expand_cr = 0
 
 "--- editorconfig-vim ---
 let g:EditorConfig_exclude_patterns = ['fugitive://.*']
@@ -341,7 +343,7 @@ let g:vim_markdown_folding_disabled=1
 "--- vim-gitgutter ---
 let g:gitgutter_max_signs=2000
 
-" "--- YouCompleteMe ---
+"--- YouCompleteMe ---
 let g:ycm_autoclose_preview_window_after_insertion=1
 
 "--- UltiSnips ---
