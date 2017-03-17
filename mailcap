@@ -1,7 +1,0 @@
-text/html; firefox '%s';
-text/html; w3m -I %{charset} -T text/html; copiousoutput;
-
-application/octet-stream; mutt.octet.filter '%s'; copiousoutput;
-application/*;  exo-open '%s'; copiousoutput;
-image/*;        exo-open '%s'; copiousoutput;
-

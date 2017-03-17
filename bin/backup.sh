@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-DEST_SERVER="backup.oro.zc2.ibm.com"
+DEST_SERVER=""
 DEST_PATH="/var/backups/"
 DEST_USER="ubuntu"
 
@@ -26,23 +26,23 @@ echo "======"
 duplicity \
     --full-if-older-than 1M \
     --exclude '**/.git' \
-    --exclude '/home/oro/Documents/Google Drive' \
-    --exclude '/home/oro/Documents/**/OwnCloud' \
-    --include '/home/oro/bin' \
-    --include '/home/oro/Documents' \
-    --include '/home/oro/lotus' \
-    --include '/home/oro/Pictures' \
-    --include '/home/oro/SametimeMeetings' \
-    --include '/home/oro/SametimeRooms' \
-    --include '/home/oro/git' \
-    --include '/home/oro/.Skype' \
-    --include '/home/oro/.cisco' \
-    --include '/home/oro/.config' \
-    --include '/home/oro/.mozilla' \
-    --include '/home/oro/.shutter' \
-    --include '/home/oro/.ssh' \
+    --exclude '~/Documents/Google Drive' \
+    --exclude '~/Documents/**/OwnCloud' \
+    --include '~/bin' \
+    --include '~/Documents' \
+    --include '~/lotus' \
+    --include '~/Pictures' \
+    --include '~/SametimeMeetings' \
+    --include '~/SametimeRooms' \
+    --include '~/git' \
+    --include '~/.Skype' \
+    --include '~/.cisco' \
+    --include '~/.config' \
+    --include '~/.mozilla' \
+    --include '~/.shutter' \
+    --include '~/.ssh' \
     --exclude '**' \
-    /home/oro/ \
+    $HOME \
     $DEST
 
 duplicity remove-older-than 6M --force $DEST

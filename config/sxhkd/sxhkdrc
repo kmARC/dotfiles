@@ -168,9 +168,6 @@ super + space; v
 super + space; k
 	dex ~/.local/share/application/slack.desktop
 
-super + space; n
-	dex /usr/share/applications/IBMNotes9.0.desktop
-
 # Terminal apps
 super + space; x
 	urxvtcd -ls -e bash -ci 'tmux attach -t Session || tmux new -s Session'

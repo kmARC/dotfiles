@@ -39,11 +39,6 @@
     ~/.bashrc.kmarc:
     ~/.compton.conf:
     ~/.fzf:
-    ~/.mailcap:
-    ~/.muttrc:
-    ~/.notmuch-config:
-    ~/.offlineimap.py:
-    ~/.offlineimaprc:
     ~/.rtorrent.rc:
     ~/.tmux.conf:
     ~/.toprc:

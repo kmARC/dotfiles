@@ -2,7 +2,6 @@ console.log('This is vimfx: ', vimfx);
 
 let QuickMarks = [
   ['w', "https://web.whatsapp.com"],
-  ['e', "https://w3id.sso.ibm.com/auth/sps/samlidp/saml20/logininitial?RequestBinding=HTTPPost&PartnerId=p0012308gu3u&NameIdFormat=persistent&AllowCreate=true&Target=https://www.concursolutions.com/"],
   ['r', "https://digg.com/reader"],
   ['t', "https://twitter.com"],
   ['y', "https://youtube.com"],
@@ -13,7 +12,6 @@ let QuickMarks = [
   ['g', "https://gmail.com"],
   ['h', "http://hup.hu/tracker/3464"],
   ['k', "https://keep.google.com"],
-  ['z', "https://zc2.ibm.com/horizon/auth/login/?next=/horizon/"],
   ['c', "https://calendar.google.com"],
   ['v', "https://mail.notes.na.collabserv.com/verse"],
   ['b', "https://docs.google.com/spreadsheets/d/1OxnkfzxDTO0KgESQqf2BN6_-hQyLLbjMbMdOoATu0ts/edit"],
