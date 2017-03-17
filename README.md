@@ -1,4 +1,12 @@
-# Dotfiles
+# kmARC's Dotfiles
+
+<a href="images/desktop-empty.png"><img src="images/desktop-empty.png"></a>
+<center>
+<a href="images/desktop-full.png"><img src="images/desktop-full.png" width="48%"></a>
+<a href="images/desktop-terminal.png"><img src="images/desktop-terminal.png" width="48%"></a>
+</center>
+
+(Wallpaper: http://gallery.world/wallpaper/520.html)
 
 ## Console
 
