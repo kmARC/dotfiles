@@ -31,6 +31,7 @@ Plug 'chriskempson/base16-vim'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 "--- Programming ---
+Plug 'AndrewRadev/splitjoin.vim'
 Plug 'SirVer/ultisnips'
 Plug 'Valloric/YouCompleteMe'           , {'do':  './install.py --tern-completer'}
 Plug 'editorconfig/editorconfig-vim'
@@ -181,7 +182,7 @@ autocmd FileType javascript*,typescript*,json   setlocal sw=2 sts=2 ts=2
 autocmd FileType css,less,scss                  setlocal sw=2 sts=2 ts=2
 autocmd FileType plaintex,text,markdown         setlocal tw=80 formatprg=par\ -jw80
 "----- filetypes
-autocmd BufReadCmd Vagrantfile                  setlocal filetype=ruby
+" autocmd BufReadCmd Vagrantfile                  setlocal filetype=ruby
 " autocmd BufReadCmd *.tsx                        setlocal filetype=typescript.jsx
 "----- marks
 autocmd BufWrite *.css,*.less,*.scss            normal! mC

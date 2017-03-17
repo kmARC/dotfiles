@@ -6,9 +6,14 @@ Setting up on a new host
 
 ### Install prerequisites
 
-    sudo apt-get -y install git vim
+
+    sudo add-apt-repository "deb http://ppa.launchpad.net/jonathonf/vim/ubuntu xenial main"
+    sudo add-apt-repository "deb-src http://ppa.launchpad.net/jonathonf/vim/ubuntu xenial main"
+
+    sudo apt-get -y install git vim-gtk3-py2
     sudo apt-get -y install curl build-essential cmake python-dev \
-                            python-unidecode silversearcher-ag nodejs-legacy npm
+                            python-unidecode silversearcher-ag nodejs-legacy \
+                            npm par
 
 ### Set up vim with plugins
 
@@ -21,8 +26,7 @@ you can startup vim with all plugins installed.
 ### Configure look&feel
 
 My choice of terminal GUI colors is base16. For more information how to set it
-up, visit [base16-shell on
-GitHub](https://github.com/chriskempson/base16-shell).
+up, visit [base16-shell on GitHub](https://github.com/chriskempson/base16-shell).
 
 Update a host
 -------------
