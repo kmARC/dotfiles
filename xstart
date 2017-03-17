@@ -6,31 +6,39 @@ export _JAVA_OPTIONS="\
           -Dswing.aatext=true \
           -Dswing.crossplatformlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel"
 
+# Workaround for electron/chrome based apps timeout while connecting to
+killall gnome-keyring-daemon
+
 # Configure ssh-agent
 ssh-add -k
 
 # X settings
+compton &
 xrdb -load ~/.Xresources
 xsetroot -cursor_name left_ptr
 ~/.fehbg
 
 # Daemons
+touchegg &
 sxhkd &
-compton &
+mopidy --config ~/.config/mopidy/mopidy.conf:~/.pdotfiles/mopidy.conf &
 xcape -t 250 -e 'Caps_Lock=Escape'
-
 
 # XFCE daemons withouth session management
 xfsettingsd --sm-client-disable
 xfce4-panel --sm-client-disable -d &
 
+# Panel
+polybar kmarc &
+
+# Autostarting daemons
 dex /etc/xdg/autostart/polkit-gnome-authentication-agent-1.desktop
 dex /etc/xdg/autostart/gnome-keyring-pkcs11.desktop
 dex /etc/xdg/autostart/gnome-keyring-secrets.desktop
 dex /etc/xdg/autostart/gnome-keyring-ssh.desktop
 dex /etc/xdg/autostart/xscreensaver.desktop
 
-# Panel applets
+# Tray applets
 dex /etc/xdg/autostart/xfce4-power-manager.desktop
 dex /etc/xdg/autostart/blueman.desktop
 dex /etc/xdg/autostart/hplip-systray.desktop

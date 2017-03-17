@@ -132,10 +132,13 @@ ctrl + alt + l
 	xflock4
 
 XF86Display
-	bash -x /home/oro/bin/desktop.sh > /tmp/desktopsh.log 2>&1
+	bash -x $HOME/bin/desktop.sh > /tmp/desktopsh.log 2>&1
 
 XF86AudioMicMute
 	~/bin/mic-mute-toggle.sh
+
+XF86AudioPlay
+	mpc toggle
 
 Print
 	shutter -w

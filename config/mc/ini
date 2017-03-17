@@ -81,7 +81,7 @@ editor_filesize_threshold=64M
 editor_stop_format_chars=-+*\\,.;:&>
 mcview_eof=
 ignore_ftp_chattr_errors=true
-skin=modarcon16-defbg-thin.ini
+skin=gotar
 
 [Layout]
 message_visible=1
@@ -93,13 +93,13 @@ menubar_visible=1
 free_space=1
 horizontal_split=0
 vertical_equal=1
-left_panel_size=97
+left_panel_size=67
 horizontal_equal=1
 top_panel_size=1
 
 [Misc]
-timeformat_recent=%b %e %H:%M
-timeformat_old=%b %e  %Y
+timeformat_recent=%d. %b %H:%M
+timeformat_old=%d. %b %Y 
 ftp_proxy_host=gate
 ftpfs_password=anonymous@
 display_codepage=UTF-8
@@ -111,18 +111,16 @@ clipboard_paste=
 
 [Colors]
 base_color=
-rxvt-unicode-256color=
+linux=
 color_terminals=
 
-linux=
+rxvt-unicode-256color=
 
 screen-256color=
 
-xterm=
-
 xterm-256color=
 
-rxvt=
+xterm=
 
 [Panels]
 show_mini_info=true
@@ -137,6 +135,7 @@ reverse_files_only=true
 auto_save_setup_panels=false
 navigate_with_arrows=false
 panel_scroll_pages=true
+panel_scroll_center=false
 mouse_move_pages=true
 filetype_mode=true
 permission_mode=false
@@ -144,23 +143,8 @@ torben_fj_mode=false
 quick_search_mode=2
 select_flags=6
 
-[FindFile]
-file_case_sens=true
-file_shell_pattern=true
-file_find_recurs=true
-file_skip_hidden=false
-file_all_charsets=false
-content_use=true
-content_case_sens=false
-content_regexp=false
-content_first_hit=false
-content_whole_words=false
-content_all_charsets=false
-ignore_dirs_enable=true
-ignore_dirs=
-
 [Panelize]
-Find *.orig after patching=find . -name \\*.orig -print
-Find SUID and SGID programs=find . \\( \\( -perm -04000 -a -perm /011 \\) -o \\( -perm -02000 -a -perm /01 \\) \\) -print
-Find rejects after patching=find . -name \\*.rej -print
-Modified git files=git ls-files --modified
+Geänderte git Dateien=git ls-files --modified
+Nach dem Patchen nach Rejects suchen=find . -name \\*.rej -print
+Suche SUID und SGID Programme=find . \\( \\( -perm -04000 -a -perm /011 \\) -o \\( -perm -02000 -a -perm /01 \\) \\) -print
+Suche nach *.orig nach dem Patchen=find . -name \\*.orig -print

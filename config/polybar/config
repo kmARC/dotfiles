@@ -1,0 +1,323 @@
+;=====================================================
+;
+;   To learn more about how to configure Polybar
+;   go to https://github.com/jaagr/polybar
+;
+;   The README contains alot of information
+;
+;=====================================================
+
+[colors]
+background = #d9263238
+background-alt = #444
+foreground = #aaa
+foreground-alt = #555
+foreground-bright = #ddd
+primary = #89ddff
+secondary = #e60053
+alert = #bd2c40
+color1 = #ff0033
+color2 = #ff8000
+color3 = #ffe600
+color4 = #1aB34d
+color5 = #1a66ff
+color6 = #801ab3
+
+[bar/kmarc]
+width = 1904
+height = 27
+offset-x = 8
+offset-y = 8
+radius = 0
+fixed-center = false
+
+background = ${colors.background}
+foreground = ${colors.foreground}
+
+line-size = 3
+line-color = #ff0
+
+border-size = 0
+border-color = #00000000
+
+padding-left = 0
+padding-right = 0
+margin-left = 8
+margin-right = 8
+
+module-margin-left = 1
+module-margin-right = 2
+
+font-0 = "Noto Sans:pixelsize=9:weight=bold;0"
+font-1 = "Roboto:size=11:weight=bold;2"
+font-2 = "FontAwesome:size=11;1"
+
+modules-left = bspwm mpd
+modules-center = xwindow
+modules-right = backlight-acpi volume xkeyboard filesystem memory cpu battery temperature wlan date
+
+wm-restack = bspwm
+
+;override-redirect = true
+
+scroll-up = bspwm-desknext
+scroll-down = bspwm-deskprev
+
+[module/xwindow]
+type = internal/xwindow
+label = %title:0:60:...%
+format-foreground = ${colors.foreground-bright}
+
+[module/xkeyboard]
+type = internal/xkeyboard
+blacklist-0 = num lock
+
+format-prefix = " "
+format-prefix-foreground = ${colors.foreground-bright}
+format-prefix-underline = ${colors.color1}
+
+label-layout = %layout%
+label-layout-underline = ${colors.color1}
+
+label-indicator-padding = 2
+label-indicator-margin = 1
+label-indicator-background = ${colors.secondary}
+label-indicator-underline = ${colors.color1}
+
+[module/filesystem]
+type = internal/fs
+interval = 25
+
+mount-0 = /
+
+format-mounted-prefix = " "
+label-mounted = %percentage_used%%
+format-mounted-prefix-foreground = ${colors.foreground-bright}
+
+format-mounted-underline = ${colors.color2}
+
+[module/bspwm]
+type = internal/bspwm
+
+label-focused = %index%
+label-focused-foreground = ${colors.foreground-bright}
+label-focused-background = ${colors.background-alt}
+label-focused-underline= ${colors.primary}
+label-focused-padding = 2
+
+label-occupied = %index%
+label-occupied-padding = 2
+label-occupied-underline= ${colors.foreground}
+
+label-urgent = %index%
+label-urgent-background = ${colors.alert}
+label-urgent-padding = 2
+
+label-empty = %index%
+label-empty-foreground = ${colors.foreground-alt}
+label-empty-padding = 2
+label-empty-underline= ${colors.foreground-alt}
+
+[module/mpd]
+type = internal/mpd
+format-online = <icon-prev> <icon-seekb> <bar-progress> <icon-seekf> <icon-next>   <label-time>   <toggle>   <label-song>   <icon-repeatone>   <icon-random>
+
+icon-play = 
+icon-pause = 
+icon-stop = 
+icon-prev = 
+icon-next = 
+icon-seekb = 
+icon-seekf = 
+icon-random = 
+icon-repeat = 
+icon-repeatone = 
+
+bar-progress-width = 10
+bar-progress-indicator = ●
+bar-progress-fill = ●
+bar-progress-empty = ○
+bar-progress-foreground-0 = #e8e
+bar-progress-background-0 = #00f
+
+label-song-maxlen = 65
+label-song-ellipsis = true
+label-song = %{F#eee}%title:0:20:...%%{F-}   (%artist:0:20:...%)
+
+toggle-on-foreground = ${colors.foreground-bright}
+toggle-off-foreground = ${colors.foreground}
+
+[module/xbacklight]
+type = internal/xbacklight
+
+format = <label> <bar>
+label = 
+label-foreground = ${colors.foreground-bright}
+
+bar-width = 10
+
+bar-indicator = ●
+bar-indicator-foreground = #ff
+bar-fill = ●
+bar-fill-foreground = #9f78e1
+bar-empty = ○
+bar-empty-foreground = ${colors.foreground}
+
+[module/backlight-acpi]
+inherit = module/xbacklight
+type = internal/backlight
+card = intel_backlight
+
+[module/cpu]
+type = internal/cpu
+interval = 2
+format-prefix = " "
+format-prefix-foreground = ${colors.foreground-bright}
+format-underline = ${colors.color4}
+label = %percentage%%
+
+format = <label>
+
+ramp-load-0 = ▁
+ramp-load-1 = ▂
+ramp-load-2 = ▃
+ramp-load-3 = ▄
+ramp-load-4 = ▅
+ramp-load-5 = ▆
+ramp-load-6 = ▇
+ramp-load-7 = █
+
+[module/memory]
+type = internal/memory
+interval = 2
+format-prefix = " "
+format-prefix-foreground = ${colors.foreground-bright}
+format-underline = ${colors.color3}
+label = %percentage_used%%
+
+[module/wlan]
+type = internal/network
+interface = wlp1s0
+interval = 3.0
+
+format-connected = <ramp-signal> <label-connected>
+; format-connected-underline = ${colors.color1}
+label-connected = %local_ip%
+
+format-disconnected =
+;format-disconnected = <label-disconnected>
+;format-disconnected-underline = ${self.format-connected-underline}
+;label-disconnected = %ifname% disconnected
+;label-disconnected-foreground = ${colors.foreground-bright}
+
+ramp-signal-0 = 
+ramp-signal-1 = 
+ramp-signal-2 = 
+ramp-signal-3 = 
+ramp-signal-4 = 
+ramp-signal-foreground = ${colors.foreground-bright}
+
+[module/date]
+type = internal/date
+interval = 5
+
+date =
+date-alt = " %Y-%m-%d"
+
+time = %H:%M
+time-alt = %H:%M:%S
+
+format-prefix = 
+format-prefix-foreground = ${colors.foreground-bright}
+;format-underline = ${colors.color2}
+
+label = %date% %time%
+
+[module/volume]
+type = internal/volume
+
+format-volume =  <bar-volume>
+format-volume-prefix = " "
+format-volume-foreground = ${colors.foreground-bright}
+label-volume-foreground = ${colors.foreground}
+
+format-muted-prefix = " "
+format-muted-foreground = ${colors.foreground}
+label-muted = " 0% ○○○○○○○○○○"
+
+bar-volume-width = 10
+bar-volume-foreground-0 = #55aa55
+bar-volume-foreground-1 = #55aa55
+bar-volume-foreground-2 = #55aa55
+bar-volume-foreground-3 = #55aa55
+bar-volume-foreground-4 = #55aa55
+bar-volume-foreground-5 = #f5a70a
+bar-volume-foreground-6 = #ff5555
+bar-volume-gradient = false
+bar-volume-indicator = ●
+bar-volume-fill = ●
+bar-volume-empty = ○
+bar-volume-empty-foreground = ${colors.foreground}
+
+[module/battery]
+type = internal/battery
+battery = BAT1
+adapter = ACAD
+full-at = 98
+
+format-charging = <animation-charging> <label-charging>
+format-charging-underline = ${colors.color5}
+
+format-discharging = <ramp-capacity> <label-discharging>
+format-discharging-underline = ${self.format-charging-underline}
+
+format-full-prefix = " "
+format-full-prefix-foreground = ${colors.foreground-bright}
+format-full-underline = ${self.format-charging-underline}
+
+ramp-capacity-0 = 
+ramp-capacity-1 = 
+ramp-capacity-2 = 
+ramp-capacity-3 = 
+ramp-capacity-4 = 
+ramp-capacity-foreground = ${colors.foreground-bright}
+
+animation-charging-0 = 
+animation-charging-1 = 
+animation-charging-2 = 
+animation-charging-3 = 
+animation-charging-4 = 
+animation-charging-foreground = ${colors.foreground-bright}
+animation-charging-framerate = 750
+
+[module/temperature]
+type = internal/temperature
+thermal-zone = 0
+warn-temperature = 60
+
+format = <ramp> <label>
+format-underline = ${colors.color6}
+format-warn = <ramp> <label-warn>
+format-warn-underline = ${self.format-underline}
+
+label = %temperature%
+label-warn = %temperature%
+label-warn-foreground = ${colors.secondary}
+
+ramp-0 = 
+ramp-1 = 
+ramp-2 = 
+ramp-foreground = ${colors.foreground-bright}
+
+[settings]
+screenchange-reload = true
+;compositing-background = xor
+;compositing-background = screen
+;compositing-foreground = source
+;compositing-border = over
+
+[global/wm]
+margin-top = 5
+margin-bottom = 5
+
+; vim:ft=dosini

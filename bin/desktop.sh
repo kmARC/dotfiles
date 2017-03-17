@@ -90,16 +90,8 @@ for monitor in $PRI $SEC; do
     done
 done
 
-# Fix XFCE's workspace numbering
-xfconf-query -c xfwm4 -p /general/workspace_count -r -R
-xfconf-query -c xfwm4 -p /general/workspace_count -n -t int -s 10
-xfconf-query -c xfwm4 -p /general/workspace_names -r -R
-xfconf-query -c xfwm4 -p /general/workspace_names --create \
-    -t string -s 1 -t string -s 2 -t string -s 3 -t string -s 4 -t string -s 5 \
-    -t string -s 6 -t string -s 7 -t string -s 8 -t string -s 9 -t string -s 0
-
 # Add tray space on primary monitor
-bspc config -m "$PRI" top_padding 24
+bspc config -m "$PRI" top_padding 35 # 35 = 27 (bar) + 8 (padding)
 
 # Set wallpaper
 ~/.fehbg

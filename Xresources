@@ -54,7 +54,3 @@ URxvt.matcher.rend.1:  Uline fg6
 URxvt.perl-ext-common: default,matcher,urxvt-font-size/font-size
 URxvt.scrollBar:       false
 URxvt.url-launcher:    /usr/bin/xdg-open
-!URxvt*fading:           50
-!URxvt*fadeColor:        #000000
-URxvt.transparent:   true
-URxvt.shading:       40

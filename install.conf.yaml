@@ -12,22 +12,22 @@
         path: config/base16-shell
     ~/.config/bspwm/bspwmrc:
         path: config/bspwm/bspwmrc
-    ~/.config/fontconfig:
-        path: config/fontconfig
-    ~/.config/gtk-3.0/settings.ini:
-        path: config/gtk-3.0/settings.ini
-    ~/.config/gtk-3.0/gtk.css:
-        path: config/gtk-3.0/gtk.css
     ~/.config/htop/htoprc:
         path: config/htop/htoprc
     ~/.config/mc/ini:
         path: config/mc/ini
+    ~/.config/mopidy/mopidy.conf:
+        path: config/mopidy/mopidy.conf
+    ~/.config/polybar/config:
+        path: config/polybar/config
+    ~/.config/qt5ct/qt5ct.conf:
+        path: config/qt5ct/qt5ct.conf
     ~/.config/sxhkd/sxhkdrc:
         path: config/sxhkd/sxhkdrc
-    ~/.config/xfce4/xfconf:
-        path: config/xfce4/xfconf
-    ~/.config/xfce4/panel:
-        path: config/xfce4/panel
+    ~/.config/xfce4/xfconf/xfce-perchannel-xml/xsettings.xml:
+        path: config/xfce4/xfconf/xfce-perchannel-xml/xsettings.xml
+    ~/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-panel.xml:
+        path: config/xfce4/xfconf/xfce-perchannel-xml/xfce4-panel.xml
     ~/.tmux/plugins/tpm:
         path: tmux/plugins/tpm
     ~/.urxvt/ext:
@@ -38,7 +38,6 @@
     # Top levels
     ~/.bashrc.kmarc:
     ~/.compton.conf:
-    ~/.gtkrc-2.0:
     ~/.fzf:
     ~/.mailcap:
     ~/.muttrc:
@@ -51,6 +50,7 @@
     ~/.vimfx:
     ~/.Xresources:
     ~/.xprofile:
+    ~/.xstart:
     ~/.xinitrc:
         path: xprofile
 

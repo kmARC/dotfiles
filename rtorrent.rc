@@ -1,10 +1,13 @@
 # vim: ft=conf
 directory = ~/Torrents/
 session = ~/Torrents/.rtorrent.session
-schedule = watch_directory,5,5,load_start=/home/oro/Downloads/*.torrent
+schedule = watch_directory,5,5,load_start=~/Downloads/*.torrent
 schedule = low_diskspace,5,60,close_low_diskspace=2000M
 dht = auto
 dht_port = 6881
 peer_exchange = yes
 encryption = allow_incoming,try_outgoing,enable_retry,prefer_plaintext
 method.set_key = event.download.erased, remove_file,"execute={rm,-drf,--,$d.get_base_path=}"
+# network.http.proxy_address.set = 127.0.0.1:8118
+# network.proxy_address.set = 127.0.0.1:8118
+

@@ -104,8 +104,13 @@ fi
 # Aliases #
 ###########
 
-alias zc2="ssh zc2.ibm.com -t 'tmux attach -t oro || tmux new -s oro'"
-alias irc="ssh -X irc.oro.zc2.ibm.com -t 'tmux attach'"
+function nvm_activate() {
+    unalias nvm
+    . $NVM_DIR/nvm.sh
+    nvm "$@"
+}
+
 alias ls="ls --color -h --group-directories-first"
 alias p="vim ~/projects.org/projects.org"
 alias gits="git status"
+alias nvm="nvm_activate"

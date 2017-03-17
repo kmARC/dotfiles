@@ -3,7 +3,7 @@
 <channel name="xsettings" version="1.0">
   <property name="Net" type="empty">
     <property name="ThemeName" type="string" value="Arc-Darker"/>
-    <property name="IconThemeName" type="empty"/>
+    <property name="IconThemeName" type="string" value="elementary-xfce-darker"/>
     <property name="DoubleClickTime" type="empty"/>
     <property name="DoubleClickDistance" type="empty"/>
     <property name="DndDragThreshold" type="empty"/>
@@ -35,8 +35,7 @@
     <property name="CursorThemeName" type="empty"/>
     <property name="CursorThemeSize" type="empty"/>
     <property name="DecorationLayout" type="empty"/>
-  </property>
-  <property name="Xfce" type="empty">
-    <property name="LastCustomDPI" type="int" value="90"/>
+    <property name="ShellShowsMenubar" type="bool" value="true"/>
+    <property name="ShellShowsAppmenu" type="bool" value="true"/>
   </property>
 </channel>
