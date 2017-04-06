@@ -156,9 +156,6 @@ super + space; t
 super + space; p
 	dex /usr/share/applications/cisco-anyconnect.desktop
 
-super + space; m
-	dex ~/.local/share/applications/spotify.desktop
-
 super + space; s
 	dex /usr/share/applications/skype.desktop
 
@@ -169,9 +166,8 @@ super + space; k
 	dex ~/.local/share/application/slack.desktop
 
 # Terminal apps
+super + space; m
+	~/bin/tmux-music.sh
+
 super + space; x
-	urxvtcd -ls -e bash -ci 'tmux attach -t Session || tmux new -s Session'
-
-super + space; z
-	urxvtcd -ls -e bash -ci 'zc2'
-
+	urxvtcd -ls -e bash -ci 'tmux-session'
