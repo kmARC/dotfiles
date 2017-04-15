@@ -129,7 +129,7 @@ super + {+,shift +} r
 	bspc node @/ -R {90, 270}
 
 ctrl + alt + l
-	xflock4
+	xscreensaver-command -l
 
 XF86Display
 	bash -x $HOME/bin/desktop.sh > /tmp/desktopsh.log 2>&1

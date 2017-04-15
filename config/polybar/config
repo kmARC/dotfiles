@@ -120,7 +120,7 @@ label-empty-underline= ${colors.foreground-alt}
 
 [module/mpd]
 type = internal/mpd
-format-online = <icon-prev> <icon-seekb> <bar-progress> <icon-seekf> <icon-next>   <label-time>   <toggle>   <label-song>   <icon-repeatone>   <icon-random>
+format-online = <icon-prev> <icon-seekb> <bar-progress> <icon-seekf> <icon-next>   <label-time>   <toggle>   <label-song>   <icon-repeatone>   <icon-random>   <icon-stop>
 
 icon-play = 
 icon-pause = 
@@ -229,6 +229,7 @@ time-alt = %H:%M:%S
 
 format-prefix = 
 format-prefix-foreground = ${colors.foreground-bright}
+format-suffix = "   "
 ;format-underline = ${colors.color2}
 
 label = %date% %time%
