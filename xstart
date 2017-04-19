@@ -22,9 +22,9 @@ xsetroot -cursor_name left_ptr
 touchegg &
 sxhkd &
 mopidy --config ~/.config/mopidy/mopidy.conf:~/.pdotfiles/mopidy.conf &
-xcape -t 250 -e 'Caps_Lock=Escape'
 ~/bin/cvim_server.py &
-
+xscreensaver -nosplash &
+xcape -t 250 -e 'Caps_Lock=Escape'
 
 # XFCE daemons withouth session management
 xfsettingsd --sm-client-disable
@@ -38,7 +38,6 @@ dex /etc/xdg/autostart/polkit-gnome-authentication-agent-1.desktop
 dex /etc/xdg/autostart/gnome-keyring-pkcs11.desktop
 dex /etc/xdg/autostart/gnome-keyring-secrets.desktop
 dex /etc/xdg/autostart/gnome-keyring-ssh.desktop
-dex /etc/xdg/autostart/xscreensaver.desktop
 
 # Tray applets
 dex /etc/xdg/autostart/xfce4-power-manager.desktop
