@@ -82,7 +82,7 @@ editor_stop_format_chars=-+*\\,.;:&>
 mcview_eof=
 ignore_ftp_chattr_errors=true
 
-skin=nicedark
+skin=modarcon16-defbg-thin
 
 [Layout]
 message_visible=1
