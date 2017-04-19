@@ -23,6 +23,8 @@ touchegg &
 sxhkd &
 mopidy --config ~/.config/mopidy/mopidy.conf:~/.pdotfiles/mopidy.conf &
 xcape -t 250 -e 'Caps_Lock=Escape'
+~/bin/cvim_server.py &
+
 
 # XFCE daemons withouth session management
 xfsettingsd --sm-client-disable

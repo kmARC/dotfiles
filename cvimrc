@@ -4,7 +4,7 @@ set numerichints
 set typelinkhints
 set ignorecase
 
-imap <C-o> editWithVim
+imap <C-i> editWithVim
 
 let blacklists = ["http://digg.com/*","https://mail.google.com/*", "https://docs.google.com/*"]
 
