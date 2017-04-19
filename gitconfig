@@ -1,0 +1,8 @@
+[user]
+	email = korondi.mark@gmail.com
+	name = Mark Korondi
+[gui]
+	fontui = -family \"Noto Sans\" -size 9 -weight normal -slant roman -underline 0 -overstrike 0
+	fontdiff = -family \"Source Code Pro\" -size 9 -weight normal -slant roman -underline 0 -overstrike 0
+	tabsize = 4
+	spellingdictionary = en_US

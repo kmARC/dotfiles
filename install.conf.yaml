@@ -12,6 +12,8 @@
         path: config/base16-shell
     ~/.config/bspwm/bspwmrc:
         path: config/bspwm/bspwmrc
+    ~/.config/git:
+        path: config/git
     ~/.config/htop/htoprc:
         path: config/htop/htoprc
     ~/.config/mc/ini:
@@ -39,6 +41,7 @@
     ~/.bashrc.kmarc:
     ~/.compton.conf:
     ~/.fzf:
+    ~/.gitconfig:
     ~/.rtorrent.rc:
     ~/.tmux.conf:
     ~/.toprc:
