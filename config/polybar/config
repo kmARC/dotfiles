@@ -261,6 +261,8 @@ bar-volume-fill = ●
 bar-volume-empty = ○
 bar-volume-empty-foreground = ${colors.foreground}
 
+click-left = pavucontrol
+
 [module/battery]
 type = internal/battery
 battery = BAT1
