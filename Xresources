@@ -12,7 +12,7 @@ Xcursor.theme: DMZ-Black
 *xterm*activeIcon:           true
 *xterm*borderWidth:          0
 *xterm*disallowedWindowOps:  20,21,SetXprop
-*xterm*faceName:             xft:DejaVu Sans Mono
+*xterm*faceName:             xft:Source Code Pro:medium
 *xterm*faceSize:             9.0
 *xterm*faceSize1:            3.0
 *xterm*faceSize2:            5.0
@@ -25,6 +25,7 @@ Xcursor.theme: DMZ-Black
 *xterm*italicULMode:         true
 *xterm*metaSendsEscape:      true
 *xterm*renderFont:           true
+*xterm*termName:             xterm-256color
 
 
 *VT100*translations:        #override Meta <Btn1Up>: exec-formatted("x-www-browser '%t'", PRIMARY)

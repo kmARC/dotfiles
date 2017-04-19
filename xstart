@@ -50,12 +50,6 @@ dex /etc/xdg/autostart/print-applet.desktop
 # Applications
 dex /usr/share/applications/insync.desktop
 dex /usr/share/applications/skypeforlinux.desktop
-# dex ~/.local/share/applications/slack.desktop
 dex ~/.config/autostart/shutter.desktop
-
-env | grep DBUS_SESSION_BUS_ADDRESS > /tmp/.Xdbus
-echo 'export DBUS_SESSION_BUS_ADDRESS' >> /tmp/.Xdbus
-env | grep XAUTHORITY >> /tmp/.Xdbus
-echo 'export XAUTHORITY' >> /tmp/.Xdbus
 
 ~/bin/desktop.sh

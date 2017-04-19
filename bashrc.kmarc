@@ -114,3 +114,4 @@ alias ls="ls --color -h --group-directories-first"
 alias gits="git status"
 alias nvm="nvm_activate"
 alias tmux-session="tmux attach -t Session || tmux new -s Session"
+

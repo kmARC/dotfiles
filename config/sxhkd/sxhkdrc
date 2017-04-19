@@ -148,22 +148,16 @@ shift + Print
 
 # Desktop apps
 super + space; b
-	dex /usr/share/applications/vivaldi-stable.desktop
+	x-www-browser
 
 super + space; t
 	dex /usr/share/applications/Thunar.desktop
-
-super + space; p
-	dex /usr/share/applications/cisco-anyconnect.desktop
 
 super + space; s
 	dex /usr/share/applications/skype.desktop
 
 super + space; v
 	dex /usr/share/applications/virtualbox.desktop
-
-super + space; k
-	dex ~/.local/share/application/slack.desktop
 
 # Terminal apps
 super + space; m
