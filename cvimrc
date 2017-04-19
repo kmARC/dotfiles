@@ -23,3 +23,5 @@ let qmark c = "https://calendar.google.com"
 let qmark b = "https://docs.google.com/spreadsheets/d/1OxnkfzxDTO0KgESQqf2BN6_-hQyLLbjMbMdOoATu0ts/edit"
 let qmark m = "https://messenger.com"
 
+let configpath = "/home/kmarc/.dotfiles/cvimrc"
+set localconfig
