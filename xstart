@@ -39,7 +39,6 @@ dex /etc/xdg/autostart/gnome-keyring-secrets.desktop
 dex /etc/xdg/autostart/gnome-keyring-ssh.desktop
 
 # Tray applets
-dex /etc/xdg/autostart/xfce4-power-manager.desktop
 dex /etc/xdg/autostart/blueman.desktop
 dex /etc/xdg/autostart/hplip-systray.desktop
 dex /etc/xdg/autostart/nm-applet.desktop

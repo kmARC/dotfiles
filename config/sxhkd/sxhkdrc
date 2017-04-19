@@ -140,6 +140,9 @@ XF86AudioMicMute
 XF86AudioPlay
 	mpc toggle
 
+XF86MonBrightness{Up,Down}
+	~/bin/backlight.sh {up, down}
+
 Print
 	shutter -w
 
