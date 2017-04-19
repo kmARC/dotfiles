@@ -148,7 +148,7 @@ shift + Print
 
 # Desktop apps
 super + space; b
-	dex /usr/share/applications/firefox.desktop
+	dex /usr/share/applications/vivaldi-stable.desktop
 
 super + space; t
 	dex /usr/share/applications/Thunar.desktop
