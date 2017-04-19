@@ -1,0 +1,25 @@
+set scalehints
+set linkanimations
+set numerichints
+set typelinkhints
+set ignorecase
+
+imap <C-o> editWithVim
+
+let blacklists = ["http://digg.com/*","https://mail.google.com/*", "https://docs.google.com/*"]
+
+let qmark w = "https://web.whatsapp.com"
+let qmark r = "https://digg.com/reader"
+let qmark t = "https://twitter.com"
+let qmark y = "https://youtube.com"
+let qmark i = "https://www.irccloud.com/"
+let qmark p = "https://www.postfinance.ch/ap/ba/fp/html/e-finance/home"
+let qmark a = "https://docs.google.com/spreadsheets/d/1dk67cmm4gv52XTVJZWHpjJ8Thd0O2ZI8aBeOAWhvYI4/edit"
+let qmark f = "https://facebook.com"
+let qmark g = "https://gmail.com"
+let qmark h = "https://hup.hu/tracker/3464"
+let qmark k = "https://keep.google.com"
+let qmark c = "https://calendar.google.com"
+let qmark b = "https://docs.google.com/spreadsheets/d/1OxnkfzxDTO0KgESQqf2BN6_-hQyLLbjMbMdOoATu0ts/edit"
+let qmark m = "https://messenger.com"
+

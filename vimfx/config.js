@@ -10,10 +10,9 @@ let QuickMarks = [
   ['a', "https://docs.google.com/spreadsheets/d/1dk67cmm4gv52XTVJZWHpjJ8Thd0O2ZI8aBeOAWhvYI4/edit"],
   ['f', "https://facebook.com"],
   ['g', "https://gmail.com"],
-  ['h', "http://hup.hu/tracker/3464"],
+  ['h', "https://hup.hu/tracker/3464"],
   ['k', "https://keep.google.com"],
   ['c', "https://calendar.google.com"],
-  ['v', "https://mail.notes.na.collabserv.com/verse"],
   ['b', "https://docs.google.com/spreadsheets/d/1OxnkfzxDTO0KgESQqf2BN6_-hQyLLbjMbMdOoATu0ts/edit"],
   ['m', "https://messenger.com"],
 ]
