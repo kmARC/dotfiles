@@ -50,7 +50,7 @@ sudo apt install dfc iotop powertop rar tlp zip
 
 ``` bash
 sudo apt install elementary-icon-theme fonts-noto lightdm lightdm-gtk-greeter xfce4-appfinder xfce4-panel xfce4-power-manager xfce4-pulseaudio-plugin xfce4-settings x11-utils x11-xserver-utils xinit xinput xscreensaver
-sudo apt install consolekit compton dex feh jq mpc rxvt-unicode-256color xcape xsel
+sudo apt install consolekit compton dex feh jq mpc xcape xsel xterm
 ```
 
 ### Install bspwm and sxhkd

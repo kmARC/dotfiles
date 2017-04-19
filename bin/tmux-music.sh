@@ -7,5 +7,5 @@ if [ ! -z "$WINDOW_ID" ]; then
     tmux select-window -t music
 else
     echo "not exists"
-    urxvtcd -ls -e bash -ci 'tmux attach -t Session \; find-window music'
+    x-terminal-emulator -ls -e bash -ci 'tmux attach -t Session \; find-window music'
 fi

@@ -5,7 +5,7 @@
 # terminal emulator
 super + Return
 #	urxvt
-	urxvtcd
+	x-terminal-emulator
 
 # program launcher
 super + space; super + space
@@ -170,4 +170,4 @@ super + space; m
 	~/bin/tmux-music.sh
 
 super + space; x
-	urxvtcd -ls -e bash -ci 'tmux-session'
+	x-terminal-emulator -ls -e bash -ci 'tmux-session'

@@ -32,8 +32,6 @@
         path: config/xfce4/xfconf/xfce-perchannel-xml/xfce4-panel.xml
     ~/.tmux/plugins/tpm:
         path: tmux/plugins/tpm
-    ~/.urxvt/ext:
-        path: urxvt/ext
     ~/bin:
         path: bin
 
