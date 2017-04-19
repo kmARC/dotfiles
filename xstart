@@ -27,7 +27,6 @@ xscreensaver -nosplash &
 xcape -t 250 -e 'Caps_Lock=Escape'
 
 # XFCE daemons withouth session management
-xfsettingsd --sm-client-disable
 xfce4-panel --sm-client-disable -d &
 
 # Panel
