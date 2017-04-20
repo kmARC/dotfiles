@@ -159,7 +159,7 @@ super + space; t
 	dex /usr/share/applications/Thunar.desktop
 
 super + space; s
-	dex /usr/share/applications/skype.desktop
+	dex /usr/share/applications/skypeforlinux.desktop
 
 super + space; v
 	dex /usr/share/applications/virtualbox.desktop
