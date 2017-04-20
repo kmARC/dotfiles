@@ -147,8 +147,8 @@ bar-progress-background-0 = #00f
 
 label-song = %{F#eee}%title:0:20:...%%{F-}   (%artist:0:20:...%)   %{F#eee}%{F-}
 
-format-online-prefix = %{A4:mpc seek +5:}%{A5:mpc seek -5:}
-format-online-suffix = %{A}%{A}
+format-online-prefix = %{A3:x-terminal-emulator -ls -e bash -ci 'tmux-music' &:}%{A4:mpc seek +5:}%{A5:mpc seek -5:}
+format-online-suffix = %{A}%{A}%{A}
 
 toggle-on-foreground = ${colors.foreground-bright}
 toggle-off-foreground = ${colors.foreground}
@@ -244,7 +244,7 @@ label = %date% %time%
 type = internal/volume
 
 format-volume =  <bar-volume>
-format-volume-prefix = "%{A2:pavucontrol:} "
+format-volume-prefix = "%{A3:pavucontrol &:} "
 format-volume-suffix = "%{A}"
 format-volume-foreground = ${colors.foreground-bright}
 label-volume-foreground = ${colors.foreground}
@@ -267,8 +267,6 @@ bar-volume-indicator = ●
 bar-volume-fill = ●
 bar-volume-empty = ○
 bar-volume-empty-foreground = ${colors.foreground}
-
-click-left = pavucontrol
 
 [module/battery]
 type = internal/battery

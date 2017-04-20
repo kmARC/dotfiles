@@ -166,7 +166,7 @@ super + space; v
 
 # Terminal apps
 super + space; m
-	~/bin/tmux-music.sh
+	x-terminal-emulator -ls -e bash -ci 'tmux-music'
 
 super + space; x
 	x-terminal-emulator -ls -e bash -ci 'tmux-session'
