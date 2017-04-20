@@ -147,7 +147,7 @@ bar-progress-background-0 = #00f
 
 label-song = %{F#eee}%title:0:20:...%%{F-}   (%artist:0:20:...%)   %{F#eee}%{F-}
 
-format-online-prefix = %{A3:x-terminal-emulator -ls -e bash -ci 'tmux-music' &:}%{A4:mpc seek +5:}%{A5:mpc seek -5:}
+format-online-prefix = %{A3:x-terminal-emulator -ls -e bash -ci 'ncmpcpp' &:}%{A4:mpc seek +5:}%{A5:mpc seek -5:}
 format-online-suffix = %{A}%{A}%{A}
 
 toggle-on-foreground = ${colors.foreground-bright}

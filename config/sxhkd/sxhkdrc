@@ -166,7 +166,7 @@ super + space; v
 
 # Terminal apps
 super + space; m
-	x-terminal-emulator -ls -e bash -ci 'tmux-music'
+	x-terminal-emulator -ls -e bash -ci 'ncmpcpp'
 
 super + space; x
 	x-terminal-emulator -ls -e bash -ci 'tmux-session'
