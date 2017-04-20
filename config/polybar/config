@@ -93,7 +93,8 @@ interval = 25
 
 mount-0 = /
 
-format-mounted-prefix = " "
+format-mounted-prefix = "%{A3:x-terminal-emulator -ls -e bash -ci 'dfc; read' &:} "
+format-mounted-suffix = "%{A}"
 label-mounted = %percentage_used%%
 format-mounted-prefix-foreground = ${colors.foreground-bright}
 
@@ -182,8 +183,9 @@ card = intel_backlight
 [module/cpu]
 type = internal/cpu
 interval = 2
-format-prefix = " "
+format-prefix = "%{A3:x-terminal-emulator -ls -e bash -ci 'htop' &:} "
 format-prefix-foreground = ${colors.foreground-bright}
+format-suffix = "%{A}"
 format-underline = ${colors.color4}
 label = %percentage:2:2%%
 
@@ -282,6 +284,8 @@ format-charging-underline = ${colors.color5}
 
 format-discharging = <ramp-capacity> <label-discharging>
 format-discharging-underline = ${self.format-charging-underline}
+format-discharging-prefix = "%{A3:x-terminal-emulator -ls -e bash -ci 'sudo powertop' &:}"
+format-discharging-suffix = "%{A}"
 
 format-full-prefix = " "
 format-full-prefix-foreground = ${colors.foreground-bright}
