@@ -27,8 +27,11 @@ Xcursor.theme: DMZ-Black
 *xterm*renderFont:           true
 *xterm*termName:             xterm-256color
 
-
-*VT100*translations:        #override Meta <Btn1Up>: exec-formatted("x-www-browser '%t'", PRIMARY)
+*VT100*translations:        #override \
+    Meta <Btn1Up>:          exec-formatted("x-www-browser '%t'", PRIMARY) \n\
+    Ctrl <Key> Down:        smaller-vt-font() \n\
+    Ctrl <Key> Up:          larger-vt-font() \n\
+    Ctrl <Key> plus:        set-vt-font("d") \n\
 
 ! ROFI
 rofi.color-enabled:                  true
