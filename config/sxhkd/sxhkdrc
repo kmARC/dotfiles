@@ -134,8 +134,11 @@ ctrl + alt + l
 XF86Display
 	bash -x $HOME/bin/desktop.sh > /tmp/desktopsh.log 2>&1
 
-XF86AudioMicMute
-	~/bin/mic-mute-toggle.sh
+XF86Audio{Raise,Lower}Volume
+	pactl set-sink-volume 0 {+,-}5%
+
+XF86AudioMute
+	pactl set-sink-mute 0 toggle
 
 XF86AudioPlay
 	mpc toggle
