@@ -27,8 +27,8 @@ dunst &
 ~/bin/cvim_server.py &
 xcape -t 250 -e 'Caps_Lock=Escape'
 
-# Panel
-polybar kmarc &
+# COnfigure desktop
+~/bin/desktop.sh
 
 # Autostarting daemons
 dex /etc/xdg/autostart/polkit-gnome-authentication-agent-1.desktop
@@ -47,4 +47,3 @@ dex /usr/share/applications/insync.desktop
 dex /usr/share/applications/skypeforlinux.desktop
 dex ~/.config/autostart/shutter.desktop
 
-~/bin/desktop.sh

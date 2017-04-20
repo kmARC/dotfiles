@@ -22,6 +22,10 @@ function is_primary {
            > /dev/null
 }
 
+# Kill panel while reconfiguring monitors
+killall -q polybar
+
+# Configure monitors
 if [[ ${#MONS[@]} == 2 && $MODE != 'mirror' ]]; then
     # Choose primary and secondary
     if [[ $MODE == 'reverse' ]]; then
@@ -112,3 +116,14 @@ synclient TapButton3=2
 
 # Fix Java nonreparenting WM issue
 ~/bin/java_nonreparenting_wm_hack.sh
+
+# Help polybar by calculating it's desired width
+echo $(( $(xrandr | grep primary \
+                  | sed -r 's/^.*[^0-9]([0-9]+)x[0-9]+.*$/\1/g') - 16 )) \
+    > /tmp/polybar-width.txt
+
+
+# Spawn panel
+while pgrep -x polybar >/dev/null; do sleep 1; done
+polybar kmarc &
+
