@@ -22,8 +22,9 @@ xsetroot -cursor_name left_ptr
 touchegg &
 sxhkd &
 mopidy --config ~/.config/mopidy/mopidy.conf:~/.pdotfiles/mopidy.conf &
-~/bin/cvim_server.py &
 xscreensaver -nosplash &
+dunst &
+~/bin/cvim_server.py &
 xcape -t 250 -e 'Caps_Lock=Escape'
 
 # XFCE daemons withouth session management
