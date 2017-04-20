@@ -50,8 +50,9 @@ sudo apt install -y dfc iotop powertop rar tig tlp zip
 
 ``` bash
 sudo apt install -y consolekit compton dex elementary-icon-theme feh fonts-noto \
-                    jq lightdm lightdm-gtk-greeter mpc rofi x11-xserver-utils \
-                    x11-utils xcape xinit xinput xscreensaver xsel xterm
+                    jq lightdm lightdm-gtk-greeter mpc rofi shutter thunar \
+                    x11-xserver-utils x11-utils xcape xinit xinput xscreensaver \
+                    xsel xterm xubuntu-icon-theme
 ```
 
 ### Install bspwm and sxhkd
