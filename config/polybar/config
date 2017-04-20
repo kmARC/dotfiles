@@ -124,6 +124,7 @@ label-empty-underline= ${colors.foreground-alt}
 [module/mpd]
 type = internal/mpd
 format-online = <toggle>   <label-song>   <bar-progress>
+format-offline = <label-offline>
 
 click-left = xterm
 
@@ -146,6 +147,8 @@ bar-progress-foreground-0 = #e8e
 bar-progress-background-0 = #00f
 
 label-song = %{F#eee}%title:0:20:...%%{F-}   (%artist:0:20:...%)   %{F#eee}%{F-}
+
+label-offline = %{F#eee}%{F-}%{O9}○○○○○○○○○○
 
 format-online-prefix = %{A3:x-terminal-emulator -ls -e bash -ci 'ncmpcpp' &:}%{A4:mpc seek +5:}%{A5:mpc seek -5:}
 format-online-suffix = %{A}%{A}%{A}
@@ -251,7 +254,7 @@ label-volume-foreground = ${colors.foreground}
 
 format-muted-prefix = " "
 format-muted-foreground = ${colors.foreground-bright}
-label-muted = "%{O8}○○○○○○○○○○"
+label-muted = %{O8}○○○○○○○○○○
 label-muted-foreground = ${colors.foreground}
 
 bar-volume-width = 10
