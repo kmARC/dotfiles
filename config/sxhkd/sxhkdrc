@@ -23,7 +23,6 @@ super + Escape
 # quit bspwm normally
 super + alt + Escape
 	bspc quit
-	# xfce4-session-logout
 
 # close and kill
 super + {_,shift + }w

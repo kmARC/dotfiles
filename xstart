@@ -27,9 +27,6 @@ dunst &
 ~/bin/cvim_server.py &
 xcape -t 250 -e 'Caps_Lock=Escape'
 
-# XFCE daemons withouth session management
-xfce4-panel --sm-client-disable -d &
-
 # Panel
 polybar kmarc &
 

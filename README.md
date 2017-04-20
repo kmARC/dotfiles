@@ -49,7 +49,7 @@ sudo apt install dfc iotop powertop rar tlp zip
 ### Install basic apps
 
 ``` bash
-sudo apt install elementary-icon-theme fonts-noto lightdm lightdm-gtk-greeter xfce4-appfinder xfce4-panel xfce4-pulseaudio-plugin x11-utils x11-xserver-utils xinit xinput xscreensaver
+sudo apt install elementary-icon-theme fonts-noto lightdm lightdm-gtk-greeter xfce4-appfinder x11-utils x11-xserver-utils xinit xinput xscreensaver
 sudo apt install consolekit compton dex feh jq mpc xcape xsel xterm
 ```
 

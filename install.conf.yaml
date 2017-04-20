@@ -28,8 +28,6 @@
         path: config/qt5ct/qt5ct.conf
     ~/.config/sxhkd/sxhkdrc:
         path: config/sxhkd/sxhkdrc
-    ~/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-panel.xml:
-        path: config/xfce4/xfconf/xfce-perchannel-xml/xfce4-panel.xml
     ~/.tmux/plugins/tpm:
         path: tmux/plugins/tpm
     ~/bin:

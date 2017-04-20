@@ -29,7 +29,7 @@ height = 27
 offset-x = 8
 offset-y = 8
 radius = 0
-fixed-center = false
+fixed-center = true
 
 background = ${colors.background}
 foreground = ${colors.foreground}
@@ -52,9 +52,12 @@ font-0 = "Noto Sans:pixelsize=9:weight=bold;0"
 font-1 = "Roboto:size=11:weight=bold;2"
 font-2 = "FontAwesome:size=11;1"
 
-modules-left = bspwm mpd
-modules-center = xwindow
-modules-right = backlight-acpi volume xkeyboard filesystem memory cpu battery temperature wlan date
+modules-left = bspwm xwindow 
+modules-center = xkeyboard filesystem memory cpu battery temperature
+modules-right = mpd backlight-acpi volume date
+
+tray-position = right
+tray-maxsize = 22
 
 wm-restack = bspwm
 
@@ -120,7 +123,9 @@ label-empty-underline= ${colors.foreground-alt}
 
 [module/mpd]
 type = internal/mpd
-format-online = <icon-prev> <icon-seekb> <bar-progress> <icon-seekf> <icon-next>   <label-time>   <toggle>   <label-song>   <icon-repeatone>   <icon-random>   <icon-stop>
+format-online = <toggle>   <label-song>   <bar-progress>
+
+click-left = xterm
 
 icon-play = 
 icon-pause = 
@@ -140,9 +145,10 @@ bar-progress-empty = ○
 bar-progress-foreground-0 = #e8e
 bar-progress-background-0 = #00f
 
-label-song-maxlen = 65
-label-song-ellipsis = true
-label-song = %{F#eee}%title:0:20:...%%{F-}   (%artist:0:20:...%)
+label-song = %{F#eee}%title:0:20:...%%{F-}   (%artist:0:20:...%)   %{F#eee}%{F-}
+
+format-online-prefix = %{A4:mpc seek +5:}%{A5:mpc seek -5:}
+format-online-suffix = %{A}%{A}
 
 toggle-on-foreground = ${colors.foreground-bright}
 toggle-off-foreground = ${colors.foreground}
@@ -153,6 +159,8 @@ type = internal/xbacklight
 format = <label> <bar>
 label = 
 label-foreground = ${colors.foreground-bright}
+format-prefix = %{A4:~/bin/backlight.sh up:}%{A5:~/bin/backlight.sh down:}
+format-suffix = %{A}%{A}
 
 bar-width = 10
 
@@ -174,7 +182,7 @@ interval = 2
 format-prefix = " "
 format-prefix-foreground = ${colors.foreground-bright}
 format-underline = ${colors.color4}
-label = %percentage%%
+label = %percentage:2:2%%
 
 format = <label>
 
@@ -229,8 +237,6 @@ time-alt = %H:%M
 
 format-prefix = 
 format-prefix-foreground = ${colors.foreground-bright}
-format-suffix = "   "
-;format-underline = ${colors.color2}
 
 label = %date% %time%
 
@@ -238,13 +244,14 @@ label = %date% %time%
 type = internal/volume
 
 format-volume =  <bar-volume>
-format-volume-prefix = " "
+format-volume-prefix = "%{A2:pavucontrol:} "
+format-volume-suffix = "%{A}"
 format-volume-foreground = ${colors.foreground-bright}
 label-volume-foreground = ${colors.foreground}
 
 format-muted-prefix = " "
 format-muted-foreground = ${colors.foreground-bright}
-label-muted = "  ○○○○○○○○○○"
+label-muted = "%{O8}○○○○○○○○○○"
 label-muted-foreground = ${colors.foreground}
 
 bar-volume-width = 10
