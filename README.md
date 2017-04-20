@@ -1,4 +1,4 @@
-# kmARC's Dotfiles
+# KMarc'S dOTFILES
 
 <a href="images/desktop-empty.png"><img src="images/desktop-empty.png"></a>
 <center>
@@ -49,7 +49,7 @@ sudo apt install dfc iotop powertop rar tlp zip
 ### Install basic apps
 
 ``` bash
-sudo apt install elementary-icon-theme fonts-noto lightdm lightdm-gtk-greeter xfce4-appfinder x11-utils x11-xserver-utils xinit xinput xscreensaver
+sudo apt install elementary-icon-theme fonts-noto lightdm lightdm-gtk-greeter rofi x11-utils x11-xserver-utils xinit xinput xscreensaver
 sudo apt install consolekit compton dex feh jq mpc xcape xsel xterm
 ```
 

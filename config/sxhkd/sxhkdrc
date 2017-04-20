@@ -10,7 +10,7 @@ super + Return
 # program launcher
 super + space; super + space
 #	dmenu_run
-	xfce4-appfinder
+	rofi -combi-modi window,drun,ssh,run -show combi -modi combi
 
 # make sxhkd reload its configuration files:
 super + Escape
