@@ -1,7 +1,10 @@
 #!/usr/bin/env bash
 MONS=($(xrandr | awk '/\sconnected\s/{print $1}'))
-# NODES=$(bspc query -N | wc -l)
 MODE=$1
+
+# Kill panel while reconfiguring monitors
+killall -q polybar
+while pgrep -x polybar >/dev/null; do sleep 1; done
 
 # Prints largest resolution mode
 function largest_res {
@@ -21,9 +24,6 @@ function is_primary {
            | grep primary \
            > /dev/null
 }
-
-# Kill panel while reconfiguring monitors
-killall -q polybar
 
 # Configure monitors
 if [[ ${#MONS[@]} == 2 && $MODE != 'mirror' ]]; then
@@ -94,6 +94,16 @@ for monitor in $PRI $SEC; do
     done
 done
 
+# Switch off not connected but still active monitors
+ACTIVE_MONS=($(xrandr --listactivemonitors | awk '/[0-9]:/{ print $4}'))
+for AMON in "${ACTIVE_MONS[@]}"; do
+    REMOVE=1
+    for CMON in "${MONS[@]}"; do
+        [[ "$CMON" == "$AMON" ]] && REMOVE=0
+    done
+    [[ "$REMOVE" -eq 1 ]] && xrandr --output $AMON --off
+done
+
 # Add tray space on primary monitor
 bspc config -m "$PRI" top_padding 35 # 35 = 27 (bar) + 8 (padding)
 
@@ -121,8 +131,9 @@ synclient TapButton3=2
 echo $(( $(xrandr | grep primary \
                   | sed -r 's/^.*[^0-9]([0-9]+)x[0-9]+.*$/\1/g') - 16 )) \
     > /tmp/polybar-width.txt
+echo $(polybar -m | grep '+0+0' | cut -d':' -f1) \
+    > /tmp/polybar-monitor.txt
 
 # Spawn panel
-while pgrep -x polybar >/dev/null; do sleep 1; done
-polybar -r kmarc &
+polybar -r kmarc >> /dev/null 2>&1 &
 

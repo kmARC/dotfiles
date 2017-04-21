@@ -25,6 +25,7 @@ color6 = #801ab3
 
 [bar/kmarc]
 width = ${file:/tmp/polybar-width.txt:1008}
+monitor = ${file:/tmp/polybar-monitor.txt:primary}
 height = 27
 offset-x = 8
 offset-y = 8
@@ -70,6 +71,9 @@ scroll-down = bspwm-deskprev
 type = internal/xwindow
 label = %title:0:60:...%
 format-foreground = ${colors.foreground-bright}
+format-prefix = %{O5}
+format-prefix-font = 1
+format-prefix-foreground = #fff
 
 [module/xkeyboard]
 type = internal/xkeyboard
@@ -102,6 +106,14 @@ format-mounted-underline = ${colors.color2}
 
 [module/bspwm]
 type = internal/bspwm
+
+format = <label-monitor> <label-state> <label-mode>
+
+label-monitor-font = 1
+label-monitor = 
+label-monitor-foreground = #fff
+
+pin-workspaces = false
 
 label-focused = %index%
 label-focused-foreground = ${colors.foreground-bright}
