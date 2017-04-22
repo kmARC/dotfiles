@@ -6,7 +6,7 @@ set ignorecase
 
 imap <C-i> editWithVim
 
-let blacklists = ["http://digg.com/*","https://mail.google.com/*", "https://docs.google.com/*"]
+let blacklists = ["https://digg.com/*","https://mail.google.com/*", "https://docs.google.com/*"]
 
 let qmark w = "https://web.whatsapp.com"
 let qmark r = "https://digg.com/reader"
