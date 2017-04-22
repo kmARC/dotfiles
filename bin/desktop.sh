@@ -25,6 +25,10 @@ function is_primary {
            > /dev/null
 }
 
+# Focus the first desktops on all displays to prevent stale / removed desktops
+bspc desktop -f 6
+bspc desktop -f 1
+
 # Configure monitors
 if [[ ${#MONS[@]} == 2 && $MODE != 'mirror' ]]; then
     # Choose primary and secondary
@@ -68,6 +72,7 @@ else
         SEC=${MONS[1]}
         MOD_PRI=$(common_res)
         MOD_SEC=$MOD_PRI
+        xrandr --output "$SEC" --off
     else
         MOD_PRI=$(largest_res "$PRI")
     fi
@@ -86,14 +91,6 @@ else
     bspc monitor "$PRI" -o 1 2 3 4 5 6 7 8 9 0
 fi
 
-for monitor in $PRI $SEC; do
-    # Remove auto-created desktops (e.g. their name is not a digit)
-    for desktop in $(bspc query -T -m "$monitor" | jq -r '.desktops[].name' \
-                                                 | grep -v '^[0-9]$'); do
-        bspc desktop "$desktop" -r
-    done
-done
-
 # Switch off not connected but still active monitors
 ACTIVE_MONS=($(xrandr --listactivemonitors | awk '/[0-9]:/{ print $4}'))
 for AMON in "${ACTIVE_MONS[@]}"; do
@@ -103,6 +100,15 @@ for AMON in "${ACTIVE_MONS[@]}"; do
     done
     [[ "$REMOVE" -eq 1 ]] && xrandr --output $AMON --off
 done
+
+for monitor in $PRI $SEC; do
+    # Remove auto-created desktops (e.g. their name is not a digit)
+    for desktop in $(bspc query -T -m "$monitor" | jq -r '.desktops[].name' \
+                                                 | grep -v '^[0-9]$'); do
+        bspc desktop "$desktop" -r
+    done
+done
+
 
 # Add tray space on primary monitor
 bspc config -m "$PRI" top_padding 35 # 35 = 27 (bar) + 8 (padding)
