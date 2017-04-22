@@ -26,6 +26,7 @@ xscreensaver -nosplash &
 dunst &
 ~/bin/cvim_server.py &
 xcape -t 250 -e 'Caps_Lock=Escape'
+syndaemon -i 0.5 -K -R -d
 
 # COnfigure desktop
 ~/bin/desktop.sh
