@@ -41,7 +41,7 @@ These are  some handy  tools what I  like however not  (yet!) configured  by the
 dotfiles.
 
 ``` bash
-sudo apt install -y dfc iotop powertop rar tig tlp zip
+sudo apt install -y dfc iotop moreutils powertop rar tig tlp zip
 ```
 
 ## Desktop
@@ -49,10 +49,20 @@ sudo apt install -y dfc iotop powertop rar tig tlp zip
 ### Install basic apps
 
 ``` bash
-sudo apt install -y consolekit compton dex elementary-icon-theme feh fonts-noto \
-                    jq lightdm lightdm-gtk-greeter mpc rofi shutter thunar \
-                    x11-xserver-utils x11-utils xcape xinit xinput xscreensaver \
-                    xsel xterm xubuntu-icon-theme
+sudo apt install -y consolekit compton dex elementary-icon-theme feh \
+                    fonts-noto jq lightdm lightdm-gtk-greeter mpc \
+                    network-manager-openvpn-gnome rofi rxvt-unicode-256color \
+                    shutter thunar x11-xserver-utils x11-utils xcape xinit \ 
+                    xinput xscreensaver xsel xubuntu-icon-theme
+```
+
+### Set up terminal
+
+I use rxvt-unicode-256color as my terminal. To enable the daemon mode of it, use
+the `urxvtcd` binary for x-terminal-emulator.
+
+```bash
+sudo update-alternatives --install /etc/alternatives/x-terminal-emulator urxvtcd /usr/bin/urxvtcd 20
 ```
 
 ### Install bspwm and sxhkd

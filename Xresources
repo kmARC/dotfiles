@@ -1,4 +1,4 @@
-! Xft Font hinting
+! Xft
 Xft.autohint:   0
 Xft.lcdfilter:  lcddefault
 Xft.hintstyle:  hintslight
@@ -6,18 +6,19 @@ Xft.hinting:    1
 Xft.antialias:  1
 Xft.rgba:       rgb
 
+! Xcursor
 Xcursor.theme: DMZ-Black
 
-! XTerm settings
+! XTerm
 *xterm*activeIcon:           true
 *xterm*borderWidth:          0
 *xterm*disallowedWindowOps:  20,21,SetXprop
 *xterm*faceName:             xft:Source Code Pro:medium
 *xterm*faceSize:             9.0
-*xterm*faceSize1:            3.0
-*xterm*faceSize2:            5.0
-*xterm*faceSize3:            7.0
-*xterm*faceSize4:            11.0
+*xterm*faceSize1:            5.0
+*xterm*faceSize2:            7.0
+*xterm*faceSize3:            9.0
+*xterm*faceSize4:            12.0
 *xterm*faceSize5:            14.0
 *xterm*faceSize6:            17.0
 *xterm*highlightColor:       black
@@ -31,12 +32,67 @@ Xcursor.theme: DMZ-Black
     Meta <Btn1Up>:          exec-formatted("x-www-browser '%t'", PRIMARY) \n\
     Ctrl <Key> Down:        smaller-vt-font() \n\
     Ctrl <Key> Up:          larger-vt-font() \n\
-    Ctrl <Key> plus:        set-vt-font("d") \n\
+    Ctrl <Key> plus:        set-vt-font("d") \n
 
-! ROFI
+
+! Rxvt
+URxvt.borderLess:      0
+URxvt.cutchars:        │
+URxvt.externalBorder:  0
+URxvt.font-size.step:  1
+URxvt.internalBorder:  0
+URxvt.font:            xft:Source Code Pro:medium:pixelsize=12
+URxvt.boldFont:        xft:Source Code Pro:bold
+URxvt.italicFont:      xft:Source Code Pro:italic
+URxvt.keysym.C-Delete: matcher:select
+URxvt.keysym.C-0:      command:\033]710;xft:Source Code Pro:size=9\007
+URxvt.keysym.C-1:      command:\033]710;xft:Source Code Pro:size=5\007
+URxvt.keysym.C-2:      command:\033]710;xft:Source Code Pro:size=7\007
+URxvt.keysym.C-3:      command:\033]710;xft:Source Code Pro:size=9\007
+URxvt.keysym.C-4:      command:\033]710;xft:Source Code Pro:size=12\007
+URxvt.keysym.C-5:      command:\033]710;xft:Source Code Pro:size=14\007
+URxvt.keysym.C-6:      command:\033]710;xft:Source Code Pro:size=17\007
+URxvt.keysym.F1:       \033OP
+URxvt.keysym.F2:       \033OQ
+URxvt.keysym.F3:       \033OR
+URxvt.keysym.F4:       \033OS
+URxvt.keysym.KP_End:   \033OF
+URxvt.keysym.KP_Home:  \033OH
+URxvt.letterSpace:     -2
+URxvt.matcher.button:  1
+URxvt.matcher.pattern.1: \\blocalhost:\\d+
+URxvt.matcher.rend.0:  Uline fg6
+URxvt.matcher.rend.1:  Uline fg6
+URxvt.perl-ext-common: default,matcher
+URxvt.scrollBar:       false
+URxvt.url-launcher:    /usr/bin/xdg-open
+
+! Base16 color theme: Materia
+! TODO: find a better way to select base color scheme.
+#define base00 #263238
+#define base01 #2C393F
+#define base02 #37474F
+#define base03 #707880
+#define base04 #C9CCD3
+#define base05 #CDD3DE
+#define base06 #D5DBE5
+#define base07 #FFFFFF
+#define base08 #EC5F67
+#define base09 #EA9560
+#define base0A #FFCC00
+#define base0B #8BD649
+#define base0C #80CBC4
+#define base0D #89DDFF
+#define base0E #82AAFF
+#define base0F #EC5F67
+
+! Rofi
 rofi.color-enabled:                  true
-rofi.color-normal:                   #ffffff,#525d76,#f5f5f5,#5294e2,#ffffff
-rofi.color-urgent:                   #ffffff,#dc322f,#f5f5f5,#5294e2,#dc322f
-rofi.color-active:                   #ffffff,#c2cad0,#f5f5f5,#5294e2,#c2cad0
-rofi.color-window:                   #ffffff,#f5f5f5
-rofi.separator-style:                solid
+rofi.color-normal:                   base00,base04,base00,base02,base07
+rofi.color-urgent:                   base00,base08,base00,base02,base08
+rofi.color-active:                   base00,base0D,base00,base02,base0D
+rofi.color-window:                   base00,base0D,base0D
+rofi.separator-style:                none
+rofi.font:                           Source Code Pro Medium 9
+rofi.bw: 3
+
