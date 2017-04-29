@@ -8,11 +8,11 @@
 ;=====================================================
 
 [colors]
-background = #263238
+background = #ee263238
 background-alt = #444
 foreground = #aaa
 foreground-alt = #555
-foreground-bright = #ddd
+foreground-bright = #fff
 primary = #89ddff
 secondary = #e60053
 alert = #bd2c40
@@ -73,7 +73,7 @@ label = %title:0:60:...%
 format-foreground = ${colors.foreground-bright}
 format-prefix = %{O5}
 format-prefix-font = 1
-format-prefix-foreground = #fff
+format-prefix-foreground = ${colors.foreground-bright}
 
 [module/xkeyboard]
 type = internal/xkeyboard
@@ -111,7 +111,7 @@ format = <label-monitor> <label-state> <label-mode>
 
 label-monitor-font = 1
 label-monitor = 
-label-monitor-foreground = #fff
+label-monitor-foreground = ${colors.foreground-bright}
 
 pin-workspaces = false
 
@@ -289,7 +289,7 @@ bar-volume-empty-foreground = ${colors.foreground}
 type = internal/battery
 battery = BAT1
 adapter = ACAD
-full-at = 98
+full-at = 95
 
 format-charging = <animation-charging> <label-charging>
 format-charging-underline = ${colors.color5}

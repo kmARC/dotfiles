@@ -10,7 +10,14 @@ super + Return
 # program launcher
 super + space; super + space
 #	dmenu_run
-	rofi -combi-modi window,drun,ssh,run -show combi -modi combi
+	rofi -combi-modi drun,run,window,ssh -show combi -modi combi,run \
+         -columns 4 -sidebar-mode
+
+# show window list
+alt + Tab
+	rofi -show window -kb-row-down 'Alt-Tab' -kb-accept-entry '!Alt-Tab' \
+         -kb-cancel 'Alt-Escape'
+
 
 # make sxhkd reload its configuration files:
 super + Escape
