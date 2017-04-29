@@ -3,6 +3,7 @@ set linkanimations
 set numerichints
 set typelinkhints
 set ignorecase
+set tabindices
 
 imap <C-i> editWithVim
 

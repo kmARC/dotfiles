@@ -54,5 +54,5 @@
   - [~/.dotfiles/hooks/bash.sh, Setting up bashrc]
   - [~/.fzf/install --all, Installing FZF]
   - [~/.tmux/plugins/tpm/bin/install_plugins, Installing new TMUX plugins]
-  - [~/.tmux/plugins/tpm/bin/update_plugins all, Upgrading TMUX plugins]
+  # - [~/.tmux/plugins/tpm/bin/update_plugins all, Upgrading TMUX plugins]
 

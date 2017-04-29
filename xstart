@@ -45,6 +45,5 @@ dex /etc/xdg/autostart/print-applet.desktop
 
 # Applications
 dex /usr/share/applications/insync.desktop
-dex /usr/share/applications/skypeforlinux.desktop
 dex ~/.config/autostart/shutter.desktop
 

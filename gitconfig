@@ -6,3 +6,7 @@
 	fontdiff = -family \"Source Code Pro\" -size 9 -weight normal -slant roman -underline 0 -overstrike 0
 	tabsize = 4
 	spellingdictionary = en_US
+[http]
+	sslVerify = false
+[credential]
+	helper = /usr/share/doc/git/contrib/credential/gnome-keyring/git-credential-gnome-keyring
