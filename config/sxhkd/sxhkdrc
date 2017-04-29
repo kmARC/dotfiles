@@ -151,6 +151,10 @@ Print
 shift + Print
 	shutter -s
 
+# Daemons
+super + space; M
+	~/bin/start-mopidy.sh
+
 # Desktop apps
 super + space; b
 	x-www-browser

@@ -21,7 +21,7 @@ xsetroot -cursor_name left_ptr
 # Daemons
 touchegg &
 sxhkd &
-mopidy --config ~/.config/mopidy/mopidy.conf:~/.pdotfiles/mopidy.conf &
+~/bin/start-mopidy.sh &
 xscreensaver -nosplash &
 dunst &
 ~/bin/cvim_server.py &
