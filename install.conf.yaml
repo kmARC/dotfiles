@@ -50,7 +50,7 @@
         path: xprofile
 
 - shell:
-  - [git submodule update --init --remote, Installing/updating submodules]
+  - [git submodule update --init --recursive, Installing/updating submodules]
   - [~/.dotfiles/hooks/bash.sh, Setting up bashrc]
   - [~/.fzf/install --all, Installing FZF]
   - [~/.tmux/plugins/tpm/bin/install_plugins, Installing new TMUX plugins]
