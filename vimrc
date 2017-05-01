@@ -62,6 +62,8 @@ Plug 'pangloss/vim-javascript'                  , {'for': 'javascript*'}
 Plug 'mxw/vim-jsx'                              , {'for': '*.jsx'}
 "--- TypeScript ---
 Plug 'leafgarland/typescript-vim'               , {'for': 'typescript*'}
+"--- DevOps ---
+Plug 'pearofducks/ansible-vim'                  , {'for': 'ansible*'}
 " "--- C/C++ ---
 " Plug 'vim-scripts/a.vim'                  , {'for': ['cpp', 'c'] }
 " Plug 'octol/vim-cpp-enhanced-highlight'   , {'for': ['cpp', 'c'] }
@@ -182,8 +184,8 @@ autocmd FileType javascript*,typescript*,json   setlocal sw=2 sts=2 ts=2
 autocmd FileType css,less,scss                  setlocal sw=2 sts=2 ts=2
 autocmd FileType plaintex,text,markdown         setlocal tw=80 formatprg=par\ -jw80
 "----- filetypes
-" autocmd BufReadCmd Vagrantfile                  setlocal filetype=ruby
-" autocmd BufReadCmd *.tsx                        setlocal filetype=typescript.jsx
+autocmd BufRead,BufNewFile Vagrantfile          setlocal filetype=ruby
+autocmd BufRead,BufNewFile *.tsx                setlocal filetype=typescript.jsx
 "----- marks
 autocmd BufWrite *.css,*.less,*.scss            normal! mC
 autocmd BufWrite *.html                         normal! mH

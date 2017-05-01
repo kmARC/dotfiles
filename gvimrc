@@ -1,4 +1,4 @@
 if has('gui_running')
-    set guifont=Dejavu\ Sans\ Mono\ 8
+    set guifont=Source\ Code\ Pro\ Semibold\ 9
     set guioptions=agit
 endif
