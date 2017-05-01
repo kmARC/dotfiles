@@ -130,7 +130,7 @@ silent! source ~/.vimrc_background
 cmap w!!                   w !sudo tee > /dev/null %
 nnoremap <C-e>             2<C-e>
 nnoremap <C-y>             2<C-y>
-nnoremap <C-p>             :call CtrlP()<CR>
+nnoremap <C-p>             :Files<CR>
 nnoremap <F7>              :NERDTreeFind<CR>
 nnoremap <F8>              :TagbarToggle<CR>
 nnoremap <F9>              :lclose<CR>:cclose<CR>:pclose<CR>
@@ -262,13 +262,6 @@ endfunction
 
 command! Project call Project()
 
-function! CtrlP()
-  if filewritable($PWD . "/.git")
-    :GFiles
-  else
-    :Files
-  endif
-endfunction
 " }}}
 
 "--- Plugin configurations ---
