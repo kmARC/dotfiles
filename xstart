@@ -6,6 +6,8 @@ export _JAVA_OPTIONS="\
           -Dswing.aatext=true \
           -Dswing.crossplatformlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel"
 
+wmname compiz
+
 # Workaround for electron/chrome based apps timeout while connecting to
 killall gnome-keyring-daemon
 

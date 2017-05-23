@@ -50,10 +50,11 @@ sudo apt install -y dfc iotop moreutils powertop rar tig tlp zip
 
 ``` bash
 sudo apt install -y consolekit compton dex elementary-icon-theme feh \
-                    fonts-noto jq lightdm lightdm-gtk-greeter mpc \
-                    network-manager-openvpn-gnome rofi rxvt-unicode-256color \
-                    shutter thunar x11-xserver-utils x11-utils xcape xinit \ 
-                    xinput xscreensaver xsel xubuntu-icon-theme
+                    fonts-noto jq libx11-protocol-other-perl lightdm \
+                    lightdm-gtk-greeter mpc network-manager-openvpn-gnome rofi \
+                    rxvt-unicode-256color suckless-tools shutter thunar \
+                    x11-xserver-utils x11-utils xcape xinit xinput \
+                    xscreensaver xsel xubuntu-icon-theme
 ```
 
 ### Set up terminal
@@ -155,7 +156,7 @@ wget -q -O - https://apt.mopidy.com/mopidy.gpg | sudo apt-key add -
 sudo wget -q -O /etc/apt/sources.list.d/mopidy.list https://apt.mopidy.com/jessie.list
 sudo apt update
 sudo apt install -y mopidy mopidy-spotify
-sudo pip install Mopidy-TuneIn Mopidy-Qsaver
+sudo -H pip install Mopidy-TuneIn Mopidy-Qsaver
 ```
 
 ### Restart your desktop
