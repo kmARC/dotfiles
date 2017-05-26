@@ -63,6 +63,7 @@ Plug 'mxw/vim-jsx'                              , {'for': '*.jsx'}
 "--- TypeScript ---
 Plug 'leafgarland/typescript-vim'               , {'for': 'typescript*'}
 "--- DevOps ---
+Plug 'hashivim/vim-terraform'                   , {'for': 'terraform'}
 Plug 'pearofducks/ansible-vim'                  , {'for': 'ansible*'}
 " "--- C/C++ ---
 " Plug 'vim-scripts/a.vim'                  , {'for': ['cpp', 'c'] }
@@ -124,6 +125,7 @@ set wildignorecase
 set wildmode=list,full
 set wildcharm=<C-z>
 set grepprg=ag\ --vimgrep\ $*
+set foldlevel=0
 
 "--- Look & Feel ----
 set background=dark
@@ -186,6 +188,7 @@ autocmd FileType javascript*,typescript*        nnoremap <buffer> <Leader>] :Ycm
 autocmd FileType vim                            setlocal sw=2 sts=2 ts=2
 autocmd FileType javascript*,typescript*,json   setlocal sw=2 sts=2 ts=2
 autocmd FileType css,less,scss                  setlocal sw=2 sts=2 ts=2
+autocmd FileType terraform                      setlocal sw=2 sts=2 ts=2
 autocmd FileType plaintex,text,markdown         setlocal tw=80 formatprg=par\ -jw80
 "----- filetypes
 autocmd BufRead,BufNewFile Vagrantfile          setlocal filetype=ruby
@@ -215,14 +218,19 @@ autocmd BufWinEnter,WinEnter */doc/*            wincmd L | 80 wincmd | | setloca
 autocmd VimEnter * call CheckProject()
 
 "--- Functions --- {{{
+let s:fcw=2
 function! ToggleFold()
-  if &l:foldmethod == "manual"
-    let &l:foldmethod='indent'
-    let &l:foldcolumn=&l:tabstop
+  if &l:foldcolumn == s:fcw
+    normal zR
+    let &l:foldcolumn = 0
   else
+    let &l:foldcolumn = s:fcw
+    let &l:foldlevel = 0
+  endif
+  if &l:foldmethod == 'manual'
+    let &l:foldmethod='indent'
+  elseif &l:foldmethod == 'indent'
     let &l:foldmethod='manual'
-    let &l:foldcolumn=0
-    normal zE
   endif
 endfunction
 
