@@ -340,9 +340,7 @@ let g:taboo_tab_format=' [%N] %f%m |'
 let g:airline_left_sep = ''
 let g:airline_right_sep = ''
 let g:airline_theme = 'base16'
-let g:airline#extensions#branch#enabled = 0
-let g:airline#extensions#hunks#enabled = 0
-let g:airline#extensions#ycm#enabled = 0
+let g:airline_powerline_fonts = 1
 let g:airline#extensions#whitespace#enabled = 0
 let g:airline_inactive_collapse = 0
 let g:airline_section_warning = ''
@@ -352,6 +350,11 @@ function! AirlineThemePatch(palette)
         let colors[3] = 255
     endfor
 endfunction
+if !exists('g:airline_symbols')
+  let g:airline_symbols = {}
+endif
+let g:airline_symbols.maxlinenr = ''
+let g:airline_symbols.linenr = ''
 
 "--- vim-jsdoc ---
 let g:jsdoc_enable_es6 = 1
