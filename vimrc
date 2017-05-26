@@ -118,8 +118,12 @@ set wildignore+=*.o,*.so,*.a,*.swp,*.zip,*.pyc,*.class,tags,.git/**,.env/**
 set completeopt=preview,longest,menuone
 set splitright
 set diffopt+=vertical   " Always vsplit. Helps with fugitive too
-set colorcolumn=81
 set sessionoptions+=tabpages,globals,localoptions
+set switchbuf+=usetab
+set wildignorecase
+set wildmode=list,full
+set wildcharm=<C-z>
+set grepprg=ag\ --vimgrep\ $*
 
 "--- Look & Feel ----
 set background=dark
@@ -195,11 +199,20 @@ autocmd BufWrite *.py                           normal! mP
 autocmd BufWrite *.sh                           normal! mS
 autocmd BufWrite *.vim,vimrc                    normal! mV
 "----- buffer/window opts
-autocmd WinLeave *                              if &l:buftype == "" | setlocal nu nornu
-autocmd BufEnter *                              if &l:buftype == "" | setlocal nu rnu
+augroup BgHighlight
+  autocmd!
+  autocmd WinEnter * if &l:buftype == "" | setlocal nu rnu
+  autocmd WinEnter * set cursorline
+  autocmd WinEnter * set colorcolumn=81
+  autocmd WinLeave * if &l:buftype == "" | setlocal nu nornu
+  autocmd WinLeave * set nocursorline
+  autocmd WinLeave * set colorcolumn=0
+augroup END
 autocmd WinEnter *                              call ExitIfNoListedBufsDisplayed()
 autocmd FileType nerdtree                       nnoremap <buffer> <F7> :NERDTreeToggle<CR>
 autocmd BufWinEnter,WinEnter */doc/*            wincmd L | 80 wincmd | | setlocal winfixwidth
+"----- startup
+autocmd VimEnter * call CheckProject()
 
 "--- Functions --- {{{
 function! ToggleFold()
@@ -262,6 +275,15 @@ endfunction
 
 command! Project call Project()
 
+function! CheckProject()
+  if filereadable(s:sess)
+    let choice = confirm("Project detected. Should we open?", "&Yes\n&No", 1)
+    if choice==1
+      call Project()
+    endif
+  endif
+endfunction
+
 " }}}
 
 "--- Plugin configurations ---
@@ -281,7 +303,8 @@ autocmd BufReadPost *.git/index  set nobuflisted
 
 "--- fugitive-gitlab.vim ---
 let g:fugitive_gitlab_domains = [
-      \ 'http://gitlab.zurich.ibm.com'
+      \ 'https://gitlab.sec.in.pan-net.eu/',
+      \ 'https://gitlab.tools.in.pan-net.eu/'
       \ ]
 
 "--- FZF ---
@@ -338,6 +361,10 @@ let g:vim_markdown_folding_disabled=1
 
 "--- vim-gitgutter ---
 let g:gitgutter_max_signs=2000
+
+"--- vimwiki ---
+let g:vimwiki_list = [{'path': '~/Dokumente/', 'syntax': 'markdown', 'ext': '.md', 'automatic_nested_syntaxes': 1, 'auto_toc': 1, 'index': 'Home'}]
+let g:vimwiki_folding = 'list'
 
 "--- YouCompleteMe ---
 let g:ycm_autoclose_preview_window_after_insertion=1
