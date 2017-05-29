@@ -1,0 +1,5 @@
+- aptget:
+    qt5ct: ppa:nilarimogard/webupd8
+
+- aptget: [htop]
+

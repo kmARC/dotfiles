@@ -13,3 +13,6 @@
 	url = https://github.com/junegunn/fzf
 	branch = 0.16.6
 
+[submodule "dotbot_plugin_aptget"]
+	path = dotbot_plugin_aptget
+	url = https://github.com/kmARC/dotbot_plugin_aptget
