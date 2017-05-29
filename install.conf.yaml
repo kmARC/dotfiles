@@ -28,6 +28,8 @@
         path: config/qt5ct/qt5ct.conf
     ~/.config/sxhkd/sxhkdrc:
         path: config/sxhkd/sxhkdrc
+    ~/.fonts/dotbot:
+        path: fonts/dotbot
     ~/.tmux/plugins/tpm:
         path: tmux/plugins/tpm
     ~/bin:
@@ -52,6 +54,7 @@
 - shell:
   - [git submodule update --init --recursive, Installing/updating submodules]
   - [~/.dotfiles/hooks/bash.sh, Setting up bashrc]
+  - [~/.dotfiles/hooks/font.sh SourceCodePro, Installing font]
   - [~/.fzf/install --all, Installing FZF]
   - [~/.tmux/plugins/tpm/bin/install_plugins, Installing new TMUX plugins]
   # - [~/.tmux/plugins/tpm/bin/update_plugins all, Upgrading TMUX plugins]
