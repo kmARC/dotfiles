@@ -113,6 +113,7 @@ set backupdir=~/.vim/vimbackup//
 set undodir=~/.vim/vimundo//
 set viminfo+=n~/.vim/misc/viminfo
 set number relativenumber
+set colorcolumn=81
 set path+=**
 set laststatus=2
 set wildignore+=*.o,*.so,*.a,*.swp,*.zip,*.pyc,*.class,tags,.git/**,.env/**
