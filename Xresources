@@ -32,7 +32,7 @@ Xcursor.theme: DMZ-Black
 *xterm*activeIcon:           true
 *xterm*borderWidth:          0
 *xterm*disallowedWindowOps:  20,21,SetXprop
-*xterm*faceName:             xft:SauceCodePro Nerd Font:semibold:size=9
+*xterm*faceName:             xft:SauceCodePro Nerd Font:medium:size=9
 *xterm*veryBoldColors:       8
 *xterm*faceSize:             9.0
 *xterm*faceSize1:            5.0
@@ -64,17 +64,17 @@ URxvt.borderColor:     base00
 URxvt.cutchars:        │
 URxvt.externalBorder:  0
 URxvt.internalBorder:  0
-URxvt*font:            xft:SauceCodePro Nerd Font:semibold:size=9
+URxvt*font:            xft:SauceCodePro Nerd Font:medium:size=9
 URxvt.boldFont:        xft:SauceCodePro Nerd Font:bold
 URxvt.italicFont:      xft:SauceCodePro Nerd Font:italic
 URxvt.keysym.C-Delete: matcher:select
-URxvt.keysym.C-M-0:      command:\033]710;xft:SauceCodePro Nerd Font:semibold:size=9.0\007
-URxvt.keysym.C-M-1:      command:\033]710;xft:SauceCodePro Nerd Font:semibold:size=5.0\007
-URxvt.keysym.C-M-2:      command:\033]710;xft:SauceCodePro Nerd Font:semibold:size=7.0\007
-URxvt.keysym.C-M-3:      command:\033]710;xft:SauceCodePro Nerd Font:semibold:size=9.0\007
-URxvt.keysym.C-M-4:      command:\033]710;xft:SauceCodePro Nerd Font:semibold:size=12.0\007
-URxvt.keysym.C-M-5:      command:\033]710;xft:SauceCodePro Nerd Font:semibold:size=14.0\007
-URxvt.keysym.C-M-6:      command:\033]710;xft:SauceCodePro Nerd Font:semibold:size=20.0\007
+URxvt.keysym.C-M-0:      command:\033]710;xft:SauceCodePro Nerd Font:medium:size=9.0\007
+URxvt.keysym.C-M-1:      command:\033]710;xft:SauceCodePro Nerd Font:medium:size=5.0\007
+URxvt.keysym.C-M-2:      command:\033]710;xft:SauceCodePro Nerd Font:medium:size=7.0\007
+URxvt.keysym.C-M-3:      command:\033]710;xft:SauceCodePro Nerd Font:medium:size=9.0\007
+URxvt.keysym.C-M-4:      command:\033]710;xft:SauceCodePro Nerd Font:medium:size=12.0\007
+URxvt.keysym.C-M-5:      command:\033]710;xft:SauceCodePro Nerd Font:medium:size=14.0\007
+URxvt.keysym.C-M-6:      command:\033]710;xft:SauceCodePro Nerd Font:medium:size=20.0\007
 URxvt.keysym.F1:       \033OP
 URxvt.keysym.F2:       \033OQ
 URxvt.keysym.F3:       \033OR
@@ -97,6 +97,6 @@ rofi.color-urgent:                   base00,base08,base00,base02,base08
 rofi.color-active:                   base00,base0D,base00,base02,base0D
 rofi.color-window:                   base00,base0D,base0D
 rofi.separator-style:                none
-rofi.font:                           SauceCodePro Nerd Font Semibold 9
+rofi.font:                           SauceCodePro Nerd Font Medium 9
 rofi.bw: 3
 

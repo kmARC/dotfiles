@@ -1,10 +1,13 @@
 #!/usr/bin/env bash
-MONS=($(xrandr | awk '/\sconnected\s/{print $1}'))
-MODE=$1
+
+# Hide tray
+transset -n stalonetray 0
 
 # Kill panel while reconfiguring monitors
 killall -q polybar
-while pgrep -x polybar >/dev/null; do sleep 1; done
+
+MONS=($(xrandr | awk '/\sconnected\s/{print $1}'))
+MODE=$1
 
 # Prints largest resolution mode
 function largest_res {
@@ -26,7 +29,8 @@ function is_primary {
 }
 
 # Focus the first desktops on all displays to prevent stale / removed desktops
-bspc desktop -f 6
+CUR=$(bspc query -D -d)
+# bspc desktop -f 6
 bspc desktop -f 1
 
 # Configure monitors
@@ -109,10 +113,6 @@ for monitor in $PRI $SEC; do
     done
 done
 
-
-# Add tray space on primary monitor
-bspc config -m "$PRI" top_padding 35 # 35 = 27 (bar) + 8 (padding)
-
 # Set wallpaper
 ~/.fehbg
 
@@ -137,9 +137,22 @@ synclient TapButton3=2
 echo $(( $(xrandr | grep primary \
                   | sed -r 's/^.*[^0-9]([0-9]+)x[0-9]+.*$/\1/g') - 16 )) \
     > /tmp/polybar-width.txt
-echo $(polybar -m | grep '+0+0' | cut -d':' -f1) \
+polybar -m | grep '+0+0' | cut -d':' -f1 \
     > /tmp/polybar-monitor.txt
 
+bspc desktop -f "$CUR"
+
 # Spawn panel
+while pgrep -x polybar >/dev/null; do sleep 0.5; done
 polybar -r kmarc >> /dev/null 2>&1 &
 
+# Position and show stalonetray
+xdo move -N stalonetray -x $(($(cat /tmp/polybar-width.txt) / 2 - 260))
+(
+    sleep 1
+    xdo above -t "$(xdo id -n polybar)" "$(xdo id -n stalonetray)"
+    transset -n stalonetray 1
+)
+
+# Setting WM name to something java compatible
+wmname LG3D

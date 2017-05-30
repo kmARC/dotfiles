@@ -59,8 +59,10 @@ function __fzf_open__() {
 # Prompt. See __ps1 -h
  __ps1 4
 
-[ -z $TMUX ] && export TERM=xterm-256color
-[ $UID != 0 ] && transset --id "$WINDOWID" 0.95 >/dev/null
+if [ "$DISPLAY" ]; then
+    [ -z $TMUX ] && export TERM=xterm-256color
+    [ $UID != 0 ] && transset --id "$WINDOWID" 0.95 >/dev/null
+fi
 
 
 # Base16 shell

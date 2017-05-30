@@ -8,7 +8,7 @@
 ;=====================================================
 
 [colors]
-background = #ee263238
+background = #aa263238
 background-alt = #444
 foreground = #aaa
 foreground-alt = #555
@@ -25,44 +25,28 @@ color6 = #801ab3
 
 [bar/kmarc]
 width = ${file:/tmp/polybar-width.txt:1008}
-monitor = ${file:/tmp/polybar-monitor.txt:primary}
 height = 27
+monitor = ${file:/tmp/polybar-monitor.txt:primary}
 offset-x = 8
 offset-y = 8
-radius = 0
+margin-left = 8
+margin-right = 8
 fixed-center = true
+wm-restack = bspwm
 
 background = ${colors.background}
 foreground = ${colors.foreground}
 
 line-size = 3
-line-color = #ff0
-
-border-size = 0
-border-color = #00000000
-
-padding-left = 0
-padding-right = 0
-margin-left = 8
-margin-right = 8
-
-module-margin-left = 1
+module-margin-left = 2
 module-margin-right = 2
 
-font-0 = "Noto Sans:pixelsize=9:weight=bold;0"
-font-1 = "Roboto:size=11:weight=bold;2"
-font-2 = "FontAwesome:size=11;1"
+font-0 = "Noto Sans:size=9:bold"
+font-1 = "FontAwesome:size=11;1"
 
-modules-left = bspwm xwindow 
+modules-left = bspwm xwindow
 modules-center = xkeyboard filesystem memory cpu battery temperature
 modules-right = mpd backlight-acpi volume date
-
-tray-position = right
-tray-maxsize = 22
-
-wm-restack = bspwm
-
-;override-redirect = true
 
 scroll-up = bspwm-desknext
 scroll-down = bspwm-deskprev
@@ -70,9 +54,7 @@ scroll-down = bspwm-deskprev
 [module/xwindow]
 type = internal/xwindow
 label = %title:0:60:...%
-format-foreground = ${colors.foreground-bright}
 format-prefix = %{O5}
-format-prefix-font = 1
 format-prefix-foreground = ${colors.foreground-bright}
 
 [module/xkeyboard]
@@ -86,9 +68,7 @@ format-prefix-underline = ${colors.color1}
 label-layout = %layout%
 label-layout-underline = ${colors.color1}
 
-label-indicator-padding = 2
 label-indicator-margin = 1
-label-indicator-background = ${colors.secondary}
 label-indicator-underline = ${colors.color1}
 
 [module/filesystem]
@@ -109,7 +89,6 @@ type = internal/bspwm
 
 format = <label-monitor> <label-state> <label-mode>
 
-label-monitor-font = 1
 label-monitor = 
 label-monitor-foreground = ${colors.foreground-bright}
 
@@ -185,7 +164,7 @@ bar-indicator-foreground = #ff
 bar-fill = ●
 bar-fill-foreground = #9f78e1
 bar-empty = ○
-bar-empty-foreground = ${colors.foreground}
+bar-empty-foreground = #9f78e1
 
 [module/backlight-acpi]
 inherit = module/xbacklight
@@ -283,7 +262,7 @@ bar-volume-gradient = false
 bar-volume-indicator = ●
 bar-volume-fill = ●
 bar-volume-empty = ○
-bar-volume-empty-foreground = ${colors.foreground}
+bar-volume-empty-foreground = #55aa55
 
 [module/battery]
 type = internal/battery

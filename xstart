@@ -6,8 +6,6 @@ export _JAVA_OPTIONS="\
           -Dswing.aatext=true \
           -Dswing.crossplatformlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel"
 
-wmname compiz
-
 # Workaround for electron/chrome based apps timeout while connecting to
 killall gnome-keyring-daemon
 
@@ -18,19 +16,19 @@ ssh-add -k
 compton &
 xrdb -load ~/.Xresources
 xsetroot -cursor_name left_ptr
-~/.fehbg
 
 # Daemons
 touchegg &
 sxhkd &
-~/bin/start-mopidy.sh &
 xscreensaver -nosplash &
 dunst &
+stalonetray &
+~/bin/start-mopidy.sh &
 ~/bin/cvim_server.py &
 xcape -t 250 -e 'Caps_Lock=Escape'
 syndaemon -i 0.5 -K -R -d
 
-# COnfigure desktop
+# Configure desktop
 ~/bin/desktop.sh
 
 # Autostarting daemons
@@ -47,5 +45,4 @@ dex /etc/xdg/autostart/print-applet.desktop
 
 # Applications
 dex /usr/share/applications/insync.desktop
-dex ~/.config/autostart/shutter.desktop
 

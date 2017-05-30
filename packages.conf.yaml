@@ -1,79 +1,94 @@
-- aptget:
-    qt5ct: ppa:nilarimogard/webupd8
-    arc-theme:
-    ncmpcpp:
+# PPAs
+# - aptget:
+#     qt5ct: ppa:nilarimogard/webupd8
+#     arc-theme:
+#     ncmpcpp:
 
-# Dotfiles for these apps
-- aptget:
-    htop:
-    mc:
-    tmux:
+# - aptget:
+#     bitcoin-qt: ppa:bitcoin/bitcoin
 
-# Other tools
-- aptget:
-    dfc:
-    iotop:
-    moreutils: # vidir
-    powertop:
-    rar:
-    tig:
-    tlp:
-    unzip:
-    zip:
+# - aptget:
+#     neofetch: ppa:dawidd0811/neofetch
 
-# GUI reqs
 - aptget:
-    compton:
-    consolekit:
-    dex:
-    elementary-icon-theme:
-    feh:
-    fonts-noto:
-    jq:
-    libx11-protocol-other-perl:
-    lightdm-gtk-greeter:
-    lightdm:
-    mpc:
-    network-manager-openvpn-gnome:
-    rofi:
-    rxvt-unicode-256color:
-    shutter:
-    suckless-tools:
-    thunar:
-    x11-utils: # xprop
-    x11-xserver-utils: # xmodmap, xrandr
-    xcape:
-    xinit:
-    xinput:
-    xscreensaver:
-    xsel:
-    xubuntu-icon-theme:
+    vim: ppa:jonathonf/xenial/vim
+    vim-gtk3-py2:
+    vim-gtk:
+    xxd:
 
-# bspwm, sxhkd reqs
-- aptget:
-    build-essential:
-    libxcb-ewmh-dev:
-    libxcb-icccm4-dev:
-    libxcb-keysyms1-dev:
-    libxcb-randr0-dev:
-    libxcb-util-dev:
-    libxcb-xinerama0-dev:
+# # Dotfiles for these apps
+# - aptget:
+#     htop:
+#     mc:
+#     tmux:
 
-# polybar reqs
-- aptget:
-    cmake:
-    libasound2-dev:
-    libcairo2-dev:
-    libcurl4-openssl-dev:
-    libiw-dev:
-    libmpdclient-dev:
-    libxcb-image0-dev:
-    libxcb-xkb-dev:
-    libxcb-xrm-dev:
-    pkg-config:
-    python-xcbgen:
-    xcb-proto:
+# # Other tools
+# - aptget:
+#     dfc:
+#     iotop:
+#     moreutils: # vidir
+#     powertop:
+#     rar:
+#     tig:
+#     tlp:
+#     unzip:
+#     zip:
 
-# mopidy reqs
-- aptget:
-    python-pip:
+# # GUI reqs
+# - aptget:
+#     compton:
+#     consolekit:
+#     dex:
+#     elementary-icon-theme:
+#     feh:
+#     fonts-noto:
+#     jq:
+#     libx11-protocol-other-perl:
+#     lightdm-gtk-greeter:
+#     lightdm:
+#     mpc:
+#     network-manager-openvpn-gnome:
+#     rofi:
+#     rxvt-unicode-256color:
+#     shutter:
+#     stalonetray:
+#     suckless-tools:
+#     thunar:
+#     x11-utils: # xprop
+#     x11-xserver-utils: # xmodmap, xrandr
+#     xcape:
+#     xdo:
+#     xinit:
+#     xinput:
+#     xscreensaver:
+#     xsel:
+#     xubuntu-icon-theme:
+
+# # bspwm, sxhkd reqs
+# - aptget:
+#     build-essential:
+#     libxcb-ewmh-dev:
+#     libxcb-icccm4-dev:
+#     libxcb-keysyms1-dev:
+#     libxcb-randr0-dev:
+#     libxcb-util-dev:
+#     libxcb-xinerama0-dev:
+
+# # polybar reqs
+# - aptget:
+#     cmake:
+#     libasound2-dev:
+#     libcairo2-dev:
+#     libcurl4-openssl-dev:
+#     libiw-dev:
+#     libmpdclient-dev:
+#     libxcb-image0-dev:
+#     libxcb-xkb-dev:
+#     libxcb-xrm-dev:
+#     pkg-config:
+#     python-xcbgen:
+#     xcb-proto:
+
+# # mopidy reqs
+# - aptget:
+#     python-pip:
