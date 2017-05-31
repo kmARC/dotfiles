@@ -1,94 +1,96 @@
 # PPAs
-# - aptget:
-#     qt5ct: ppa:nilarimogard/webupd8
-#     arc-theme:
-#     ncmpcpp:
-
-# - aptget:
-#     bitcoin-qt: ppa:bitcoin/bitcoin
-
-# - aptget:
-#     neofetch: ppa:dawidd0811/neofetch
+- aptget:
+    qt5ct: ppa:nilarimogard/webupd8
+    arc-theme:
+    ncmpcpp:
 
 - aptget:
-    vim: ppa:jonathonf/xenial/vim
+    bitcoin-qt: ppa:bitcoin/bitcoin
+
+- aptget:
+    neofetch: ppa:dawidd0811/neofetch
+
+- shell:
+    - [add-apt-repository -y -u 'deb http://ppa.launchpad.net/jonathonf/vim/ubuntu xenial main', "Setting up vim8 xenial repo"]
+
+- aptget:
+    vim:
     vim-gtk3-py2:
     vim-gtk:
-    xxd:
 
-# # Dotfiles for these apps
-# - aptget:
-#     htop:
-#     mc:
-#     tmux:
+# Dotfiles for these apps
+- aptget:
+    htop:
+    mc:
+    tmux:
 
-# # Other tools
-# - aptget:
-#     dfc:
-#     iotop:
-#     moreutils: # vidir
-#     powertop:
-#     rar:
-#     tig:
-#     tlp:
-#     unzip:
-#     zip:
+# Other tools
+- aptget:
+    dfc:
+    iotop:
+    moreutils: # vidir
+    powertop:
+    rar:
+    tig:
+    tlp:
+    unzip:
+    zip:
 
-# # GUI reqs
-# - aptget:
-#     compton:
-#     consolekit:
-#     dex:
-#     elementary-icon-theme:
-#     feh:
-#     fonts-noto:
-#     jq:
-#     libx11-protocol-other-perl:
-#     lightdm-gtk-greeter:
-#     lightdm:
-#     mpc:
-#     network-manager-openvpn-gnome:
-#     rofi:
-#     rxvt-unicode-256color:
-#     shutter:
-#     stalonetray:
-#     suckless-tools:
-#     thunar:
-#     x11-utils: # xprop
-#     x11-xserver-utils: # xmodmap, xrandr
-#     xcape:
-#     xdo:
-#     xinit:
-#     xinput:
-#     xscreensaver:
-#     xsel:
-#     xubuntu-icon-theme:
+# GUI reqs
+- aptget:
+    compton:
+    consolekit:
+    dex:
+    elementary-icon-theme:
+    feh:
+    fonts-noto:
+    jq:
+    libx11-protocol-other-perl:
+    lightdm-gtk-greeter:
+    lightdm:
+    mpc:
+    network-manager-openvpn-gnome:
+    rofi:
+    rxvt-unicode-256color:
+    shutter:
+    stalonetray:
+    suckless-tools:
+    thunar:
+    x11-utils: # xprop
+    x11-xserver-utils: # xmodmap, xrandr
+    xcape:
+    xdo:
+    xinit:
+    xinput:
+    xscreensaver:
+    xsel:
+    xubuntu-icon-theme:
 
-# # bspwm, sxhkd reqs
-# - aptget:
-#     build-essential:
-#     libxcb-ewmh-dev:
-#     libxcb-icccm4-dev:
-#     libxcb-keysyms1-dev:
-#     libxcb-randr0-dev:
-#     libxcb-util-dev:
-#     libxcb-xinerama0-dev:
+# bspwm, sxhkd reqs
+- aptget:
+    build-essential:
+    libxcb-ewmh-dev:
+    libxcb-icccm4-dev:
+    libxcb-keysyms1-dev:
+    libxcb-randr0-dev:
+    libxcb-util-dev:
+    libxcb-xinerama0-dev:
 
-# # polybar reqs
-# - aptget:
-#     cmake:
-#     libasound2-dev:
-#     libcairo2-dev:
-#     libcurl4-openssl-dev:
-#     libiw-dev:
-#     libmpdclient-dev:
-#     libxcb-image0-dev:
-#     libxcb-xkb-dev:
-#     libxcb-xrm-dev:
-#     pkg-config:
-#     python-xcbgen:
-#     xcb-proto:
+# polybar reqs
+- aptget:
+    cmake:
+    libasound2-dev:
+    libcairo2-dev:
+    libcurl4-openssl-dev:
+    libiw-dev:
+    libmpdclient-dev:
+    libxcb-image0-dev:
+    libxcb-xkb-dev:
+    libxcb-xrm-dev:
+    pkg-config:
+    python-xcbgen:
+    xcb-proto:
 
-# # mopidy reqs
-# - aptget:
-#     python-pip:
+# mopidy reqs
+- aptget:
+    python-pip:

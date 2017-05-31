@@ -15,7 +15,7 @@ Tested on Ubuntu Server 16.10
 ``` bash
 sudo apt install -y git python
 git clone https://github.com/kmARC/dotfiles ~/.dotfiles
-cd ~/.dotfiles && git submodule update --init && ./install-packages && ./install && cd -
+cd ~/.dotfiles && git submodule update --init && sudo ./install-packages && ./install && cd -
 ```
 
 Re-login / restart bash.
