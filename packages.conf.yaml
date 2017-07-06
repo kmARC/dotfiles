@@ -11,7 +11,7 @@
     neofetch: ppa:dawidd0811/neofetch
 
 - shell:
-    - [add-apt-repository -y -u 'deb http://ppa.launchpad.net/jonathonf/vim/ubuntu xenial main', "Setting up vim8 xenial repo"]
+    - [add-apt-repository -y -u 'deb http://ppa.launchpad.net/jonathonf/vim/ubuntu xenial main', Setting up vim8 xenial repo]
 
 - aptget:
     vim:
@@ -50,6 +50,7 @@
     lightdm:
     mpc:
     network-manager-openvpn-gnome:
+    redshift:
     rofi:
     rxvt-unicode-256color:
     shutter:
