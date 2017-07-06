@@ -17,13 +17,23 @@ function __ps1 {
 
     source /usr/lib/git-core/git-sh-prompt
 
+    function __fg {
+        echo -n "\[\e[3$1m\]"
+    }
+    function __fgb {
+        echo -n "\[\e[1;3$1m\]"
+    }
+
+    function __bg {
+        echo -n "\[\e[4$1m\]"
+    }
+    local THEME=$1
+    [ "$USER" = "root" ] && THEME=1 # Red
     local RS='\[\e[0m\]'
-    local EMW="\[\e[1;37m\]"
-    local COLOR=$1
-    [ "$USER" = "root" ] && COLOR=1 # Red
-    local BG="\[\e[4${COLOR}m\]"
-    local FG="\[\e[3${COLOR}m\]"
-    PS1="$BG$EMW[\h]$RS$EMW$FG[$EMW\u$FG][$EMW\w$FG][$EMW\$$FG]\$(__git_ps1 \(%s\))$RS "
+    local BG=$(__bg $THEME)
+    local FG=$(__fg $THEME)
+    local FGB=$(__fgb $THEME)
+    PS1="$BG$(__fgb 0)[\h]$RS$FGB[$RS\u$FGB][$RS\w$FGB][$RS\$$FGB]\$(__git_ps1 \(%s\))$RS "
 }
 
 function color_less {
@@ -61,13 +71,10 @@ function __fzf_open__() {
 
 if [ "$DISPLAY" ]; then
     [ -z $TMUX ] && export TERM=xterm-256color
-    [ $UID != 0 ] && transset --id "$WINDOWID" 0.95 >/dev/null
+    # [ $UID != 0 ] && transset --id "$WINDOWID" 0.95 >/dev/null
 fi
 
-
-# Base16 shell
-BASE16_SHELL=$HOME/.config/base16-shell/
-[ -n "$PS1" ] && [ -s "$BASE16_SHELL/profile_helper.sh" ] && eval "$($BASE16_SHELL/profile_helper.sh)"
+"$HOME/.bashrc.colors" "$HOME/.colors.kmarc"
 
 # bind \M-o to __fzf_open__()
 if [[ ! -o vi ]]; then
@@ -87,6 +94,10 @@ function nvm_activate() {
     unalias nvm
     source "$NVM_DIR/nvm.sh"
     nvm "$@"
+}
+
+function ssh-tmux() {
+    ssh $1 -t 'tmux attach'
 }
 
 alias ls="ls --color -h --group-directories-first"
