@@ -36,6 +36,7 @@
         path: bin
 
     # Top levels
+    ~/.bashrc.colors:
     ~/.bashrc.kmarc:
     ~/.colors.kmarc:
     ~/.compton.conf:
