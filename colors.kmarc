@@ -1,0 +1,38 @@
+#!/usr/bin/env bash
+export color00="ED/ED/ED" # blank
+export color01="D7/00/5F" # red
+export color02="71/8C/00" # green
+export color03="D7/5F/00" # yellow
+export color04="42/71/AE" # blue
+export color05="89/59/A8" # purple
+export color06="3E/99/9F" # turquise
+export color07="4D/4D/4C" # white
+export color08="96/96/94"
+export color09="D7/00/5F"
+export color10="71/8C/00"
+export color11="D7/5F/00"
+export color12="42/71/AE"
+export color13="89/59/A8"
+export color14="3E/99/9F"
+export color15="F5/F5/F5"
+export color_background="EE/EE/EE"
+export color_foreground="4D/4D/4C"
+export color_foreground_alt
+
+function _html() {
+    COLOR=$1
+    echo "#${COLOR//\//}"
+}
+
+function _alt() {
+    # Calculate alternate color
+    IFS="/"
+    ALTA=()
+    for v in $1; do
+        ALTA[${#ALTA[@]}]=$(echo "scale=0;obase=ibase=16;${v^^}+(FF-${v^^})/1.F4B" | bc -l)
+    done
+    IFS=
+    ALT="${ALTA[0]}/${ALTA[1]}/${ALTA[2]}"
+    echo "$ALT"
+}
+color_foreground_alt=$(_alt $color_foreground)

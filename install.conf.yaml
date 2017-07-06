@@ -37,6 +37,7 @@
 
     # Top levels
     ~/.bashrc.kmarc:
+    ~/.colors.kmarc:
     ~/.compton.conf:
     ~/.fzf:
     ~/.gitconfig:
