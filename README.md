@@ -15,7 +15,12 @@ Tested on Ubuntu Server 16.10
 ``` bash
 sudo apt install -y git python
 git clone https://github.com/kmARC/dotfiles ~/.dotfiles
-cd ~/.dotfiles && git submodule update --init && sudo ./install-packages && ./install && cd -
+cd ~/.dotfiles && git submodule update --init
+sudo ./install-packages-console
+sudo ./install-packages-gui
+./install
+sudo ./install-system
+cd -
 ```
 
 Re-login / restart bash.
@@ -51,6 +56,8 @@ cd ~/.local/src/bspwm
 make
 sudo make install
 cd -
+sudo mkdir -p /usr/share/xsessions
+sudo ln -s /usr/local/share/xsessions/bspwm.desktop /usr/share/xsessions/
 
 # sxhkd
 git clone https://github.com/baskerville/sxhkd.git ~/.local/src/sxhkd
@@ -83,7 +90,15 @@ sudo make install
 cd -
 ```
 
-[Fontawesome]: http://fontawesome.io/
+### Install i3 screen locker
+
+``` bash
+git clone https://github.com/chrjguill/i3lock-color ~/.local/src/i3lock-color
+cd ~/.local/src/i3lock-color
+make -j5
+sudo make install
+```
+
 [Polybar]: https://github.com/jaagr/polybar
 
 ### Configuration
@@ -91,6 +106,7 @@ cd -
 To select a wallpaper, use `feh`.
 
 ``` bash
+~/bin/colorize.sh ~/.colors.kmarc
 feh --bg-fill path_to_wallpaper
 ```
 
@@ -101,8 +117,10 @@ wget -q -O - https://apt.mopidy.com/mopidy.gpg | sudo apt-key add -
 sudo wget -q -O /etc/apt/sources.list.d/mopidy.list https://apt.mopidy.com/jessie.list
 sudo apt update
 sudo apt install -y mopidy mopidy-spotify
-sudo -H pip install Mopidy-TuneIn Mopidy-Qsaver
+sudo -H pip install Mopidy-TuneIn Mopidy-Spotify-Web Mopidy-SoundCloud \
+                    Mopidy-MPRIS
 ```
+
 
 ### Restart your desktop
 

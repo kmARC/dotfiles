@@ -2,34 +2,39 @@
 
 # gui tools
 apt install -y \
+    blueman \
     compton \
     consolekit \
     dex \
     elementary-icon-theme \
     feh \
     fonts-noto \
+    gir1.2-appindicator \
+    hplip-gui \
     jq \
     libx11-protocol-other-perl \
     lightdm-gtk-greeter \
     lightdm \
     mpc \
     network-manager-openvpn-gnome \
+    notification-daemon \
     redshift \
     rofi \
     rxvt-unicode-256color \
     shutter \
     stalonetray \
     suckless-tools \
+    system-config-printer-gnome \
     thunar \
     vim-gtk3-py2 \
-    vim-gtk
+    vim-gtk \
+    x11-apps \
     x11-utils \
     x11-xserver-utils \
     xcape \
     xdo \
     xinit \
     xinput \
-    xscreensaver \
     xsel \
     xubuntu-icon-theme
 
@@ -57,6 +62,15 @@ apt install -y \
     pkg-config \
     python-xcbgen \
     xcb-proto
+
+# i3lock-color reqs
+apt install -y \
+    libev-dev \
+    libpam-dev \
+    libxcb-composite0-dev \
+    libxcb-dpms0-dev \
+    libxkbcommon-dev \
+    libxkbcommon-x11-dev
 
 # PPA
 add-apt-repository -y -u ppa:nilarimogard/webupd8

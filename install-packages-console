@@ -1,7 +1,10 @@
 #!/usr/bin/env bash
 
+apt update
+
 # console tools
 apt install -y \
+    bc \
     dfc \
     htop \
     iotop \

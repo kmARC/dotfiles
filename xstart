@@ -16,17 +16,13 @@ ssh-add -k
 compton &
 xrdb -load ~/.Xresources
 xsetroot -cursor_name left_ptr
-xinput disable 10
 
 # Daemons
-touchegg &
 sxhkd &
-xscreensaver -nosplash &
 /usr/lib/notification-daemon/notification-daemon &
 stalonetray &
 redshift &
 ~/bin/start-mopidy.sh &
-~/bin/cvim_server.py &
 xcape -t 250 -e 'Caps_Lock=Escape'
 syndaemon -i 0.5 -K -R -d
 
@@ -48,3 +44,6 @@ dex /etc/xdg/autostart/print-applet.desktop
 # Applications
 dex /usr/share/applications/insync.desktop
 
+# Disable touchscreen
+TOUCHSCREEN=$(xinput list | grep SYNA | sed 's/.*id=\([0-9]*\).*/\1/g')
+xinput disable "$TOUCHSCREEN"

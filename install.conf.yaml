@@ -12,12 +12,6 @@
         path: config/bspwm/bspwmrc
     ~/.config/gtk-3.0/settings.ini:
         path: config/gtk-3.0/settings.ini
-    ~/.config/git:
-        path: config/git
-    ~/.config/htop/htoprc:
-        path: config/htop/htoprc
-    ~/.config/mc/ini:
-        path: config/mc/ini
     ~/.config/mopidy/mopidy.conf:
         path: config/mopidy/mopidy.conf
     ~/.config/polybar/config:
