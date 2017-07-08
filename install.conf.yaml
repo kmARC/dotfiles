@@ -10,8 +10,6 @@
         path: config/base16-shell
     ~/.config/bspwm/bspwmrc:
         path: config/bspwm/bspwmrc
-    ~/.config/dunst/dunstrc:
-        path: config/dunst/dunstrc
     ~/.config/gtk-3.0/settings.ini:
         path: config/gtk-3.0/settings.ini
     ~/.config/git:
@@ -44,6 +42,7 @@
     ~/.gitconfig:
     ~/.gtkrc-2.0:
     ~/.rtorrent.rc:
+    ~/.stalonetrayrc:
     ~/.tmux.conf:
     ~/.toprc:
     ~/.vimfx:

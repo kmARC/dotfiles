@@ -1,0 +1,14 @@
+[Unit]
+Description=Lock screen before suspend
+Before=sleep.target
+
+[Service]
+User=kmarc
+Type=forking
+Environment=DISPLAY=:0
+Environment=HOME=/home/kmarc
+ExecStart=/home/kmarc/bin/lock.sh
+ExecStartPost=/bin/sleep 1
+
+[Install]
+WantedBy=suspend.target

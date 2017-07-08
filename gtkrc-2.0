@@ -1,4 +1,4 @@
-include "/usr/share/themes/Arc-Darker/gtk-2.0/gtkrc"
+include "/usr/share/themes/Arc/gtk-2.0/gtkrc"
 
 style "user-font" {
 	font_name = "Noto Sans 9"
@@ -6,4 +6,4 @@ style "user-font" {
 widget_class "*" style "user-font"
 
 gtk-font-name="Noto Sans 9"
-gtk-icon-theme-name = "elementary-xfce-darker"
+gtk-icon-theme-name = "elementary-xfce"

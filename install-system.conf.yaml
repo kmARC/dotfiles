@@ -1,0 +1,9 @@
+- defaults:
+    link:
+        create: true
+
+- link:
+    # Explicit paths
+    /etc/systemd/system/i3lock.service:
+        path: etc/systemd/system/i3lock.service
+

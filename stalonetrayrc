@@ -1,0 +1,15 @@
+kludges force_icons_size
+icon_size 22
+icon_gravity SW
+tint_level 255
+tint_color "#eeeeee"
+fuzzy_edges 0
+slot_size 27
+grow_gravity E
+geometry 1x1+700+8
+max_geometry 4x1
+scrollbars horizontal
+transparent true
+scrollbars_size 10
+scrollbars_step 27
+scrollbars_highlight red

@@ -16,13 +16,15 @@ ssh-add -k
 compton &
 xrdb -load ~/.Xresources
 xsetroot -cursor_name left_ptr
+xinput disable 10
 
 # Daemons
 touchegg &
 sxhkd &
 xscreensaver -nosplash &
-dunst &
+/usr/lib/notification-daemon/notification-daemon &
 stalonetray &
+redshift &
 ~/bin/start-mopidy.sh &
 ~/bin/cvim_server.py &
 xcape -t 250 -e 'Caps_Lock=Escape'

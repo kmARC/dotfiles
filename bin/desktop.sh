@@ -147,11 +147,11 @@ while pgrep -x polybar >/dev/null; do sleep 0.5; done
 polybar -r kmarc >> /dev/null 2>&1 &
 
 # Position and show stalonetray
-xdo move -N stalonetray -x $(($(cat /tmp/polybar-width.txt) / 2 - 260))
+xdo move -N stalonetray -x $(($(cat /tmp/polybar-width.txt) / 2 - 290))
 (
     sleep 1
     xdo above -t "$(xdo id -n polybar)" "$(xdo id -n stalonetray)"
-    transset -n stalonetray 1
+    transset -n stalonetray 0.5
 )
 
 # Setting WM name to something java compatible

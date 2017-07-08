@@ -1,21 +1,26 @@
-! Base16 color theme: Materia
-! TODO: find a better way to select base color scheme.
-#define base00 #263238
-#define base01 #2C393F
-#define base02 #37474F
-#define base03 #707880
-#define base04 #C9CCD3
-#define base05 #CDD3DE
-#define base06 #D5DBE5
-#define base07 #FFFFFF
-#define base08 #EC5F67
-#define base09 #EA9560
-#define base0A #FFCC00
-#define base0B #8BD649
-#define base0C #80CBC4
-#define base0D #89DDFF
-#define base0E #82AAFF
-#define base0F #EC5F67
+! vim: set fdm=marker:
+#include ".Xresources.colors"
+
+! Theming {{{
+theme_color01: color01
+theme_color02: color02
+theme_color03: color03
+theme_color04: color04
+theme_color05: color05
+theme_color06: color06
+theme_color07: color07
+theme_color08: color08
+theme_color09: color09
+theme_color10: color10
+theme_color11: color11
+theme_color12: color12
+theme_color13: color13
+theme_color14: color14
+theme_color15: color15
+theme_background: color_background
+theme_foreground: color_foreground
+theme_foreground_alt: color_foreground_alt
+! }}}
 
 ! Xft
 Xft.autohint:   0
@@ -33,7 +38,6 @@ Xcursor.theme: DMZ-Black
 *xterm*borderWidth:          0
 *xterm*disallowedWindowOps:  20,21,SetXprop
 *xterm*faceName:             xft:SauceCodePro Nerd Font:medium:size=9
-*xterm*veryBoldColors:       8
 *xterm*faceSize:             9.0
 *xterm*faceSize1:            5.0
 *xterm*faceSize2:            7.0
@@ -43,6 +47,8 @@ Xcursor.theme: DMZ-Black
 *xterm*faceSize6:            20.0
 *xterm*highlightColor:       black
 *xterm*internalBorder:       0
+!*xterm*boldMode: true
+*xterm*colorBD:          white
 *xterm*italicULMode:         true
 *xterm*metaSendsEscape:      true
 *xterm*renderFont:           true
@@ -60,13 +66,15 @@ Xcursor.theme: DMZ-Black
 
 ! Rxvt
 URxvt.borderLess:      0
-URxvt.borderColor:     base00
+URxvt.borderColor:     color00
 URxvt.cutchars:        │
+URxvt.cursorBlink:     1
 URxvt.externalBorder:  0
 URxvt.internalBorder:  0
 URxvt*font:            xft:SauceCodePro Nerd Font:medium:size=9
 URxvt.boldFont:        xft:SauceCodePro Nerd Font:bold
 URxvt.italicFont:      xft:SauceCodePro Nerd Font:italic
+URxvt.intensityStyles: false
 URxvt.keysym.C-Delete: matcher:select
 URxvt.keysym.C-M-0:      command:\033]710;xft:SauceCodePro Nerd Font:medium:size=9.0\007
 URxvt.keysym.C-M-1:      command:\033]710;xft:SauceCodePro Nerd Font:medium:size=5.0\007
@@ -92,11 +100,10 @@ URxvt.url-launcher:    /usr/bin/xdg-open
 
 ! Rofi
 rofi.color-enabled:                  true
-rofi.color-normal:                   base00,base04,base00,base02,base07
-rofi.color-urgent:                   base00,base08,base00,base02,base08
-rofi.color-active:                   base00,base0D,base00,base02,base0D
-rofi.color-window:                   base00,base0D,base0D
-rofi.separator-style:                none
+rofi.color-normal:                   color00,color07,color00,color04,color00
+rofi.color-urgent:                   color00,color08,color00,color01,color08
+rofi.color-active:                   color00,color01,color00,color01,color00
+rofi.color-window:                   color00,color04,color06
+rofi.separator-style:                dotted
 rofi.font:                           SauceCodePro Nerd Font Medium 9
 rofi.bw: 3
-

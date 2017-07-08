@@ -1,0 +1,71 @@
+#!/usr/bin/env bash
+
+# gui tools
+apt install -y \
+    compton \
+    consolekit \
+    dex \
+    elementary-icon-theme \
+    feh \
+    fonts-noto \
+    jq \
+    libx11-protocol-other-perl \
+    lightdm-gtk-greeter \
+    lightdm \
+    mpc \
+    network-manager-openvpn-gnome \
+    redshift \
+    rofi \
+    rxvt-unicode-256color \
+    shutter \
+    stalonetray \
+    suckless-tools \
+    thunar \
+    vim-gtk3-py2 \
+    vim-gtk
+    x11-utils \
+    x11-xserver-utils \
+    xcape \
+    xdo \
+    xinit \
+    xinput \
+    xscreensaver \
+    xsel \
+    xubuntu-icon-theme
+
+# bspwm, sxhkd reqs
+apt install -y \
+    build-essential \
+    libxcb-ewmh-dev \
+    libxcb-icccm4-dev \
+    libxcb-keysyms1-dev \
+    libxcb-randr0-dev \
+    libxcb-util-dev \
+    libxcb-xinerama0-dev
+
+# polybar reqs
+apt install -y \
+    cmake \
+    libasound2-dev \
+    libcairo2-dev \
+    libcurl4-openssl-dev \
+    libiw-dev \
+    libmpdclient-dev \
+    libxcb-image0-dev \
+    libxcb-xkb-dev \
+    libxcb-xrm-dev \
+    pkg-config \
+    python-xcbgen \
+    xcb-proto
+
+# PPA
+add-apt-repository -y -u ppa:nilarimogard/webupd8
+apt install -y \
+    qt5ct \
+    arc-theme \
+    ncmpcpp
+
+add-apt-repository -y -u ppa:bitcoin/bitcoin
+apt install -y \
+    bitcoin-qt
+

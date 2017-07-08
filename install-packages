@@ -1,4 +1,0 @@
-#!/usr/bin/env bash
-
-sudo ./install -p dotbot_plugin_aptget/aptget.py -c packages.conf.yaml
-

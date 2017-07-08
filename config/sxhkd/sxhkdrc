@@ -135,7 +135,7 @@ super + {+,shift +} r
 	bspc node @/ -R {90, 270}
 
 ctrl + alt + l
-	xscreensaver-command -l
+	~/bin/lock.sh; xset dpms force off
 
 XF86Display
 	bash -x $HOME/bin/desktop.sh > /tmp/desktopsh.log 2>&1
@@ -153,10 +153,10 @@ XF86MonBrightness{Up,Down}
 	~/bin/backlight.sh {up, down}
 
 Print
-	shutter -f -d 0 --disable_systray -e & sleep 1; notify-send "Screenshot saved"
+	shutter -f & sleep 1; notify-send "Screenshot saved"
 
 shift + Print
-	shutter -s -d 0 --disable_systray
+	shutter -s
 
 # Daemons
 super + space; M
@@ -179,7 +179,7 @@ super + space; v
 	dex /usr/share/applications/virtualbox.desktop
 
 super + space; h
-	bspc node -o 0.65 && gvim ~/Dokumente/Home.md
+	bspc node -o 0.65 && gvim ~/Documents/Home.md
 
 # Terminal apps
 super + space; m

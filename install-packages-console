@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+
+# console tools
+apt install -y \
+    dfc \
+    htop \
+    iotop \
+    mc \
+    moreutils \
+    powertop \
+    rar \
+    tig \
+    tlp \
+    tmux \
+    unzip \
+    zip
+
+# mopidy reqs
+sudo apt install -y \
+    python-pip
+
+# PPAs
+add-apt-repository -y -u deb 'http://ppa.launchpad.net/jonathonf/vim/ubuntu xenial main'
+apt install -y \
+    vim
+
+add-apt-repository -y -u ppa:dawidd0811/neofetch
+apt install -y \
+    neofetch
+
