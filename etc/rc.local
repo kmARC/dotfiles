@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+chmod 777 /sys/class/backlight/intel_backlight/brightness
+

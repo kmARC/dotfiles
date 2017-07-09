@@ -1,9 +1,15 @@
 - defaults:
     link:
         create: true
+        force: true
+        relink: true
 
 - link:
     # Explicit paths
+    /etc/default/tlp:
+        path: etc/default/tlp
     /etc/systemd/system/i3lock.service:
         path: etc/systemd/system/i3lock.service
+    /etc/rc.local:
+        path: etc/rc.local
 

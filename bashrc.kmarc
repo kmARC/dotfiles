@@ -71,7 +71,7 @@ function __fzf_open__() {
 
 if [ "$DISPLAY" ]; then
     [ -z $TMUX ] && export TERM=xterm-256color
-    # [ $UID != 0 ] && transset --id "$WINDOWID" 0.95 >/dev/null
+    [ $UID != 0 ] && transset --id "$WINDOWID" 0.95 >/dev/null
 fi
 
 "$HOME/.bashrc.colors" "$HOME/.colors.kmarc"

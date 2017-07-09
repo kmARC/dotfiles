@@ -6,7 +6,7 @@ transset -n stalonetray 0
 # Kill panel while reconfiguring monitors
 killall -q polybar
 
-MONS=($(xrandr | awk '/\sconnected\s/{print $1}'))
+MONS=($(xrandr | awk '/ connected /{print $1}'))
 MODE=$1
 
 # Prints largest resolution mode

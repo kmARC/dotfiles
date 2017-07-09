@@ -11,6 +11,7 @@ apt install -y \
     mc \
     moreutils \
     powertop \
+    ranger \
     rar \
     tig \
     tlp \
@@ -23,10 +24,6 @@ sudo apt install -y \
     python-pip
 
 # PPAs
-add-apt-repository -y -u deb 'http://ppa.launchpad.net/jonathonf/vim/ubuntu xenial main'
-apt install -y \
-    vim
-
 add-apt-repository -y -u ppa:dawidd0811/neofetch
 apt install -y \
     neofetch
