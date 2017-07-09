@@ -47,21 +47,6 @@ apt install -y \
     libxcb-util-dev \
     libxcb-xinerama0-dev
 
-# polybar reqs
-apt install -y \
-    cmake \
-    libasound2-dev \
-    libcairo2-dev \
-    libcurl4-openssl-dev \
-    libiw-dev \
-    libmpdclient-dev \
-    libxcb-image0-dev \
-    libxcb-xkb-dev \
-    libxcb-xrm-dev \
-    pkg-config \
-    python-xcbgen \
-    xcb-proto
-
 # i3lock-color reqs
 apt install -y \
     libev-dev \
