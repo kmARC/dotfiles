@@ -27,10 +27,8 @@ Re-login / restart bash.
 
 ### Configuration
 
-To select a theme, type `base16_<TAB>` and you'll see the fantastic theme
-collection from [base16]. My preference is...
-
-    base16_materia
+I used to depend on [base16] however currently I configure colorization from
+`color.kmarc`. I'll clean this up in the future
 
 [base16]: https://github.com/chriskempson/base16
 
@@ -69,7 +67,7 @@ cd -
 
 ### Install Polybar
 
-[Fontawesome]
+[FontAwesome]
 
 ``` bash
 mkdir -p ~/.fonts
@@ -90,6 +88,9 @@ sudo make install
 cd -
 ```
 
+[FontAwesome]: http://fontawesome.io/
+[Polybar]: https://github.com/jaagr/polybar
+
 ### Install i3 screen locker
 
 ``` bash
@@ -98,8 +99,6 @@ cd ~/.local/src/i3lock-color
 make -j5
 sudo make install
 ```
-
-[Polybar]: https://github.com/jaagr/polybar
 
 ### Configuration
 
