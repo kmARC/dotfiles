@@ -13,3 +13,6 @@
     /etc/rc.local:
         path: etc/rc.local
 
+- shell:
+  - [systemctl daemon-reload, Reload systemctl daemon]
+  - [systemctl enable i3lock.service, Enable screen lock on suspend]
