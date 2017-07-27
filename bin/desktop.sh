@@ -6,7 +6,8 @@ transset -n stalonetray 0
 # Kill panel while reconfiguring monitors
 killall -q polybar
 
-MONS=($(xrandr | awk '/ connected /{print $1}'))
+MONS=($(xrandr | grep primary | awk '/ connected /{print $1}'))
+MONS=(${MONS[@]} $(xrandr | grep -v primary | awk '/ connected /{print $1}'))
 MODE=$1
 
 # Prints largest resolution mode
@@ -36,13 +37,8 @@ bspc desktop -f 1
 # Configure monitors
 if [[ ${#MONS[@]} == 2 && $MODE != 'mirror' ]]; then
     # Choose primary and secondary
-    if [[ $MODE == 'reverse' ]]; then
-        PRI=${MONS[0]}
-        SEC=${MONS[1]}
-    else
-        PRI=${MONS[1]}
-        SEC=${MONS[0]}
-    fi
+    PRI=${MONS[0]}
+    SEC=${MONS[1]}
 
     # Detect resolutions
     MOD_PRI=$(largest_res "$PRI")
@@ -55,7 +51,7 @@ if [[ ${#MONS[@]} == 2 && $MODE != 'mirror' ]]; then
         xrandr --output "$PRI" --off
     fi
     xrandr --output "$SEC" --mode "$MOD_SEC" \
-           --output "$PRI" --mode "$MOD_PRI" --left-of "$SEC" --primary
+           --output "$PRI" --mode "$MOD_PRI" --above "$SEC" --primary
     # Move around desktops
     for desktop in 1 2 3 4 5; do
         bspc desktop $desktop -m "$PRI"
@@ -66,8 +62,6 @@ if [[ ${#MONS[@]} == 2 && $MODE != 'mirror' ]]; then
     # Fix desktop order
     bspc monitor "$PRI" -o 1 2 3 4 5
     bspc monitor "$SEC" -o 6 7 8 9 0
-    # Remove tray space from secondary monitor
-    bspc config -m "$SEC" top_padding 0
 else
     # Select primary monitor
     PRI=${MONS[0]}
@@ -112,6 +106,11 @@ for monitor in $PRI $SEC; do
         bspc desktop "$desktop" -r
     done
 done
+
+# Add tray space on primary monitor
+bspc config -m "$PRI" top_padding 40 # 40 = 32 (bar) + 8 (padding)
+# Remove tray space from secondary monitor
+bspc config -m "$SEC" top_padding 0
 
 # Set wallpaper
 ~/.fehbg
