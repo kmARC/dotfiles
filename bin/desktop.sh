@@ -6,8 +6,9 @@ transset -n stalonetray 0
 # Kill panel while reconfiguring monitors
 killall -q polybar
 
-MONS=($(xrandr | grep primary | awk '/ connected /{print $1}'))
-MONS=(${MONS[@]} $(xrandr | grep -v primary | awk '/ connected /{print $1}'))
+BUILTIN_MON=${BUILTIN_MON:-eDP-1}
+MONS=($(xrandr | grep -v $BUILTIN_MON | awk '/ connected /{print $1}'))
+MONS=(${MONS[@]} $(xrandr | grep $BUILTIN_MON | awk '/ connected /{print $1}'))
 MODE=$1
 
 # Prints largest resolution mode
@@ -35,7 +36,31 @@ CUR=$(bspc query -D -d)
 bspc desktop -f 1
 
 # Configure monitors
-if [[ ${#MONS[@]} == 2 && $MODE != 'mirror' ]]; then
+if [[ ${#MONS[@]} == 1 || $MODE == 'mirror' ]]; then
+    # Select primary monitor
+    PRI=${MONS[0]}
+    MOD_PRI=$(largest_res "$PRI")
+    # Detect mirroring setting and set up monitors
+    if [[ ${#MONS[@]} == 2 ]]; then
+        SEC=${MONS[1]}
+        MOD_PRI=$(common_res)
+        MOD_SEC=$MOD_PRI
+        xrandr --output "$SEC" --off
+    fi
+    echo "Setting up monitor: $PRI ($MOD_PRI)"
+    xrandr --output "$PRI" --mode "$MOD_PRI" --primary
+    # Move around desktops
+    for desktop in 1 2 3 4 5 6 7 8 9 0; do
+        bspc desktop $desktop -m "$PRI"
+    done
+    if [[ ${#MONS[@]} == 2 ]]; then
+        xrandr --output "$PRI" --mode "$MOD_PRI" --rate 60 --primary \
+               --output "$SEC" --mode "$MOD_SEC" --rate 60 --same-as "$PRI"
+        bspc monitor "$SEC" -r
+    fi
+    # Fix desktop order
+    bspc monitor "$PRI" -o 1 2 3 4 5 6 7 8 9 0
+else
     # Choose primary and secondary
     PRI=${MONS[0]}
     SEC=${MONS[1]}
@@ -62,31 +87,6 @@ if [[ ${#MONS[@]} == 2 && $MODE != 'mirror' ]]; then
     # Fix desktop order
     bspc monitor "$PRI" -o 1 2 3 4 5
     bspc monitor "$SEC" -o 6 7 8 9 0
-else
-    # Select primary monitor
-    PRI=${MONS[0]}
-    # Detect mirroring setting and set up monitors
-    if [[ ${#MONS[@]} == 2 && $MODE == 'mirror' ]]; then
-        SEC=${MONS[1]}
-        MOD_PRI=$(common_res)
-        MOD_SEC=$MOD_PRI
-        xrandr --output "$SEC" --off
-    else
-        MOD_PRI=$(largest_res "$PRI")
-    fi
-    echo "Setting up monitor: $PRI ($MOD_PRI)"
-    xrandr --output "$PRI" --mode "$MOD_PRI" --primary
-    # Move around desktops
-    for desktop in 1 2 3 4 5 6 7 8 9 0; do
-        bspc desktop $desktop -m "$PRI"
-    done
-    if [[ ${#MONS[@]} == 2 && $MODE == 'mirror' ]]; then
-        xrandr --output "$PRI" --mode "$MOD_PRI" --rate 60 --primary \
-               --output "$SEC" --mode "$MOD_SEC" --rate 60 --same-as "$PRI"
-        bspc monitor "$SEC" -r
-    fi
-    # Fix desktop order
-    bspc monitor "$PRI" -o 1 2 3 4 5 6 7 8 9 0
 fi
 
 # Switch off not connected but still active monitors
