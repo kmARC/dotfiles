@@ -28,15 +28,14 @@
         path: bin
 
     # Top levels
-    ~/.bashrc.colors:
     ~/.bashrc.kmarc:
-    ~/.colors.kmarc:
     ~/.compton.conf:
     ~/.fzf:
     ~/.gitconfig:
     ~/.gtkrc-2.0:
     ~/.rtorrent.rc:
     ~/.stalonetrayrc:
+    ~/.theme.rofi.Xresources:
     ~/.tmux.conf:
     ~/.toprc:
     ~/.vimfx:

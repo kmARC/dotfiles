@@ -11,39 +11,51 @@ function __ps1 {
         echo "    4: blue"
         echo "    5: magenta"
         echo "    6: cyan"
-        echo "    7: white"
+        echo "    7: gray"
         return 0
     fi
 
     source /usr/lib/git-core/git-sh-prompt
 
-    function __fg {
-        echo -n "\[\e[3$1m\]"
-    }
-    function __fgb {
-        echo -n "\[\e[1;3$1m\]"
+    function __hostname {
+        echo -n "$(tput bold)\[\e[7;49;9${1}m\]"
     }
 
-    function __bg {
-        echo -n "\[\e[4$1m\]"
+    function __bracket {
+        echo -n "\[\e[1;49;3${1}m\]"
     }
+
+    function __reset {
+        echo -n "\[\e[0;49;39m\]"
+    }
+
+    function __text {
+        echo -n "\[\e[1;49;39m\]"
+    }
+
     local THEME=$1
-    [ "$USER" = "root" ] && THEME=1 # Red
-    local RS='\[\e[0m\]'
-    local BG=$(__bg $THEME)
-    local FG=$(__fg $THEME)
-    local FGB=$(__fgb $THEME)
-    PS1="$BG$(__fgb 0)[\h]$RS$FGB[$RS\u$FGB][$RS\w$FGB][$RS\$$FGB]\$(__git_ps1 \(%s\))$RS "
+    [ "$USER" = "root" ] && THEME=1
+    local RS=$(__reset)
+    local TEXT=$(__text)
+    local HOST=$(__hostname $THEME)
+    local BRAK=$(__bracket $THEME)
+    PS1="$HOST[\h]$RS$BRAK[$TEXT\u$BRAK][$TEXT\w$BRAK][$TEXT\$$BRAK]\$(__git_ps1 \(%s\))$BD "
+    PS0="$RS"
 }
 
 function color_less {
-    env LESS_TERMCAP_mb=$'\e[1;31m' \
-        LESS_TERMCAP_md=$'\e[1;32m' \
-        LESS_TERMCAP_me=$'\e[0m' \
-        LESS_TERMCAP_se=$'\e[0m' \
-        LESS_TERMCAP_so=$'\e[7;34m' \
-        LESS_TERMCAP_ue=$'\e[0m' \
-        LESS_TERMCAP_us=$'\e[4;33m' \
+    # mb: ???
+    # md: Tag
+    # me: End of Tag
+    # so: Search highlight, bottom bar
+    # se: End of highlight?
+    env LESS_TERMCAP_mb=$'\e[0;49;39m' \
+        LESS_TERMCAP_md=$'\e[1;49;35m' \
+        LESS_TERMCAP_me=$'\e[0;49;39m' \
+        LESS_TERMCAP_so=$'\e[1;46;97m' \
+        LESS_TERMCAP_se=$'\e[0;49;39m' \
+        LESS_TERMCAP_us=$'\e[1;49;36m' \
+        LESS_TERMCAP_ue=$'\e[0;49;39m' \
         "$@"
 }
 
@@ -70,11 +82,51 @@ function __fzf_open__() {
  __ps1 4
 
 if [ "$DISPLAY" ]; then
-    [ -z $TMUX ] && export TERM=xterm-256color
+    # [ -z $TMUX ] && export TERM=xterm-256color
     [ $UID != 0 ] && transset --id "$WINDOWID" 0.95 >/dev/null
 fi
 
-"$HOME/.bashrc.colors" "$HOME/.colors.kmarc"
+source "$HOME/.theme.bashrc"
+
+if [ -n "$TMUX" ]; then
+  # Tell tmux to pass the escape sequences through
+  # (Source: http://permalink.gmane.org/gmane.comp.terminal-emulators.tmux.user/1324)
+  printf_template='\033Ptmux;\033\033]4;%d;rgb:%s\033\033\\\033\\'
+  printf_template_var='\033Ptmux;\033\033]%d;rgb:%s\033\033\\\033\\'
+  printf_template_custom='\033Ptmux;\033\033]%s%s\033\033\\\033\\'
+elif [ "${TERM%%-*}" = "screen" ]; then
+  # GNU screen (screen, screen-256color, screen-256color-bce)
+  printf_template='\033P\033]4;%d;rgb:%s\033\\'
+  printf_template_var='\033P\033]%d;rgb:%s\033\\'
+  printf_template_custom='\033P\033]%s%s\033\\'
+else
+  printf_template='\033]4;%d;rgb:%s\033\\'
+  printf_template_var='\033]%d;rgb:%s\033\\'
+  printf_template_custom='\033]%s%s\033\\'
+fi
+
+printf $printf_template 0 $theme_color0
+printf $printf_template 1 $theme_color1
+printf $printf_template 2 $theme_color2
+printf $printf_template 3 $theme_color3
+printf $printf_template 4 $theme_color4
+printf $printf_template 5 $theme_color5
+printf $printf_template 6 $theme_color6
+printf $printf_template 7 $theme_color7
+printf $printf_template 8 $theme_color8
+printf $printf_template 9 $theme_color9
+printf $printf_template 10 $theme_color10
+printf $printf_template 11 $theme_color11
+printf $printf_template 12 $theme_color12
+printf $printf_template 13 $theme_color13
+printf $printf_template 14 $theme_color14
+printf $printf_template 15 $theme_color15
+printf $printf_template_var 10 $theme_foreground
+printf $printf_template_var 11 $theme_background
+if [ "${TERM%%-*}" = "rxvt" ]; then
+  printf $printf_template_var 708 $theme_background # internal border (rxvt)
+fi
+printf $printf_template_custom 12 ";7" # cursor (reverse video)
 
 # bind \M-o to __fzf_open__()
 if [[ ! -o vi ]]; then

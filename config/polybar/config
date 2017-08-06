@@ -10,18 +10,18 @@
 [colors]
 ; {{{
 foreground=${xrdb:theme_foreground:#000000}
-foreground-alt=${xrdb:theme_foreground_alt:#000000}
+foreground-alt=${xrdb:theme_foreground:#000000}
 background=${xrdb:theme_background:#000000}
-color00=${xrdb:theme_color00:#000000}
-color01=${xrdb:theme_color01:#000000}
-color02=${xrdb:theme_color02:#000000}
-color03=${xrdb:theme_color03:#000000}
-color04=${xrdb:theme_color04:#000000}
-color05=${xrdb:theme_color05:#000000}
-color06=${xrdb:theme_color06:#000000}
-color07=${xrdb:theme_color07:#000000}
-color08=${xrdb:theme_color08:#000000}
-color09=${xrdb:theme_color09:#000000}
+color00=${xrdb:theme_color0:#000000}
+color01=${xrdb:theme_color1:#000000}
+color02=${xrdb:theme_color2:#000000}
+color03=${xrdb:theme_color3:#000000}
+color04=${xrdb:theme_color4:#000000}
+color05=${xrdb:theme_color5:#000000}
+color06=${xrdb:theme_color6:#000000}
+color07=${xrdb:theme_color7:#000000}
+color08=${xrdb:theme_color8:#000000}
+color09=${xrdb:theme_color9:#000000}
 color10=${xrdb:theme_color11:#000000}
 color11=${xrdb:theme_color12:#000000}
 color12=${xrdb:theme_color13:#000000}
@@ -121,7 +121,7 @@ format = <label-monitor> <label-state> <label-mode>
 label-monitor = 
 label-monitor-foreground = ${colors.foreground-alt}
 
-pin-workspaces = true
+pin-workspaces = false
 
 label-focused = ●
 label-focused-foreground = ${colors.color01}
