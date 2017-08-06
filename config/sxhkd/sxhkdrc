@@ -138,7 +138,7 @@ ctrl + alt + l
 	~/bin/lock.sh; xset dpms force off
 
 XF86Display
-	bash -x $HOME/bin/desktop.sh > /tmp/desktopsh.log 2>&1
+	~/bin/desktop.sh
 
 XF86Audio{Raise,Lower}Volume
 	pactl set-sink-volume 0 {+,-}5%
@@ -165,6 +165,9 @@ super + space; M
 super + space; d
 	~/bin/desktop.sh
 
+super + space; D
+	~/bin/desktop.sh mirror
+
 # Desktop apps
 super + space; b
 	x-www-browser
@@ -182,6 +185,9 @@ super + space; h
 	bspc node -o 0.65 && gvim ~/Documents/Home.md
 
 # Terminal apps
+super + space; f
+	x-terminal-emulator -ls -e bash -ci 'cd ~/Documents/; ranger'
+
 super + space; m
 	x-terminal-emulator -ls -e bash -ci 'ncmpcpp'
 
