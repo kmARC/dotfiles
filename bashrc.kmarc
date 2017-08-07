@@ -18,7 +18,7 @@ function __ps1 {
     source /usr/lib/git-core/git-sh-prompt
 
     function __hostname {
-        echo -n "$(tput bold)\[\e[7;49;9${1}m\]"
+        echo -n "\[\e[7;49;9${1}m\]"
     }
 
     function __bracket {
@@ -39,8 +39,7 @@ function __ps1 {
     local TEXT=$(__text)
     local HOST=$(__hostname $THEME)
     local BRAK=$(__bracket $THEME)
-    PS1="$HOST[\h]$RS$BRAK[$TEXT\u$BRAK][$TEXT\w$BRAK][$TEXT\$$BRAK]\$(__git_ps1 \(%s\))$BD "
-    PS0="$RS"
+    PS1="$HOST[\h]$RS$BRAK[$TEXT\u$BRAK][$TEXT\w$BRAK][$TEXT\$$BRAK]\$(__git_ps1 \(%s\))$TEXT$RS "
 }
 
 function color_less {

@@ -1,14 +1,14 @@
 #!/usr/bin/env bash
 
 echo "locking screen..."
-source "$HOME/.colors.kmarc"
+source "$HOME/.theme.bashrc"
 
-B=$(_html $color00)99 # blank
-C=$(_html $color04)99 # clear ish
-D=$(_html $color05)99 # default
-T=$(_html $color06)99 # text
-W=$(_html $color07)99 # wrong
-V=$(_html $color07)99 # verifying
+B=${theme_html_color0}99 # blank
+C=${theme_html_color0}99 # clear ish
+D=${theme_html_color12}99 # default
+T=${theme_html_color12}99 # text
+W=${theme_html_color9}99 # wrong
+V=${theme_html_color3}99 # verifying
 
 i3lock                \
 --insidevercolor=$C   \

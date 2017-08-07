@@ -1,8 +1,5 @@
 #!/usr/bin/env bash
 
-# Hide tray
-transset -n stalonetray 0
-
 # Kill panel while reconfiguring monitors
 killall -q polybar
 
@@ -144,14 +141,6 @@ bspc desktop -f "$CUR"
 # Spawn panel
 while pgrep -x polybar >/dev/null; do sleep 0.5; done
 polybar -r kmarc >> /dev/null 2>&1 &
-
-# Position and show stalonetray
-xdo move -N stalonetray -x $(($(cat /tmp/polybar-width.txt) / 2 - 290))
-(
-    sleep 1
-    xdo above -t "$(xdo id -n polybar)" "$(xdo id -n stalonetray)"
-    transset -n stalonetray 0.5
-)
 
 # Setting WM name to something java compatible
 wmname LG3D

@@ -21,6 +21,7 @@ xsetroot -cursor_name left_ptr
 sxhkd &
 /usr/lib/notification-daemon/notification-daemon &
 stalonetray &
+~/.local/src/hideIt.sh/hideIt.sh --name "stalonetray" -d top --peek 0 --region 750x8+-299+27 &
 redshift &
 ~/bin/start-mopidy.sh &
 xcape -t 250 -e 'Caps_Lock=Escape'

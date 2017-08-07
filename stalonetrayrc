@@ -5,11 +5,7 @@ tint_level 255
 tint_color "#eeeeee"
 fuzzy_edges 0
 slot_size 27
-grow_gravity W
-geometry 1x1+700+8
-max_geometry 4x1
-scrollbars horizontal
+grow_gravity E
+geometry 1x1+750+8
 transparent true
-scrollbars_size 10
-scrollbars_step 27
-scrollbars_highlight red
+window_type dock
