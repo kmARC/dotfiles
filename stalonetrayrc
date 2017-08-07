@@ -5,7 +5,7 @@ tint_level 255
 tint_color "#eeeeee"
 fuzzy_edges 0
 slot_size 27
-grow_gravity E
-geometry 1x1+750+8
+grow_gravity W
+geometry 1x1+1150+8
 transparent true
 window_type dock
