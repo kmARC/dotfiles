@@ -100,6 +100,12 @@ make -j5
 sudo make install
 ```
 
+### Install hideIt.sh
+
+``` bash
+git clone https://github.com/Tadly/hideIt.sh ~/.local/src/hideIt.sh
+```
+
 ### Configuration
 
 To select a wallpaper, use `feh`.
