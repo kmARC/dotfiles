@@ -1,58 +1,75 @@
 #!/usr/bin/env bash
 
-DEST_SERVER=""
-DEST_PATH="/var/backups/"
-DEST_USER="ubuntu"
+# DEST_LOCAL="/media/kmarc/Passport/Backup/"
+DEST_S3_BUCKET="backup-kmarc"
+DEST_S3_REGION="eu-central-1"
+DEST_S3_MOUNT="/tmp/backup/"
+EXCLUDES="/tmp/backup_excludes.txt"
+LOCK_FILE="/tmp/lock.backup"
 
-DEST="rsync://${DEST_USER}@${DEST_SERVER}/${DEST_PATH}"
+cat > "$EXCLUDES" <<EOF
+/home/kmarc/.cache
+/home/kmarc/.m2
+/home/kmarc/.vagrant.d/boxes
+/home/kmarc/Downloads
+/home/kmarc/Torrents
+/home/kmarc/VirtualBox VMs
+**/*.bak
+**/*.ova
+**/*.pyc
+**/__pycache__
+**/node_modules
+**/Cache
+**/tmp
+EOF
 
-ping -c1 ${DEST_SERVER} > /dev/null 2>&1
-if [ $? != 0 ]; then
-    echo "Destination server (${DEST_SERVER}) currently unreachable"
+if [ -f "$LOCK_FILE" ]; then
+    echo "Lock file exists at $LOCK_FILE."
+    echo "Exiting."
     exit -1
 fi
 
-if [ -z "$PASSPHRASE" ]; then
-    echo -n "Enter passphrase: "
-    read -s PASSPHRASE
-    export PASSPHRASE
-    echo
+mkdir -p "$DEST_S3_MOUNT"
+
+goofys --region "$DEST_S3_REGION" "$DEST_S3_BUCKET" "$DEST_S3_MOUNT"
+
+touch "$LOCK_FILE"
+
+BORG_PASSPHRASE=$(secret-tool lookup type borg_passphrase)
+export BORG_PASSPHRASE
+
+if [ -z "$BORG_PASSPHRASE" ]; then
+    echo "No password specified. Check your secrets. Seahorse, secret-tool"
+    echo "Exiting."
+    exit -1
 fi
 
 echo "======"
-echo "    Creating backup @ $(date)"
+echo "    Backup script starting @ $(date)"
 echo "======"
-# doing a monthly full backup (1M)
-duplicity \
-    --full-if-older-than 1M \
-    --exclude '**/.git' \
-    --exclude '~/Documents/Google Drive' \
-    --exclude '~/Documents/**/OwnCloud' \
-    --include '~/bin' \
-    --include '~/Documents' \
-    --include '~/lotus' \
-    --include '~/Pictures' \
-    --include '~/SametimeMeetings' \
-    --include '~/SametimeRooms' \
-    --include '~/git' \
-    --include '~/.Skype' \
-    --include '~/.cisco' \
-    --include '~/.config' \
-    --include '~/.mozilla' \
-    --include '~/.shutter' \
-    --include '~/.ssh' \
-    --exclude '**' \
-    $HOME \
-    $DEST
 
-duplicity remove-older-than 6M --force $DEST
+if [ -f "$DEST_S3_MOUNT"/README ]; then
+    borg create --verbose \
+                --progress \
+                --stats \
+                --compression lz4 \
+                --exclude-from "$EXCLUDES" \
+                "$DEST_S3_MOUNT"::'{now}' \
+                "$HOME"
 
-duplicity cleanup --force --extra-clean $DEST
+    borg prune --keep-daily 7 \
+               --keep-weekly 4 \
+               --keep-monthly 12 \
+               --keep-yearly 1 \
+               "$DEST_S3_MOUNT"
 
-duplicity remove-all-inc-of-but-n-full 3 --force $DEST
+    borg list "$DEST_S3_MOUNT"
+fi
 
-duplicity collection-status $DEST
+fusermount -u "$DEST_S3_MOUNT"
+
+rm -rf "$LOCK_FILE"
 
 echo "======"
-echo "    Backup script exiting - $(date)."
+echo "    Backup script exiting @ $(date)."
 echo "======"
