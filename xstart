@@ -13,21 +13,22 @@ killall gnome-keyring-daemon
 ssh-add -k
 
 # X settings
-compton &
+# compton &
 xrdb -load ~/.Xresources
 xsetroot -cursor_name left_ptr
+
+# Configure desktop
+~/bin/desktop.sh
 
 # Daemons
 sxhkd &
 /usr/lib/notification-daemon/notification-daemon &
+sleep 5
 ~/bin/tray.sh &
 redshift &
 ~/bin/start-mopidy.sh &
 xcape -t 250 -e 'Caps_Lock=Escape'
 syndaemon -i 0.5 -K -R -d
-
-# Configure desktop
-~/bin/desktop.sh
 
 # Autostarting daemons
 dex /etc/xdg/autostart/polkit-gnome-authentication-agent-1.desktop
