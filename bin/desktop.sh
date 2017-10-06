@@ -6,7 +6,7 @@ killall -q polybar
 BUILTIN_MON=${BUILTIN_MON:-eDP-1}
 MONS=($(xrandr | grep -v $BUILTIN_MON | awk '/ connected /{print $1}'))
 MONS=(${MONS[@]} $(xrandr | grep $BUILTIN_MON | awk '/ connected /{print $1}'))
-MODE=$1
+POSITION=${1:-right-of}
 
 # Prints largest resolution mode
 function largest_res {
@@ -33,7 +33,7 @@ CUR=$(bspc query -D -d)
 bspc desktop -f 1
 
 # Configure monitors
-if [[ ${#MONS[@]} == 1 || $MODE == 'mirror' ]]; then
+if [[ ${#MONS[@]} == 1 || $POSITION == 'mirror' ]]; then
     # Select primary monitor
     PRI=${MONS[0]}
     MOD_PRI=$(largest_res "$PRI")
@@ -68,12 +68,18 @@ else
 
     echo "Setting up monitors: primary   - $PRI ($MOD_PRI)"
     echo "                     secondary - $SEC ($MOD_SEC)"
+
+    # Swap monitors if needed
+    if [[ $(bspc query -M --names | head -n1) != "$PRI" ]]; then
+        echo "sapping"
+        bspc monitor "$PRI" -s "$SEC"
+    fi
     # Enable second monitor
     if ! is_primary $PRI; then
         xrandr --output "$PRI" --off
     fi
     xrandr --output "$SEC" --mode "$MOD_SEC" \
-           --output "$PRI" --mode "$MOD_PRI" --above "$SEC" --primary
+           --output "$PRI" --mode "$MOD_PRI" --$POSITION "$SEC" --primary
     # Move around desktops
     for desktop in 1 2 3 4 5; do
         bspc desktop $desktop -m "$PRI"
@@ -105,7 +111,7 @@ for monitor in $PRI $SEC; do
 done
 
 # Add tray space on primary monitor
-bspc config -m "$PRI" top_padding 40 # 40 = 32 (bar) + 8 (padding)
+bspc config -m "$PRI" top_padding 33 # 33 = 32 (bar) + 8 (padding) - 7 (half of padding)
 # Remove tray space from secondary monitor
 bspc config -m "$SEC" top_padding 0
 
