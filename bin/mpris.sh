@@ -1,27 +1,25 @@
 #!/usr/bin/env bash
 
 
-# shellcheck source=/home/kmarc/.colors.kmarc
+# shellcheck source=/home/kmarc/.theme.bashrc
 source "$HOME/.theme.bashrc"
 
 prefix="%{F${theme_html_color6}}"
 
 # check for spotify
-playerctl -l 2>/dev/null | grep spotify > /dev/null
-if [[ $? -eq 0 ]]; then
-    player_status=$(playerctl -p spotify status 2> /dev/null)
+if (playerctl -l | grep spotify) &>/dev/null; then
+    player_status=$(playerctl status)
+    metadata="$(playerctl metadata artist) - $(playerctl metadata title)"
 else
-    player_status=$(playerctl status 2> /dev/null)
-fi
-
-if [[ $? -eq 0 ]]; then
-    metadata="$(playerctl metadata artist 2> /dev/null) - $(playerctl metadata title 2>/dev/null)"
+    mpc_output=$(mpc status -f %title% + %name%)
+    player_status=$(echo "$mpc_output" | awk 'FNR==2{print $1}')
+    metadata=$(echo "$mpc_output" | head -1)
 fi
 
 # Foreground color formatting tags are optional
-if [[ $player_status = "Playing" ]]; then
+if [[ ${player_status,,} =~ .*playing.* ]]; then
     echo "$prefix%{F${theme_html_foreground}}%{O9}$metadata %{F-}"
-elif [[ $player_status = "Paused" ]]; then
+elif [[ ${player_status,,} =~ .*paused.* ]]; then
     echo "$prefix%{F${theme_html_foreground}}%{O9}$metadata %{F-}"
 else
     echo "$prefix%{F${theme_html_foreground}}%{O9}●%{O1}●%{O1}●%{O1}●%{O1}●%{O1}●%{O1}●%{O1}●%{O1}●%{O1}●%{O1} %{F-}"
