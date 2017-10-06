@@ -72,6 +72,8 @@ URxvt*perl-ext-common: default,matcher
 URxvt*scrollBar:       false
 URxvt*url-launcher:    /usr/bin/xdg-open
 URxvt*termName:        rxvt-unicode-256color
+URxvt*urgentOnBell:    true
+URxvt*visualBell:      true
 
 ! Rofi
 rofi.color-enabled:                  true

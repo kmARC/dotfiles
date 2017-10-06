@@ -30,7 +30,7 @@ function __ps1 {
     }
 
     function __text {
-        echo -n "\[\e[1;49;39m\]"
+        echo -n "\[\e[0;49;39m\]"
     }
 
     local THEME=$1
@@ -80,10 +80,10 @@ function __fzf_open__() {
 # Prompt. See __ps1 -h
  __ps1 4
 
-if [ "$DISPLAY" ]; then
-    # [ -z $TMUX ] && export TERM=xterm-256color
-    [ $UID != 0 ] && transset --id "$WINDOWID" 0.95 >/dev/null
-fi
+# if [ "$DISPLAY" ]; then
+#     # [ -z $TMUX ] && export TERM=xterm-256color
+#     [ $UID != 0 ] && transset --id "$WINDOWID" 0.95 >/dev/null
+# fi
 
 source "$HOME/.theme.bashrc"
 

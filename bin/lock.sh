@@ -3,7 +3,7 @@
 echo "locking screen..."
 source "$HOME/.theme.bashrc"
 
-B=${theme_html_color0}99 # blank
+B=${theme_html_color0}ee # blank
 C=${theme_html_color0}99 # clear ish
 D=${theme_html_color12}99 # default
 T=${theme_html_color12}99 # text
