@@ -1,13 +1,19 @@
 #!/usr/bin/env bash
 
-apt update
+
+# PPAs
+sudo add-apt-repository -y -u ppa:dawidd0811/neofetch
+sudo apt update
+sudo apt install -y \
+    neofetch
 
 # console tools
-apt install -y \
+sudo apt install -y \
     bc \
     dfc \
     htop \
     iotop \
+    libsecret-tools \
     mc \
     moreutils \
     powertop \
@@ -22,9 +28,4 @@ apt install -y \
 # mopidy reqs
 sudo apt install -y \
     python-pip
-
-# PPAs
-add-apt-repository -y -u ppa:dawidd0811/neofetch
-apt install -y \
-    neofetch
 
