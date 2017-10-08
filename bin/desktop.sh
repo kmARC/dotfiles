@@ -150,3 +150,8 @@ polybar -r kmarc >> /dev/null 2>&1 &
 
 # Setting WM name to something java compatible
 wmname LG3D
+
+# Fix tray
+sleep 3 #FIXME waiting for polybar to start
+~/bin/tray.sh
+
