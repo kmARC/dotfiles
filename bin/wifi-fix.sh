@@ -8,5 +8,6 @@ echo "Removed wireless modules"
 sleep 3
 sudo modprobe iwlwifi
 echo "Added wireless modules"
+sudo systemctl restart NetworkManager
 sleep 3
 sudo iwlist "$IFACE" s

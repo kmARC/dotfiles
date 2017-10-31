@@ -6,10 +6,14 @@ wid=$1
 class=$2
 instance=$3
 
-# echo $wid, $class, $instance > /tmp/bspwm-debug.txt
+# echo $wid, $class, $instance >> /tmp/bspwm-debug.txt
 
 if [ "$class" = Slack ]; then
     if [[ "$(xprop -id "$wid" WM_NAME)" == *"Call Minipanel"* ]]; then
+        echo "state = floating"
+    fi
+elif [[ $class =~ Vivaldi|Firefox ]]; then
+    if [[ "$(xprop -id "$wid" WM_NAME)" == *"Pushbullet"* ]]; then
         echo "state = floating"
     fi
 fi

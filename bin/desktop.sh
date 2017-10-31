@@ -119,7 +119,7 @@ bspc config -m "$SEC" top_padding 0
 ~/.fehbg
 
 # Set X keyboard related settings
-setxkbmap us,hu ,102_qwerty_dot_dead -option "grp:alt_shift_toggle,caps:ctrl_modifier"
+setxkbmap us,hu ,102_qwerty_dot_dead -option "grp:shifts_toggle,caps:ctrl_modifier"
 
 # Set X mouse related settings
 for ID in $(xinput | grep pointer \

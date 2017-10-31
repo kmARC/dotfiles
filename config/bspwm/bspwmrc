@@ -45,6 +45,7 @@ bspc rule -a "Keybase"            state=floating
 bspc rule -a "Orage"              state=floating
 bspc rule -a "Xfce4-appfinder"    state=floating sticky=on
 bspc rule -a "*:vpnui"            state=floating
+bspc rule -a "peek"               state=floating
 
 # Configure desktop
 ~/.xstart

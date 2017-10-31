@@ -11,6 +11,9 @@ cat > "$EXCLUDES" <<EOF
 /home/kmarc/.cache
 /home/kmarc/.m2
 /home/kmarc/.vagrant.d/boxes
+/home/kmarc/.vim/vimswap
+/home/kmarc/.vim/vimundo
+/home/kmarc/.vim/vimbackup
 /home/kmarc/Downloads
 /home/kmarc/Torrents
 /home/kmarc/VirtualBox VMs

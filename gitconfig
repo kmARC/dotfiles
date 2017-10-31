@@ -16,3 +16,5 @@
 	username = oro
 [github]
 	user = kmarc
+[merge]
+	tool = vimdiff
