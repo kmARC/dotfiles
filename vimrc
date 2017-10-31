@@ -4,7 +4,6 @@ Plug 'gcmt/taboo.vim'
 Plug 'junegunn/fzf'             , {'dir': '~/.fzf', 'frozen': 1 }
 Plug 'junegunn/fzf.vim'
 Plug 'junegunn/vim-peekaboo'
-Plug 'romainl/vim-qf'
 Plug 'scrooloose/nerdtree'      , {'on': ['NERDTreeToggle', 'NERDTreeFind'] }
 Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-rsi'
@@ -14,26 +13,25 @@ Plug 'airblade/vim-gitgutter'
 Plug 'mattn/gist-vim'
 Plug 'shumphrey/fugitive-gitlab.vim'
 Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-rhubarb'
 "--- TMUX ---
 Plug 'jpalardy/vim-slime'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'tmux-plugins/vim-tmux'
 "--- Filetype helpers ---
 Plug 'nblock/vim-dokuwiki'
-Plug 'jceb/vim-orgmode'                 , {'for': 'org'}
 "--- Editing ---
 Plug 'Raimondi/delimitMate'
 Plug 'godlygeek/tabular'                , {'on': 'Tabularize'}
 Plug 'michaeljsmith/vim-indent-object'
 Plug 'tpope/vim-surround'
 "--- Look&Feel ---
-Plug 'chriskempson/base16-vim'
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
+Plug 'itchyny/lightline.vim'
+Plug 'NLKNguyen/papercolor-theme'
 "--- Programming ---
 Plug 'AndrewRadev/splitjoin.vim'
 Plug 'SirVer/ultisnips'
-Plug 'Valloric/YouCompleteMe'           , {'do':  './install.py --tern-completer'}
+Plug 'Valloric/YouCompleteMe'           , {'do':  'python3 ./install.py --tern-completer'}
 Plug 'editorconfig/editorconfig-vim'
 Plug 'honza/vim-snippets'
 Plug 'majutsushi/tagbar'
@@ -118,27 +116,38 @@ set path+=**
 set laststatus=2
 set wildignore+=*.o,*.so,*.a,*.swp,*.zip,*.pyc,*.class,tags,.git/**,.env/**
 set completeopt=preview,longest,menuone
+set splitbelow
 set splitright
 set diffopt+=vertical   " Always vsplit. Helps with fugitive too
 set sessionoptions+=tabpages,globals,localoptions
 set switchbuf+=usetab
 set wildignorecase
-set wildmode=list,full
+set wildmode=full
 set wildcharm=<C-z>
 set grepprg=ag\ --vimgrep\ $*
 set foldlevel=0
+set noshowmode
 
 "--- Look & Feel ----
-set background=dark
-let base16colorspace=256
-silent! source ~/.vimrc_background
+set background=light
+" let base16colorspace=256
+" silent! source ~/.vimrc_background
+set bg=light
+let g:pencil_terminal_italics = 1
+silent! colorscheme PaperColor
+highlight Comment cterm=italic
+
+
+hi VertSplit ctermbg=231 ctermfg=231 cterm=bold
+
 
 "--- Mappings ----
 cmap w!!                   w !sudo tee > /dev/null %
 nnoremap <C-e>             2<C-e>
 nnoremap <C-y>             2<C-y>
 nnoremap <C-p>             :Files<CR>
-nnoremap <F7>              :NERDTreeFind<CR>
+nnoremap <expr> <F7>       expand('%') == '' ? ":NERDTreeToggle<CR>" : ":NERDTreeFind<CR>"
+nnoremap <F2>              :ls<CR>:buffer 
 nnoremap <F8>              :TagbarToggle<CR>
 nnoremap <F9>              :lclose<CR>:cclose<CR>:pclose<CR>
 nnoremap <leader>fa        :call fzf#vim#grep('ag                            --nogroup --column --color "(?=.)"', 1, {'options':'--exact'})<CR>
@@ -165,6 +174,9 @@ nnoremap <leader>7         7gt
 nnoremap <leader>8         8gt
 nnoremap <leader>9         9gt
 nnoremap <leader>0         0gt
+nnoremap <leader>"         :normal ysiW"<CR>
+nnoremap <leader>'         :normal ysiW'<CR>
+nnoremap <leader>)         :normal ysiW)<CR>
 nnoremap <ScrollWheelDown> 2<C-E>
 nnoremap <ScrollWheelUp>   2<C-Y>
 nnoremap <M-ScrollWheelDown> 4zl
@@ -173,12 +185,16 @@ nnoremap n                 nzz
 nnoremap N                 Nzz
 nnoremap [h                :GitGutterPrevHunk<CR>
 nnoremap ]h                :GitGutterNextHunk<CR>
+nnoremap <leader>aa :!xdg-open http://docs.ansible.com/ansible/latest/list_of_all_modules.html<CR>
+nnoremap <leader>am :!xdg-open http://docs.ansible.com/ansible/latest/<C-R><C-W>_module.html\#options<CR>
+nnoremap <leader>as :!xdg-open https://www.google.com/search?q=site:docs.ansible.com/ansible/latest/+\"<C-R><C-W>\"<CR>
 
 "--- Autocommands ---
 "----- keywordprg
 autocmd FileType vim                            setlocal keywordprg=:help
-autocmd FileType javascript*,typescript*        let &l:keywordprg=fnamemodify($MYVIMRC, ":h") . "/docsearch.sh"
-autocmd FileType css,less,scss                  let &l:keywordprg=fnamemodify($MYVIMRC, ":h") . "/docsearch.sh"
+autocmd FileType javascript*,typescript*        let &l:keywordprg=fnamemodify($MYVIMRC, ":h") . "/devdocs.sh " . &l:filetype
+autocmd FileType css,less,scss                  let &l:keywordprg=fnamemodify($MYVIMRC, ":h") . "/devdocs.sh " . &l:filetype
+autocmd FileType ansible*                       let &l:keywordprg=fnamemodify($MYVIMRC, ":h") . "/devdocs.sh " . &l:filetype
 "----- mappings
 autocmd FileType markdown                       nnoremap <buffer> <F6> :LivedownToggle<CR>
 autocmd FileType markdown                       nnoremap <buffer> <F8> :Toc<CR><C-w>L<C-w>50<bar>:setlocal winfixwidth<CR>
@@ -189,11 +205,12 @@ autocmd FileType javascript*,typescript*        nnoremap <buffer> <Leader>] :Ycm
 autocmd FileType vim                            setlocal sw=2 sts=2 ts=2
 autocmd FileType javascript*,typescript*,json   setlocal sw=2 sts=2 ts=2
 autocmd FileType css,less,scss                  setlocal sw=2 sts=2 ts=2
-autocmd FileType terraform                      setlocal sw=2 sts=2 ts=2
+autocmd FileType terraform                      setlocal sw=2 sts=2 ts=2 commentstring=#%s
 autocmd FileType plaintex,text,markdown         setlocal tw=80 formatprg=par\ -jw80
 "----- filetypes
 autocmd BufRead,BufNewFile Vagrantfile          setlocal filetype=ruby
 autocmd BufRead,BufNewFile *.tsx                setlocal filetype=typescript.jsx
+autocmd FileType ansible                        setlocal filetype=ansible.yaml
 "----- marks
 autocmd BufWrite *.css,*.less,*.scss            normal! mC
 autocmd BufWrite *.html                         normal! mH
@@ -202,6 +219,7 @@ autocmd BufWrite *.md                           normal! mM
 autocmd BufWrite *.py                           normal! mP
 autocmd BufWrite *.sh                           normal! mS
 autocmd BufWrite *.vim,vimrc                    normal! mV
+autocmd BufWrite /home/kmarc/Documents/Home.md  silent !pandoc -o /home/kmarc/Documents/Home.html -c /home/kmarc/Documents/github-pandoc.css %
 "----- buffer/window opts
 augroup BgHighlight
   autocmd!
@@ -214,7 +232,7 @@ augroup BgHighlight
 augroup END
 autocmd WinEnter *                              call ExitIfNoListedBufsDisplayed()
 autocmd FileType nerdtree                       nnoremap <buffer> <F7> :NERDTreeToggle<CR>
-autocmd BufWinEnter,WinEnter */doc/*            wincmd L | 80 wincmd | | setlocal winfixwidth
+autocmd BufWinEnter,WinEnter *vim/**/doc/*            wincmd L | 80 wincmd | | setlocal winfixwidth
 "----- startup
 autocmd VimEnter * call CheckProject()
 
@@ -253,7 +271,7 @@ function! BufferClose()
   elseif len(getbufinfo({'buflisted':1})) == 1
     bd
   else
-    bp
+    normal 
     bd #
   endif
 endfunction
@@ -281,21 +299,26 @@ function! Project()
     exec "Obsession " . fnameescape(s:sess)
   endif
 endfunction
-
 command! Project call Project()
 
+function! ProjectDelete()
+  exec "Obsession!"
+  call delete(s:sess)
+endfunction
+command! ProjectDelete call ProjectDelete()
+
 function! CheckProject()
-  if filereadable(s:sess)
-    let choice = confirm("Project detected. Should we open?", "&Yes\n&No", 1)
-    if choice==1
+  if filereadable(s:sess) && argc() == 0
       call Project()
     endif
-  endif
 endfunction
 
 " }}}
 
 "--- Plugin configurations ---
+
+"--- ale ---
+let g:ale_sh_shellcheck_options = '-x'
 
 "--- delimitMate ---
 let delimitMate_expand_cr = 0
@@ -323,14 +346,16 @@ let g:fzf_tags_command = '(git ls-files || ag -l) | ctags -L-'
 
 "--- nerdtree ---
 let NERDTreeRespectWildIgnore = 1
+let NERDTreeQuitOnOpen = 1
 
 "--- netrw ---
 let g:netrw_home=expand("~/.vim/misc")
 let g:netrw_liststyle=3
+let g:netrw_bufsettings="rnu"
 
 "--- vim-slime ---
 let g:slime_target = "tmux"
-let g:slime_python_ipython = 1
+" let g:slime_python_ipython = 1
 let g:slime_paste_file = tempname()
 
 " "--- orgmode ---
@@ -345,25 +370,32 @@ let g:tagbar_autofocus=1
 let g:taboo_renamed_tab_format=' [%N] %l%m |'
 let g:taboo_tab_format=' [%N] %f%m |'
 
-"--- vim-airline ---
-let g:airline_left_sep = ''
-let g:airline_right_sep = ''
-let g:airline_theme = 'base16'
-let g:airline_powerline_fonts = 1
-let g:airline#extensions#whitespace#enabled = 0
-let g:airline_inactive_collapse = 0
-let g:airline_section_warning = ''
-let g:airline_theme_patch_func = 'AirlineThemePatch'
-function! AirlineThemePatch(palette)
-    for colors in values(a:palette.inactive)
-        let colors[3] = 255
-    endfor
-endfunction
-if !exists('g:airline_symbols')
-  let g:airline_symbols = {}
-endif
-let g:airline_symbols.maxlinenr = ''
-let g:airline_symbols.linenr = ''
+" "--- vim-airline ---
+" let g:airline_left_sep = ''
+" let g:airline_right_sep = ''
+" let g:airline_theme = 'papercolor'
+" let g:airline_powerline_fonts = 1
+" let g:airline#extensions#whitespace#enabled = 0
+" let g:airline#extensions#branch#enabled = 0
+" let g:airline#extensions#hunks#enabled = 0
+" let g:airline_inactive_collapse = 0
+" let g:airline_section_warning = ''
+" let g:airline_theme_patch_func = 'AirlineThemePatch'
+" function! AirlineThemePatch(palette)
+"     for colors in values(a:palette.inactive)
+"         let colors[3] = 252
+"     endfor
+" endfunction
+" if !exists('g:airline_symbols')
+"   let g:airline_symbols = {}
+" endif
+" let g:airline_symbols.maxlinenr = ''
+" let g:airline_symbols.linenr = ''
+
+"--- lightline.vim ---
+let g:lightline = {
+      \ 'colorscheme': 'PaperColor',
+      \ }
 
 "--- vim-jsdoc ---
 let g:jsdoc_enable_es6 = 1
@@ -374,8 +406,11 @@ let g:vim_markdown_folding_disabled=1
 "--- vim-gitgutter ---
 let g:gitgutter_max_signs=2000
 
+"--- vim-terraform ---
+let g:terraform_align = 1
+
 "--- vimwiki ---
-let g:vimwiki_list = [{'path': '~/Dokumente/', 'syntax': 'markdown', 'ext': '.md', 'automatic_nested_syntaxes': 1, 'auto_toc': 1, 'index': 'Home'}]
+let g:vimwiki_list = [{'path': '~/Documents/', 'syntax': 'markdown', 'ext': '.md', 'automatic_nested_syntaxes': 1, 'auto_toc': 1, 'index': 'Home'}]
 let g:vimwiki_folding = 'list'
 
 "--- YouCompleteMe ---
@@ -384,10 +419,11 @@ let g:ycm_autoclose_preview_window_after_insertion=1
 "--- UltiSnips ---
 let g:UltiSnipsExpandTrigger="<c-j>"
 let g:UltiSnipsListSnippets="<c-h>"
-let g:UltiSnipsSnippetDirectories=["plugged/vim-snippets/UltiSnips","UltiSnips"]
+let g:UltiSnipsEditSplit="vertical"
 
 set modeline
 set exrc
 set secure
+
 
 " vim: fdm=marker fdl=0 fen
