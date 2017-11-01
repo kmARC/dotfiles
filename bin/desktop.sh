@@ -111,7 +111,7 @@ for monitor in $PRI $SEC; do
 done
 
 # Add tray space on primary monitor
-bspc config -m "$PRI" top_padding 33 # 33 = 32 (bar) + 8 (padding) - 7 (half of padding)
+bspc config -m "$PRI" top_padding 24
 # Remove tray space from secondary monitor
 bspc config -m "$SEC" top_padding 0
 
@@ -137,7 +137,7 @@ synclient TapButton3=2
 
 # Help polybar by calculating it's desired width
 echo $(( $(xrandr | grep primary \
-                  | sed -r 's/^.*[^0-9]([0-9]+)x[0-9]+.*$/\1/g') - 16 )) \
+                  | sed -r 's/^.*[^0-9]([0-9]+)x[0-9]+.*$/\1/g') )) \
     > /tmp/polybar-width.txt
 polybar -m | grep '+0+0' | cut -d':' -f1 \
     > /tmp/polybar-monitor.txt

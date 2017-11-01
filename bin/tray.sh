@@ -5,8 +5,10 @@ PID_TRAY=$(pgrep stalonetray)
 WID_TRAY=$(xwininfo -root -tree \
            | awk '/"stalonetray"/{ print $1 }')
 
-kill "$PID_HIDEIT" &> /dev/null
-sleep 1
+for p in "${PID_HIDEIT[@]}"; do
+    echo kill "$p"
+    kill $p
+done
 
 VALUES=($(xwininfo -root -tree \
           | grep -i polybar \
@@ -14,8 +16,8 @@ VALUES=($(xwininfo -root -tree \
 
 
 POS_X=$((VALUES[0] / 2 + VALUES[2] + 190))
-GEOMETRY="1x1+${POS_X}+${VALUES[3]}"
-REGION="${POS_X}x0+300+35"
+GEOMETRY="1x1+${POS_X}+{VALUES[3]}"
+REGION="0x0+1920+24"
 
 (
     if [ -z "$PID_TRAY" ]; then

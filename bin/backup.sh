@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -e
+
 # DEST_LOCAL="/media/kmarc/Passport/Backup/"
 DEST_S3_BUCKET="backup-kmarc"
 DEST_S3_REGION="eu-central-1"
