@@ -1,0 +1,105 @@
+snippet name "Generic play definition" b
+- name: $1
+	${2:module_name}:
+		$0
+	${3:become: true}
+	${6:register: r_$2}
+	${7:tags:} $8
+endsnippet
+
+snippet namei "Generic play definition with_items" b
+- name: $1
+	${2:module_name}:
+		$0: {{ item }}
+	with_items:
+		- $3
+	${4:become: true}
+	${7:tags:} $8
+endsnippet
+
+snippet debug "Ansible debug module" b
+- name: Print debug for variable $1
+	debug: var=${1}
+endsnippet
+
+snippet apt "Ansible apt module" b
+- name: Install $1 package
+	${2:become: true}
+	apt:
+		name: ${1}
+		$0
+endsnippet
+
+snippet apti "Ansible apt module with_items" b
+- name: Install packages
+	${2:become: true}
+	apt:
+		name: "{{ item }}"
+		${4:update_cache: yes}
+		$0
+	with_items:
+		- ${3}
+endsnippet
+
+snippet template "Ansible template module" b
+- name: Copy template $1
+	template:
+		src: ${2}.j2
+		dest: ${3}$2
+		$0
+	${1:become: true}
+endsnippet
+
+snippet templatei "Ansible template module with_items" b
+- name: Copy ${1:configuration} templates
+	template:
+		src: "{{ item.src }}"
+		dest: "{{ item.dest }}"
+	with_items:
+		- src: ${3}.j2
+		  dest: ${4}$3
+		$0
+	${2:become: true}
+endsnippet
+
+snippet "- src" "With items: src, dest"
+- src: ${1}.j2
+  dest: ${2}$1
+  $0
+endsnippet
+
+snippet command "Ansible command module" b
+- name: $1
+	command: ${2}
+	args:
+		$0
+endsnippet
+
+snippet commandi "Ansible command module with_items" b
+- name: $1
+	command: ${2} "{{ item }}"
+	args:
+		$0
+	with_items:
+		- ${3}
+endsnippet
+
+snippet service "Ansible service module" b
+- name: ${2/^(\w)([^p]*)p?(p?)(.*)$/\u$1$2$3$4/} $1
+	service:
+		name: ${1}
+		state: ${2:restart}ed
+		$0
+	become: true
+endsnippet
+
+snippet servicei "Ansible service module with_items" b
+- name: ${1/^(\w)([^p]*)p?(p?)(.*)$/\u$1$2$3$4/} services
+	service:
+		name: "{{ item }}"
+		state: ${1:restart}ed
+		$0
+	with_items:
+		- $2
+	become: true
+endsnippet

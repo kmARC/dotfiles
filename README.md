@@ -6,27 +6,15 @@ Setting up on a new host
 
 ### Install prerequisites
 
-
-    sudo add-apt-repository "deb http://ppa.launchpad.net/jonathonf/vim/ubuntu xenial main"
-    sudo add-apt-repository "deb-src http://ppa.launchpad.net/jonathonf/vim/ubuntu xenial main"
-
-    sudo apt-get -y install git vim-gtk3-py2
-    sudo apt-get -y install curl build-essential cmake python-dev \
-                            python-unidecode silversearcher-ag nodejs-legacy \
-                            npm par
+    sudo apt -y install git vim
+    sudo apt -y install curl build-essential cmake python-dev python3-dev \
+                        python-unidecode silversearcher-ag nodejs-legacy \
+                        npm par
 
 ### Set up vim with plugins
 
     git clone https://github.com/kmARC/vim.git ~/.vim
-    vim -c ':PlugInstall' -c ':qa'
-
-At this point, plugins will automatically installed inside vim. After finished, 
-you can startup vim with all plugins installed.
-
-### Configure look&feel
-
-My choice of terminal GUI colors is base16. For more information how to set it
-up, visit [base16-shell on GitHub](https://github.com/chriskempson/base16-shell).
+    vim -c ':PlugInstall' -c ':qa!'
 
 Update a host
 -------------
@@ -40,26 +28,23 @@ Programming languages
 
 Optional fo **Shell scripting**
 
-    sudo apt-get install shellcheck
+    sudo apt install shellcheck
 
 Optional for **Python**
 
-    sudo apt-get install pylint ipython bpython
+    sudo apt install pylint ipython bpython
+    sudo -H pip install jedi
+
+Optional for **Ansible/yaml**
+
+    sudo -H pip install ansible-lint yamllint
 
 Optional for **Markdown**
 
-    sudo npm install -g livedown
+    sudo -H npm install -g livedown
 
 Installing new modules
 ----------------------
 
 Refer to https://github.com/junegunn/vim-plug
 
-Example: vim-fugitive. Add the following line to vimrc and run :PlugInstall
-
-    Plug 'tpope/vim-fugitive.git'
-
-To persist the change, commit.
-
-    git commit -m 'Added vim-fugitive'
-    git push
