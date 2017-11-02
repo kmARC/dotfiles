@@ -38,25 +38,25 @@ function _html() {
     echo export theme_background=${theme_shell[background]}
     # echo "#define theme_foreground_alt $(_html "$color_foreground_alt")"
 
-    echo export theme_html_color0=$(_html ${theme_shell[color0]})
-    echo export theme_html_color1=$(_html ${theme_shell[color1]})
-    echo export theme_html_color2=$(_html ${theme_shell[color2]})
-    echo export theme_html_color3=$(_html ${theme_shell[color3]})
-    echo export theme_html_color4=$(_html ${theme_shell[color4]})
-    echo export theme_html_color5=$(_html ${theme_shell[color5]})
-    echo export theme_html_color6=$(_html ${theme_shell[color6]})
-    echo export theme_html_color7=$(_html ${theme_shell[color7]})
-    echo export theme_html_color8=$(_html ${theme_shell[color8]})
-    echo export theme_html_color9=$(_html ${theme_shell[color9]})
-    echo export theme_html_color10=$(_html ${theme_shell[color10]})
-    echo export theme_html_color11=$(_html ${theme_shell[color11]})
-    echo export theme_html_color12=$(_html ${theme_shell[color12]})
-    echo export theme_html_color13=$(_html ${theme_shell[color13]})
-    echo export theme_html_color14=$(_html ${theme_shell[color14]})
-    echo export theme_html_color15=$(_html ${theme_shell[color15]})
-    echo export theme_html_foreground=$(_html ${theme_shell[foreground]})
-    echo export theme_html_background=$(_html ${theme_shell[background]})
-    # echo "#define theme_foreground_alt $(_html "$color_foreground_alt")"
+    echo export theme_html_color0="$(_html "${theme_shell[color0]}")"
+    echo export theme_html_color1="$(_html "${theme_shell[color1]}")"
+    echo export theme_html_color2="$(_html "${theme_shell[color2]}")"
+    echo export theme_html_color3="$(_html "${theme_shell[color3]}")"
+    echo export theme_html_color4="$(_html "${theme_shell[color4]}")"
+    echo export theme_html_color5="$(_html "${theme_shell[color5]}")"
+    echo export theme_html_color6="$(_html "${theme_shell[color6]}")"
+    echo export theme_html_color7="$(_html "${theme_shell[color7]}")"
+    echo export theme_html_color8="$(_html "${theme_shell[color8]}")"
+    echo export theme_html_color9="$(_html "${theme_shell[color9]}")"
+    echo export theme_html_color10="$(_html "${theme_shell[color10]}")"
+    echo export theme_html_color11="$(_html "${theme_shell[color11]}")"
+    echo export theme_html_color12="$(_html "${theme_shell[color12]}")"
+    echo export theme_html_color13="$(_html "${theme_shell[color13]}")"
+    echo export theme_html_color14="$(_html "${theme_shell[color14]}")"
+    echo export theme_html_color15="$(_html "${theme_shell[color15]}")"
+    echo export theme_html_foreground="$(_html "${theme_shell[foreground]}")"
+    echo export theme_html_background="$(_html "${theme_shell[background]}")"
+    # echo "#define theme_foreground_alt "$("_html ""$color_foreground_alt")""
 } > "$HOME/.theme.bashrc"
 
 # Write X resource defines

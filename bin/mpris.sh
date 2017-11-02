@@ -22,5 +22,5 @@ if [[ ${player_status,,} =~ .*playing.* ]]; then
 elif [[ ${player_status,,} =~ .*paused.* ]]; then
     echo "$prefix%{F${theme_html_foreground}}%{O9}$metadata %{F-}"
 else
-    echo "$prefix%{F${theme_html_foreground}}%{O9}•%{O1}•%{O1}•%{O1}•%{O1}•%{O1}•%{O1}•%{O1}•%{O1}•%{O1}•%{O1} %{F-}"
+    echo ""
 fi

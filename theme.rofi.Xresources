@@ -1,4 +1,4 @@
-! vim: set ft=xdefaplts:
+! vim: set ft=xdefaults:
 ! State:           ´bg´,             ´fg´,              ´bgalt´,         ´hlbg´,        ´hlfg´
 rofi.color-normal: theme_background, theme_foreground, theme_background, theme_color12, theme_background
 rofi.color-urgent: theme_background, theme_color9,     theme_background, theme_color9,  theme_background
