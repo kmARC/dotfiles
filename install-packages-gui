@@ -18,6 +18,7 @@ apt install -y \
     mpc \
     network-manager-openvpn-gnome \
     notification-daemon \
+    pandoc \
     redshift \
     rofi \
     rxvt-unicode-256color \

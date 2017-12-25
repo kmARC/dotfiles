@@ -12,6 +12,9 @@ killall gnome-keyring-daemon
 # Configure ssh-agent
 ssh-add -k
 
+# Start gnome keyring daemon with correct ssh sock
+gnome-keyring-daemon --login --damonize
+
 # X settings
 # compton &
 xrdb -load ~/.Xresources
@@ -23,12 +26,13 @@ xsetroot -cursor_name left_ptr
 # Daemons
 sxhkd &
 /usr/lib/notification-daemon/notification-daemon &
-sleep 5
+# sleep 5
 ~/bin/tray.sh &
-redshift &
+redshift -r &
 ~/bin/start-mopidy.sh &
 xcape -t 250 -e 'Caps_Lock=Escape'
 syndaemon -i 0.5 -K -R -d
+(cd "$HOME/Documents/Home"; python -m SimpleHTTPServer)
 
 # Autostarting daemons
 dex /etc/xdg/autostart/polkit-gnome-authentication-agent-1.desktop

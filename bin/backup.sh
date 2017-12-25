@@ -3,14 +3,16 @@
 set -e
 
 # DEST_LOCAL="/media/kmarc/Passport/Backup/"
-DEST_S3_BUCKET="backup-kmarc"
-DEST_S3_REGION="eu-central-1"
-DEST_S3_MOUNT="/tmp/backup/"
+# DEST_S3_BUCKET="backup-kmarc"
+# DEST_S3_REGION="eu-central-1"
+DEST="/media/kmarc/BACKUP/"
 EXCLUDES="/tmp/backup_excludes.txt"
 LOCK_FILE="/tmp/lock.backup"
 
 cat > "$EXCLUDES" <<EOF
 /home/kmarc/.cache
+/home/kmarc/.bitcoin/blocks
+/home/kmarc/.bitcoin/chainstate
 /home/kmarc/.m2
 /home/kmarc/.vagrant.d/boxes
 /home/kmarc/.vim/vimswap
@@ -34,9 +36,9 @@ if [ -f "$LOCK_FILE" ]; then
     exit -1
 fi
 
-mkdir -p "$DEST_S3_MOUNT"
+# mkdir -p "$DEST"
 
-goofys --region "$DEST_S3_REGION" "$DEST_S3_BUCKET" "$DEST_S3_MOUNT"
+# goofys --region "$DEST_S3_REGION" "$DEST_S3_BUCKET" "$DEST"
 
 touch "$LOCK_FILE"
 
@@ -53,25 +55,25 @@ echo "======"
 echo "    Backup script starting @ $(date)"
 echo "======"
 
-if [ -f "$DEST_S3_MOUNT"/README ]; then
+if [ -f "$DEST"/README ]; then
     borg create --verbose \
                 --progress \
                 --stats \
                 --compression lz4 \
                 --exclude-from "$EXCLUDES" \
-                "$DEST_S3_MOUNT"::'{now}' \
+                "$DEST"::'{now}' \
                 "$HOME"
 
     borg prune --keep-daily 7 \
                --keep-weekly 4 \
                --keep-monthly 12 \
                --keep-yearly 1 \
-               "$DEST_S3_MOUNT"
+               "$DEST"
 
-    borg list "$DEST_S3_MOUNT"
+    borg list "$DEST"
 fi
 
-fusermount -u "$DEST_S3_MOUNT"
+# fusermount -u "$DEST"
 
 rm -rf "$LOCK_FILE"
 

@@ -22,21 +22,21 @@ color06=${xrdb:theme_color6:#000000}
 color07=${xrdb:theme_color7:#000000}
 color08=${xrdb:theme_color8:#000000}
 color09=${xrdb:theme_color9:#000000}
-color10=${xrdb:theme_color11:#000000}
-color11=${xrdb:theme_color12:#000000}
-color12=${xrdb:theme_color13:#000000}
-color13=${xrdb:theme_color14:#000000}
-color14=${xrdb:theme_color15:#000000}
-color15=${xrdb:theme_color16:#000000}
+color10=${xrdb:theme_color10:#000000}
+color11=${xrdb:theme_color11:#000000}
+color12=${xrdb:theme_color12:#000000}
+color13=${xrdb:theme_color13:#000000}
+color14=${xrdb:theme_color14:#000000}
+color15=${xrdb:theme_color15:#000000}
 
-theme=${colors.color11}
+theme=${colors.color06}
 ; }}}
 
 [bar/kmarc]
 ; {{{
 width = ${file:/tmp/polybar-width.txt:1008}
-height = 24
-; monitor = ${file:/tmp/polybar-monitor.txt:primary}
+height = 28
+monitor = ${file:/tmp/polybar-monitor.txt}
 offset-x = 0
 offset-y = 0
 margin-left = 0
@@ -50,13 +50,13 @@ foreground = ${colors.foreground}
 line-size = 3
 module-margin = 2
 
-font-0 = "Roboto:size=8:Regular;2"
-font-1 = "FontAwesome:size=9;3"
+font-0 = "Roboto:size=9:Bold;2"
+font-1 = "FontAwesome:size=11;3"
 font-2 = "Noto Sans:size=11;3"
 
 modules-left = bspwm xwindow
 modules-center = xkeyboard filesystem memory cpu battery temperature
-modules-right = music backlight-acpi volume date
+modules-right = backlight-acpi volume date
 ; modules-right = music backlight-acpi volume date
 
 scroll-up = bspwm-desknext
@@ -134,7 +134,7 @@ label-urgent = %index%
 label-urgent-background = ${colors.theme}
 label-urgent-padding = 2
 
-label-empty = "%{O2}-%{O1}"
+label-empty = "%{O2}•%{O1}"
 label-empty-foreground = ${colors.foreground-alt}
 label-empty-padding = 2
 label-empty-underline= ${colors.background}
@@ -264,7 +264,7 @@ format-muted-foreground = ${colors.theme}
 [module/battery]
 ; {{{
 type = internal/battery
-battery = BAT1
+battery = BAT0
 adapter = ACAD
 full-at = 95
 

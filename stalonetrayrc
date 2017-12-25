@@ -2,9 +2,9 @@ kludges force_icons_size
 icon_size 12
 icon_gravity SW
 tint_level 255
-tint_color "#eeeeee"
+tint_color "#212121"
 fuzzy_edges 0
-slot_size 24
+slot_size 28
 grow_gravity W
 transparent true
 window_type dock

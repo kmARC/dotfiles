@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 # Courtesy of https://gist.github.com/briceburg/81d2c8d95a7cf4f61c0a
+# Modifications by kmarc
 
 # backlight brightness controls. use freely
 # and adjust sysfs directory if not on toshiba
@@ -22,6 +23,7 @@ usage()
     echo "$script up     : increases brightness"
     echo "$script down   : decreases brightness"
     echo "$script set #  : sets brightness to # (integer)"
+    echo "   min: $min max: $max"
     echo "----------------"
     echo
 
@@ -39,6 +41,8 @@ set_brightness()
     fi
 
     echo $level > $sysfs/brightness
+    sleep 0.1
+    echo $level > $sysfs/brightness
 }
 
 case "$1" in
@@ -55,6 +59,9 @@ case "$1" in
             usage "second argument must be an integer"
         fi
         set_brightness $2
+        ;;
+    max)
+        set_brightness $max
         ;;
     *)
         usage "invalid argument"

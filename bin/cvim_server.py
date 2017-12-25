@@ -10,6 +10,7 @@ By default, this script will spawn a gvim ("gvim -f"), but this action
 can be changed via the "vimcommand" cVimrc option
 '''
 
+
 import os
 import sys
 import shlex

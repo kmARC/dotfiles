@@ -6,7 +6,7 @@ killall -q polybar
 BUILTIN_MON=${BUILTIN_MON:-eDP-1}
 MONS=($(xrandr | grep -v $BUILTIN_MON | awk '/ connected /{print $1}'))
 MONS=(${MONS[@]} $(xrandr | grep $BUILTIN_MON | awk '/ connected /{print $1}'))
-POSITION=${1:-right-of}
+POSITION=${1:-left-of}
 
 # Prints largest resolution mode
 function largest_res {
@@ -37,6 +37,7 @@ if [[ ${#MONS[@]} == 1 || $POSITION == 'mirror' ]]; then
     # Select primary monitor
     PRI=${MONS[0]}
     MOD_PRI=$(largest_res "$PRI")
+
     # Detect mirroring setting and set up monitors
     if [[ ${#MONS[@]} == 2 ]]; then
         SEC=${MONS[1]}
@@ -46,6 +47,7 @@ if [[ ${#MONS[@]} == 1 || $POSITION == 'mirror' ]]; then
     fi
     echo "Setting up monitor: $PRI ($MOD_PRI)"
     xrandr --output "$PRI" --mode "$MOD_PRI" --primary
+
     # Move around desktops
     for desktop in 1 2 3 4 5 6 7 8 9 0; do
         bspc desktop $desktop -m "$PRI"
@@ -55,8 +57,12 @@ if [[ ${#MONS[@]} == 1 || $POSITION == 'mirror' ]]; then
                --output "$SEC" --mode "$MOD_SEC" --rate 60 --same-as "$PRI"
         bspc monitor "$SEC" -r
     fi
+
     # Fix desktop order
     bspc monitor "$PRI" -o 1 2 3 4 5 6 7 8 9 0
+
+    # Set brightness to 20%
+    "$HOME/bin/backlight.sh" set 210
 else
     # Choose primary and secondary
     PRI=${MONS[0]}
@@ -69,17 +75,13 @@ else
     echo "Setting up monitors: primary   - $PRI ($MOD_PRI)"
     echo "                     secondary - $SEC ($MOD_SEC)"
 
-    # Swap monitors if needed
-    if [[ $(bspc query -M --names | head -n1) != "$PRI" ]]; then
-        echo "sapping"
-        bspc monitor "$PRI" -s "$SEC"
-    fi
     # Enable second monitor
-    if ! is_primary $PRI; then
+    if ! is_primary "$PRI"; then
         xrandr --output "$PRI" --off
     fi
     xrandr --output "$SEC" --mode "$MOD_SEC" \
-           --output "$PRI" --mode "$MOD_PRI" --$POSITION "$SEC" --primary
+           --output "$PRI" --mode "$MOD_PRI" --"$POSITION" "$SEC" --primary
+
     # Move around desktops
     for desktop in 1 2 3 4 5; do
         bspc desktop $desktop -m "$PRI"
@@ -87,9 +89,13 @@ else
     for desktop in 6 7 8 9 0; do
         bspc desktop $desktop -m "$SEC"
     done
+
     # Fix desktop order
     bspc monitor "$PRI" -o 1 2 3 4 5
     bspc monitor "$SEC" -o 6 7 8 9 0
+
+    # Set brightness to maximum
+    "$HOME/bin/backlight.sh" max
 fi
 
 # Switch off not connected but still active monitors
@@ -99,7 +105,7 @@ for AMON in "${ACTIVE_MONS[@]}"; do
     for CMON in "${MONS[@]}"; do
         [[ "$CMON" == "$AMON" ]] && REMOVE=0
     done
-    [[ "$REMOVE" -eq 1 ]] && xrandr --output $AMON --off
+    [[ "$REMOVE" -eq 1 ]] && xrandr --output "$AMON" --off
 done
 
 for monitor in $PRI $SEC; do
@@ -111,7 +117,7 @@ for monitor in $PRI $SEC; do
 done
 
 # Add tray space on primary monitor
-bspc config -m "$PRI" top_padding 24
+bspc config -m "$PRI" top_padding 28
 # Remove tray space from secondary monitor
 bspc config -m "$SEC" top_padding 0
 
@@ -136,10 +142,10 @@ synclient TapButton3=2
 ~/bin/java_nonreparenting_wm_hack.sh
 
 # Help polybar by calculating it's desired width
-echo $(( $(xrandr | grep primary \
-                  | sed -r 's/^.*[^0-9]([0-9]+)x[0-9]+.*$/\1/g') )) \
+xrandr | grep primary \
+       | sed -r 's/^.*[^0-9]([0-9]+)x[0-9]+.*$/\1/g' \
     > /tmp/polybar-width.txt
-polybar -m | grep '+0+0' | cut -d':' -f1 \
+echo "$PRI" \
     > /tmp/polybar-monitor.txt
 
 bspc desktop -f "$CUR"
@@ -152,6 +158,5 @@ polybar -r kmarc >> /dev/null 2>&1 &
 wmname LG3D
 
 # Fix tray
-sleep 3 #FIXME waiting for polybar to start
 ~/bin/tray.sh
 

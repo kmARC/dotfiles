@@ -5,9 +5,9 @@ source "$HOME/.theme.bashrc"
 
 B=${theme_html_color0}ee # blank
 C=${theme_html_color0}99 # clear ish
-D=${theme_html_color12}99 # default
-T=${theme_html_color12}99 # text
-W=${theme_html_color9}99 # wrong
+D=${theme_html_color4}99 # default
+T=${theme_html_color4}99 # text
+W=${theme_html_color1}99 # wrong
 V=${theme_html_color3}99 # verifying
 
 i3lock                \
@@ -28,12 +28,11 @@ i3lock                \
 --keyhlcolor=$W       \
 --bshlcolor=$W        \
 \
---screen 0            \
---blur 8              \
+-B=12341234 \
 --clock               \
 --indicator           \
 --timestr="%H:%M:%S"  \
---datestr="%A, %m %Y" \
+--datestr="%Y-%m-%d, %A" \
 
 # --veriftext="Drinking verification can..."
 # --wrongtext="Nope!"
