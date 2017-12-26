@@ -17,22 +17,22 @@ gnome-keyring-daemon --login --damonize
 
 # X settings
 # compton &
-xrdb -load ~/.Xresources
+xrdb -load "$HOME/.Xresources"
 xsetroot -cursor_name left_ptr
 
 # Configure desktop
-~/bin/desktop.sh
+"$HOME/bin/desktop.sh"
+xset dpms 305 305 305
 
 # Daemons
-sxhkd &
+"$HOME/bin/start-mopidy.sh" &
 /usr/lib/notification-daemon/notification-daemon &
-# sleep 5
-~/bin/tray.sh &
 redshift -r &
-~/bin/start-mopidy.sh &
-xcape -t 250 -e 'Caps_Lock=Escape'
+sxhkd &
 syndaemon -i 0.5 -K -R -d
-(cd "$HOME/Documents/Home"; python -m SimpleHTTPServer)
+xautolock -locker "$HOME/bin/lock.sh" -time 5 -detectsleep &
+xcape -t 250 -e 'Caps_Lock=Escape'
+(cd "$HOME/Documents/Home" || exit; python -m SimpleHTTPServer) &
 
 # Autostarting daemons
 dex /etc/xdg/autostart/polkit-gnome-authentication-agent-1.desktop

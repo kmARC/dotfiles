@@ -1,9 +1,9 @@
 include "/usr/share/themes/Arc/gtk-2.0/gtkrc"
 
 style "user-font" {
-	font_name = "Roboto Regular 8"
+	font_name = "Roboto Regular 9"
 }
 widget_class "*" style "user-font"
 
-gtk-font-name="Roboto Regular 8"
+gtk-font-name="Roboto Regular 9"
 gtk-icon-theme-name = "elementary-xfce"

@@ -31,6 +31,7 @@ apt install -y \
     x11-apps \
     x11-utils \
     x11-xserver-utils \
+    xautolock \
     xcape \
     xdo \
     xinit \

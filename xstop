@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+kill -TERM $(pgrep -f "redshift -r")
+kill -TERM $(pgrep -f "python -m SimpleHTTPServer")
+kill -TERM $(pgrep -f "urxvtd -q -f")

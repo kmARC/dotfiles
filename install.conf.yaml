@@ -1,8 +1,10 @@
+---
+
 - clean: ['~']
 
 - defaults:
     link:
-        create: true
+      create: true
 
 - link:
     # Explicit paths
@@ -18,6 +20,8 @@
         path: config/polybar/config
     ~/.config/qt5ct/qt5ct.conf:
         path: config/qt5ct/qt5ct.conf
+    ~/.config/ranger/rc.conf:
+        path: config/ranger/rc.conf
     ~/.config/sxhkd/sxhkdrc:
         path: config/sxhkd/sxhkdrc
     ~/.fonts/dotbot:
@@ -42,14 +46,14 @@
     ~/.Xresources:
     ~/.xprofile:
     ~/.xstart:
+    ~/.xstop:
     ~/.xinitrc:
         path: xprofile
 
 - shell:
-  - [git submodule update --init --recursive, Installing/updating submodules]
-  - [~/.dotfiles/hooks/bash.sh, Setting up bashrc]
-  - [~/.dotfiles/hooks/font.sh SourceCodePro, Installing font]
-  - [~/.fzf/install --all, Installing FZF]
-  - [~/.tmux/plugins/tpm/bin/install_plugins, Installing new TMUX plugins]
-  # - [~/.tmux/plugins/tpm/bin/update_plugins all, Upgrading TMUX plugins]
-
+    - [git submodule update --init --recursive, Installing/updating submodules]
+    - [~/.dotfiles/hooks/bash.sh, Setting up bashrc]
+    - [~/.dotfiles/hooks/font.sh SourceCodePro, Installing font]
+    - [~/.fzf/install --all, Installing FZF]
+    - [~/.tmux/plugins/tpm/bin/install_plugins, Installing new TMUX plugins]
+    # - [~/.tmux/plugins/tpm/bin/update_plugins all, Upgrading TMUX plugins]

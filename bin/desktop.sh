@@ -158,5 +158,4 @@ polybar -r kmarc >> /dev/null 2>&1 &
 wmname LG3D
 
 # Fix tray
-~/bin/tray.sh
-
+~/bin/tray.sh &

@@ -31,13 +31,11 @@ POS_Y=${BAR_Y}
 GEOMETRY="1x1+${POS_X}+${POS_Y}"
 REGION="${BAR_X}x${BAR_Y}+${BAR_WIDTH}+${BAR_HEIGHT}"
 
-(
-    if [ -z "$PID_TRAY" ]; then
-        stalonetray --geometry "$GEOMETRY" &
-    else
-        xdotool windowmove "${WID_TRAY}" "${POS_X}" "${POS_Y}"
-    fi
-    ~/.local/src/hideIt.sh/hideIt.sh --name '^stalonetray$' -d top \
-                                     --peek 0 --region "$REGION" &
-) &
+if [ -z "$PID_TRAY" ]; then
+    stalonetray --geometry "$GEOMETRY"
+else
+    xdotool windowmove "${WID_TRAY}" "${POS_X}" "${POS_Y}"
+fi
 
+~/.local/src/hideIt.sh/hideIt.sh --name '^stalonetray$' -d top \
+                                 --peek 0 --region "$REGION"

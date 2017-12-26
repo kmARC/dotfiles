@@ -8,10 +8,11 @@ while read -r line; do
   key=${entry[0]}
   val=${entry[1]}
   echo "key: $key val: $val"
-  theme_shell[$key]=$val
   if [[ ${val:0:1} == '$' ]]; then
+    theme_shell[$key]=${theme_shell[${val:1}]}
     theme_xdefaults[$key]=${theme_xdefaults[${val:1}]}
   else
+    theme_shell[$key]=$val
     theme_xdefaults[$key]="#${val:0:2}${val:3:2}${val:6:2}"
   fi
 done < <(sed 's/=/ /' "$HOME/.base16_theme" | awk '/^color/{ print $1, $2 }' | sed 's/\"//g')
@@ -37,6 +38,12 @@ function _html() {
     echo export theme_color13=${theme_shell[color13]}
     echo export theme_color14=${theme_shell[color14]}
     echo export theme_color15=${theme_shell[color15]}
+    echo export theme_color16=${theme_shell[color16]}
+    echo export theme_color17=${theme_shell[color17]}
+    echo export theme_color18=${theme_shell[color18]}
+    echo export theme_color19=${theme_shell[color19]}
+    echo export theme_color20=${theme_shell[color20]}
+    echo export theme_color21=${theme_shell[color21]}
     echo export theme_foreground=${theme_shell[color_foreground]}
     echo export theme_background=${theme_shell[color_background]}
     # echo "#define theme_foreground_alt $(_html "$color_foreground_alt")"
@@ -57,6 +64,12 @@ function _html() {
     echo export theme_html_color13="$(_html "${theme_shell[color13]}")"
     echo export theme_html_color14="$(_html "${theme_shell[color14]}")"
     echo export theme_html_color15="$(_html "${theme_shell[color15]}")"
+    echo export theme_html_color16="$(_html "${theme_shell[color16]}")"
+    echo export theme_html_color17="$(_html "${theme_shell[color17]}")"
+    echo export theme_html_color18="$(_html "${theme_shell[color18]}")"
+    echo export theme_html_color19="$(_html "${theme_shell[color19]}")"
+    echo export theme_html_color20="$(_html "${theme_shell[color20]}")"
+    echo export theme_html_color21="$(_html "${theme_shell[color21]}")"
     echo export theme_html_foreground="$(_html "${theme_shell[color_foreground]}")"
     echo export theme_html_background="$(_html "${theme_shell[color_background]}")"
     # echo "#define theme_foreground_alt "$("_html ""$color_foreground_alt")""
@@ -80,6 +93,12 @@ function _html() {
     echo "theme_color13:    ${theme_xdefaults[color13]}"
     echo "theme_color14:    ${theme_xdefaults[color14]}"
     echo "theme_color15:    ${theme_xdefaults[color15]}"
+    echo "theme_color16:    ${theme_xdefaults[color16]}"
+    echo "theme_color17:    ${theme_xdefaults[color17]}"
+    echo "theme_color18:    ${theme_xdefaults[color18]}"
+    echo "theme_color19:    ${theme_xdefaults[color19]}"
+    echo "theme_color20:    ${theme_xdefaults[color20]}"
+    echo "theme_color21:    ${theme_xdefaults[color21]}"
     echo "theme_foreground: ${theme_xdefaults[color_foreground]}"
     echo "theme_background: ${theme_xdefaults[color_background]}"
     # echo "#define theme_foreground_alt $(_html "$color_foreground_alt")"
@@ -100,6 +119,12 @@ function _html() {
     echo "#define theme_color13    ${theme_xdefaults[color13]}"
     echo "#define theme_color14    ${theme_xdefaults[color14]}"
     echo "#define theme_color15    ${theme_xdefaults[color15]}"
+    echo "#define theme_color16    ${theme_xdefaults[color16]}"
+    echo "#define theme_color17    ${theme_xdefaults[color17]}"
+    echo "#define theme_color18    ${theme_xdefaults[color18]}"
+    echo "#define theme_color19    ${theme_xdefaults[color19]}"
+    echo "#define theme_color20    ${theme_xdefaults[color20]}"
+    echo "#define theme_color21    ${theme_xdefaults[color21]}"
     echo "#define theme_foreground ${theme_xdefaults[color_foreground]}"
     echo "#define theme_background ${theme_xdefaults[color_background]}"
     # echo "#define theme_foreground_alt $(_html "$color_foreground_alt")"

@@ -29,7 +29,7 @@ super + Escape
 
 # quit bspwm normally
 super + alt + Escape
-	bspc quit
+	~/.xstop; bspc quit
 
 # close and kill
 super + {_,shift + }w
