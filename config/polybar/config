@@ -36,7 +36,7 @@ theme=${colors.color06}
 ; {{{
 width = ${file:/tmp/polybar-width.txt:1008}
 height = 28
-monitor = ${file:/tmp/polybar-monitor.txt}
+monitor = ${file:/tmp/polybar-monitor.txt:eDP-1}
 offset-x = 0
 offset-y = 0
 margin-left = 0

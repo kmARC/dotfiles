@@ -44,7 +44,6 @@ Xcursor.theme: DMZ-Black
 
 ! Rxvt
 URxvt*borderLess:      0
-URxvt*borderColor:     color00
 URxvt*cutchars:        │
 URxvt*cursorBlink:     1
 URxvt*externalBorder:  0

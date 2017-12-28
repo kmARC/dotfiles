@@ -10,6 +10,10 @@ T=${theme_html_color4}99 # text
 W=${theme_html_color1}99 # wrong
 V=${theme_html_color3}99 # verifying
 
+xset dpms 5 5 5
+
+(sleep 1; xset dpms force off) &
+
 i3lock                \
 --insidevercolor=$C   \
 --ringvercolor=$V     \
@@ -33,6 +37,10 @@ i3lock                \
 --indicator           \
 --timestr="%H:%M:%S"  \
 --datestr="%Y-%m-%d, %A" \
+\
+--nofork
+
+xset dpms 300 300 300
 
 # --veriftext="Drinking verification can..."
 # --wrongtext="Nope!"

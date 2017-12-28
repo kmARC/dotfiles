@@ -4,8 +4,8 @@
 killall -q polybar
 
 BUILTIN_MON=${BUILTIN_MON:-eDP-1}
-MONS=($(xrandr | grep -v $BUILTIN_MON | awk '/ connected /{print $1}'))
-MONS=(${MONS[@]} $(xrandr | grep $BUILTIN_MON | awk '/ connected /{print $1}'))
+MONS=($(xrandr | grep $BUILTIN_MON | awk '/ connected /{print $1}'))
+MONS=(${MONS[@]} $(xrandr | grep -v $BUILTIN_MON | awk '/ connected /{print $1}'))
 POSITION=${1:-left-of}
 
 # Prints largest resolution mode
@@ -63,10 +63,14 @@ if [[ ${#MONS[@]} == 1 || $POSITION == 'mirror' ]]; then
 
     # Set brightness to 20%
     "$HOME/bin/backlight.sh" set 210
+
+    # Save primary monitor for polybar
+    # polybar -m | head -n1 | awk -F':' '{ print $1 }' > /tmp/polybar-monitor.txt
+    echo "$PRI" > /tmp/polybar-monitor.txt
 else
     # Choose primary and secondary
-    PRI=${MONS[0]}
-    SEC=${MONS[1]}
+    PRI=${MONS[1]}
+    SEC=${MONS[0]}
 
     # Detect resolutions
     MOD_PRI=$(largest_res "$PRI")
@@ -96,6 +100,9 @@ else
 
     # Set brightness to maximum
     "$HOME/bin/backlight.sh" max
+
+    # Save primary monitor for polybar
+    echo "$PRI" > /tmp/polybar-monitor.txt
 fi
 
 # Switch off not connected but still active monitors
@@ -145,8 +152,6 @@ synclient TapButton3=2
 xrandr | grep primary \
        | sed -r 's/^.*[^0-9]([0-9]+)x[0-9]+.*$/\1/g' \
     > /tmp/polybar-width.txt
-echo "$PRI" \
-    > /tmp/polybar-monitor.txt
 
 bspc desktop -f "$CUR"
 

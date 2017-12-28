@@ -1,0 +1,1 @@
+KERNEL=="card0-DP-4", ACTION=="remove", SUBSYSTEM=="drm", ENV{DISPLAY}=":0", ENV{XAUTHORITY}="/home/kmarc/.Xauthority", RUN+="/home/kmarc/bin/udev-desktop.sh"
