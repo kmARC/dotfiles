@@ -26,6 +26,8 @@
         path: config/sxhkd/sxhkdrc
     ~/.fonts/dotbot:
         path: fonts/dotbot
+    ~/.local/src/rxvt:
+        path: local/src/rxvt
     ~/.tmux/plugins/tpm:
         path: tmux/plugins/tpm
     ~/bin:

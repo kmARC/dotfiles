@@ -28,7 +28,7 @@ Xcursor.theme: DMZ-Black
 *xterm*faceSize6:            20.0
 *xterm*internalBorder:       0
 *xterm*metaSendsEscape:      true
-*xterm*renderFont:           true
+/* *xterm*renderFont:           true */
 *xterm*scaleHeight:          1.05
 *xterm*termName:             xterm-256color
 

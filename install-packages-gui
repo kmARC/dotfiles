@@ -58,6 +58,14 @@ apt install -y \
     libxkbcommon-dev \
     libxkbcommon-x11-dev
 
+# Debian packaging
+apt install -y \
+    devscripts
+
+# RXVT mouse patch
+apt build-dep -y \
+    rxvt-unicode-256color
+
 # PPA
 add-apt-repository -y -u ppa:nilarimogard/webupd8
 apt install -y \
@@ -68,4 +76,3 @@ apt install -y \
 add-apt-repository -y -u ppa:bitcoin/bitcoin
 apt install -y \
     bitcoin-qt
-
