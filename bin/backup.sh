@@ -1,26 +1,35 @@
 #!/usr/bin/env bash
 
-set -e
+# set -e
 
-# DEST_LOCAL="/media/kmarc/Passport/Backup/"
-# DEST_S3_BUCKET="backup-kmarc"
-# DEST_S3_REGION="eu-central-1"
-DEST="/media/kmarc/BACKUP/"
+DEST_S3_BUCKET="$USER-backup-2"
+DEST="${DEST:-/media/$USER/Backup/Backup}"
 EXCLUDES="/tmp/backup_excludes.txt"
 LOCK_FILE="/tmp/lock.backup"
 
+if [ ! -d "$DEST" ]; then
+    echo "Destination directory ($DEST) not available."
+    echo "Exiting."
+    exit -1
+fi
+
 cat > "$EXCLUDES" <<EOF
-/home/kmarc/.cache
-/home/kmarc/.bitcoin/blocks
-/home/kmarc/.bitcoin/chainstate
-/home/kmarc/.m2
-/home/kmarc/.vagrant.d/boxes
-/home/kmarc/.vim/vimswap
-/home/kmarc/.vim/vimundo
-/home/kmarc/.vim/vimbackup
-/home/kmarc/Downloads
-/home/kmarc/Torrents
-/home/kmarc/VirtualBox VMs
+$DEST
+$HOME/.cache
+$HOME/.bitcoin/blocks
+$HOME/.bitcoin/chainstate
+$HOME/.m2
+$HOME/.npm
+$HOME/.vagrant.d/boxes
+$HOME/.vim/vimswap
+$HOME/.vim/vimundo
+$HOME/.vim/vimbackup
+$HOME/Downloads
+$HOME/Torrents
+$HOME/VirtualBox VMs
+$HOME/vmware
+$HOME/.local/share/Trash
+$HOME/.local/share/Steam/steamapps
 **/*.bak
 **/*.ova
 **/*.pyc
@@ -40,8 +49,6 @@ fi
 
 # goofys --region "$DEST_S3_REGION" "$DEST_S3_BUCKET" "$DEST"
 
-touch "$LOCK_FILE"
-
 BORG_PASSPHRASE=$(secret-tool lookup type borg_passphrase)
 export BORG_PASSPHRASE
 
@@ -51,6 +58,7 @@ if [ -z "$BORG_PASSPHRASE" ]; then
     exit -1
 fi
 
+touch "$LOCK_FILE"
 echo "======"
 echo "    Backup script starting @ $(date)"
 echo "======"
@@ -59,7 +67,7 @@ if [ -f "$DEST"/README ]; then
     borg create --verbose \
                 --progress \
                 --stats \
-                --compression lz4 \
+                --compression auto,lzma \
                 --exclude-from "$EXCLUDES" \
                 "$DEST"::'{now}' \
                 "$HOME"
@@ -68,14 +76,19 @@ if [ -f "$DEST"/README ]; then
                --keep-weekly 4 \
                --keep-monthly 12 \
                --keep-yearly 1 \
+               --save-space \
                "$DEST"
 
     borg list "$DEST"
 fi
 
 # fusermount -u "$DEST"
-
 rm -rf "$LOCK_FILE"
+
+echo
+echo "Sync to s3:"
+echo "    aws s3 sync ${DEST} ${DEST_S3_BUCKET}"
+echo
 
 echo "======"
 echo "    Backup script exiting @ $(date)."
