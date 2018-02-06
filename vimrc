@@ -1,12 +1,14 @@
 call plug#begin('~/.vim/plugged')
 "--- Tools ---
-Plug 'junegunn/fzf'             , {'dir': '~/.fzf', 'frozen': 1 }
+Plug 'gcmt/taboo.vim'
+Plug 'junegunn/fzf'             , {'dir': '~/.fzf', 'do': './install --all'}
 Plug 'junegunn/fzf.vim'
 Plug 'scrooloose/nerdtree'      , {'on': ['NERDTreeToggle', 'NERDTreeFind'] }
 Plug 'tpope/vim-unimpaired'
-Plug 'tpope/vim-rsi'
+" Plug 'tpope/vim-rsi' " Bugs with macros :-(
 Plug 'tpope/vim-obsession'
 "--- Git ---
+Plug 'airblade/vim-gitgutter'
 Plug 'mattn/gist-vim'
 Plug 'shumphrey/fugitive-gitlab.vim'
 Plug 'tpope/vim-fugitive'
@@ -22,7 +24,8 @@ Plug 'michaeljsmith/vim-indent-object'
 Plug 'tpope/vim-surround'
 "--- Look&Feel ---
 Plug 'itchyny/lightline.vim'
-Plug 'NLKNguyen/papercolor-theme'
+Plug 'daviesjamie/vim-base16-lightline'
+Plug 'chriskempson/base16-vim'
 "--- Programming ---
 Plug 'SirVer/ultisnips'
 Plug 'editorconfig/editorconfig-vim'
@@ -30,7 +33,7 @@ Plug 'honza/vim-snippets'
 Plug 'majutsushi/tagbar'
 Plug 'maralla/completor.vim'
 Plug 'tpope/vim-commentary'
-Plug 'w0rp/ale', { 'commit': '2f5b94' } " TODO: wait until https://github.com/w0rp/ale/issues/491 is fixed
+Plug 'w0rp/ale'
 "--- Markdown ---
 Plug 'plasticboy/vim-markdown'  , {'for': 'markdown'}
 Plug 'shime/vim-livedown'       , {'for': 'markdown'}
@@ -38,11 +41,12 @@ Plug 'shime/vim-livedown'       , {'for': 'markdown'}
 Plug 'mattn/emmet-vim'          , {'for': ['html', '*jsx']}
 Plug 'othree/html5.vim'         , {'for': ['html', '*jsx']}
 "--- CSS ---
-Plug 'ap/vim-css-color'         , {'for': 'css'}
 Plug 'groenewege/vim-less'      , {'for': 'css'}
 "--- Dependencies
 Plug 'mattn/webapi-vim'
 Plug 'tpope/vim-repeat'
+"--- Java ---
+Plug 'artur-shaik/vim-javacomplete2', {'for': 'java' }
 "--- JavaScript ---
 Plug 'moll/vim-node'            , {'for': 'javascript*'}
 Plug 'heavenshell/vim-jsdoc'    , {'for': 'javascript*'}
