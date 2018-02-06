@@ -114,21 +114,31 @@ set wildcharm=<C-z>
 set grepprg=ag\ --vimgrep\ $*
 set foldlevel=0
 set noshowmode
+set signcolumn=yes
 
 "--- Look & Feel ----
-set background=light
-silent! colorscheme PaperColor
-hi VertSplit ctermbg=231 ctermfg=231 cterm=bold
+let base16colorspace=256
+set background=dark
+silent! source $HOME/.vimrc_background
+
+highlight VertSplit ctermbg=00 ctermfg=18
+set fillchars+=vert:\│,stlnc:-
+
+highlight link ALEWarningSign ToDo
+highlight link ALEErrorSign DiffDelete
 
 "--- Mappings ----
 cmap w!!                   w !sudo tee > /dev/null %
 nnoremap <C-e>             2<C-e>
 nnoremap <C-y>             2<C-y>
-nnoremap <C-p>             :Files<CR>
+nnoremap <C-p>             :GFiles<CR>
+nnoremap <C-S-p>           :Files<CR>
 nnoremap <expr> <F7>       expand('%') == '' ? ":NERDTreeToggle<CR>" : ":NERDTreeFind<CR>"
 nnoremap <space>           :ls<CR>:sbuffer 
 nnoremap <F8>              :TagbarToggle<CR>
 nnoremap <F9>              :lclose<CR>:cclose<CR>:pclose<CR>
+nnoremap {               :bn!<CR>
+nnoremap }               :bp!<CR>
 nnoremap <leader>fa        :call fzf#vim#grep('ag                            --nogroup --column --color "(?=.)"', 1, {'options':'--exact'})<CR>
 nnoremap <leader>fA        :call fzf#vim#grep('ag -G <C-r>=expand("%:e")<CR> --nogroup --column --color "(?=.)"', 1, {'options':'--exact --query=<C-r><C-w> +i'})<CR>
 nnoremap <leader>ft        :call fzf#vim#tags('',             {'options':'--exact -i'})<CR>
@@ -138,9 +148,9 @@ nnoremap <leader>fw        :Windows<CR>
 nnoremap <leader>w         :call BufferClose()<CR>
 nnoremap <leader>W         :call BufferCloseAll()<CR>
 nnoremap <leader>z         :call ToggleFold()<CR>
-vnoremap <leader>t,        :Tabularize /,\zs/l0l1<CR>
-vnoremap <leader>t:        :Tabularize /:\zs/l0l1<CR>
-vnoremap <leader>t=        :Tabularize /=\+/l1c1<CR>
+vnoremap <leader>t,        :Tabularize /^[^,]*\zs/l0l1<CR>
+vnoremap <leader>t:        :Tabularize /^[^:]*\zs/l0l1<CR>
+vnoremap <leader>t=        :Tabularize /^[^=]*\zs/l1c1<CR>
 vnoremap <leader>t<Space>  :Tabularize /\S\+/l1l0<CR>
 vnoremap <leader>t<bar>    :Tabularize /<bar>\+/l1c1<CR>
 nnoremap <leader>1         1gt
@@ -188,26 +198,28 @@ augroup vimrc
   autocmd FileType css,less,scss                  setlocal sw=2 sts=2 ts=2
   autocmd FileType terraform                      setlocal sw=2 sts=2 ts=2 commentstring=#%s
   autocmd FileType plaintex,text,markdown         setlocal tw=80 formatprg=par\ -jw80
+  "----- folding
+  autocmd FileType python                         setlocal foldmethod=indent foldnestmax=2 foldcolumn=2 colorcolumn=101 textwidth=100
   "----- filetypes
   autocmd BufRead,BufNewFile Vagrantfile          setlocal filetype=ruby
   autocmd BufRead,BufNewFile *.tsx                setlocal filetype=typescript.jsx
   autocmd FileType ansible                        setlocal filetype=ansible.yaml
   "----- marks
-  autocmd BufWrite *.css,*.less,*.scss            normal! mC
-  autocmd BufWrite *.html                         normal! mH
-  autocmd BufWrite *.js,*.jsx,*.ts,*.tsx          normal! mJ
-  autocmd BufWrite *.md                           normal! mM
-  autocmd BufWrite *.py                           normal! mP
-  autocmd BufWrite *.sh                           normal! mS
-  autocmd BufWrite *.vim,vimrc                    normal! mV
-  autocmd BufWrite /home/kmarc/Documents/Home.md  silent !pandoc -o /home/kmarc/Documents/Home.html -c /home/kmarc/Documents/github-pandoc.css %
+  autocmd BufUnload *.css,*.less,*.scss            normal! mC
+  autocmd BufUnload *.html                         normal! mH
+  autocmd BufUnload *.js,*.jsx,*.ts,*.tsx          normal! mJ
+  autocmd BufUnload *.md                           normal! mM
+  autocmd BufUnload *.py                           normal! mP
+  autocmd BufUnload *.sh                           normal! mS
+  autocmd BufUnload *.yml                          normal! mY
+  autocmd BufUnload *.vim,vimrc                    normal! mV
   "----- buffer/window opts
   autocmd WinEnter *                              if &l:buftype == "" | setlocal nu rnu
   autocmd WinEnter *                              set cursorline
-  autocmd WinEnter *                              set colorcolumn=81
+  " autocmd WinEnter *                              set colorcolumn=81
   autocmd WinLeave *                              if &l:buftype == "" | setlocal nu nornu
   autocmd WinLeave *                              set nocursorline
-  autocmd WinLeave *                              set colorcolumn=0
+  " autocmd WinLeave *                              set colorcolumn=0
   autocmd WinEnter *                              call ExitIfNoListedBufsDisplayed()
   autocmd FileType nerdtree                       nnoremap <buffer> <F7> :NERDTreeToggle<CR>
   autocmd BufWinEnter,WinEnter *vim/**/doc/*      wincmd L | 80 wincmd | | setlocal winfixwidth
@@ -215,7 +227,12 @@ augroup vimrc
   autocmd BufReadPost *.git/index                 set nobuflisted
   "----- startup
   autocmd VimEnter * call CheckProject()
+  "----- misc
+  autocmd BufWrite /home/kmarc/Documents/Home/index.md  silent !pandoc -o /home/kmarc/Documents/Home/index.html -c github-pandoc.css %
+  autocmd FileType java setlocal omnifunc=javacomplete#Complete
+  autocmd InsertEnter *.java call UnmapJcMappings()
 augroup end
+
 
 "--- Functions --- {{{
 let s:fcw=2
@@ -294,35 +311,45 @@ function! CheckProject()
     endif
 endfunction
 
+function! UnmapJcMappings()
+  silent! iunmap <buffer> <C-J>I
+  silent! iunmap <buffer> <C-j>R
+  silent! iunmap <buffer> <C-j>i
+  silent! iunmap <buffer> <C-j>ii
+  silent! iunmap <buffer> <C-j>jM
+  silent! iunmap <buffer> <C-j>s
+  silent! iunmap <buffer> <C-j>g
+  silent! iunmap <buffer> <C-j>a
+endfunction
 " }}}
 
 "--- Plugin configurations ---
-let NERDTreeQuitOnOpen = 1
 let NERDTreeRespectWildIgnore = 1
 let delimitMate_expand_cr = 0
 let g:EditorConfig_exclude_patterns = ['fugitive://.*']
-let g:UltiSnipsEditSplit="vertical"
-let g:UltiSnipsExpandTrigger="<c-j>"
-let g:UltiSnipsListSnippets="<c-h>"
+let g:UltiSnipsEditSplit = "vertical"
+let g:UltiSnipsExpandTrigger = "<c-j>"
+let g:UltiSnipsListSnippets = "<c-h>"
 let g:ale_sh_shellcheck_options = '-x'
+let g:completor_java_omni_trigger = '(\w+\.)$'
 let g:completor_refresh_always = 0
 let g:fugitive_gitlab_domains = [ 'https://gitlab.tools.in.pan-net.eu/' ]
 let g:fzf_buffers_jump = 1
 let g:fzf_files_options = '--exact'
 let g:fzf_tags_command = '(git ls-files || ag -l) | ctags -L-'
 let g:jsdoc_enable_es6 = 1
-let g:lightline = { 'colorscheme': 'PaperColor' }
-let g:netrw_bufsettings="rnu"
-let g:netrw_home=expand("~/.vim/misc")
-let g:netrw_liststyle=3
+let g:lightline = { 'colorscheme': 'base16' , 'inactive': {'left':[['mode'], ['filename']]}}
+let g:netrw_bufsettings = "rnu"
+let g:netrw_home = expand("~/.vim/misc")
+let g:netrw_liststyle = 3
 let g:slime_paste_file = tempname()
 let g:slime_target = "tmux"
-let g:tagbar_autoclose=1
-let g:tagbar_autofocus=1
+let g:taboo_renamed_tab_format =' [%N] %l%m |'
+let g:taboo_tab_format = ' [%N] %f%m |'
+let g:tagbar_autoclose = 1
+let g:tagbar_autofocus = 1
 let g:terraform_align = 1
-let g:vim_markdown_folding_disabled=1
-let g:vimwiki_folding = 'list'
-let g:vimwiki_list = [{'path': '~/Documents/', 'syntax': 'markdown', 'ext': '.md', 'automatic_nested_syntaxes': 1, 'auto_toc': 1, 'index': 'Home'}]
+let g:vim_markdown_folding_disabled = 1
 
 set modeline
 set exrc
