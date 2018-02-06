@@ -75,7 +75,6 @@ set smartindent
 set nowrap
 set linebreak
 set backspace=indent,eol,start
-set showbreak=↵
 set pastetoggle=<F12>
 set ignorecase
 set smartcase
@@ -84,7 +83,8 @@ set hlsearch
 set scrolloff=3
 set cursorline
 set list
-set listchars=trail:·,tab:»\ "
+let &listchars="trail:\u00b7,tab:\u00bb ,nbsp:\u00b7"
+let &showbreak="\u21b5"
 set hidden
 set wildmenu
 set backup
