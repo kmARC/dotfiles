@@ -1,3 +1,11 @@
+snippet bec "Become true" b
+become: ${0:true}
+endsnippet
+
+snippet tags "Tags" b
+tags: [$0]
+endsnippet
+
 snippet name "Generic play definition" b
 - name: $1
 	${2:module_name}:
@@ -42,7 +50,7 @@ snippet apti "Ansible apt module with_items" b
 endsnippet
 
 snippet template "Ansible template module" b
-- name: Copy template $1
+- name: Copy template $2
 	template:
 		src: ${2}.j2
 		dest: ${3}$2
