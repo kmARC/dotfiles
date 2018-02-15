@@ -9,32 +9,15 @@
 
 [colors]
 ; {{{
-foreground=${xrdb:theme_foreground:#000000}
-foreground-alt=${xrdb:theme_foreground:#000000}
-background=${xrdb:theme_background:#000000}
-color00=${xrdb:theme_color0:#000000}
-color01=${xrdb:theme_color1:#000000}
-color02=${xrdb:theme_color2:#000000}
-color03=${xrdb:theme_color3:#000000}
-color04=${xrdb:theme_color4:#000000}
-color05=${xrdb:theme_color5:#000000}
-color06=${xrdb:theme_color6:#000000}
-color07=${xrdb:theme_color7:#000000}
-color08=${xrdb:theme_color8:#000000}
-color09=${xrdb:theme_color9:#000000}
-color10=${xrdb:theme_color10:#000000}
-color11=${xrdb:theme_color11:#000000}
-color12=${xrdb:theme_color12:#000000}
-color13=${xrdb:theme_color13:#000000}
-color14=${xrdb:theme_color14:#000000}
-color15=${xrdb:theme_color15:#000000}
+foreground=${xrdb:base05:#ffffff}
+foreground-alt=${xrdb:base05:#ffffff}
+background=${xrdb:base00_ahtml:#000000}
 
-theme=${colors.color06}
+theme=${xrdb:theme:#ff0000}
 ; }}}
 
 [bar/kmarc]
 ; {{{
-width = ${file:/tmp/polybar-width.txt:1008}
 height = 28
 monitor = ${file:/tmp/polybar-monitor.txt:eDP-1}
 offset-x = 0
@@ -50,9 +33,8 @@ foreground = ${colors.foreground}
 line-size = 3
 module-margin = 2
 
-font-0 = "Roboto:size=9:Bold;2"
-font-1 = "FontAwesome:size=11;3"
-font-2 = "Noto Sans:size=11;3"
+font-0 = "Roboto:size=9:style=Bold;2"
+font-1 = "MaterialIcons:size=14;4"
 
 modules-left = bspwm xwindow
 modules-center = xkeyboard filesystem memory cpu battery temperature
@@ -62,7 +44,6 @@ modules-right = backlight-acpi volume date
 scroll-up = bspwm-desknext
 scroll-down = bspwm-deskprev
 
-border-top = ${colors.background}
 padding = 3
 ; }}}
 
@@ -80,7 +61,7 @@ exec = ~/bin/mpris.sh
 ; {{{
 type = internal/xwindow
 label = %title:0:60:...%
-format-prefix = %{O5}
+format-prefix = %{O5}
 format-prefix-foreground = ${colors.theme}
 ; }}}
 
@@ -89,10 +70,10 @@ format-prefix-foreground = ${colors.theme}
 type = internal/xkeyboard
 blacklist-0 = num lock
 
-format-prefix = "  "
+format-prefix = 
 format-prefix-foreground = ${colors.theme}
 
-label-layout = %layout%
+label-layout = %layout:4%
 
 label-indicator-margin = 1
 ; }}}
@@ -104,9 +85,9 @@ interval = 25
 
 mount-0 = /
 
-format-mounted-prefix = "%{A3:x-terminal-emulator -ls -e bash -ci 'dfc; read' &:}  "
-format-mounted-suffix = "%{A}"
-label-mounted = %percentage_used%%
+format-mounted-prefix = %{A3:x-terminal-emulator -ls -e bash -ci 'dfc -f; read' &:} 
+format-mounted-suffix = %{A}
+label-mounted = %percentage_used:4%%
 format-mounted-prefix-foreground = ${colors.theme}
 ; }}}
 
@@ -116,14 +97,13 @@ type = internal/bspwm
 
 format = <label-monitor> <label-state> <label-mode>
 
-label-monitor = 
+label-monitor = 
 label-monitor-foreground = ${colors.theme}
 
 pin-workspaces = false
 
 label-focused = %index%
 label-focused-foreground = ${colors.theme}
-label-focused-underline= ${colors.theme}
 label-focused-padding = 2
 
 label-occupied = %index%
@@ -137,7 +117,6 @@ label-urgent-padding = 2
 label-empty = "%{O2}•%{O1}"
 label-empty-foreground = ${colors.foreground-alt}
 label-empty-padding = 2
-label-empty-underline= ${colors.background}
 ; }}}
 
 [module/mpd]
@@ -182,10 +161,10 @@ toggle-off-foreground = ${colors.foreground}
 type = internal/xbacklight
 
 format = <label>
-label = %{A4:~/bin/backlight.sh up:}%{A5:~/bin/backlight.sh down:}%percentage%%
+label = %{A4:~/bin/backlight.sh up:}%{A5:~/bin/backlight.sh down:}%percentage:4%%
 format-label-foreground = ${colors.foreground}
 
-format-prefix = %{O4}
+format-prefix = 
 format-prefix-foreground = ${colors.theme}
 
 format-suffix = %{A}%{A}
@@ -202,30 +181,21 @@ card = intel_backlight
 ; {{{
 type = internal/cpu
 interval = 2
-format-prefix = "%{A3:x-terminal-emulator -ls -e bash -ci 'htop' &:}  "
+format-prefix = %{A3:x-terminal-emulator -ls -e bash -ci 'htop' &:} 
 format-prefix-foreground = ${colors.theme}
-format-suffix = "%{A}"
-label = %percentage:2:2%%
+format-suffix = %{A}
+label = %percentage:4:2%%
 
 format = <label>
-
-ramp-load-0 = ▁
-ramp-load-1 = ▂
-ramp-load-2 = ▃
-ramp-load-3 = ▄
-ramp-load-4 = ▅
-ramp-load-5 = ▆
-ramp-load-6 = ▇
-ramp-load-7 = █
 ; }}}
 
 [module/memory]
 ; {{{
 type = internal/memory
 interval = 2
-format-prefix = "  "
+format-prefix = 
 format-prefix-foreground = ${colors.theme}
-label = %percentage_used%%
+label = %percentage_used:4%%
 ; }}}
 
 [module/date]
@@ -239,7 +209,7 @@ date-alt = " %Y-%m-%d"
 time = %H:%M
 time-alt = %H:%M
 
-format-prefix = 
+format-prefix = 
 format-prefix-foreground = ${colors.theme}
 
 label = %date% %time%
@@ -251,13 +221,13 @@ type = internal/volume
 
 format-volume =  <label-volume>
 
-label-volume = %percentage:4%%
+label-volume = %{A3:pavucontrol:}%percentage:4%%%{A}
 label-volume-foreground = ${colors.foreground}
-format-volume-prefix = 
+format-volume-prefix = %{A3:pavucontrol:}%{A}
 format-volume-foreground = ${colors.theme}
 label-muted = %percentage:4%%
 label-muted-foreground = ${colors.foreground}
-format-muted-prefix = %{O6}
+format-muted-prefix = 
 format-muted-foreground = ${colors.theme}
 ; }}}
 
@@ -266,32 +236,18 @@ format-muted-foreground = ${colors.theme}
 type = internal/battery
 battery = BAT0
 adapter = ACAD
-full-at = 95
 
-format-charging = <animation-charging> <label-charging>
+format-charging = <label-charging>
+format-charging-prefix = %{O4}
+format-charging-prefix-foreground = ${colors.theme}
 
-format-discharging = <ramp-capacity> <label-discharging>
-format-discharging-prefix = "%{A3:x-terminal-emulator -ls -e bash -ci 'sudo powertop' &:}"
-format-discharging-foreground = ${colors.theme}
-format-discharging-suffix = "%{A}"
+format-discharging = <label-discharging>
+format-discharging-prefix = %{A3:x-terminal-emulator -ls -e bash -ci 'sudo powertop' &:} %{O4}
+format-discharging-prefix-foreground = ${colors.theme}
+format-discharging-suffix = %{A}
 
-format-full-prefix = "  "
+format-full-prefix = %{O4}
 format-full-prefix-foreground = ${colors.theme}
-
-ramp-capacity-0 = "  "
-ramp-capacity-1 = "  "
-ramp-capacity-2 = "  "
-ramp-capacity-3 = "  "
-ramp-capacity-4 = "  "
-ramp-capacity-foreground = ${colors.theme}
-
-animation-charging-0 = "  "
-animation-charging-1 = "  "
-animation-charging-2 = "  "
-animation-charging-3 = "  "
-animation-charging-4 = "  "
-animation-charging-foreground = ${colors.theme}
-animation-charging-framerate = 750
 ; }}}
 
 [module/temperature]
@@ -307,9 +263,9 @@ label = %temperature%
 label-warn = %temperature%
 label-warn-foreground = ${colors.theme}
 
-ramp-0 = "  "
-ramp-1 = "  "
-ramp-2 = "  "
+ramp-0 = "  "
+; ramp-1 = "  "
+; ramp-2 = "  "
 ramp-foreground = ${colors.theme}
 ; }}}
 

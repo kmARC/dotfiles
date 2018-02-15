@@ -1,0 +1,11 @@
+[Unit]
+Description=Monitor hotplug
+
+[Service]
+Type=simple
+RemainAfterExit=no
+User=kmarc
+ExecStart=/home/kmarc/bin/kmarc-monitor.sh
+
+[Install]
+WantedBy=multi-user.target

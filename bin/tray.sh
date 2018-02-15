@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 
-PID_HIDEIT=$(pgrep -f bash.*hideIt)
+PID_HIDEIT=($(pgrep -f bash.*hideIt))
 PID_TRAY=$(pgrep stalonetray)
 WID_TRAY=$(xwininfo -root -tree \
            | awk '/"stalonetray"/{ print $1 }')
 
-for p in ${PID_HIDEIT[@]}; do
+for p in "${PID_HIDEIT[@]}"; do
     kill "$p"
 done
 
@@ -29,10 +29,10 @@ BAR_Y=${VALUES[3]}
 POS_X=$((BAR_WIDTH / 2 + BAR_X + 190))
 POS_Y=${BAR_Y}
 GEOMETRY="1x1+${POS_X}+${POS_Y}"
-REGION="${BAR_X}x${BAR_Y}+${BAR_WIDTH}+${BAR_HEIGHT}"
+REGION="${POS_X}x${POS_Y}+200+${BAR_HEIGHT}"
 
 if [ -z "$PID_TRAY" ]; then
-    stalonetray --geometry "$GEOMETRY"
+    stalonetray --geometry "$GEOMETRY" &
 else
     xdotool windowmove "${WID_TRAY}" "${POS_X}" "${POS_Y}"
 fi

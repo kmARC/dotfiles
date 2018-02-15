@@ -1,8 +1,5 @@
 #!/usr/bin/env bash
 
-# Kill panel while reconfiguring monitors
-killall -q polybar
-
 BUILTIN_MON=${BUILTIN_MON:-eDP-1}
 MONS=($(xrandr | grep $BUILTIN_MON | awk '/ connected /{print $1}'))
 MONS=(${MONS[@]} $(xrandr | grep -v $BUILTIN_MON | awk '/ connected /{print $1}'))
@@ -156,8 +153,10 @@ xrandr | grep primary \
 bspc desktop -f "$CUR"
 
 # Spawn panel
-while pgrep -x polybar >/dev/null; do sleep 0.5; done
-polybar -r kmarc >> /dev/null 2>&1 &
+if ! pgrep -x polybar >/dev/null; then
+  polybar -r kmarc &
+fi
+touch -m "$HOME"/.config/polybar/config
 
 # Setting WM name to something java compatible
 wmname LG3D
