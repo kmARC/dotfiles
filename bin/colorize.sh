@@ -1,143 +1,144 @@
 #!/usr/bin/env bash
 
-declare -A theme_shell
-declare -A theme_xdefaults
+##############
+#  Settings  #
+##############
+# Alpha level determines transparency.  It's  a  linear  between  0  (completely
+# tranclucent) and 255 (completely opaque)
+ALPHA_LEVEL=180
 
-while read -r line; do
-  entry=( $line )
-  key=${entry[0]}
-  val=${entry[1]}
-  echo "key: $key val: $val"
-  if [[ ${val:0:1} == '$' ]]; then
-    theme_shell[$key]=${theme_shell[${val:1}]}
-    theme_xdefaults[$key]=${theme_xdefaults[${val:1}]}
-  else
-    theme_shell[$key]=$val
-    theme_xdefaults[$key]="#${val:0:2}${val:3:2}${val:6:2}"
-  fi
-done < <(sed 's/=/ /' "$HOME/.base16_theme" | awk '/^color/{ print $1, $2 }' | sed 's/\"//g')
+# A base theme color for highlights, selections links, icons on the bar. Check
+# http://chriskempson.com/projects/base16/ for further reference, here are some
+# commonly used colors:
+# 8  Red
+# 9  Orange
+# 10 Yellow
+# 11 Green
+# 12 Cyan
+# 13 Blue
+# 14 Magenta
+THEME=12
+
+# Computation {{{
+declare -A base
+declare -A map
+alpha_hex=$(printf '%x' "$ALPHA_LEVEL")
+
+map[0]=0
+map[1]=18
+map[2]=19
+map[3]=8
+map[4]=20
+map[5]=7
+map[6]=21
+map[7]=15
+map[8]=1
+map[9]=16
+map[10]=3
+map[11]=2
+map[12]=6
+map[13]=4
+map[14]=5
+map[15]=17
 
 function _html() {
-    echo "#${1//\//}"
+    echo "#$2${1//\//}"
 }
 
-{
-    echo export theme_color0=${theme_shell[color00]}
-    echo export theme_color1=${theme_shell[color01]}
-    echo export theme_color2=${theme_shell[color02]}
-    echo export theme_color3=${theme_shell[color03]}
-    echo export theme_color4=${theme_shell[color04]}
-    echo export theme_color5=${theme_shell[color05]}
-    echo export theme_color6=${theme_shell[color06]}
-    echo export theme_color7=${theme_shell[color07]}
-    echo export theme_color8=${theme_shell[color08]}
-    echo export theme_color9=${theme_shell[color09]}
-    echo export theme_color10=${theme_shell[color10]}
-    echo export theme_color11=${theme_shell[color11]}
-    echo export theme_color12=${theme_shell[color12]}
-    echo export theme_color13=${theme_shell[color13]}
-    echo export theme_color14=${theme_shell[color14]}
-    echo export theme_color15=${theme_shell[color15]}
-    echo export theme_color16=${theme_shell[color16]}
-    echo export theme_color17=${theme_shell[color17]}
-    echo export theme_color18=${theme_shell[color18]}
-    echo export theme_color19=${theme_shell[color19]}
-    echo export theme_color20=${theme_shell[color20]}
-    echo export theme_color21=${theme_shell[color21]}
-    echo export theme_foreground=${theme_shell[color_foreground]}
-    echo export theme_background=${theme_shell[color_background]}
-    # echo "#define theme_foreground_alt $(_html "$color_foreground_alt")"
+function _argb() {
+    echo "argb:$2${1//\//}"
+}
 
-    echo export theme_html_color0="$(_html "${theme_shell[color00]}")"
-    echo export theme_html_color1="$(_html "${theme_shell[color01]}")"
-    echo export theme_html_color2="$(_html "${theme_shell[color02]}")"
-    echo export theme_html_color3="$(_html "${theme_shell[color03]}")"
-    echo export theme_html_color4="$(_html "${theme_shell[color04]}")"
-    echo export theme_html_color5="$(_html "${theme_shell[color05]}")"
-    echo export theme_html_color6="$(_html "${theme_shell[color06]}")"
-    echo export theme_html_color7="$(_html "${theme_shell[color07]}")"
-    echo export theme_html_color8="$(_html "${theme_shell[color08]}")"
-    echo export theme_html_color9="$(_html "${theme_shell[color09]}")"
-    echo export theme_html_color10="$(_html "${theme_shell[color10]}")"
-    echo export theme_html_color11="$(_html "${theme_shell[color11]}")"
-    echo export theme_html_color12="$(_html "${theme_shell[color12]}")"
-    echo export theme_html_color13="$(_html "${theme_shell[color13]}")"
-    echo export theme_html_color14="$(_html "${theme_shell[color14]}")"
-    echo export theme_html_color15="$(_html "${theme_shell[color15]}")"
-    echo export theme_html_color16="$(_html "${theme_shell[color16]}")"
-    echo export theme_html_color17="$(_html "${theme_shell[color17]}")"
-    echo export theme_html_color18="$(_html "${theme_shell[color18]}")"
-    echo export theme_html_color19="$(_html "${theme_shell[color19]}")"
-    echo export theme_html_color20="$(_html "${theme_shell[color20]}")"
-    echo export theme_html_color21="$(_html "${theme_shell[color21]}")"
-    echo export theme_html_foreground="$(_html "${theme_shell[color_foreground]}")"
-    echo export theme_html_background="$(_html "${theme_shell[color_background]}")"
-    # echo "#define theme_foreground_alt "$("_html ""$color_foreground_alt")""
+function _rgba() {
+    echo "rgba:${1//\//00\/}00/${2}00"
+}
+
+while read -r line; do
+  e=($line)
+  base[$(printf "%d" "0x${e[3]}")]="${e[0]}/${e[1]}/${e[2]}"
+done < <(sed -n 's%^.*\([0-fA-F]\{2\}\)/\([0-fA-F]\{2\}\)/\([0-fA-F]\{2\}\).*Base\ \([0-F]\{2\}\).*$%\1 \2 \3 \4%p' < "$HOME/.base16_theme" | sort -k4 | uniq)
+
+# }}}
+
+# Bash variables {{{
+{
+    for i in $(seq 0 15); do
+        printf "export base%.2x_html=%s\n" "$i" "$(_html ${base[$i]})"
+    done
+    printf "export theme_html=%s\n" "$(_html ${base[$THEME]})"
+    printf "export theme=%s\n" "${map[$THEME]}"
 } > "$HOME/.theme.bashrc"
+# }}}
 
-# Write X resource defines
+# Xresources {{{
 {
-    echo "theme_color0:     ${theme_xdefaults[color00]}"
-    echo "theme_color1:     ${theme_xdefaults[color01]}"
-    echo "theme_color2:     ${theme_xdefaults[color02]}"
-    echo "theme_color3:     ${theme_xdefaults[color03]}"
-    echo "theme_color4:     ${theme_xdefaults[color04]}"
-    echo "theme_color5:     ${theme_xdefaults[color05]}"
-    echo "theme_color6:     ${theme_xdefaults[color06]}"
-    echo "theme_color7:     ${theme_xdefaults[color07]}"
-    echo "theme_color8:     ${theme_xdefaults[color08]}"
-    echo "theme_color9:     ${theme_xdefaults[color09]}"
-    echo "theme_color10:    ${theme_xdefaults[color10]}"
-    echo "theme_color11:    ${theme_xdefaults[color11]}"
-    echo "theme_color12:    ${theme_xdefaults[color12]}"
-    echo "theme_color13:    ${theme_xdefaults[color13]}"
-    echo "theme_color14:    ${theme_xdefaults[color14]}"
-    echo "theme_color15:    ${theme_xdefaults[color15]}"
-    echo "theme_color16:    ${theme_xdefaults[color16]}"
-    echo "theme_color17:    ${theme_xdefaults[color17]}"
-    echo "theme_color18:    ${theme_xdefaults[color18]}"
-    echo "theme_color19:    ${theme_xdefaults[color19]}"
-    echo "theme_color20:    ${theme_xdefaults[color20]}"
-    echo "theme_color21:    ${theme_xdefaults[color21]}"
-    echo "theme_foreground: ${theme_xdefaults[color_foreground]}"
-    echo "theme_background: ${theme_xdefaults[color_background]}"
-    # echo "#define theme_foreground_alt $(_html "$color_foreground_alt")"
-
-    echo "#define theme_color0     ${theme_xdefaults[color00]}"
-    echo "#define theme_color1     ${theme_xdefaults[color01]}"
-    echo "#define theme_color2     ${theme_xdefaults[color02]}"
-    echo "#define theme_color3     ${theme_xdefaults[color03]}"
-    echo "#define theme_color4     ${theme_xdefaults[color04]}"
-    echo "#define theme_color5     ${theme_xdefaults[color05]}"
-    echo "#define theme_color6     ${theme_xdefaults[color06]}"
-    echo "#define theme_color7     ${theme_xdefaults[color07]}"
-    echo "#define theme_color8     ${theme_xdefaults[color08]}"
-    echo "#define theme_color9     ${theme_xdefaults[color09]}"
-    echo "#define theme_color10    ${theme_xdefaults[color10]}"
-    echo "#define theme_color11    ${theme_xdefaults[color11]}"
-    echo "#define theme_color12    ${theme_xdefaults[color12]}"
-    echo "#define theme_color13    ${theme_xdefaults[color13]}"
-    echo "#define theme_color14    ${theme_xdefaults[color14]}"
-    echo "#define theme_color15    ${theme_xdefaults[color15]}"
-    echo "#define theme_color16    ${theme_xdefaults[color16]}"
-    echo "#define theme_color17    ${theme_xdefaults[color17]}"
-    echo "#define theme_color18    ${theme_xdefaults[color18]}"
-    echo "#define theme_color19    ${theme_xdefaults[color19]}"
-    echo "#define theme_color20    ${theme_xdefaults[color20]}"
-    echo "#define theme_color21    ${theme_xdefaults[color21]}"
-    echo "#define theme_foreground ${theme_xdefaults[color_foreground]}"
-    echo "#define theme_background ${theme_xdefaults[color_background]}"
-    # echo "#define theme_foreground_alt $(_html "$color_foreground_alt")"
-
+    for i in $(seq 0 15); do
+        printf "base%.2x: %s\n" "$i" "$(_html ${base[$i]})"
+        printf "#define base%.2x %s\n" "$i" "$(_html ${base[$i]})"
+        printf "base%.2x_argb: %s\n" "$i" "$(_argb ${base[$i]} $alpha_hex)"
+        printf "#define base%.2x_argb %s\n" "$i" "$(_argb ${base[$i]} $alpha_hex)"
+        printf "base%.2x_ahtml: %s\n" "$i" "$(_html ${base[$i]} $alpha_hex)"
+        printf "#define base%.2x_ahtml %s\n" "$i" "$(_html ${base[$i]} $alpha_hex)"
+        printf "base%.2x_rgba: %s\n" "$i" "$(_rgba ${base[$i]} $alpha_hex)"
+        printf "#define base%.2x_rgba %s\n" "$i" "$(_rgba ${base[$i]} $alpha_hex)"
+    done
+    printf "theme: %s\n" "$(_html ${base[$THEME]})"
+    printf "#define theme %s\n" "$(_html ${base[$THEME]})"
 } > "$HOME/.theme.defines.Xresources"
+# }}}
 
-xrdb -load "$HOME/.Xresources"
+# Firefox {{{
+# Write userChrome.css
+cat > "$HOME"/.mozilla/firefox/*/chrome/userChrome.css <<EOF
+:root:-moz-lwtheme-brighttext {
+  --chrome-background-color: $(_html "${base[0]}")!important; /* base00 */
+  --chrome-color: $(_html "${base[5]}")!important; /* base06 */
+  --chrome-secondary-background-color: $(_html "${base[1]}")!important; /* base02 */
+  --url-and-searchbar-background-color: $(_html "${base[0]}")!important; /* base01 */
+}
 
-# Stalonetray
-source "$HOME/.theme.bashrc"
-sed -i "s/^tint_color.*$/tint_color \"${theme_html_color0}\"/" "$HOME/.stalonetrayrc"
+.tabbrowser-tab[visuallyselected="true"]:-moz-lwtheme {
+  color: $(_html "${base[07]}")!important;
+}
+EOF
+# }}}
 
-# clean up
+# GTK theme {{{
+cat > "$HOME/.themes/colors.rc" << EOF
+gtk-color-scheme = "bg_color:$(_html ${base[6]})"
+gtk-color-scheme = "fg_color:$(_html ${base[0]})"
+gtk-color-scheme = "base_color:$(_html ${base[7]})"
+gtk-color-scheme = "text_color:$(_html ${base[0]})"
+gtk-color-scheme = "selected_bg_color:$(_html ${base[$THEME]})"
+gtk-color-scheme = "selected_fg_color:$(_html ${base[1]})"
+gtk-color-scheme = "tooltip_bg_color:$(_html ${base[4]})"
+gtk-color-scheme = "tooltip_fg_color:$(_html ${base[1]})"
+gtk-color-scheme = "titlebar_bg_color:$(_html ${base[7]})"
+gtk-color-scheme = "titlebar_fg_color:$(_html ${base[0]})"
+gtk-color-scheme = "menubar_bg_color:$(_html ${base[0]})"
+gtk-color-scheme = "menubar_fg_color:$(_html ${base[5]})"
+gtk-color-scheme = "toolbar_bg_color:$(_html ${base[6]})"
+gtk-color-scheme = "toolbar_fg_color:$(_html ${base[0]})"
+gtk-color-scheme = "menu_bg_color:$(_html ${base[1]})"
+gtk-color-scheme = "menu_fg_color:$(_html ${base[5]})"
+gtk-color-scheme = "panel_bg_color:$(_html ${base[0]})"
+gtk-color-scheme = "panel_fg_color:$(_html ${base[5]})"
+gtk-color-scheme = "link_color:$(_html ${base[13]})"
+EOF
+# }}}
+
+# Stalonetray {{{
+sed -i --follow-symlink "s/^tint_color.*$/tint_color \"$(_html "${base[0]}")\"/" "$HOME/.stalonetrayrc"
+sed -i --follow-symlink "s/^tint_level.*$/tint_level ${ALPHA_LEVEL}/" "$HOME/.stalonetrayrc"
+# }}}
+
+# Clean up {{{
 unset printf_template
 unset printf_template_var
+# }}}
 
+# Apply changes {{{
+xrdb -load "$HOME/.Xresources"
+# }}}
+
+# vim: fdm=marker fdl=0 fen fdc=2

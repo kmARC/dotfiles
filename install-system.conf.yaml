@@ -10,6 +10,8 @@
         path: etc/default/tlp
     /etc/systemd/system/i3lock.service:
         path: etc/systemd/system/i3lock.service
+    /etc/systemd/system/kmarc-monitor.service:
+        path: etc/systemd/system/kmarc-monitor.service
     /etc/udev/rules.d/99-desktop.rules:
         path: etc/udev/rules.d/99-desktop.rules
     /etc/rc.local:

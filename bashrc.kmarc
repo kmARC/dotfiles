@@ -1,3 +1,4 @@
+#/usr/bin/env bash
 # Colorized prompt
 
 function __ps1 {
@@ -33,38 +34,29 @@ function __ps1 {
         echo -n "\[\e[0;49;39m\]"
     }
 
-    local THEME=$1
-    [ "$USER" = "root" ] && THEME=1
+    [ "$USER" = "root" ] && theme=1
     local RS=$(__reset)
     local TEXT=$(__text)
-    local HOST=$(__hostname $THEME)
-    local BRAK=$(__bracket $THEME)
-    PS1="$HOST[\h]$RS$BRAK[$TEXT\u$BRAK][$TEXT\w$BRAK][$TEXT\$$BRAK]\$(__git_ps1 \(%s\))$TEXT$RS "
+    local HOST=$(__hostname $theme)
+    local BRAK=$(__bracket $theme)
+    # PS1="$HOST[\h]$RS$BRAK[$TEXT\u$BRAK][$TEXT\W$BRAK][$TEXT\$$BRAK]\$(__git_ps1 \(%s\))$TEXT$RS "
+    function __pwd_kmarc {
+        echo "$@" | sed "s#$HOME#~#g" | sed "s#\(/\?\)\(\.\?.\)[^/]*/#\1\2/#g"
+    }
+    function __git_kmarc {
+        __git_ps1 "$@" | sed 's/^\(.\{6\}\).\+\(.\{6\}\)$/\1…\2/g'
+    }
+    PS1="$BRAK[$TEXT\$(__pwd_kmarc \w)$BRAK]\$(__git_kmarc \(%s\))$TEXT$RS "
 }
 
-function color_less {
-    # mb: ???
-    # md: Tag
-    # me: End of Tag
-    # so: Search highlight, bottom bar
-    # se: End of highlight?
-    env LESS_TERMCAP_mb=$'\e[0;49;39m' \
-        LESS_TERMCAP_md=$'\e[1;49;35m' \
-        LESS_TERMCAP_me=$'\e[0;49;39m' \
-        LESS_TERMCAP_so=$'\e[1;46;97m' \
-        LESS_TERMCAP_se=$'\e[0;49;39m' \
-        LESS_TERMCAP_us=$'\e[1;49;36m' \
-        LESS_TERMCAP_ue=$'\e[0;49;39m' \
-        "$@"
-}
-
-function pydoc {
-    color_less pydoc "$@"
-}
-
-function man {
-    color_less man "$@"
-}
+# Colorized less / man / pydoc
+export LESS_TERMCAP_mb=$'\e[0;49;39m'
+export LESS_TERMCAP_md=$'\e[1;49;35m'
+export LESS_TERMCAP_me=$'\e[0;49;39m'
+export LESS_TERMCAP_so=$'\e[1;46;97m'
+export LESS_TERMCAP_se=$'\e[0;49;39m'
+export LESS_TERMCAP_us=$'\e[1;49;36m'
+export LESS_TERMCAP_ue=$'\e[0;49;39m'
 
 # Based on FZF's __fzf_cd__()
 function __fzf_open__() {
@@ -77,10 +69,14 @@ function __fzf_open__() {
 #################
 # LOOK AND FEEL #
 #################
+# Source bash compatible base colorscheme defines
+source "$HOME"/.theme.bashrc
+
 # Prompt. See __ps1 -h
- __ps1 6
+__ps1 $theme
 
 # Base16 theming
+# export BASE16_SHELL_SET_BACKGROUND=false
 BASE16_SHELL=$HOME/.config/base16-shell/
 [ -n "$PS1" ] && [ -s $BASE16_SHELL/profile_helper.sh ] && eval "$($BASE16_SHELL/profile_helper.sh)"
 

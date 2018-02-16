@@ -7,7 +7,7 @@ export _JAVA_OPTIONS="\
           -Dswing.crossplatformlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel"
 
 # Workaround for electron/chrome based apps timeout while connecting to
-kill -TERM $(pgrep -f "gnome-keyring-daemon")
+kill -TERM "$(pgrep -f "gnome-keyring-daemon")"
 
 # Configure ssh-agent
 ssh-add -k
@@ -25,8 +25,9 @@ sxhkd &
 "$HOME/bin/start-mopidy.sh" &
 /usr/lib/notification-daemon/notification-daemon &
 redshift -r &
+compton &
 syndaemon -i 0.5 -K -R -d
-xautolock -locker "$HOME/bin/lock.sh" -time 5 -detectsleep &
+xautolock -locker "$HOME/bin/lock.sh" -time 5 -detectsleep -corners '----' &
 xcape -t 250 -e 'Caps_Lock=Escape'
 (cd "$HOME/Documents/Home" || exit; python -m SimpleHTTPServer) &
 

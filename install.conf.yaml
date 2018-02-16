@@ -12,6 +12,8 @@
         path: config/base16-shell
     ~/.config/bspwm/bspwmrc:
         path: config/bspwm/bspwmrc
+    ~/.config/gtk-3.0/gtk.css:
+        path: config/gtk-3.0/gtk.css
     ~/.config/gtk-3.0/settings.ini:
         path: config/gtk-3.0/settings.ini
     ~/.config/mopidy/mopidy.conf:

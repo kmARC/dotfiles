@@ -87,7 +87,7 @@ rm -rf "$LOCK_FILE"
 
 echo
 echo "Sync to s3:"
-echo "    aws s3 sync ${DEST} ${DEST_S3_BUCKET}"
+echo "    aws s3 sync ${DEST} s3://${DEST_S3_BUCKET}"
 echo
 
 echo "======"

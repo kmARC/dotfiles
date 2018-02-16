@@ -4,7 +4,7 @@
 # shellcheck source=/home/kmarc/.theme.bashrc
 source "$HOME/.theme.bashrc"
 
-prefix="%{F${theme_html_color12}}"
+prefix="%{F${base0d_html}}"
 
 # check for spotify
 if (playerctl -l | grep spotify) &>/dev/null; then
@@ -18,9 +18,9 @@ fi
 
 # Foreground color formatting tags are optional
 if [[ ${player_status,,} =~ .*playing.* ]]; then
-    echo "$prefix%{F${theme_html_foreground}}%{O9}$metadata %{F-}"
+    echo "$prefix%{F${base05_html}}%{O9}$metadata %{F-}"
 elif [[ ${player_status,,} =~ .*paused.* ]]; then
-    echo "$prefix%{F${theme_html_foreground}}%{O9}$metadata %{F-}"
+    echo "$prefix%{F${base05_html}}%{O9}$metadata %{F-}"
 else
     echo ""
 fi

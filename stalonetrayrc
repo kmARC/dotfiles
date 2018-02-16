@@ -2,8 +2,8 @@
 kludges force_icons_size
 icon_size 22
 icon_gravity SW
-tint_level 255
-tint_color "#263238"
+tint_level 180
+tint_color "#2C3E50"
 fuzzy_edges 0
 slot_size 28
 grow_gravity W

@@ -19,6 +19,7 @@ apt install -y \
     network-manager-openvpn-gnome \
     notification-daemon \
     pandoc \
+    pulseaudio-module-bluetooth \
     redshift \
     rofi \
     rxvt-unicode-256color \
@@ -38,6 +39,8 @@ apt install -y \
     xinput \
     xsel \
     xubuntu-icon-theme
+
+pactl load-module module-bluetooth-discover
 
 # bspwm, sxhkd reqs
 apt install -y \

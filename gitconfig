@@ -11,8 +11,6 @@
 [credential]
 	helper = /usr/share/doc/git/contrib/credential/gnome-keyring/git-credential-gnome-keyring
 [gitreview]
-	username = USERNAME
-	username = USERNAME
 	username = oro
 [github]
 	user = kmarc
