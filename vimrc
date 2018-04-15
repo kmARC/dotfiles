@@ -101,7 +101,7 @@ set number relativenumber
 set colorcolumn=81
 set path+=**
 set laststatus=2
-set wildignore+=*.o,*.so,*.a,*.swp,*.zip,*.pyc,*.class,tags,.git/**,.env/**
+set wildignore+=*.o,*.so,*.a,*.swp,*.zip,*.pyc,*.class,tags,.git/**,.env/**,__pycache__
 set completeopt=preview,longest,menuone
 set splitbelow
 set splitright
@@ -115,13 +115,14 @@ set grepprg=ag\ --vimgrep\ $*
 set foldlevel=0
 set noshowmode
 set signcolumn=yes
+set sw=2 sts=2 ts=2
 
 "--- Look & Feel ----
 let base16colorspace=256
 set background=dark
 silent! source $HOME/.vimrc_background
 
-highlight VertSplit ctermbg=00 ctermfg=18
+" highlight VertSplit ctermbg=00 ctermfg=18
 set fillchars+=vert:\│,stlnc:-
 
 highlight link ALEWarningSign ToDo
@@ -132,15 +133,14 @@ cmap w!!                   w !sudo tee > /dev/null %
 nnoremap <C-e>             2<C-e>
 nnoremap <C-y>             2<C-y>
 nnoremap <C-p>             :GFiles<CR>
-nnoremap <C-S-p>           :Files<CR>
 nnoremap <expr> <F7>       expand('%') == '' ? ":NERDTreeToggle<CR>" : ":NERDTreeFind<CR>"
 nnoremap <space>           :ls<CR>:sbuffer 
 nnoremap <F8>              :TagbarToggle<CR>
 nnoremap <F9>              :lclose<CR>:cclose<CR>:pclose<CR>
 nnoremap {               :bn!<CR>
 nnoremap }               :bp!<CR>
-nnoremap <leader>fa        :call fzf#vim#grep('ag                            --nogroup --column --color "(?=.)"', 1, {'options':'--exact'})<CR>
-nnoremap <leader>fA        :call fzf#vim#grep('ag -G <C-r>=expand("%:e")<CR> --nogroup --column --color "(?=.)"', 1, {'options':'--exact --query=<C-r><C-w> +i'})<CR>
+nnoremap <leader>fa        :call fzf#vim#grep('ag --nogroup --column --color "(?=.)"', 1, {'options':'--exact --delimiter : --nth 4..'})<CR>
+nnoremap <leader>fA        :call fzf#vim#grep('ag --nogroup --column --color "(?=.)"', 1, {'options':'--exact --delimiter : --nth 4.. --query=<C-r><C-w> +i'})<CR>
 nnoremap <leader>ft        :call fzf#vim#tags('',             {'options':'--exact -i'})<CR>
 nnoremap <leader>fT        :call fzf#vim#tags('^<C-r><C-w> ', {'options':'--exact +i'})<CR>
 nnoremap <leader>fb        :Buffers<CR>
@@ -176,7 +176,7 @@ nnoremap [h                :GitGutterPrevHunk<CR>
 nnoremap ]h                :GitGutterNextHunk<CR>
 nnoremap <leader>aa :!xdg-open http://docs.ansible.com/ansible/latest/list_of_all_modules.html<CR>
 nnoremap <leader>am :!xdg-open http://docs.ansible.com/ansible/latest/<C-R><C-W>_module.html\#options<CR>
-nnoremap <leader>as :!xdg-open https://www.google.com/search?q=site:docs.ansible.com/ansible/latest/+\"<C-R><C-W>\"<CR>
+nnoremap <leader>as :!xdg-open https://www.google.com/search?q=site:docs.ansible.com+\"<C-R><C-W>\"<CR>
 
 "--- Autocommands ---
 augroup vimrc
@@ -193,13 +193,10 @@ augroup vimrc
   autocmd FileType python                         nnoremap <buffer> <Leader>] :YcmCompleter GoTo<CR>
   autocmd FileType javascript*,typescript*        nnoremap <buffer> <Leader>] :YcmCompleter GoTo<CR>
   "----- formatting
-  autocmd FileType vim                            setlocal sw=2 sts=2 ts=2
-  autocmd FileType javascript*,typescript*,json   setlocal sw=2 sts=2 ts=2
-  autocmd FileType css,less,scss                  setlocal sw=2 sts=2 ts=2
-  autocmd FileType terraform                      setlocal sw=2 sts=2 ts=2 commentstring=#%s
-  autocmd FileType plaintex,text,markdown         setlocal tw=80 formatprg=par\ -jw80
+  autocmd FileType terraform                      setlocal commentstring=#%s
+  autocmd FileType plaintex,text,markdown         setlocal tw=100 colorcolumn=101 formatprg=par\ -jw100
   "----- folding
-  autocmd FileType python                         setlocal foldmethod=indent foldnestmax=2 foldcolumn=2 colorcolumn=101 textwidth=100
+  autocmd FileType python                         setlocal foldmethod=indent foldnestmax=2 colorcolumn=101 textwidth=100
   "----- filetypes
   autocmd BufRead,BufNewFile Vagrantfile          setlocal filetype=ruby
   autocmd BufRead,BufNewFile *.tsx                setlocal filetype=typescript.jsx
@@ -333,12 +330,23 @@ let g:UltiSnipsListSnippets = "<c-h>"
 let g:ale_sh_shellcheck_options = '-x'
 let g:completor_java_omni_trigger = '(\w+\.)$'
 let g:completor_refresh_always = 0
+let g:diminactive_use_syntax = 1
 let g:fugitive_gitlab_domains = [ 'https://gitlab.tools.in.pan-net.eu/' ]
 let g:fzf_buffers_jump = 1
 let g:fzf_files_options = '--exact'
 let g:fzf_tags_command = '(git ls-files || ag -l) | ctags -L-'
 let g:jsdoc_enable_es6 = 1
-let g:lightline = { 'colorscheme': 'base16' , 'inactive': {'left':[['mode'], ['filename']]}}
+let g:lightline = {
+  \ 'colorscheme': 'base16',
+  \ 'inactive': {
+  \   'left': [ [ 'mode', 'paste' ],
+  \             [ 'readonly', 'relativepath', 'modified' ] ]
+  \   },
+  \ 'active': {
+  \   'left': [ [ 'mode', 'paste' ],
+  \             [ 'readonly', 'relativepath', 'modified' ] ]
+  \   },
+  \ }
 let g:netrw_bufsettings = "rnu"
 let g:netrw_home = expand("~/.vim/misc")
 let g:netrw_liststyle = 3
@@ -348,7 +356,6 @@ let g:taboo_renamed_tab_format =' [%N] %l%m |'
 let g:taboo_tab_format = ' [%N] %f%m |'
 let g:tagbar_autoclose = 1
 let g:tagbar_autofocus = 1
-let g:terraform_align = 1
 let g:vim_markdown_folding_disabled = 1
 
 set modeline
