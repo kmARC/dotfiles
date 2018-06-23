@@ -22,7 +22,6 @@ apt install -y \
     pulseaudio-module-bluetooth \
     redshift \
     rofi \
-    rxvt-unicode-256color \
     shutter \
     stalonetray \
     suckless-tools \
@@ -64,10 +63,6 @@ apt install -y \
 # Debian packaging
 apt install -y \
     devscripts
-
-# RXVT mouse patch
-apt build-dep -y \
-    rxvt-unicode-256color
 
 # PPA
 add-apt-repository -y -u ppa:nilarimogard/webupd8
