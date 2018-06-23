@@ -199,3 +199,6 @@ super + space; m
 
 super + space; x
 	x-terminal-emulator -ls -e bash -ci 'tmux-session'
+
+super + space; l; m
+	$HOME/bin/lunch-migros.sh
