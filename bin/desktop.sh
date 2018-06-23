@@ -164,7 +164,7 @@ wmname LG3D
 # Fix tray
 ~/bin/tray.sh &
 
-SINK=$(pactl list sinks | awk -v RS="" -F'#' '{ print $2 }' | tail -n1)
+SINK=$(pactl list sinks | awk -v RS="" -F'#' '{ print $2 }' | tail -n0)
 SINK_INPUTS=($(pactl list sink-inputs | awk -F'#' '/^Sink Input/{ print $2 }'))
 for input in "${SINK_INPUTS[@]}"; do
   pactl move-sink-input "$input" "$SINK"

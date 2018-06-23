@@ -19,7 +19,7 @@ theme=${xrdb:theme:#ff0000}
 [bar/kmarc]
 ; {{{
 height = 28
-monitor = ${file:/tmp/polybar-monitor.txt:eDP-1}
+; monitor = ${file:/tmp/polybar-monitor.txt:eDP-1}
 offset-x = 0
 offset-y = 0
 margin-left = 0
@@ -217,7 +217,7 @@ label = %date% %time%
 
 [module/volume]
 ; {{{
-type = internal/volume
+type = internal/pulseaudio
 
 format-volume =  <label-volume>
 
@@ -259,8 +259,8 @@ warn-temperature = 60
 format = <ramp> <label>
 format-warn = <ramp> <label-warn>
 
-label = %temperature%
-label-warn = %temperature%
+label = %temperature-c%
+label-warn = %temperature-c%
 label-warn-foreground = ${colors.theme}
 
 ramp-0 = "  "

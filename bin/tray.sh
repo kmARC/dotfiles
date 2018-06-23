@@ -6,8 +6,12 @@ WID_TRAY=$(xwininfo -root -tree \
            | awk '/"stalonetray"/{ print $1 }')
 
 for p in "${PID_HIDEIT[@]}"; do
+    echo killing $p hideit
     kill "$p"
 done
+
+# Sleep a bit until stalonetray comes back
+sleep 0.5
 
 for try in {1..10}; do
     VALUES=($(xwininfo -root -tree \
@@ -32,8 +36,10 @@ GEOMETRY="1x1+${POS_X}+${POS_Y}"
 REGION="${POS_X}x${POS_Y}+200+${BAR_HEIGHT}"
 
 if [ -z "$PID_TRAY" ]; then
+    echo starting window
     stalonetray --geometry "$GEOMETRY" &
 else
+    echo moving window
     xdotool windowmove "${WID_TRAY}" "${POS_X}" "${POS_Y}"
 fi
 

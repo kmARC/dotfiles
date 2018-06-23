@@ -30,7 +30,7 @@ elif [ -z "$class" ]; then
             wmname=$(xprop -id "$wid" WM_NAME)
             if [[ "$wmname" == *"Spotify"* ]]; then
                 echo "move around spotify window" >> /tmp/bspwm-debug.txt
-                bspc node "$wid" --state tiled --focus --desktop 8
+                bspc node "$wid" --state tiled --focus --to-desktop 8
             else
                 bspc node "$wid" --state tiled --focus
             fi

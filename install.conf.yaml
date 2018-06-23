@@ -40,7 +40,7 @@
     ~/.compton.conf:
     ~/.fzf:
     ~/.gitconfig:
-    ~/.gtkrc-2.0:
+    ~/.gtkrc.mine:
     ~/.rtorrent.rc:
     ~/.stalonetrayrc:
     ~/.theme.rofi.Xresources:

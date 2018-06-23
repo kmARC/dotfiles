@@ -1,10 +1,14 @@
-include "/home/kmarc/.themes/colors.rc"
-include "/home/kmarc/.themes/Numix-kmarc/gtk-2.0/gtkrc"
+# -- THEME AUTO-WRITTEN DO NOT EDIT
+include "/usr/share/themes/Arc/gtk-2.0/gtkrc"
 
 style "user-font" {
-	font_name = "Roboto Bold 9"
+	font_name = "Roboto 9"
 }
+
 widget_class "*" style "user-font"
 
-gtk-font-name="Roboto Bold 9"
-gtk-icon-theme-name = "elementary-xfce"
+gtk-font-name="Roboto 9"
+
+include "/home/kmarc/.gtkrc.mine"
+
+# -- THEME AUTO-WRITTEN DO NOT EDIT

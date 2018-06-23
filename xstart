@@ -23,7 +23,6 @@ xset dpms 300 300 300
 # Daemons
 sxhkd &
 "$HOME/bin/start-mopidy.sh" &
-/usr/lib/notification-daemon/notification-daemon &
 redshift -r &
 compton &
 syndaemon -i 0.5 -K -R -d

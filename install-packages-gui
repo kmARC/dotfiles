@@ -60,6 +60,10 @@ apt install -y \
     libxkbcommon-dev \
     libxkbcommon-x11-dev
 
+# Polybar
+apt install -y \
+    libpulse-dev
+
 # Debian packaging
 apt install -y \
     devscripts
