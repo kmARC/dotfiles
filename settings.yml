@@ -1,0 +1,22 @@
+---
+
+bashrc: '$HOME/.bashrc'
+
+base16_theme: summerfruit-dark
+base16_path: '$HOME/.config/base16-shell'
+
+bashit_path: '$HOME/.bash_it'
+
+vim_path: '$HOME/.vim'
+
+bspwm_version: 0.9.5
+bspwm_path: '$HOME/.local/src/bspwm'
+
+sxhkd_version: 0.5.9
+sxhkd_path: '$HOME/.local/src/sxhkd'
+
+polybar_version: master
+polybar_path: '$HOME/.local/src/polybar'
+
+popcorntime_version: 0.3.10
+popcorntime_path: '/opt/PopcornTime'
