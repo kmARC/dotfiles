@@ -19,7 +19,7 @@ theme=${xrdb:theme:#ff0000}
 [bar/kmarc]
 ; {{{
 height = 28
-; monitor = ${file:/tmp/polybar-monitor.txt:eDP-1}
+monitor = ${file:/tmp/polybar-monitor.txt:eDP-1}
 offset-x = 0
 offset-y = 0
 margin-left = 0
