@@ -87,21 +87,21 @@ done < <(sed -n 's%^.*\([0-fA-F]\{2\}\)/\([0-fA-F]\{2\}\)/\([0-fA-F]\{2\}\).*Bas
 } > "$HOME/.theme.defines.Xresources"
 # }}}
 
-# Firefox {{{
-# Write userChrome.css
-cat > "$HOME"/.mozilla/firefox/*/chrome/userChrome.css <<EOF
-:root:-moz-lwtheme-brighttext {
-  --chrome-background-color: $(_html "${base[0]}")!important; /* base00 */
-  --chrome-color: $(_html "${base[5]}")!important; /* base06 */
-  --chrome-secondary-background-color: $(_html "${base[1]}")!important; /* base02 */
-  --url-and-searchbar-background-color: $(_html "${base[0]}")!important; /* base01 */
-}
+# # Firefox {{{
+# # Write userChrome.css
+# cat > "$HOME"/.mozilla/firefox/*/chrome/userChrome.css <<EOF
+# :root:-moz-lwtheme-brighttext {
+#   --chrome-background-color: $(_html "${base[0]}")!important; /* base00 */
+#   --chrome-color: $(_html "${base[5]}")!important; /* base06 */
+#   --chrome-secondary-background-color: $(_html "${base[1]}")!important; /* base02 */
+#   --url-and-searchbar-background-color: $(_html "${base[0]}")!important; /* base01 */
+# }
 
-.tabbrowser-tab[visuallyselected="true"]:-moz-lwtheme {
-  color: $(_html "${base[07]}")!important;
-}
-EOF
-# }}}
+# .tabbrowser-tab[visuallyselected="true"]:-moz-lwtheme {
+#   color: $(_html "${base[07]}")!important;
+# }
+# EOF
+# # }}}
 
 # GTK theme {{{
 cat > "$HOME/.themes/colors.rc" << EOF
