@@ -32,3 +32,11 @@ req_polybar:
   - libxcb1-dev
   - python-xcbgen
   - xcb-proto
+
+req_i3lock:
+  - libev-dev
+  - libpam-dev
+  - libxcb-composite0-dev
+  - libxcb-dpms0-dev
+  - libxkbcommon-dev
+  - libxkbcommon-x11-dev

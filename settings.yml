@@ -20,3 +20,6 @@ polybar_path: '$HOME/.local/src/polybar'
 
 popcorntime_version: 0.3.10
 popcorntime_path: '/opt/PopcornTime'
+
+i3lock_version: 'master'
+i3lock_path: '$HOME/.local/src/i3lock-color'

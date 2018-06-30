@@ -13,6 +13,12 @@
       become: true
       when: 'ansible_distribution == "Fedora"'
       tags: packages
+    - name: Set up external sources for Ubuntu
+      apt_repository:
+        repo: ppa:bitcoin/bitcoin
+      become: true
+      when: 'ansible_distribution == "Ubuntu"'
+      tags: packages
     - name: Install basic packages
       package: name={{ item }}
       with_items: "{{ base }}"
@@ -29,10 +35,12 @@
         # Tools
         - bc
         - borgbackup
+        - dex
         - git
         - gitk
         - htop
         - mc
+        - ncmpcpp
         - powertop
         - ranger
         - rar
@@ -40,12 +48,17 @@
         - tig
         - vim
         # GUI
+        - bitcoin-qt
         - shutter
         - stalonetray
         - thunar
         - xterm
         # Daemons
+        - qt5ct
+        - redshift
         - tlp
+        - xautolock
+        - xcape
       become: true
       tags: packages
     - name: Install bspwm requirements
@@ -209,6 +222,31 @@
         creates: '$HOME/.fonts/MaterialIcons-Regular.ttf'
       become: true
       tags: polybar
+
+    #
+    # i3lock
+    #
+    - name: Download i3lock
+      git:
+        repo: https://github.com/PandorasFox/i3lock-color
+        dest: '{{ i3lock_path }}'
+        version: '{{ i3lock_version }}'
+      tags: i3lock
+    - name: Compile i3lock
+      shell: |
+        ./configure
+        make -j5
+      args:
+        chdir: '{{ i3lock_path }}'
+      tags: i3lock
+      changed_when: false
+    - name: Install i3lock
+      # FIXME: this should be ran as `become` but then $HOME is root
+      command: bash -c 'sudo make install'
+      args:
+        chdir: '{{ i3lock_path }}'
+      changed_when: false
+      tags: i3lock
 
     #
     # popcorntime
