@@ -1,53 +1,4 @@
 #/usr/bin/env bash
-# Colorized prompt
-
-function __ps1 {
-    if [ -z "$1" ] || [ "$1" == "-h" ] || [ "$1" == "--help" ]; then
-        echo "Usage: __ps1 N"
-        echo "    where N is one of the following colors:"
-        echo "    0: black"
-        echo "    1: red"
-        echo "    2: green"
-        echo "    3: yellow"
-        echo "    4: blue"
-        echo "    5: magenta"
-        echo "    6: cyan"
-        echo "    7: gray"
-        return 0
-    fi
-
-    source /usr/lib/git-core/git-sh-prompt
-
-    function __hostname {
-        echo -n "\[\e[7;49;9${1}m\]"
-    }
-
-    function __bracket {
-        echo -n "\[\e[1;49;3${1}m\]"
-    }
-
-    function __reset {
-        echo -n "\[\e[0;49;39m\]"
-    }
-
-    function __text {
-        echo -n "\[\e[0;49;39m\]"
-    }
-
-    [ "$USER" = "root" ] && theme=1
-    local RS=$(__reset)
-    local TEXT=$(__text)
-    local HOST=$(__hostname $theme)
-    local BRAK=$(__bracket $theme)
-    # PS1="$HOST[\h]$RS$BRAK[$TEXT\u$BRAK][$TEXT\W$BRAK][$TEXT\$$BRAK]\$(__git_ps1 \(%s\))$TEXT$RS "
-    function __pwd_kmarc {
-        echo "$@" | sed "s#$HOME#~#g" | sed "s#\(/\?\)\(\.\?.\)[^/]*/#\1\2/#g"
-    }
-    function __git_kmarc {
-        __git_ps1 "$@" | sed 's/^\(.\{6\}\).\+\(.\{6\}\)$/\1…\2/g'
-    }
-    PS1="$BRAK[$TEXT\$(__pwd_kmarc \w)$BRAK]\$(__git_kmarc \(%s\))$TEXT$RS "
-}
 
 # Colorized less / man / pydoc
 export LESS_TERMCAP_mb=$'\e[0;49;39m'
@@ -66,20 +17,6 @@ function __fzf_open__() {
   file=$(eval "$cmd | $(__fzfcmd) +m $FZF_ALT_O_OPTS") && printf '/usr/bin/xdg-open %q/%q' "$PWD" "$file"
 }
 
-#################
-# LOOK AND FEEL #
-#################
-# Source bash compatible base colorscheme defines
-source "$HOME"/.theme.bashrc
-
-# Prompt. See __ps1 -h
-__ps1 $theme
-
-# Base16 theming
-# export BASE16_SHELL_SET_BACKGROUND=false
-BASE16_SHELL=$HOME/.config/base16-shell/
-[ -n "$PS1" ] && [ -s $BASE16_SHELL/profile_helper.sh ] && eval "$($BASE16_SHELL/profile_helper.sh)"
-
 # bind \M-o to __fzf_open__()
 if [[ ! -o vi ]]; then
   # ALT-O - open file
@@ -89,10 +26,6 @@ else
   bind '"\eo": "\C-x\C-addi`__fzf_open__`\C-x\C-e\C-x\C-r\C-m"'
   bind -m vi-command '"\eo": "ddi`__fzf_open__`\C-x\C-e\C-x\C-r\C-m"'
 fi
-
-###########
-# Aliases #
-###########
 
 function nvm_activate() {
     unalias nvm
@@ -109,3 +42,55 @@ alias gits="git status"
 alias nvm="nvm_activate"
 alias tmux-session="tmux attach -t Session || tmux new -s Session"
 
+# Source bash compatible base colorscheme defines
+source "$HOME"/.theme.bashrc
+
+# Lock and Load a custom theme file
+# location /.bash_it/themes/
+export BASH_IT_THEME='bakke'
+
+# (Advanced): Change this to the name of your remote repo if you
+# cloned bash-it with a remote other than origin such as `bash-it`.
+# export BASH_IT_REMOTE='bash-it'
+
+# Your place for hosting Git repos. I use this for private repos.
+export GIT_HOSTING='git@git.domain.com'
+
+# Don't check mail when opening terminal.
+unset MAILCHECK
+
+# Change this to your console based IRC client of choice.
+export IRC_CLIENT='irssi'
+
+# Set this to the command you use for todo.txt-cli
+export TODO="t"
+
+# Set this to false to turn off version control status checking within the prompt for all themes
+export SCM_CHECK=true
+
+# Set Xterm/screen/Tmux title with only a short hostname.
+# Uncomment this (or set SHORT_HOSTNAME to something else),
+# Will otherwise fall back on $HOSTNAME.
+#export SHORT_HOSTNAME=$(hostname -s)
+
+# Set Xterm/screen/Tmux title with only a short username.
+# Uncomment this (or set SHORT_USER to something else),
+# Will otherwise fall back on $USER.
+#export SHORT_USER=${USER:0:8}
+
+# Set Xterm/screen/Tmux title with shortened command and directory.
+# Uncomment this to set.
+#export SHORT_TERM_LINE=true
+
+# Set vcprompt executable path for scm advance info in prompt (demula theme)
+# https://github.com/djl/vcprompt
+#export VCPROMPT_EXECUTABLE=~/.vcprompt/bin/vcprompt
+
+# (Advanced): Uncomment this to make Bash-it reload itself automatically
+# after enabling or disabling aliases, plugins, and completions.
+# export BASH_IT_AUTOMATIC_RELOAD_AFTER_CONFIG_CHANGE=1
+
+# Uncomment this to make Bash-it create alias reload.
+# export BASH_IT_RELOAD_LEGACY=1
+
+export THEME_SHOW_CLOCK_CHAR="false"
