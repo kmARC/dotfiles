@@ -1,0 +1,31 @@
+---
+
+base:
+  - '@multimedia'
+  - '@development-tools'
+  # Ansible module dependencies
+  - libselinux-python
+  # Enable youtube html5
+  - mozilla-openh264
+  - compat-ffmpeg28
+
+req_bspwm:
+  - libxcb-devel
+  - xcb-util-devel
+  - xcb-util-keysyms-devel
+  - xcb-util-wm-devel
+
+req_sxhkd: []
+
+req_polybar:
+  - alsa-lib-devel
+  - cairo-devel
+  - cmake
+  - gcc-c++
+  - jsoncpp-devel
+  - libcurl-devel
+  - libmpdclient-devel
+  - pulseaudio-libs-devel
+  - wireless-tools-devel
+  - xcb-proto
+  - xcb-util-xrm-devel
