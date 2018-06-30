@@ -18,7 +18,8 @@ Xcursor.theme: DMZ-Black
 *xterm*activeIcon:           true
 *xterm*borderWidth:          0
 *xterm*disallowedWindowOps:  20,21,SetXprop
-*xterm*faceName:             Hack-Regular:style=Bold:size=9
+/* *xterm*faceName:             Hack-Regular:style=Bold:size=9 */
+*xterm*faceName:             DejaVu Sans Mono:size=9
 *xterm*faceSize:             9.0
 *xterm*faceSize1:            7.5
 *xterm*faceSize2:            9.0
@@ -29,9 +30,9 @@ Xcursor.theme: DMZ-Black
 *xterm*internalBorder:       0
 *xterm*metaSendsEscape:      true
 *xterm*scaleHeight:          1.15
+*xterm*scrollbar:            false
 *xterm*useClipping:          false
 *xterm*termName:             xterm-256color
-
 *xterm*forceBoxChars:        true
 
 *VT100*translations:         #override \n\
