@@ -384,6 +384,14 @@
     #
     # Dotfiles
     #
+    - name: Create directories
+      file:
+        path: '$HOME/.{{ item }}'
+        state: directory
+        recurse: true
+      with_items:
+        - tmux/plugins
+      tags: config
     - name: Symlink config files
       file:
         src: '{{ playbook_dir }}/{{ item }}'
@@ -396,10 +404,10 @@
         - bashrc.kmarc
         - compton.conf
         - gitconfig
-        - gtkrc-2.0
         - rtorrent.rc
         - stalonetrayrc
         - theme.rofi.Xresources
+        - tmux/plugins/tpm
         - tmux.conf
         - toprc
         - Xresources
