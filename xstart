@@ -15,12 +15,14 @@ ssh-add -k
 # X settings
 xrdb -load "$HOME/.Xresources"
 xsetroot -cursor_name left_ptr
+xhost +local:"$USER"
 
 # Configure desktop
 "$HOME/bin/desktop.sh"
 xset dpms 300 300 300
 
 # Daemons
+lxpolkit &
 sxhkd &
 "$HOME/bin/start-mopidy.sh" &
 redshift -r &
@@ -31,19 +33,18 @@ xcape -t 250 -e 'Caps_Lock=Escape'
 (cd "$HOME/Documents/Home" || exit; python -m SimpleHTTPServer) &
 
 # Autostarting daemons
-dex /etc/xdg/autostart/polkit-gnome-authentication-agent-1.desktop
-dex /etc/xdg/autostart/gnome-keyring-pkcs11.desktop
-dex /etc/xdg/autostart/gnome-keyring-secrets.desktop
-dex /etc/xdg/autostart/gnome-keyring-ssh.desktop
+dex-autostart /etc/xdg/autostart/gnome-keyring-pkcs11.desktop
+dex-autostart /etc/xdg/autostart/gnome-keyring-secrets.desktop
+dex-autostart /etc/xdg/autostart/gnome-keyring-ssh.desktop
 
 # Tray applets
-dex /etc/xdg/autostart/blueman.desktop
-dex /etc/xdg/autostart/hplip-systray.desktop
-dex /etc/xdg/autostart/nm-applet.desktop
-dex /etc/xdg/autostart/print-applet.desktop
+dex-autostart /etc/xdg/autostart/blueman.desktop
+dex-autostart /etc/xdg/autostart/hplip-systray.desktop
+dex-autostart /etc/xdg/autostart/nm-applet.desktop
+dex-autostart  /etc/xdg/autostart/print-applet.desktop
 
 # Applications
-dex /usr/share/applications/insync.desktop
+dex-autostart  /usr/share/applications/insync.desktop
 
 # Disable touchscreen
 TOUCHSCREEN=$(xinput list | grep SYNA | sed 's/.*id=\([0-9]*\).*/\1/g')

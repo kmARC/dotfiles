@@ -1,9 +1,19 @@
 ---
+
 - name: Dotfiles
   hosts: localhost
   tasks:
     - name: Gather os specific variables
       include_vars: "requirements-{{ ansible_distribution | lower }}.yml"
+      tags: always
+    - name: Ensure directories exist
+      file:
+        path: 'item'
+        state: directory
+        mode: 0755
+      with_items:
+        - '$HOME/.fonts'
+        - '$HOME/.local/share/applications/'
       tags: config
     - name: Set up external sources for Fedora
       dnf: name={{ item }}
@@ -13,13 +23,98 @@
       become: true
       when: 'ansible_distribution == "Fedora"'
       tags: packages
-    - name: Set up external sources for Ubuntu
-      apt_repository:
-        repo: ppa:bitcoin/bitcoin
+    - name: Add APT keys
+      apt_key: '{{ item }}'
+      with_items:
+        # Docker
+        - keyserver: keyserver.ubuntu.com
+          id: 7EA0A9C3F273FCD8
+        # Google Chrome
+        - keyserver: keys.gnupg.net
+          id: 1397BC53640DB551
+        # Insync
+        - keyserver: keyserver.ubuntu.com
+          id: ACCAF35C
+        # Mopidy
+        - keyserver: pgp.mit.edu
+          id: 78FD980E271D2943
+        # Skype
+        - url: https://repo.skype.com/data/SKYPE-GPG-KEY
+        # Slack
+        - url: https://packagecloud.io/slacktechnologies/slack/gpgkey
+        # Spotify
+        - keyserver: keyserver.ubuntu.com
+          id: 0DF731E45CE24F27EEEB1450EFDC8610341D9410
+        - keyserver: keyserver.ubuntu.com
+          id: 931FF8E79F0876134EDDBDCCA87FF9DF48BF1C90
+        # Virtualbox
+        - url: https://www.virtualbox.org/download/oracle_vbox_2016.asc
+        - url: https://www.virtualbox.org/download/oracle_vbox.asc
       become: true
       when: 'ansible_distribution == "Ubuntu"'
       tags: packages
-    - name: Install basic packages
+    - name: Add APT keys
+      rpm_key: '{{ item }}'
+      with_items:
+        ## Docker
+        #- keyserver: keyserver.ubuntu.com
+        #  id: 7EA0A9C3F273FCD8
+        ## Google Chrome
+        #- keyserver: keys.gnupg.net
+        #  id: 1397BC53640DB551
+        # Insync
+        - key: https://d2t3ff60b2tol4.cloudfront.net/repomd.xml.key
+        # # Mopidy
+        # - keyserver: pgp.mit.edu
+        #   id: 78FD980E271D2943
+        # # Skype
+        # - url: https://repo.skype.com/data/SKYPE-GPG-KEY
+        # # Slack
+        # - url: https://packagecloud.io/slacktechnologies/slack/gpgkey
+        # # Spotify
+        # - keyserver: keyserver.ubuntu.com
+        #   id: 0DF731E45CE24F27EEEB1450EFDC8610341D9410
+        # - keyserver: keyserver.ubuntu.com
+        #   id: 931FF8E79F0876134EDDBDCCA87FF9DF48BF1C90
+        # # Virtualbox
+        # - url: https://www.virtualbox.org/download/oracle_vbox_2016.asc
+        # - url: https://www.virtualbox.org/download/oracle_vbox.asc
+      become: true
+      when: 'ansible_distribution == "Fedora"'
+      tags: packages
+    - name: Set up external sources for Ubuntu
+      apt_repository:
+        repo: '{{ item }}'
+      with_items:
+        - ppa:bitcoin/bitcoin
+        - deb [arch=amd64] https://repo.skype.com/deb stable main
+        - deb http://repository.spotify.com stable non-free
+        - deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main
+        - deb http://apt.mopidy.com/ stretch main contrib non-free
+        - deb https://packagecloud.io/slacktechnologies/slack/debian/
+            jessie main
+        - deb http://apt.insynchq.com/ubuntu
+            {{ ansible_distribution_release }} non-free contrib
+        - deb [arch=amd64] http://download.virtualbox.org/virtualbox/debian
+            {{ ansible_distribution_release }} contrib
+        - deb [arch=amd64] https://download.docker.com/linux/ubuntu
+            {{ ansible_distribution_release }} stable
+      become: true
+      when: 'ansible_distribution == "Ubuntu"'
+      tags: packages
+    - name: Set up external sources for Fedora
+      yum_repository: '{{ item }}'
+      with_items:
+        - name: Insync
+          description: Insync fedora
+          baseurl: http://yum.insynchq.com/fedora/$releasever/
+          gpgcheck: true
+          gpgkey: https://d2t3ff60b2tol4.cloudfront.net/repomd.xml.key
+          metadata_expire: 120m
+      become: true
+      when: 'ansible_distribution == "Fedora"'
+      tags: packages
+    - name: Install distribution specific packages
       package: name={{ item }}
       with_items: "{{ base }}"
       become: true
@@ -32,6 +127,7 @@
         # Desktop
         - compton
         - rofi
+        - arc-theme
         # Tools
         - bc
         - borgbackup
@@ -43,17 +139,26 @@
         - ncmpcpp
         - powertop
         - ranger
-        - rar
+        - unrar
         - rtorrent
+        - silversearcher-ag
         - tig
         - vim
         # GUI
         - bitcoin-qt
+        - google-chrome-stable
+        - insync
         - shutter
+        - skypeforlinux
+        - slack-desktop
+        - spotify-client
         - stalonetray
         - thunar
+        - virtualbox-{{ virtualbox_version }}
         - xterm
         # Daemons
+        - docker-ce
+        - mopidy
         - qt5ct
         - redshift
         - tlp
@@ -61,21 +166,6 @@
         - xcape
       become: true
       tags: packages
-    - name: Install bspwm requirements
-      package: name={{ item }}
-      with_items: "{{ req_bspwm }}"
-      become: true
-      tags: bspwm
-    - name: Install sxhkd requirements
-      package: name={{ item }}
-      with_items: "{{ req_sxhkd }}"
-      become: true
-      tags: sxhkd
-    - name: Install polybar requirements
-      package: name={{ item }}
-      with_items: "{{ req_polybar }}"
-      become: true
-      tags: polybar
 
     #
     # Base16
@@ -117,7 +207,7 @@
         /bin/bash -cl '{{ bashit_path }}/install.sh --silent --no-modify-config'
       changed_when: false
       tags: bashit
-    - name: Configure Base16 Shell
+    - name: Configure Bash-It
       blockinfile:
         path: '{{ bashrc }}'
         marker: "# {mark} Bash-it config {kmarc's dotfiles}"
@@ -132,7 +222,7 @@
     #
     - name: Install kmarc's vim configuration
       git:
-        repo: git@github.com:kmARC/vim.git
+        repo: '{{ vim_repo }}'
         dest: '{{ vim_path }}'
         version: master
       tags: vim
@@ -144,6 +234,11 @@
     #
     # bspwm
     #
+    - name: Install bspwm requirements
+      package: name={{ item }}
+      with_items: "{{ req_bspwm }}"
+      become: true
+      tags: bspwm
     - name: Download bspwm
       git:
         repo: https://github.com/baskerville/bspwm
@@ -167,6 +262,11 @@
     #
     # sxhkd
     #
+    - name: Install sxhkd requirements
+      package: name={{ item }}
+      with_items: "{{ req_sxhkd }}"
+      become: true
+      tags: sxhkd
     - name: Download sxhkd
       git:
         repo: https://github.com/baskerville/sxhkd
@@ -190,6 +290,11 @@
     #
     # polybar
     #
+    - name: Install polybar requirements
+      package: name={{ item }}
+      with_items: "{{ req_polybar }}"
+      become: true
+      tags: polybar
     - name: Download polybar
       git:
         repo: https://github.com/jaagr/polybar
@@ -198,8 +303,8 @@
       tags: polybar
     - name: Compile polybar
       shell: |
+        mkdir -p build
         cd build
-        rm -rf *
         cmake ..
         make -j5
       args:
@@ -214,18 +319,20 @@
       changed_when: false
       tags: polybar
     - name: Download Material Icon Font
-      unarchive:
-        src: "https://github.com/google/material-design-icons/\
+      get_url:
+        url: "https://github.com/google/material-design-icons/\
               raw/2.2.0/iconfont/MaterialIcons-Regular.ttf"
         dest: '$HOME/.fonts/'
-        remote_src: true
-        creates: '$HOME/.fonts/MaterialIcons-Regular.ttf'
-      become: true
       tags: polybar
 
     #
     # i3lock
     #
+    - name: Install i3lock requirements
+      package: name={{ item }}
+      with_items: "{{ req_i3lock }}"
+      become: true
+      tags: i3lock
     - name: Download i3lock
       git:
         repo: https://github.com/PandorasFox/i3lock-color
@@ -234,6 +341,7 @@
       tags: i3lock
     - name: Compile i3lock
       shell: |
+        autoreconf -i
         ./configure
         make -j5
       args:
@@ -251,7 +359,7 @@
     #
     # popcorntime
     #
-    - name: Ensure PopcornTime path exists
+    - name: Ensure PopcornTime paths exist
       file:
         path: '{{ popcorntime_path }}'
         state: directory
@@ -264,7 +372,7 @@
               Popcorn-Time-{{ popcorntime_version }}-Linux-64.tar.xz"
         dest: '{{ popcorntime_path }}'
         remote_src: true
-        creates: '{{ popcorntime_path }}/Popcorn-Time'
+        creates: '{{ popcorntime_path }}/linux64/Popcorn-Time'
       become: true
       tags: popcorntime
     - name: Copy template popcorntime.desktop
@@ -288,6 +396,7 @@
         - bashrc.kmarc
         - compton.conf
         - gitconfig
+        - gtkrc-2.0
         - rtorrent.rc
         - stalonetrayrc
         - theme.rofi.Xresources
@@ -314,3 +423,24 @@
         '
       changed_when: false
       tags: config
+    - name: Symlink system-wide config files
+      copy:
+        src: '{{ playbook_dir }}/{{ item }}'
+        dest: '/{{ item }}'
+        mode: 0700
+      with_items:
+        - etc/systemd/system/i3lock@.service
+        - etc/rc.d/rc.local
+      become: true
+      tags: root_config
+      notify: Reload systemd
+  handlers:
+    - name: Reload systemd
+      systemd:
+        name: '{{ item }}'
+        enabled: true
+        daemon_reload: true
+      with_items:
+        - i3lock@{{ ansible_user_id }}.service
+        - rc-local.service
+      become: true

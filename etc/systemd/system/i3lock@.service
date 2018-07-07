@@ -3,12 +3,11 @@ Description=Lock screen before suspend
 Before=sleep.target
 
 [Service]
-User=kmarc
+User=%I
+PAMName=systemd-user
 Type=forking
 Environment=DISPLAY=:0
-Environment=HOME=/home/kmarc
-ExecStart=/home/kmarc/bin/lock.sh
-ExecStartPost=/bin/sleep 1
+ExecStart=-/bin/bash -c 'exec $HOME/bin/lock.sh'
 
 [Install]
 WantedBy=suspend.target

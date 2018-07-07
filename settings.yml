@@ -23,3 +23,5 @@ popcorntime_path: '/opt/PopcornTime'
 
 i3lock_version: 'master'
 i3lock_path: '$HOME/.local/src/i3lock-color'
+
+virtualbox_version: 5.2

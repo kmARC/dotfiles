@@ -29,3 +29,9 @@ req_polybar:
   - wireless-tools-devel
   - xcb-proto
   - xcb-util-xrm-devel
+
+req_i3lock:
+  - libev-devel
+  - libxkbcommon-x11-devel
+  - libjpeg-turbo-devel
+  - pam-devel

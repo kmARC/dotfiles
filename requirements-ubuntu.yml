@@ -1,9 +1,11 @@
 ---
 
-base: []
+base:
+  - autoconf
+  - build-essential
+  - cmake
 
 req_bspwm:
-  - build-essential
   - libxcb-ewmh-dev
   - libxcb-icccm4-dev
   - libxcb-randr0-dev
@@ -14,7 +16,6 @@ req_sxhkd:
   - libxcb-keysyms1-dev
 
 req_polybar:
-  - cmake
   - libasound2-dev
   - libcairo2-dev
   - libcurl4-openssl-dev
@@ -35,6 +36,7 @@ req_polybar:
 
 req_i3lock:
   - libev-dev
+  - libjpeg-dev
   - libpam-dev
   - libxcb-composite0-dev
   - libxcb-dpms0-dev
