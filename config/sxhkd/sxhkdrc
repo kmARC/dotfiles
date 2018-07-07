@@ -5,7 +5,7 @@
 # terminal emulator
 super + Return
 #	urxvt
-	x-terminal-emulator
+	xterm
 
 # program launcher
 super + space; super + space
@@ -173,16 +173,16 @@ super + space; D
 
 # Desktop apps
 super + space; b
-	x-www-browser
+	firefox
 
 super + space; t
-	dex /usr/share/applications/Thunar.desktop
+	dex-autostart /usr/share/applications/Thunar.desktop
 
 super + space; s
-	dex /usr/share/applications/skypeforlinux.desktop
+	dex-autostart /usr/share/applications/skypeforlinux.desktop
 
 super + space; v
-	dex /usr/share/applications/virtualbox.desktop
+	dex-autostart /usr/share/applications/virtualbox.desktop
 
 super + space; h
 	bspc node -o 0.65 && gvim ~/Documents/Home/index.md
@@ -192,13 +192,13 @@ super + space; w
 
 # Terminal apps
 super + space; f
-	x-terminal-emulator -ls -e bash -ci 'cd ~/Documents/; ranger'
+	xterm -ls -e bash -ci 'cd ~/Documents/; ranger'
 
 super + space; m
-	x-terminal-emulator -ls -e bash -ci 'ncmpcpp'
+	xterm -ls -e bash -ci 'ncmpcpp'
 
 super + space; x
-	x-terminal-emulator -ls -e bash -ci 'tmux-session'
+	xterm -ls -e bash -ci 'tmux-session'
 
 super + space; l; m
 	$HOME/bin/lunch-migros.sh

@@ -33,7 +33,7 @@ foreground = ${colors.foreground}
 line-size = 3
 module-margin = 2
 
-font-0 = "Roboto:size=9:style=Bold;2"
+font-0 = "Droid Sans:size=10:style=Bold;2"
 font-1 = "MaterialIcons:size=14;4"
 
 modules-left = bspwm xwindow
