@@ -1,52 +1,51 @@
 ! vim: set fdm=marker:
 ! #include ".theme.Xresources"
-#include ".theme.defines.Xresources"
-#include ".theme.rofi.Xresources"
+#include "/home/kmarc/.theme.defines.Xresources"
+#include "/home/kmarc/.theme.rofi.Xresources"
 
 ! Xft
-Xft.autohint:   0
-Xft.lcdfilter:  lcddefault
-Xft.hintstyle:  hintslight
-Xft.hinting:    1
-Xft.antialias:  1
-Xft.rgba:       rgb
+Xft.autohint:               0
+Xft.lcdfilter:              lcddefault
+Xft.hintstyle:              hintslight
+Xft.hinting:                1
+Xft.antialias:              1
+Xft.rgba:                   rgb
 
 ! Xcursor
-Xcursor.theme: DMZ-Black
+Xcursor.theme:              DMZ-Black
 
 ! XTerm
-*xterm*activeIcon:           true
-*xterm*borderWidth:          0
-*xterm*disallowedWindowOps:  20,21,SetXprop
-/* *xterm*faceName:             Hack-Regular:style=Bold:size=9 */
-*xterm*faceName:             DejaVu Sans Mono:size=9
-*xterm*faceSize:             9.0
-*xterm*faceSize1:            7.5
-*xterm*faceSize2:            9.0
-*xterm*faceSize3:            10.0
-*xterm*faceSize4:            12.0
-*xterm*faceSize5:            15.0
-*xterm*faceSize6:            20.0
-*xterm*internalBorder:       0
-*xterm*metaSendsEscape:      true
-*xterm*scaleHeight:          1.15
-*xterm*scrollbar:            false
-*xterm*useClipping:          false
-*xterm*termName:             xterm-256color
-*xterm*forceBoxChars:        true
-
-*VT100*translations:         #override \n\
-    Meta <Btn1Up>:           exec-formatted("x-www-browser '%t'", PRIMARY) \n\
-    Ctrl Meta <Key> 0:            set-vt-font("d") \n\
-    Ctrl Meta <Key> 1:            set-vt-font(1) \n\
-    Ctrl Meta <Key> 2:            set-vt-font(2) \n\
-    Ctrl Meta <Key> 3:            set-vt-font(3) \n\
-    Ctrl Meta <Key> 4:            set-vt-font(4) \n\
-    Ctrl Meta <Key> 5:            set-vt-font(5) \n\
-    Ctrl Meta <Key> 6:            set-vt-font(6) \n
-
+*xterm*activeIcon:          true
+*xterm*borderWidth:         0
+*xterm*disallowedWindowOps: 20,21,SetXprop
+*xterm*faceName:            DejaVu Sans Mono:size=9
+*xterm*faceSize:            9.0
+*xterm*faceSize1:           7.5
+*xterm*faceSize2:           9.0
+*xterm*faceSize3:           10.0
+*xterm*faceSize4:           12.0
+*xterm*faceSize5:           15.0
+*xterm*faceSize6:           20.0
+*xterm*internalBorder:      0
+*xterm*metaSendsEscape:     true
+*xterm*scaleHeight:         1.15
+*xterm*scrollBar:           false
+*xterm*useClipping:         false
+*xterm*termName:            xterm-256color
+*xterm*forceBoxChars:       true
+*VT100*translations:        #override \n\
+    Meta <Btn1Up>:          exec-formatted("x-www-browser '%t'", PRIMARY) \n\
+    Ctrl Meta <Key> 0:      set-vt-font("d") \n\
+    Ctrl Meta <Key> 1:      set-vt-font(1) \n\
+    Ctrl Meta <Key> 2:      set-vt-font(2) \n\
+    Ctrl Meta <Key> 3:      set-vt-font(3) \n\
+    Ctrl Meta <Key> 4:      set-vt-font(4) \n\
+    Ctrl Meta <Key> 5:      set-vt-font(5) \n\
+    Ctrl Meta <Key> 6:      set-vt-font(6) \n\
+    Shift Ctrl <Key> C:     copy-selection(CLIPBOARD) \n\
+    Shift Ctrl <Key> V:     insert-selection(CLIPBOARD)
 
 ! Rofi
-rofi.color-enabled:                  true
-rofi.font:                           Hack Bold 15
+rofi.color-enabled:         true
+rofi.font:                  DejaVu Sans Mono Bold 15
 rofi.bw: 0
