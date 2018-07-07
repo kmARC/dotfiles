@@ -8,7 +8,7 @@
 # $author Brice Burgess @iceburg 
 
 sysfs="/sys/class/backlight/intel_backlight"
-min=5
+min=1
 max=$(cat ${sysfs}/max_brightness)
 step=25
 level=$(cat ${sysfs}/brightness)

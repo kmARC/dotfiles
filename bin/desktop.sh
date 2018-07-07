@@ -131,16 +131,12 @@ bspc config -m "$SEC" top_padding 0
 # Set X keyboard related settings
 setxkbmap us,hu ,102_qwerty_dot_dead -option "grp:shifts_toggle,caps:ctrl_modifier"
 
-# Set X mouse related settings
-for ID in $(xinput | grep pointer \
-                   | grep -Eiv 'Virtual|Touch|Track' \
-                   | sed 's/^.*id=\([0-9]*\).*$/\1/g'); do
-    xinput set-button-map "$ID" 3 2 1
-done
-
 # Configure synaptics touchpad
 synclient HorizTwoFingerScroll=1
+synclient TapButton1=1
+synclient TapButton2=3
 synclient TapButton3=2
+synclient ClickPad=1
 
 # Fix Java nonreparenting WM issue
 ~/bin/java_nonreparenting_wm_hack.sh

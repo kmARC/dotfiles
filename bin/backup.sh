@@ -3,7 +3,7 @@
 # set -e
 
 DEST_S3_BUCKET="$USER-backup-2"
-DEST="${DEST:-/media/$USER/Backup/Backup}"
+DEST="${DEST:-/run/media/$USER/Backup/Backup}"
 EXCLUDES="/tmp/backup_excludes.txt"
 LOCK_FILE="/tmp/lock.backup"
 

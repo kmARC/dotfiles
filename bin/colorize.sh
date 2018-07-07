@@ -17,7 +17,7 @@ ALPHA_LEVEL=180
 # 12 Cyan
 # 13 Blue
 # 14 Magenta
-THEME=12
+THEME=13
 
 # Computation {{{
 declare -A base
