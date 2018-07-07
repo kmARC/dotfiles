@@ -18,7 +18,7 @@ sxhkd_path: '$HOME/.local/src/sxhkd'
 polybar_version: master
 polybar_path: '$HOME/.local/src/polybar'
 
-popcorntime_version: 0.3.10
+popcorntime_version: 0.3.9
 popcorntime_path: '/opt/PopcornTime'
 
 i3lock_version: 'master'
