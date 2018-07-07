@@ -29,7 +29,9 @@ fi
 
 function nvm_activate() {
     unalias nvm
-    source "$NVM_DIR/nvm.sh"
+    export NVM_DIR="$HOME/.nvm"
+    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+    [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
     nvm "$@"
 }
 
@@ -41,6 +43,7 @@ alias ls="ls --color -h --group-directories-first"
 alias gits="git status"
 alias nvm="nvm_activate"
 alias tmux-session="tmux attach -t Session || tmux new -s Session"
+alias vim="vimx"
 
 # Source bash compatible base colorscheme defines
 source "$HOME"/.theme.bashrc
