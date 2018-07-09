@@ -37,8 +37,8 @@ font-0 = "Droid Sans:size=10:style=Bold;2"
 font-1 = "MaterialIcons:size=14;4"
 
 modules-left = bspwm xwindow
-modules-center = xkeyboard filesystem memory cpu battery temperature
-modules-right = backlight-acpi volume date
+modules-center = date
+modules-right = xkeyboard filesystem memory cpu battery temperature wifi backlight-acpi volume
 ; modules-right = music backlight-acpi volume date
 
 scroll-up = bspwm-desknext
@@ -203,13 +203,13 @@ label = %percentage_used:4%%
 type = internal/date
 interval = 5
 
-date =
-date-alt = " %Y-%m-%d"
+date-alt =
+date = " %a, %B %d, "
 
-time = %H:%M
 time-alt = %H:%M
+time =   %H:%M
 
-format-prefix = 
+format-prefix = " "
 format-prefix-foreground = ${colors.theme}
 
 label = %date% %time%
@@ -283,5 +283,17 @@ screenchange-reload = true
 margin-top = 0
 margin-bottom = 0
 ; }}}
+
+[module/wifi]
+type = internal/network
+interface = wlp4s0
+format-connected = <ramp-signal> <label-connected>
+ramp-signal-0 = %{A1:xterm -e bash -ci 'nmtui' &:}%{A}
+label-connected = %{A1:xterm -e bash -ci 'nmtui' &:} %essid% (%signal%) %{A}
+ramp-signal-foreground = ${colors.theme}
+
+format-disconnected = <label-disconnected>
+label-disconnected = %{A1:xterm -e bash -ci 'nmtui' &:}%{A}
+label-disconnected-foreground = ${colors.theme}
 
 ; vim: fdm=marker fdl=0 fen ft=dosini
