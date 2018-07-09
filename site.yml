@@ -8,7 +8,7 @@
       tags: always
     - name: Ensure directories exist
       file:
-        path: 'item'
+        path: '{{ item }}'
         state: directory
         mode: 0755
       with_items:
@@ -290,6 +290,12 @@
     #
     # polybar
     #
+    - name: Download Material Icon Font
+      get_url:
+        url: "https://github.com/google/material-design-icons/\
+              raw/3.0.1/iconfont/MaterialIcons-Regular.ttf"
+        dest: '$HOME/.fonts/'
+      tags: polybar
     - name: Install polybar requirements
       package: name={{ item }}
       with_items: "{{ req_polybar }}"
@@ -317,12 +323,6 @@
       args:
         chdir: '{{ polybar_path }}'
       changed_when: false
-      tags: polybar
-    - name: Download Material Icon Font
-      get_url:
-        url: "https://github.com/google/material-design-icons/\
-              raw/2.2.0/iconfont/MaterialIcons-Regular.ttf"
-        dest: '$HOME/.fonts/'
       tags: polybar
 
     #
@@ -407,7 +407,6 @@
         - rtorrent.rc
         - stalonetrayrc
         - theme.rofi.Xresources
-        - tmux/plugins/tpm
         - tmux.conf
         - toprc
         - Xresources
@@ -430,6 +429,14 @@
           $HOME/bin/colorize.sh \
         '
       changed_when: false
+      tags: config
+    - name: Install tpm
+      git:
+        repo: https://github.com/tmux-plugins/tpm
+        dest: ~/.tmux/plugins/tpm
+      tags: config
+    - name: Install tmux plugins
+      shell: '~/.tmux/plugins/tpm/bin/install_plugins'
       tags: config
     - name: Symlink system-wide config files
       copy:
