@@ -1,3 +1,0 @@
-#!/usr/bin/env bash
-
-sudo ./install -c install-system.conf.yaml
