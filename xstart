@@ -7,15 +7,12 @@ export _JAVA_OPTIONS="\
           -Dswing.crossplatformlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel"
 
 # Workaround for electron/chrome based apps timeout while connecting to
-kill -TERM "$(pgrep -f "gnome-keyring-daemon")"
-
-# Configure ssh-agent
-ssh-add -k
+# kill -TERM "$(pgrep -f "gnome-keyring-daemon")"
 
 # X settings
 xrdb -load "$HOME/.Xresources"
 xsetroot -cursor_name left_ptr
-xhost +local:"$USER"
+# xhost +local:"$USER"
 
 # Configure desktop
 "$HOME/bin/desktop.sh"
@@ -32,20 +29,14 @@ xautolock -locker "$HOME/bin/lock.sh" -time 5 -detectsleep -corners '----' &
 xcape -t 250 -e 'Caps_Lock=Escape'
 (cd "$HOME/Documents/Home" || exit; python -m SimpleHTTPServer) &
 
-# Autostarting daemons
-dex-autostart /etc/xdg/autostart/gnome-keyring-pkcs11.desktop
-dex-autostart /etc/xdg/autostart/gnome-keyring-secrets.desktop
-dex-autostart /etc/xdg/autostart/gnome-keyring-ssh.desktop
+# Unlock gnome-keyring
+# /usr/bin/gnome-keyring-daemon --start --components=pkcs11,secrets,ssh
+
+# Configure ssh-agent
+ssh-add -k
 
 # Tray applets
-dex-autostart /etc/xdg/autostart/blueman.desktop
 dex-autostart /etc/xdg/autostart/hplip-systray.desktop
-dex-autostart /etc/xdg/autostart/nm-applet.desktop
-dex-autostart  /etc/xdg/autostart/print-applet.desktop
 
 # Applications
 dex-autostart  /usr/share/applications/insync.desktop
-
-# Disable touchscreen
-TOUCHSCREEN=$(xinput list | grep SYNA | sed 's/.*id=\([0-9]*\).*/\1/g')
-xinput disable "$TOUCHSCREEN"
