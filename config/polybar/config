@@ -38,7 +38,7 @@ font-1 = "MaterialIcons:size=14;4"
 
 modules-left = bspwm xwindow
 modules-center = date
-modules-right = xkeyboard filesystem memory cpu battery temperature wifi backlight-acpi volume
+modules-right = wifi bluetooth xkeyboard filesystem memory cpu battery temperature backlight-acpi volume
 ; modules-right = music backlight-acpi volume date
 
 scroll-up = bspwm-desknext
@@ -285,6 +285,7 @@ margin-bottom = 0
 ; }}}
 
 [module/wifi]
+; {{{
 type = internal/network
 interface = wlp4s0
 format-connected = <ramp-signal> <label-connected>
@@ -295,5 +296,18 @@ ramp-signal-foreground = ${colors.theme}
 format-disconnected = <label-disconnected>
 label-disconnected = %{A1:xterm -e bash -ci 'nmtui' &:}%{A}
 label-disconnected-foreground = ${colors.theme}
+; }}}
+
+[module/bluetooth]
+; {{{
+type = custom/script
+interval = 2
+
+label = %output%
+label-foreground = ${colors.theme}
+click-left = blueman-manager
+click-right = bluetooth toggle
+exec = ~/bin/polybar-bt.sh
+; }}}
 
 ; vim: fdm=marker fdl=0 fen ft=dosini
