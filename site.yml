@@ -3,6 +3,9 @@
 - name: Dotfiles
   hosts: localhost
   tasks:
+    - name: Debug ansible distribution
+      debug:
+        var: ansible_distribution
     - name: Gather os specific variables
       include_vars: "requirements-{{ ansible_distribution | lower }}.yml"
       tags: always

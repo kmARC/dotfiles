@@ -44,6 +44,7 @@ alias gits="git status"
 alias nvm="nvm_activate"
 alias tmux-session="tmux attach -t Session || tmux new -s Session"
 alias vim="vimx"
+alias did="vim +'normal ggO' +'r!date +\%Y-\%m-\%d\ \%a' $(xdg-user-dir DOCUMENTS)/did.txt"
 
 # Source bash compatible base colorscheme defines
 source "$HOME"/.theme.bashrc

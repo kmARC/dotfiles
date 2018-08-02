@@ -22,7 +22,7 @@ xset dpms 300 300 300
 lxpolkit &
 sxhkd &
 "$HOME/bin/start-mopidy.sh" &
-redshift -r &
+# redshift -r & # Started by ~/.config/systemd/user/default.target.wants/redshift.service
 compton &
 syndaemon -i 0.5 -K -R -d
 xautolock -locker "$HOME/bin/lock.sh" -time 5 -detectsleep -corners '----' &
