@@ -4,8 +4,7 @@
 
 # terminal emulator
 super + Return
-#	urxvt
-	xterm
+	xfce4-terminal
 
 # program launcher
 super + space; super + space
@@ -153,13 +152,13 @@ XF86AudioPlay
 	mpc toggle
 
 XF86MonBrightness{Up,Down}
-	~/bin/backlight.sh {up, down}
+	xbacklight -{inc,dec} 5
 
 Print
-	shutter -f & sleep 1; notify-send "Screenshot saved"
+	flameshot full -p $HOME/Pictures/Screenshots
 
 shift + Print
-	shutter -s
+	flameshot gui -p $HOME/Pictures/Screenshots
 
 # Daemons
 super + space; M
@@ -176,13 +175,13 @@ super + space; b
 	firefox
 
 super + space; t
-	dex-autostart /usr/share/applications/Thunar.desktop
+	thunar
 
 super + space; s
-	dex-autostart /usr/share/applications/skypeforlinux.desktop
+	skypeforlinux
 
 super + space; v
-	dex-autostart /usr/share/applications/virtualbox.desktop
+	virtualbox
 
 super + space; h
 	bspc node -o 0.65 && gvim ~/Documents/Home/index.md
@@ -190,15 +189,18 @@ super + space; h
 super + space; w
 	~/bin/rofi-wifi-menu.sh
 
+super + space; o
+	FILE=$(locate -r '^/home/kmarc/.*\..*' |grep -v '/\.' | rofi -dmenu -i) && exo-open "$FILE"
+
 # Terminal apps
 super + space; f
-	xterm -ls -e bash -ci 'cd ~/Documents/; ranger'
+	xfce4-terminal -x bash -ci 'cd ~/Documents/; ranger'
 
 super + space; m
-	xterm -ls -e bash -ci 'ncmpcpp'
+	xfce4-terminal -x bash -ci 'ncmpcpp'
 
 super + space; x
-	xterm -ls -e bash -ci 'tmux-session'
+	xfce4-terminal -x bash -ci 'tmux-session'
 
-super + space; l; m
-	$HOME/bin/lunch-migros.sh
+super + space; e
+	splatmoji copy
