@@ -11,6 +11,8 @@ set allow_ansi
 set arrow_cursor
 set auto_tag
 set beep_new
+set crypt_use_gpgme
+set crypt_autosign = yes
 set delete
 set mail_check = 10
 set mail_check_stats
@@ -130,11 +132,11 @@ unhdr_order *
 hdr_order   subject from to cc date
 
 # Shortcuts
-set my_macro_open_html = '<view-attachments>/html<enter><enter>q'
-set my_macro_urlview   = 'urlview<Enter>'
-macro index,pager    o        '$my_macro_open_html'             'Open HTML mail in browser'
-macro index,pager    \cb      '<pipe-message>$my_macro_urlview' 'Call urlview on message'
-macro attach,compose \cb      '<pipe-entry>$my_macro_urlview'   'Call urlview on message'
+set my_macro_open_html = "<view-attachments>/html<enter><enter>q"
+set my_macro_urlview   = "urlview<Enter>"
+macro index,pager    o        "$my_macro_open_html"             'Open HTML mail in browser'
+macro index,pager    \cb      "<pipe-message>$my_macro_urlview" 'Call urlview on message'
+macro attach,compose \cb      "<pipe-entry>$my_macro_urlview"   'Call urlview on message'
 
 macro index L "<shell-escape>read -p 'Search messages: ' x; echo \$x >~/.cache/mutt_terms<enter><limit>~i \"\`notmuch search --output=messages \$(cat ~/.cache/mutt_terms) | perl -le '@a=<>;chomp@a;s/\^id:// for@a;$,=\"|\";print@a'\`\"<enter>" "show only messages matching a notmuch pattern"
 
