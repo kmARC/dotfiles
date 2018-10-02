@@ -19,7 +19,7 @@ theme=${xrdb:theme:#ff0000}
 [bar/kmarc]
 ; {{{
 height = 28
-monitor = ${file:/tmp/polybar-monitor.txt:eDP-1}
+monitor = ${file:/tmp/polybar-monitor.txt:eDP1}
 offset-x = 0
 offset-y = 0
 margin-left = 0
@@ -33,13 +33,12 @@ foreground = ${colors.foreground}
 line-size = 3
 module-margin = 2
 
-font-0 = "Droid Sans:size=10:style=Bold;2"
+font-0 = "Droid Sans:style=Bold:size=10;2"
 font-1 = "MaterialIcons:size=14;4"
 
 modules-left = bspwm xwindow
 modules-center = date
-modules-right = wifi bluetooth xkeyboard filesystem memory cpu battery temperature backlight-acpi volume
-; modules-right = music backlight-acpi volume date
+modules-right = xkeyboard filesystem memory cpu battery temperature xbacklight volume
 
 scroll-up = bspwm-desknext
 scroll-down = bspwm-deskprev
@@ -161,20 +160,13 @@ toggle-off-foreground = ${colors.foreground}
 type = internal/xbacklight
 
 format = <label>
-label = %{A4:~/bin/backlight.sh up:}%{A5:~/bin/backlight.sh down:}%percentage:4%%
+label = %percentage:4%%
 format-label-foreground = ${colors.foreground}
 
 format-prefix = 
 format-prefix-foreground = ${colors.theme}
 
 format-suffix = %{A}%{A}
-; }}}
-
-[module/backlight-acpi]
-; {{{
-inherit = module/xbacklight
-type = internal/backlight
-card = intel_backlight
 ; }}}
 
 [module/cpu]
@@ -282,32 +274,6 @@ screenchange-reload = true
 ; {{{
 margin-top = 0
 margin-bottom = 0
-; }}}
-
-[module/wifi]
-; {{{
-type = internal/network
-interface = wlp4s0
-format-connected = <ramp-signal> <label-connected>
-ramp-signal-0 = %{A1:xterm -e bash -ci 'nmtui' &:}%{A}
-label-connected = %{A1:xterm -e bash -ci 'nmtui' &:} %essid% (%signal%) %{A}
-ramp-signal-foreground = ${colors.theme}
-
-format-disconnected = <label-disconnected>
-label-disconnected = %{A1:xterm -e bash -ci 'nmtui' &:}%{A}
-label-disconnected-foreground = ${colors.theme}
-; }}}
-
-[module/bluetooth]
-; {{{
-type = custom/script
-interval = 2
-
-label = %output%
-label-foreground = ${colors.theme}
-click-left = blueman-manager
-click-right = bluetooth toggle
-exec = ~/bin/polybar-bt.sh
 ; }}}
 
 ; vim: fdm=marker fdl=0 fen ft=dosini
