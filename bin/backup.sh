@@ -3,7 +3,7 @@
 # set -e
 
 DEST_S3_BUCKET="$USER-backup-2"
-DEST="${DEST:-/run/media/$USER/Backup/Backup}"
+DEST="${DEST:-/mnt/Backup/Backup}"
 EXCLUDES="/tmp/backup_excludes.txt"
 LOCK_FILE="/tmp/lock.backup"
 
@@ -60,7 +60,7 @@ fi
 
 touch "$LOCK_FILE"
 echo "======"
-echo "    Backup script starting @ $(date)"
+echo "    Backup script starting @ $(date) - $HOME => $DEST"
 echo "======"
 
 if [ -f "$DEST"/README ]; then
@@ -72,7 +72,8 @@ if [ -f "$DEST"/README ]; then
                 "$DEST"::'{now}' \
                 "$HOME"
 
-    borg prune --keep-daily 7 \
+    borg prune --keep-within 1d \
+               --keep-daily 7 \
                --keep-weekly 4 \
                --keep-monthly 12 \
                --keep-yearly 1 \
@@ -81,6 +82,8 @@ if [ -f "$DEST"/README ]; then
 
     borg list "$DEST"
 fi
+
+sync
 
 # fusermount -u "$DEST"
 rm -rf "$LOCK_FILE"
