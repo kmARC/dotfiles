@@ -1,42 +1,44 @@
 #!/usr/bin/env bash
 
+systemctl --user import-environment DISPLAY
+systemctl --user import-environment DBUS_SESSION_BUS_ADDRESS
+
 export QT_QPA_PLATFORMTHEME="qt5ct"
 export _JAVA_OPTIONS="\
           -Dawt.useSystemAAFontSettings=lcd \
           -Dswing.aatext=true \
           -Dswing.crossplatformlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel"
+export SAL_USE_VCLPLUGIN=gtk # LibreOffice scrolling
 
 # Workaround for electron/chrome based apps timeout while connecting to
-# kill -TERM "$(pgrep -f "gnome-keyring-daemon")"
+kill -TERM "$(pgrep -f "gnome-keyring-daemon")"
 
 # X settings
 xrdb -load "$HOME/.Xresources"
 xsetroot -cursor_name left_ptr
-# xhost +local:"$USER"
 
 # Configure desktop
 "$HOME/bin/desktop.sh"
 xset dpms 300 300 300
 
 # Daemons
-lxpolkit &
+/usr/lib/xfce4/notifyd/xfce4-notifyd &
+/usr/lib/xfce-polkit/xfce-polkit &
 sxhkd &
+compton -b
 "$HOME/bin/start-mopidy.sh" &
-# redshift -r & # Started by ~/.config/systemd/user/default.target.wants/redshift.service
-compton &
 syndaemon -i 0.5 -K -R -d
 xautolock -locker "$HOME/bin/lock.sh" -time 5 -detectsleep -corners '----' &
 xcape -t 250 -e 'Caps_Lock=Escape'
-(cd "$HOME/Documents/Home" || exit; python -m SimpleHTTPServer) &
 
 # Unlock gnome-keyring
-# /usr/bin/gnome-keyring-daemon --start --components=pkcs11,secrets,ssh
-
-# Configure ssh-agent
-ssh-add -k
+# dbus-update-activation-environment --systemd DISPLAY
+systemctl --user import-environment DISPLAY
+systemctl --user import-environment DBUS_SESSION_BUS_ADDRESS
+eval $(/usr/bin/gnome-keyring-daemon --start --components=pkcs11,secrets,ssh)
 
 # Tray applets
-dex-autostart /etc/xdg/autostart/hplip-systray.desktop
-
-# Applications
-dex-autostart  /usr/share/applications/insync.desktop
+dex /usr/share/applications/hplip.desktop
+dex /usr/share/applications/insync.desktop
+dex /usr/share/applications/nm-applet.desktop
+dex /usr/share/applications/flameshot.desktop
