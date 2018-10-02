@@ -1,3 +1,4 @@
 fonts/dotbot/**
+**/*.pyc
 !**/.gitkeep
 *.retry

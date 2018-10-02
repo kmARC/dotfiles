@@ -1,0 +1,14 @@
+# text/html; w3m -ppc 8 '%s'; nametemplate=%s.html; needsterminal
+text/html; firefox '%s' && sleep 1; nametemplate=%s.html;
+text/html; w3m -dump -cols 100 -ppc 8 -t 10 -graph -s -I %{charset} -T text/html; needsterminal; copiousoutput;
+# text/html; links -dump %s; nametemplate=%s.html; copiousoutput
+# text/html; lynx -justify -nonumbers -html5_charsets -assume_charset=utf8 -display_charset=%{charset} -dump %s; nametemplate=%s.html; copiousoutput
+# text/html; lynx -list_inline -display_charset=utf8 -dump %s; nametemplate=%s.html; copiousoutput
+# text/html; elinks -dump -dump-color-mode 1 dump-charset utf-8 -default-mime-type text/html %s; copiousoutput
+# text/html; elinks -dump -dump-charset %{charset} -default-mime-type text/html %s; copiousoutput
+# text/html; html2text %s; nametemplate=%s.html; copiousoutput
+
+application/octet-stream; mutt.octet.filter '%s';   copiousoutput;
+application/*;            xdg-open '%s' && sleep 1;
+image/*;                  xdg-open '%s' && sleep 1;
+text/calendar;            vcal -all '%s'; copiousoutput;
