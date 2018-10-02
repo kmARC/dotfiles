@@ -5,35 +5,26 @@
 wid=$1
 class=$2
 instance=$3
+wmname=$(xprop -id "$wid" _NET_WM_NAME)
 
-echo "$wid, $class, $instance" >> /tmp/bspwm-debug.txt
+echo "ID: $wid, class: $class, instance: $instance" >> /tmp/bspwm-debug.txt
+echo " \`--> type: $(xprop -id "$wid" _NET_WM_WINDOW_TYPE)" >> /tmp/bspwm-debug.txt
+echo " \`--> state: $(xprop -id "$wid" _NET_WM_STATE)" >> /tmp/bspwm-debug.txt
+echo " \`--> wmname: $wmname" >> /tmp/bspwm-debug.txt
 
-if [ "$class" = Slack ]; then
-    if [[ "$(xprop -id "$wid" WM_NAME)" == *"Call Minipanel"* ]]; then
+if [[ "$(xprop -id "$wid" _NET_WM_STATE)" == *"_NET_WM_STATE_ABOVE"* ]]; then
+    echo "border = off"
+fi
+if [[ "$(xprop -id "$wid" _NET_WM_WINDOW_TYPE)" == *"_NET_WM_WINDOW_TYPE_NORMAL"* ]]; then
+    echo "state = tiled"
+fi
+
+if [[ $class =~ Slack ]]; then
+    if [[ "$wmname" == *"Call Minipanel"* ]]; then
         echo "state = floating"
-    fi
-elif [[ $class =~ Vivaldi|Firefox ]]; then
-    if [[ "$(xprop -id "$wid" WM_NAME)" == *"Pushbullet"* ]]; then
-        echo "state = floating"
-    fi
-elif [[ $class =~ Chromium-browser ]]; then
-    if [[ "$(xprop -id "$wid" WM_NAME)" == *"Popcorn Time"* ]]; then
-        echo "desktop = 8 follow = on"
     fi
 elif [ -z "$class" ]; then
-    wmname=$(xprop -id "$wid" WM_NAME)
-    if [[ $wmname =~ not\ found ]]; then
-        echo "not found!" >> /tmp/bspwm-debug.txt
-        echo "state = floating"
-        (
-            sleep 0.5
-            wmname=$(xprop -id "$wid" WM_NAME)
-            if [[ "$wmname" == *"Spotify"* ]]; then
-                echo "move around spotify window" >> /tmp/bspwm-debug.txt
-                bspc node "$wid" --state tiled --focus --to-desktop 8
-            else
-                bspc node "$wid" --state tiled --focus
-            fi
-        ) &
+    if [[ $wmname =~ Spotify ]]; then
+      echo "desktop = 8 follow = on"
     fi
 fi
