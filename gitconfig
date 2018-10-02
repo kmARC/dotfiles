@@ -3,7 +3,7 @@
 	name = Mark Korondi
 [gui]
 	fontui = -family \"Noto Sans\" -size 9 -weight normal -slant roman -underline 0 -overstrike 0
-	fontdiff = -family \"SauceCodePro Nerd Font\" -size 9 -weight normal -slant roman -underline 0 -overstrike 0
+	fontdiff = -family Hack -size 9 -weight normal -slant roman -underline 0 -overstrike 0
 	tabsize = 4
 	spellingdictionary = en_US
 [http]
