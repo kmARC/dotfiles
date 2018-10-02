@@ -1,9 +1,12 @@
 #!/usr/bin/env bash
 
-BUILTIN_MON=${BUILTIN_MON:-eDP-1}
+# xbacklight -set 0 -time 500
+
+BUILTIN_MON=${BUILTIN_MON:-eDP1}
 MONS=($(xrandr | grep $BUILTIN_MON | awk '/ connected /{print $1}'))
 MONS=(${MONS[@]} $(xrandr | grep -v $BUILTIN_MON | awk '/ connected /{print $1}'))
 POSITION=${1:-left-of}
+PREF_BRGHT=0
 
 # Prints largest resolution mode
 function largest_res {
@@ -39,7 +42,7 @@ if [[ ${#MONS[@]} == 1 || $POSITION == 'mirror' ]]; then
     if [[ ${#MONS[@]} == 2 ]]; then
         SEC=${MONS[1]}
         MOD_PRI=$(common_res)
-        MOD_SEC=$MOD_PRI
+        MOD_SEC=${MOD_PRI}i
         xrandr --output "$SEC" --off
     fi
     echo "Setting up monitor: $PRI ($MOD_PRI)"
@@ -58,12 +61,13 @@ if [[ ${#MONS[@]} == 1 || $POSITION == 'mirror' ]]; then
     # Fix desktop order
     bspc monitor "$PRI" -o 1 2 3 4 5 6 7 8 9 0
 
-    # Set brightness to 20%
-    "$HOME/bin/backlight.sh" set 210
+    # Set preferred brightness to 20%
+    PREF_BRGHT=20
 
     # Save primary monitor for polybar
     # polybar -m | head -n1 | awk -F':' '{ print $1 }' > /tmp/polybar-monitor.txt
     echo "$PRI" > /tmp/polybar-monitor.txt
+    # echo "HDMI1" > /tmp/polybar-monitor.txt
 else
     # Choose primary and secondary
     PRI=${MONS[1]}
@@ -95,8 +99,8 @@ else
     bspc monitor "$PRI" -o 1 2 3 4 5
     bspc monitor "$SEC" -o 6 7 8 9 0
 
-    # Set brightness to maximum
-    "$HOME/bin/backlight.sh" max
+    # Set preferred brightness to maximum
+    PREF_BRGHT=100
 
     # Save primary monitor for polybar
     echo "$PRI" > /tmp/polybar-monitor.txt
@@ -172,3 +176,7 @@ SINK_INPUTS=($(pactl list sink-inputs | awk -F'#' '/^Sink Input/{ print $2 }'))
 for input in "${SINK_INPUTS[@]}"; do
   pactl move-sink-input "$input" "$SINK"
 done
+
+sleep 1
+
+xbacklight -set "$PREF_BRGHT" -time 500
