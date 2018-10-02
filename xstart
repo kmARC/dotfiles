@@ -26,19 +26,17 @@ xset dpms 300 300 300
 /usr/lib/xfce-polkit/xfce-polkit &
 sxhkd &
 compton -b
-"$HOME/bin/start-mopidy.sh" &
 syndaemon -i 0.5 -K -R -d
 xautolock -locker "$HOME/bin/lock.sh" -time 5 -detectsleep -corners '----' &
 xcape -t 250 -e 'Caps_Lock=Escape'
 
+"$HOME/bin/start-mopidy.sh" &
+
 # Unlock gnome-keyring
-# dbus-update-activation-environment --systemd DISPLAY
-systemctl --user import-environment DISPLAY
-systemctl --user import-environment DBUS_SESSION_BUS_ADDRESS
 eval $(/usr/bin/gnome-keyring-daemon --start --components=pkcs11,secrets,ssh)
 
 # Tray applets
-dex /usr/share/applications/hplip.desktop
+hp-systray &
 dex /usr/share/applications/insync.desktop
 dex /usr/share/applications/nm-applet.desktop
 dex /usr/share/applications/flameshot.desktop
