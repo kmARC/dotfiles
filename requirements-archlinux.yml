@@ -1,0 +1,20 @@
+---
+
+packages_base:
+  - bspwm
+  - sxhkd
+  - polybar
+
+packages_aur:
+  - polybar
+  - i3lock-color
+  - base16-manager
+  - tmux-tpm
+
+req_bspwm: []
+
+req_sxhkd: []
+
+req_polybar: []
+
+req_i3lock: []
