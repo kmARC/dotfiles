@@ -1,14 +1,17 @@
 #!/usr/bin/env bash
 
-PID_HIDEIT=($(pgrep -f bash.*hideIt))
-PID_TRAY=$(pgrep stalonetray)
+# PID_HIDEIT=($(pgrep -f bash.*hideIt))
+# PID_TRAY=$(pgrep stalonetray)
+# WID_TRAY=$(xwininfo -root -tree \
+#            | awk '/"stalonetray"/{ print $1 }')
+PID_TRAY=$(pgrep xfce4-panel)
 WID_TRAY=$(xwininfo -root -tree \
-           | awk '/"stalonetray"/{ print $1 }')
+           | awk '/"xfce4-panel"/{ print $1 }')
 
-for p in "${PID_HIDEIT[@]}"; do
-    echo killing $p hideit
-    kill "$p"
-done
+# for p in "${PID_HIDEIT[@]}"; do
+#     echo killing $p hideit
+#     kill "$p"
+# done
 
 # Sleep a bit until stalonetray comes back
 sleep 0.5
@@ -40,11 +43,10 @@ REGION="${POS_X}x${POS_Y}+200+${BAR_HEIGHT}"
 
 if [ -z "$PID_TRAY" ]; then
     echo starting window
-    stalonetray --geometry "$GEOMETRY" &
+    xfce4-panel -d &
 else
     echo moving window
     xdotool windowmove "${WID_TRAY}" "${POS_X}" "${POS_Y}"
 fi
 
-~/.local/src/hideIt.sh/hideIt.sh --name '^stalonetray$' -d top \
-                                 --peek 0 --region "$REGION"
+# hideIt.sh --name '^stalonetray$' -d top --peek 0 --region "$REGION"
