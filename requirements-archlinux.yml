@@ -10,6 +10,7 @@ packages_aur:
   - i3lock-color
   - base16-manager
   - tmux-tpm
+  - xfce-polkit
 
 req_bspwm: []
 

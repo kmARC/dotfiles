@@ -3,12 +3,15 @@
 - name: Dotfiles
   hosts: localhost
   tasks:
+
     - name: Debug ansible distribution
       debug:
         var: ansible_distribution
+
     - name: Gather os specific variables
       include_vars: "requirements-{{ ansible_distribution | lower }}.yml"
       tags: always
+
     - name: Ensure directories exist
       file:
         path: '{{ item }}'
@@ -18,207 +21,12 @@
         - '$HOME/.fonts'
         - '$HOME/.local/share/applications/'
       tags: config
-    - name: Set up external sources for Fedora
-      dnf: name={{ item }}
-      with_items:
-        - https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-28.noarch.rpm
-        - https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-28.noarch.rpm
-      become: true
-      when: 'ansible_distribution == "Fedora"'
-      tags: packages
-    - name: Add APT keys
-      apt_key: '{{ item }}'
-      with_items:
-        # Docker
-        - keyserver: keyserver.ubuntu.com
-          id: 7EA0A9C3F273FCD8
-        # Google Chrome
-        - keyserver: keys.gnupg.net
-          id: 1397BC53640DB551
-        # Insync
-        - keyserver: keyserver.ubuntu.com
-          id: ACCAF35C
-        # Mopidy
-        - keyserver: pgp.mit.edu
-          id: 78FD980E271D2943
-        # Skype
-        - url: https://repo.skype.com/data/SKYPE-GPG-KEY
-        # Slack
-        - url: https://packagecloud.io/slacktechnologies/slack/gpgkey
-        # Spotify
-        - keyserver: keyserver.ubuntu.com
-          id: 0DF731E45CE24F27EEEB1450EFDC8610341D9410
-        - keyserver: keyserver.ubuntu.com
-          id: 931FF8E79F0876134EDDBDCCA87FF9DF48BF1C90
-        # Virtualbox
-        - url: https://www.virtualbox.org/download/oracle_vbox_2016.asc
-        - url: https://www.virtualbox.org/download/oracle_vbox.asc
-      become: true
-      when: 'ansible_distribution == "Ubuntu"'
-      tags: packages
-    - name: Add APT keys
-      rpm_key: '{{ item }}'
-      with_items:
-        ## Docker
-        #- keyserver: keyserver.ubuntu.com
-        #  id: 7EA0A9C3F273FCD8
-        ## Google Chrome
-        #- keyserver: keys.gnupg.net
-        #  id: 1397BC53640DB551
-        # Insync
-        - key: https://d2t3ff60b2tol4.cloudfront.net/repomd.xml.key
-        # # Mopidy
-        # - keyserver: pgp.mit.edu
-        #   id: 78FD980E271D2943
-        # # Skype
-        # - url: https://repo.skype.com/data/SKYPE-GPG-KEY
-        # # Slack
-        # - url: https://packagecloud.io/slacktechnologies/slack/gpgkey
-        # # Spotify
-        # - keyserver: keyserver.ubuntu.com
-        #   id: 0DF731E45CE24F27EEEB1450EFDC8610341D9410
-        # - keyserver: keyserver.ubuntu.com
-        #   id: 931FF8E79F0876134EDDBDCCA87FF9DF48BF1C90
-        # # Virtualbox
-        # - url: https://www.virtualbox.org/download/oracle_vbox_2016.asc
-        # - url: https://www.virtualbox.org/download/oracle_vbox.asc
-      become: true
-      when: 'ansible_distribution == "Fedora"'
-      tags: packages
-    - name: Set up external sources for Ubuntu
-      apt_repository:
-        repo: '{{ item }}'
-      with_items:
-        - ppa:bitcoin/bitcoin
-        - deb [arch=amd64] https://repo.skype.com/deb stable main
-        - deb http://repository.spotify.com stable non-free
-        - deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main
-        - deb http://apt.mopidy.com/ stretch main contrib non-free
-        - deb https://packagecloud.io/slacktechnologies/slack/debian/
-            jessie main
-        - deb http://apt.insynchq.com/ubuntu
-            {{ ansible_distribution_release }} non-free contrib
-        - deb [arch=amd64] http://download.virtualbox.org/virtualbox/debian
-            {{ ansible_distribution_release }} contrib
-        - deb [arch=amd64] https://download.docker.com/linux/ubuntu
-            {{ ansible_distribution_release }} stable
-      become: true
-      when: 'ansible_distribution == "Ubuntu"'
-      tags: packages
-    - name: Set up external sources for Fedora
-      yum_repository: '{{ item }}'
-      with_items:
-        - name: Insync
-          description: Insync fedora
-          baseurl: http://yum.insynchq.com/fedora/$releasever/
-          gpgcheck: true
-          gpgkey: https://d2t3ff60b2tol4.cloudfront.net/repomd.xml.key
-          metadata_expire: 120m
-      become: true
-      when: 'ansible_distribution == "Fedora"'
-      tags: packages
+
     - name: Install distribution specific packages
       package: name={{ item }}
-      with_items: "{{ base }}"
+      with_items: "{{ packages_base }}"
       become: true
       tags: packages
-    - name: Install tools and software
-      package: name={{ item }}
-      with_items:
-        # Tmux
-        - xsel
-        # Desktop
-        - compton
-        - rofi
-        - arc-theme
-        # Tools
-        - bc
-        - borgbackup
-        - dex
-        - git
-        - gitk
-        - htop
-        - mc
-        - ncmpcpp
-        - powertop
-        - ranger
-        - unrar
-        - rtorrent
-        - silversearcher-ag
-        - tig
-        - vim
-        # GUI
-        - bitcoin-qt
-        - google-chrome-stable
-        - insync
-        - shutter
-        - skypeforlinux
-        - slack-desktop
-        - spotify-client
-        - stalonetray
-        - thunar
-        - virtualbox-{{ virtualbox_version }}
-        - xterm
-        # Daemons
-        - docker-ce
-        - mopidy
-        - qt5ct
-        - redshift
-        - tlp
-        - xautolock
-        - xcape
-      become: true
-      tags: packages
-
-    #
-    # Base16
-    #
-    - name: Install Base16 Shell
-      git:
-        repo: https://github.com/chriskempson/base16-shell.git
-        dest: '{{ base16_path }}'
-        version: master
-      tags: base16
-    - name: Configure Base16 Shell
-      blockinfile:
-        path: '{{ bashrc }}'
-        marker: "# {mark} Base16 Shell config {kmarc's dotfiles}"
-        block: |
-          BASE16_SHELL="{{ base16_path }}"
-          [ -n "$PS1" ] && \
-              [ -s "$BASE16_SHELL/profile_helper.sh" ] && \
-                  eval "$("$BASE16_SHELL/profile_helper.sh")"
-      tags: base16
-    - name: Select a default bash theme
-      command: /bin/bash -cil 'base16_{{ base16_theme }}'
-      args:
-        creates: '$HOME/.base16_theme'
-      changed_when: false
-      tags: base16
-
-    #
-    # Bash-it
-    #
-    - name: Install Bash-it
-      git:
-        repo: https://github.com/Bash-it/bash-it.git
-        dest: '{{ bashit_path }}'
-        version: master
-      tags: bashit
-    - name: Configure Bash-it
-      command: |
-        /bin/bash -cl '{{ bashit_path }}/install.sh --silent --no-modify-config'
-      changed_when: false
-      tags: bashit
-    - name: Configure Bash-It
-      blockinfile:
-        path: '{{ bashrc }}'
-        marker: "# {mark} Bash-it config {kmarc's dotfiles}"
-        block: |
-          export BASH_IT="{{ bashit_path }}"
-          source "$HOME"/.bashrc.kmarc
-          source "$BASH_IT"/bash_it.sh
-      tags: bashit
 
     #
     # vim
@@ -229,160 +37,11 @@
         dest: '{{ vim_path }}'
         version: master
       tags: vim
+
     - name: Install vim plugins
       command: bash -cil 'vim -c ":PlugInstall" -c ":qa!"'
       changed_when: false
       tags: vim
-
-    #
-    # bspwm
-    #
-    - name: Install bspwm requirements
-      package: name={{ item }}
-      with_items: "{{ req_bspwm }}"
-      become: true
-      tags: bspwm
-    - name: Download bspwm
-      git:
-        repo: https://github.com/baskerville/bspwm
-        dest: '{{ bspwm_path }}'
-        version: '{{ bspwm_version }}'
-      tags: bspwm
-    - name: Compile bspwm
-      command: bash -c 'make'
-      args:
-        chdir: '{{ bspwm_path }}'
-      changed_when: false
-      tags: bspwm
-    - name: Install bspwm
-      # FIXME: this should be ran as `become` but then $HOME is root
-      command: bash -c 'sudo make install'
-      args:
-        chdir: '{{ bspwm_path }}'
-      changed_when: false
-      tags: bspwm
-
-    #
-    # sxhkd
-    #
-    - name: Install sxhkd requirements
-      package: name={{ item }}
-      with_items: "{{ req_sxhkd }}"
-      become: true
-      tags: sxhkd
-    - name: Download sxhkd
-      git:
-        repo: https://github.com/baskerville/sxhkd
-        dest: '{{ sxhkd_path }}'
-        version: '{{ sxhkd_version }}'
-      tags: sxhkd
-    - name: Compile sxhkd
-      command: bash -c 'make'
-      args:
-        chdir: '{{ sxhkd_path }}'
-      changed_when: false
-      tags: sxhkd
-    - name: Install sxhkd
-      # FIXME: this should be ran as `become` but then $HOME is root
-      command: bash -c 'sudo make install'
-      args:
-        chdir: '{{ sxhkd_path }}'
-      changed_when: false
-      tags: sxhkd
-
-    #
-    # polybar
-    #
-    - name: Download Material Icon Font
-      get_url:
-        url: "https://github.com/google/material-design-icons/\
-              raw/3.0.1/iconfont/MaterialIcons-Regular.ttf"
-        dest: '$HOME/.fonts/'
-      tags: polybar
-    - name: Install polybar requirements
-      package: name={{ item }}
-      with_items: "{{ req_polybar }}"
-      become: true
-      tags: polybar
-    - name: Download polybar
-      git:
-        repo: https://github.com/jaagr/polybar
-        dest: '{{ polybar_path }}'
-        version: '{{ polybar_version }}'
-      tags: polybar
-    - name: Compile polybar
-      shell: |
-        mkdir -p build
-        cd build
-        cmake ..
-        make -j5
-      args:
-        chdir: '{{ polybar_path }}'
-      tags: polybar
-      changed_when: false
-    - name: Install polybar
-      # FIXME: this should be ran as `become` but then $HOME is root
-      command: bash -c 'sudo make install'
-      args:
-        chdir: '{{ polybar_path }}'
-      changed_when: false
-      tags: polybar
-
-    #
-    # i3lock
-    #
-    - name: Install i3lock requirements
-      package: name={{ item }}
-      with_items: "{{ req_i3lock }}"
-      become: true
-      tags: i3lock
-    - name: Download i3lock
-      git:
-        repo: https://github.com/PandorasFox/i3lock-color
-        dest: '{{ i3lock_path }}'
-        version: '{{ i3lock_version }}'
-      tags: i3lock
-    - name: Compile i3lock
-      shell: |
-        autoreconf -i
-        ./configure
-        make -j5
-      args:
-        chdir: '{{ i3lock_path }}'
-      tags: i3lock
-      changed_when: false
-    - name: Install i3lock
-      # FIXME: this should be ran as `become` but then $HOME is root
-      command: bash -c 'sudo make install'
-      args:
-        chdir: '{{ i3lock_path }}'
-      changed_when: false
-      tags: i3lock
-
-    #
-    # popcorntime
-    #
-    - name: Ensure PopcornTime paths exist
-      file:
-        path: '{{ popcorntime_path }}'
-        state: directory
-        mode: 0755
-      become: true
-      tags: popcorntime
-    - name: Download popcorntime
-      unarchive:
-        src: "https://mirror03.popcorntime.sh/repo/build/\
-              Popcorn-Time-{{ popcorntime_version }}-Linux-64.tar.xz"
-        dest: '{{ popcorntime_path }}'
-        remote_src: true
-        creates: '{{ popcorntime_path }}/linux64/Popcorn-Time'
-      become: true
-      tags: popcorntime
-    - name: Copy template popcorntime.desktop
-      template:
-        src: popcorntime.desktop.j2
-        dest: '$HOME/.local/share/applications/popcorntime.desktop'
-      tags: popcorntime
 
     #
     # Dotfiles
@@ -395,6 +54,7 @@
       with_items:
         - tmux/plugins
       tags: config
+
     - name: Symlink config files
       file:
         src: '{{ playbook_dir }}/{{ item }}'
@@ -417,6 +77,7 @@
         - xstart
         - xstop
       tags: config
+
     - name: Symlink bin
       file:
         src: '{{ playbook_dir }}/{{ item }}'
@@ -425,6 +86,7 @@
       with_items:
         - bin
       tags: config
+
     - name: Run scripts
       command: |
         bash -cil '\
@@ -433,32 +95,16 @@
         '
       changed_when: false
       tags: config
+
+    #
+    # tmux tpm
+    #
     - name: Install tpm
       git:
         repo: https://github.com/tmux-plugins/tpm
         dest: ~/.tmux/plugins/tpm
       tags: config
+
     - name: Install tmux plugins
       shell: '~/.tmux/plugins/tpm/bin/install_plugins'
       tags: config
-    - name: Symlink system-wide config files
-      copy:
-        src: '{{ playbook_dir }}/{{ item }}'
-        dest: '/{{ item }}'
-        mode: 0700
-      with_items:
-        - etc/systemd/system/i3lock@.service
-        - etc/rc.d/rc.local
-      become: true
-      tags: root_config
-      notify: Reload systemd
-  handlers:
-    - name: Reload systemd
-      systemd:
-        name: '{{ item }}'
-        enabled: true
-        daemon_reload: true
-      with_items:
-        - i3lock@{{ ansible_user_id }}.service
-        - rc-local.service
-      become: true
