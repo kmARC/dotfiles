@@ -75,6 +75,7 @@
         - rtorrent.rc
         - theme.rofi.Xresources
         - tmux.conf
+        - todo.cfg
         - toprc
         - xprofile
         - xstart
