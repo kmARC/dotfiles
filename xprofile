@@ -1,3 +1,9 @@
 #!/usr/bin/env bash
 
-exec dbus-launch --exit-with-session ssh-agent bspwm
+eval "$(ssh-agent)"
+export SSH_AUTH_SOCK
+
+eval "$(dbus-launch)"
+export DBUS_SESSION_BUS_ADDRESS
+
+exec bspwm
