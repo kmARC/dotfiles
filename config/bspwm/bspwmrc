@@ -36,9 +36,6 @@ bspc rule -a "Thunar"           desktop=4 follow=on
 bspc rule -a "VirtualBox"       desktop=5 follow=on
 bspc rule -a "Vivaldi-stable"   desktop=2 follow=on
 
-# Enforce tiled
-bspc rule -a "*:libreoffice"    state=tiled
-
 # Better if floating
 bspc rule -a "*:vpnui"          state=floating
 bspc rule -a "Keybase"          state=floating
