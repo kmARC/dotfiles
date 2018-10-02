@@ -1,0 +1,38 @@
+setenv from $from
+
+set my_user = $from
+set my_pass = `secret-tool lookup gmail-user $from`
+
+# Folders
+set folder     = ~/.mutt/$from
+set spoolfile  = +INBOX
+set record     = +[Gmail].Sent\ Mail
+set mbox       = +[Gmail].All\ Mail
+set postponed  = +[Gmail].Drafts
+set trash      = +[Gmail].Trash
+set signature  = ~/.mutt/sig/sig-$from.txt
+
+# Sending
+set smtp_pass  = $my_pass
+set smtp_url   = smtp://$from@smtp.gmail.com:587/
+
+# Mailboxes
+unmailboxes *
+mailboxes `find ~/.mutt/$from/ -type d -name cur -printf '"%h" ' | sort`
+exec check-stats
+
+# Addressbook
+setenv user $my_user
+setenv pass $my_pass
+set query_command = "goobook -c .config/goobook/goobookrc-$from query '%s'"
+macro index,pager a "<pipe-message>goobook -c .config/goobook/goobookrc-$from add<return>" "add sender to google contacts"
+
+# Variable-dependent shortcuts
+macro index,pager e "\
+<enter-command>unset resolve<enter>\
+<clear-flag>N\
+<save-message>$mbox<enter><enter>\
+<sync-mailbox>\
+<enter-command>set resolve<enter>"               "Archive"
+
+# vim: set ft=neomuttrc:

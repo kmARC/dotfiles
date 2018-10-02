@@ -1,0 +1,149 @@
+# Directories
+set alias_file       = ~/.mutt/alias
+set header_cache     = ~/.mutt/cache/headers
+set message_cachedir = ~/.mutt/cache/bodies
+set certificate_file = ~/.mutt/certificates
+set tmpdir           = ~/.mutt/temp
+set mailcap_path     = ~/.mailcap
+
+# General
+set allow_ansi
+set arrow_cursor
+set auto_tag
+set beep_new
+set delete
+set mail_check = 10
+set mail_check_stats
+set mbox_type = Maildir
+set menu_scroll
+set pager_context = 3
+set pager_index_lines = 10
+set pager_stop
+set quit
+set sort = threads
+set sort_aux = reverse-last-date-received
+set thorough_search
+set timeout = 10
+set wrap = 100
+unset mark_old
+unset move
+unset copy
+unset wait_key
+
+# Folder
+set folder_format = '%2C %t %N %f'
+
+
+# MIME
+set implicit_autoview
+alternative_order text/enriched text/calendar text/plain text/html 
+
+# Sidebar
+bind  index,pager \cP sidebar-prev
+bind  index,pager \cN sidebar-next
+bind  index,pager \cO sidebar-open
+macro index,pager b   '<enter-command>toggle sidebar_visible<enter>'
+set sidebar_visible
+set sidebar_format = '%B%* %?N?%N?'
+set sidebar_sort_method = 'path'
+
+# Colors
+# Default
+color normal        color07 color00
+color error         color01 color00
+color tilde         color20 color00
+color message       color06 color00
+color markers       color18 color19
+color attachment    color19 color00
+color search        color05 color00
+color indicator     color18 color06
+color tree          color03 color00
+color signature     color05 color00
+
+# Status
+set status_format = '  %f   Messages: %?M?%M of ?%m    New: %n    Flag: %F    Tag: %t%> (%P)   '
+
+color status        color08       color18
+color status        color06       color18 '=(.*)Messages' 1
+color status        color02       color18 'Messages'
+color status        brightcolor15 color18 'New'
+color status        color05       color18 'Flag'
+color status        color04       color18 'Tag'
+
+# Index
+set index_format = ' %4C %Z  %-15.15L (%?l?%4l&%4c?) %s %*· %?X?[%X] &?%<[y?%<[m?%<[d?%[ %H:%M]&%[%a %d]>&%[%b %d]>&%[%Y-%m]> '
+color index         color19       color00 '~R'
+color index_author  color20       color00 '~R'
+color index_subject color20       color00 '~R'
+color index         brightcolor19 color00 '~N'
+color index_author  brightcolor15 color00 '~N'
+color index_subject brightcolor15 color00 '~N'
+color index_flags   color00       color04 '~T'
+color index_flags   color00       color05 '~F'
+color index_number  color02       color00
+
+# Sidebar
+color sidebar_new       brightcolor15 color00
+color sidebar_divider   color18       color18
+color sidebar_highlight brightcolor14 color00
+
+# Links
+color body color06 color00 '[-a-z_0-9.%$]+@[-a-z_0-9.]+\\.[-a-z][-a-z]+'
+color body blue    color00 "([a-z][a-z0-9+-]*://(((([a-z0-9_.!~*'();:&=+$,-]|%[0-9a-f][0-9a-f])*@)?((([a-z0-9]([a-z0-9-]*[a-z0-9])?)\\.)*([a-z]([a-z0-9-]*[a-z0-9])?)\\.?|[0-9]+\\.[0-9]+\\.[0-9]+\\.[0-9]+)(:[0-9]+)?)|([a-z0-9_.!~*'()$,;:@&=+-]|%[0-9a-f][0-9a-f])+)(/([a-z0-9_.!~*'():@&=+$,-]|%[0-9a-f][0-9a-f])*(;([a-z0-9_.!~*'():@&=+$,-]|%[0-9a-f][0-9a-f])*)*(/([a-z0-9_.!~*'():@&=+$,-]|%[0-9a-f][0-9a-f])*(;([a-z0-9_.!~*'():@&=+$,-]|%[0-9a-f][0-9a-f])*)*)*)?(\\?([a-z0-9_.!~*'();/?:@&=+$,-]|%[0-9a-f][0-9a-f])*)?(#([a-z0-9_.!~*'();/?:@&=+$,-]|%[0-9a-f][0-9a-f])*)?|(www|ftp)\\.(([a-z0-9]([a-z0-9-]*[a-z0-9])?)\\.)*([a-z]([a-z0-9-]*[a-z0-9])?)\\.?(:[0-9]+)?(/([-a-z0-9_.!~*'():@&=+$,]|%[0-9a-f][0-9a-f])*(;([-a-z0-9_.!~*'():@&=+$,]|%[0-9a-f][0-9a-f])*)*(/([-a-z0-9_.!~*'():@&=+$,]|%[0-9a-f][0-9a-f])*(;([-a-z0-9_.!~*'():@&=+$,]|%[0-9a-f][0-9a-f])*)*)*)?(\\?([-a-z0-9_.!~*'();/?:@&=+$,]|%[0-9a-f][0-9a-f])*)?(#([-a-z0-9_.!~*'();/?:@&=+$,]|%[0-9a-f][0-9a-f])*)?)[^].,:;!)? \t\r\n<>\"]"
+
+# Attachments
+color attach_headers brightyellow  default    '\[-- Attachment.*'
+
+# Header
+color hdrdefault color19       color00
+color header     brightcolor15 color00 '^(Subject)'
+color header     color02       color00 '^(From)'
+
+# Body
+color bold        brightcolor20 color00
+
+# Quoted text
+color quoted  color04 color00 # Quote level 1: Blue
+color quoted1 color06 color00 # Quote level 2: Cyan
+color quoted2 color03 color00 # Quote level 3: Yellow
+color quoted3 color01 color00 # Quote level 4: Red
+color quoted4 color02 color00 # Quote level 5: Green
+color quoted5 color04 color00 # Quote level 6: Blue
+color quoted6 color06 color00 # Quote level 7: Cyan
+color quoted7 color03 color00 # Quote level 8: Yellow
+color quoted8 color01 color00 # Quote level 9: Red
+
+# PGP
+color body    color01 color00 '(BAD signature)'
+color body    color06 color00 '(Good signature)'
+color body    color02 color00 '^gpg: Good signature .*'
+color body    color03 color00 '^gpg: '
+color body    color01 color00 '^gpg: BAD signature from.*'
+
+# Border lines.
+color body        color04 color00 '( *[-+=#*~_]){6,}'
+
+# Headers
+ignore      *
+unignore    subject from to cc date
+unhdr_order *
+hdr_order   subject from to cc date
+
+# Shortcuts
+set my_macro_open_html = '<view-attachments>/html<enter><enter>q'
+set my_macro_urlview   = 'urlview<Enter>'
+macro index,pager    o        '$my_macro_open_html'             'Open HTML mail in browser'
+macro index,pager    \cb      '<pipe-message>$my_macro_urlview' 'Call urlview on message'
+macro attach,compose \cb      '<pipe-entry>$my_macro_urlview'   'Call urlview on message'
+
+macro index L "<shell-escape>read -p 'Search messages: ' x; echo \$x >~/.cache/mutt_terms<enter><limit>~i \"\`notmuch search --output=messages \$(cat ~/.cache/mutt_terms) | perl -le '@a=<>;chomp@a;s/\^id:// for@a;$,=\"|\";print@a'\`\"<enter>" "show only messages matching a notmuch pattern"
+
+bind editor <Tab>    complete-query
+bind editor <space>  noop
+# bind  index,pager g        noop
+
+source ~/.pdotfiles/muttrc
+
+source ~/.mutt/muttrc._gmail_
+
+# vim: set ft=neomuttrc:

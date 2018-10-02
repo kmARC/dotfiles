@@ -18,8 +18,9 @@
         state: directory
         mode: 0755
       with_items:
-        - '$HOME/.fonts'
+        - '$HOME/.fonts/'
         - '$HOME/.local/share/applications/'
+        - '$HOME/.mutt/'
       tags: config
 
     - name: Install distribution specific packages
@@ -61,18 +62,20 @@
         dest: '$HOME/.{{ item }}'
         state: link
       with_items:
+        - Xresources
+        - bashrc.kmarc
+        - compton.conf
         - config/bspwm
         - config/polybar
         - config/sxhkd
-        - bashrc.kmarc
-        - compton.conf
         - gitconfig
+        - mutt/muttrc._gmail_
+        - mutt/muttrc._owa_
+        - muttrc
         - rtorrent.rc
-        - stalonetrayrc
         - theme.rofi.Xresources
         - tmux.conf
         - toprc
-        - Xresources
         - xprofile
         - xstart
         - xstop
