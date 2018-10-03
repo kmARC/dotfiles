@@ -13,9 +13,8 @@ echo " \`--> state: $(xprop -id "$wid" _NET_WM_STATE)" >> /tmp/bspwm-debug.txt
 echo " \`--> wmname: $wmname" >> /tmp/bspwm-debug.txt
 
 if [[ "$(xprop -id "$wid" _NET_WM_STATE)" == *"_NET_WM_STATE_ABOVE"* ]]; then
-    echo "border = off"
-fi
-if [[ "$(xprop -id "$wid" _NET_WM_WINDOW_TYPE)" == *"_NET_WM_WINDOW_TYPE_NORMAL"* ]]; then
+    echo "border = off state = floating"
+elif [[ "$(xprop -id "$wid" _NET_WM_WINDOW_TYPE)" == *"_NET_WM_WINDOW_TYPE_NORMAL"* ]]; then
     echo "state = tiled"
 fi
 
