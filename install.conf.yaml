@@ -24,8 +24,8 @@
         path: mutt/*
     # ~/.local/src/rxvt:
     #     path: local/src/rxvt
-    # ~/.tmux/plugins/tpm:
-    #     path: tmux/plugins/tpm
+    ~/.tmux/plugins/tpm:
+        path: tmux/plugins/tpm
     ~/bin:
         path: bin
 
@@ -51,5 +51,5 @@
     # - [~/.dotfiles/hooks/bash.sh, Setting up bashrc]
     # - [~/.dotfiles/hooks/font.sh SourceCodePro, Installing font]
     # - [~/.fzf/install --all, Installing FZF]
-    # - [~/.tmux/plugins/tpm/bin/install_plugins, Installing new TMUX plugins]
-    # - [~/.tmux/plugins/tpm/bin/update_plugins all, Upgrading TMUX plugins]
+    - [~/.tmux/plugins/tpm/bin/install_plugins, Installing new TMUX plugins]
+    - [~/.tmux/plugins/tpm/bin/update_plugins all, Upgrading TMUX plugins]
