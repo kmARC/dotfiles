@@ -13,6 +13,11 @@ if [ ! -d "$DEST" ]; then
     exit -1
 fi
 
+if [[ "$1" == "sync" ]]; then
+    aws s3 sync "${DEST}" "s3://${DEST_S3_BUCKET}"
+    exit 0
+fi
+
 cat > "$EXCLUDES" <<EOF
 $DEST
 $HOME/.cache
