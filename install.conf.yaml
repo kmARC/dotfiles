@@ -1,0 +1,52 @@
+- defaults:
+    link:
+      create: true
+      relink: true
+
+- clean: ['~']
+
+- link:
+    # Explicit paths
+    ~/.config/bspwm/bspwmrc:
+        path: config/bspwm/bspwmrc
+    ~/.config/mopidy/mopidy.conf:
+        path: config/mopidy/mopidy.conf
+    ~/.config/polybar/config:
+        path: config/polybar/config
+    ~/.config/ranger/rc.conf:
+        path: config/ranger/rc.conf
+    ~/.config/sxhkd/sxhkdrc:
+        path: config/sxhkd/sxhkdrc
+    ~/.fonts/dotbot:
+        path: fonts/dotbot
+    # ~/.local/src/rxvt:
+    #     path: local/src/rxvt
+    # ~/.tmux/plugins/tpm:
+    #     path: tmux/plugins/tpm
+    ~/bin:
+        path: bin
+
+    # Top levels
+    ~/.bashrc.kmarc:
+    ~/.compton.conf:
+    ~/.gitconfig:
+    ~/.mailcap:
+    ~/.muttrc:
+    ~/.rtorrent.rc:
+    ~/.theme.rofi.Xresources:
+    ~/.tmux.conf:
+    ~/.todo.cfg:
+    ~/.toprc:
+    ~/.Xresources:
+    ~/.xinitrc: xprofile
+    ~/.xprofile:
+    ~/.xstart:
+    ~/.xstop:
+
+- shell:
+    - [git submodule update --init --recursive, Installing/updating submodules]
+    # - [~/.dotfiles/hooks/bash.sh, Setting up bashrc]
+    # - [~/.dotfiles/hooks/font.sh SourceCodePro, Installing font]
+    # - [~/.fzf/install --all, Installing FZF]
+    # - [~/.tmux/plugins/tpm/bin/install_plugins, Installing new TMUX plugins]
+    # - [~/.tmux/plugins/tpm/bin/update_plugins all, Upgrading TMUX plugins]
