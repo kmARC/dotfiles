@@ -1,7 +1,7 @@
 setenv from $from
 
 set my_user = $from
-set my_pass = `secret-tool lookup gmail-user $from`
+set my_pass = `secret-tool lookup gmail-pass $from`
 
 # Folders
 set folder     = ~/.mutt/$from
@@ -29,10 +29,10 @@ macro index,pager a "<pipe-message>goobook -c .config/goobook/goobookrc-$from ad
 
 # Variable-dependent shortcuts
 macro index,pager e "\
-<enter-command>unset resolve<enter>\
+<enter-command>set resolve=no confirmappend=no<enter>\
 <clear-flag>N\
-<save-message>$mbox<enter><enter>\
+<save-message>$mbox<enter>\
 <sync-mailbox>\
-<enter-command>set resolve<enter>"               "Archive"
+<enter-command>set resolve=yes confirmappend=yes<enter>" "Archive"
 
 # vim: set ft=neomuttrc:

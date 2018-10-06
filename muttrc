@@ -14,6 +14,7 @@ set beep_new
 set crypt_use_gpgme
 set crypt_autosign = yes
 set delete
+set fast_reply
 set mail_check = 10
 set mail_check_stats
 set mbox_type = Maildir
@@ -22,6 +23,7 @@ set pager_context = 3
 set pager_index_lines = 10
 set pager_stop
 set quit
+set save_history = 1000
 set sort = threads
 set sort_aux = reverse-last-date-received
 set thorough_search
@@ -138,7 +140,7 @@ macro index,pager    o        "$my_macro_open_html"             'Open HTML mail 
 macro index,pager    \cb      "<pipe-message>$my_macro_urlview" 'Call urlview on message'
 macro attach,compose \cb      "<pipe-entry>$my_macro_urlview"   'Call urlview on message'
 
-macro index L "<shell-escape>read -p 'Search messages: ' x; echo \$x >~/.cache/mutt_terms<enter><limit>~i \"\`notmuch search --output=messages \$(cat ~/.cache/mutt_terms) | perl -le '@a=<>;chomp@a;s/\^id:// for@a;$,=\"|\";print@a'\`\"<enter>" "show only messages matching a notmuch pattern"
+macro index L "<shell-escape>read -p 'Search messages: ' x; echo \$x >~/.cache/mutt_terms<enter><enter-command>virtual-mailboxes \"\`cat ~/.cache/mutt_terms\`\" \"notmuch://?query=\`cat ~/.cache/mutt_terms\`\"<enter><change-vfolder>?"
 
 bind editor <Tab>    complete-query
 bind editor <space>  noop

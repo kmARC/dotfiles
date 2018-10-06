@@ -1,7 +1,7 @@
 setenv from $from
 
-set my_user = `secret-tool lookup owa-user $from`
-set my_pass = `secret-tool lookup owa-pass $from`
+set my_user = "`secret-tool lookup owa-user $from`"
+set my_pass = "`secret-tool lookup owa-pass $from`"
 
 # Folders
 set folder     = ~/.mutt/$from

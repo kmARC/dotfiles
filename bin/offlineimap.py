@@ -1,4 +1,4 @@
 from subprocess import check_output
 
-def get_pass(account):
-    return check_output("secret-tool lookup username " + account, shell=True).splitlines()[0]
+def get_pass(kind, account):
+    return check_output("secret-tool lookup %s-pass '%s'" %(kind ,account), shell=True).splitlines()[0]
