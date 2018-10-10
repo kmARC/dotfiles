@@ -1,9 +1,11 @@
 #!/usr/bin/env bash
 
-eval "$(ssh-agent)"
+# Unlock gnome-keyring
+eval $(gnome-keyring-daemon --replace --components=pkcs11,secrets,ssh)
 export SSH_AUTH_SOCK
+export GNOME_KEYRING_CONTROL
 
-eval "$(dbus-launch)"
-export DBUS_SESSION_BUS_ADDRESS
+# Update systemctl user slice with $DISPLAY
+systemctl --user import-environment DISPLAY
 
 exec bspwm

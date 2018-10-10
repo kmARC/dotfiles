@@ -1,17 +1,11 @@
 #!/usr/bin/env bash
 
-systemctl --user import-environment DISPLAY
-systemctl --user import-environment DBUS_SESSION_BUS_ADDRESS
-
 export QT_QPA_PLATFORMTHEME="qt5ct"
 export _JAVA_OPTIONS="\
           -Dawt.useSystemAAFontSettings=lcd \
           -Dswing.aatext=true \
           -Dswing.crossplatformlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel"
 export SAL_USE_VCLPLUGIN=gtk # LibreOffice scrolling
-
-# Workaround for electron/chrome based apps timeout while connecting to
-kill -TERM "$(pgrep -f "gnome-keyring-daemon")"
 
 # X settings
 xrdb -load "$HOME/.Xresources"
@@ -23,17 +17,16 @@ xset dpms 300 300 300
 
 # Daemons
 /usr/lib/xfce4/notifyd/xfce4-notifyd &
-/usr/lib/xfce-polkit/xfce-polkit &
+/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
+/usr/lib/geoclue-2.0/demos/agent &
+systemctl --user restart redshift &
+system-config-printer-applet &
 sxhkd &
 compton -b
 syndaemon -i 0.5 -K -R -d
 xautolock -locker "$HOME/bin/lock.sh" -time 5 -detectsleep -corners '----' &
 xcape -t 250 -e 'Caps_Lock=Escape'
-
 "$HOME/bin/start-mopidy.sh" &
-
-# Unlock gnome-keyring
-eval $(/usr/bin/gnome-keyring-daemon --start --components=pkcs11,secrets,ssh)
 
 # Tray applets
 hp-systray &
