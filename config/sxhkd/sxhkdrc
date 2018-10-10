@@ -155,7 +155,7 @@ XF86MonBrightness{Up,Down}
 	xbacklight -{inc,dec} 5
 
 Print
-	flameshot full -p $HOME/Pictures/Screenshots
+	flameshot screen -p $HOME/Pictures/Screenshots
 
 shift + Print
 	flameshot gui -p $HOME/Pictures/Screenshots
@@ -194,13 +194,13 @@ super + space; o
 
 # Terminal apps
 super + space; f
-	xfce4-terminal -x bash -ci 'cd ~/Documents/; ranger'
+	xfce4-terminal -x zsh -ci 'cd ~/Documents/; ranger'
 
 super + space; m
-	xfce4-terminal -x bash -ci 'ncmpcpp'
+	xfce4-terminal -x zsh -ci 'ncmpcpp'
 
 super + space; x
-	xfce4-terminal -x bash -ci 'tmux-session'
+	xfce4-terminal -x zsh -ci 'tmux-session'
 
 super + space; e
 	splatmoji copy
