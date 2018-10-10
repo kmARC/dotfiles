@@ -22,6 +22,7 @@ set menu_scroll
 set pager_context = 3
 set pager_index_lines = 10
 set pager_stop
+set pipe_decode
 set quit
 set save_history = 1000
 set sort = threads
@@ -37,7 +38,6 @@ unset wait_key
 # Folder
 set folder_format = '%2C %t %N %f'
 
-
 # MIME
 set implicit_autoview
 alternative_order text/enriched text/calendar text/plain text/html 
@@ -46,9 +46,9 @@ alternative_order text/enriched text/calendar text/plain text/html
 bind  index,pager \cP sidebar-prev
 bind  index,pager \cN sidebar-next
 bind  index,pager \cO sidebar-open
-macro index,pager b   '<enter-command>toggle sidebar_visible<enter>'
+macro index,pager   b '<enter-command>toggle sidebar_visible<enter>'
 set sidebar_visible
-set sidebar_format = '%B%* %?N?%N?'
+set sidebar_format      = '%B%* %?N?%N?'
 set sidebar_sort_method = 'path'
 
 # Colors
@@ -96,7 +96,7 @@ color body color06 color00 '[-a-z_0-9.%$]+@[-a-z_0-9.]+\\.[-a-z][-a-z]+'
 color body blue    color00 "([a-z][a-z0-9+-]*://(((([a-z0-9_.!~*'();:&=+$,-]|%[0-9a-f][0-9a-f])*@)?((([a-z0-9]([a-z0-9-]*[a-z0-9])?)\\.)*([a-z]([a-z0-9-]*[a-z0-9])?)\\.?|[0-9]+\\.[0-9]+\\.[0-9]+\\.[0-9]+)(:[0-9]+)?)|([a-z0-9_.!~*'()$,;:@&=+-]|%[0-9a-f][0-9a-f])+)(/([a-z0-9_.!~*'():@&=+$,-]|%[0-9a-f][0-9a-f])*(;([a-z0-9_.!~*'():@&=+$,-]|%[0-9a-f][0-9a-f])*)*(/([a-z0-9_.!~*'():@&=+$,-]|%[0-9a-f][0-9a-f])*(;([a-z0-9_.!~*'():@&=+$,-]|%[0-9a-f][0-9a-f])*)*)*)?(\\?([a-z0-9_.!~*'();/?:@&=+$,-]|%[0-9a-f][0-9a-f])*)?(#([a-z0-9_.!~*'();/?:@&=+$,-]|%[0-9a-f][0-9a-f])*)?|(www|ftp)\\.(([a-z0-9]([a-z0-9-]*[a-z0-9])?)\\.)*([a-z]([a-z0-9-]*[a-z0-9])?)\\.?(:[0-9]+)?(/([-a-z0-9_.!~*'():@&=+$,]|%[0-9a-f][0-9a-f])*(;([-a-z0-9_.!~*'():@&=+$,]|%[0-9a-f][0-9a-f])*)*(/([-a-z0-9_.!~*'():@&=+$,]|%[0-9a-f][0-9a-f])*(;([-a-z0-9_.!~*'():@&=+$,]|%[0-9a-f][0-9a-f])*)*)*)?(\\?([-a-z0-9_.!~*'();/?:@&=+$,]|%[0-9a-f][0-9a-f])*)?(#([-a-z0-9_.!~*'();/?:@&=+$,]|%[0-9a-f][0-9a-f])*)?)[^].,:;!)? \t\r\n<>\"]"
 
 # Attachments
-color attach_headers brightyellow  default    '\[-- Attachment.*'
+color attach_headers brightcolor00 yellow     '\[-- Attachment.*'
 
 # Header
 color hdrdefault color19       color00
@@ -136,18 +136,16 @@ hdr_order   subject from to cc date
 # Shortcuts
 set my_macro_open_html = "<view-attachments>/html<enter><enter>q"
 set my_macro_urlview   = "urlview<Enter>"
-macro index,pager    o        "$my_macro_open_html"             'Open HTML mail in browser'
-macro index,pager    \cb      "<pipe-message>$my_macro_urlview" 'Call urlview on message'
-macro attach,compose \cb      "<pipe-entry>$my_macro_urlview"   'Call urlview on message'
+macro index,pager      o "$my_macro_open_html"             'Open HTML mail in browser'
+macro index,pager    \cb "<pipe-message>$my_macro_urlview" 'Call urlview on message'
+macro attach,compose \cb "<pipe-entry>$my_macro_urlview"   'Call urlview on message'
+macro compose        \eh "<filter-entry>pandoc -s -f markdown -t html<enter>y<edit-type>text/html; charset=us-ascii<enter>"   'Convert markdown to html'
+macro compose        \em "<filter-entry>pandoc -s -f html -t markdown<enter>y<edit-type>text/plain; charset=us-ascii<enter>"  'Convert html to markdown'
+macro index            L "<shell-escape>read -p 'Search messages: ' x; echo \$x >~/.cache/mutt_terms<enter><enter-command>virtual-mailboxes \"\`cat ~/.cache/mutt_terms\`\" \"notmuch://?query=\`cat ~/.cache/mutt_terms\`\"<enter><change-vfolder>?"
 
-macro index L "<shell-escape>read -p 'Search messages: ' x; echo \$x >~/.cache/mutt_terms<enter><enter-command>virtual-mailboxes \"\`cat ~/.cache/mutt_terms\`\" \"notmuch://?query=\`cat ~/.cache/mutt_terms\`\"<enter><change-vfolder>?"
-
-bind editor <Tab>    complete-query
-bind editor <space>  noop
-# bind  index,pager g        noop
+bind  editor       <Tab> complete-query
+bind  editor     <space> noop
 
 source ~/.pdotfiles/muttrc
-
-source ~/.mutt/muttrc._gmail_
 
 # vim: set ft=neomuttrc:
