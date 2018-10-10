@@ -179,4 +179,9 @@ done
 
 sleep 1
 
+# Cleanup buggy unknown monitors
+for unknown in $(xrandr | awk '/unknown/{ print $1 }'); do
+  xrandr --output "$unknown" --auto
+done
+
 xbacklight -set "$PREF_BRGHT" -time 500
