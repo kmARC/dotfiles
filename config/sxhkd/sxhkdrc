@@ -134,7 +134,7 @@ super + {+,shift +} r
 	bspc node @/ -R {90, 270}
 
 ctrl + alt + l
-	~/bin/lock.sh nosuspend
+	xscreensaver-command -lock
 
 XF86Display
 	~/bin/desktop.sh

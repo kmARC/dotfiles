@@ -99,15 +99,6 @@ cd -
 [FontAwesome]: http://fontawesome.io/
 [Polybar]: https://github.com/jaagr/polybar
 
-### Install i3 screen locker
-
-``` bash
-git clone https://github.com/chrjguill/i3lock-color ~/.local/src/i3lock-color
-cd ~/.local/src/i3lock-color
-make -j5
-sudo make install
-```
-
 ### Install hideIt.sh
 
 ``` bash

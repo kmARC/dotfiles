@@ -21,13 +21,12 @@ system-config-printer-applet &
 sxhkd &
 compton -b
 syndaemon -i 0.5 -K -R -d
-xautolock -locker "i3lock-fancy" -time 5 -detectsleep -corners '----' &
+xscreensaver -nosplash &
 xcape -t 250 -e 'Caps_Lock=Escape'
 "$HOME/bin/start-mopidy.sh" &
 
 # Configure desktop
 "$HOME/bin/desktop.sh"
-xset dpms 300 300 300
 
 # Tray applets
 hp-systray &
