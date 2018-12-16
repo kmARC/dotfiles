@@ -98,5 +98,5 @@ URxvt*iso14755_52:     false
 
 ! Rofi
 rofi.color-enabled:         true
-rofi.font:                  Hack Bold 15
+rofi.font:                  Noto Sans Mono Bold 15
 rofi.bw: 0

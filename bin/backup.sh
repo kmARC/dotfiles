@@ -3,7 +3,7 @@
 # set -e
 
 DEST_S3_BUCKET="$USER-backup-2"
-DEST="${DEST:-/mnt/Backup/Backup}"
+DEST="${DEST:-/media/kmarc/Backup/Backup}"
 EXCLUDES="/tmp/backup_excludes.txt"
 LOCK_FILE="/tmp/lock.backup"
 
@@ -34,10 +34,11 @@ $HOME/Torrents
 $HOME/VirtualBox VMs
 $HOME/vmware
 $HOME/.local/share/Trash
-$HOME/.local/share/Steam/steamapps
+$HOME/.local/share/Steam
 **/*.bak
 **/*.ova
 **/*.pyc
+**/.notmuch
 **/__pycache__
 **/node_modules
 **/Cache

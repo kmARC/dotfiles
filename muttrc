@@ -53,16 +53,16 @@ set sidebar_sort_method = 'path'
 
 # Colors
 # Default
-color normal        color07 color00
-color error         color01 color00
-color tilde         color20 color00
-color message       color06 color00
+color normal        color07 default
+color error         color01 default
+color tilde         color20 default
+color message       color06 default
 color markers       color18 color19
-color attachment    color19 color00
-color search        color05 color00
+color attachment    color19 default
+color search        color05 default
 color indicator     color18 color06
-color tree          color03 color00
-color signature     color05 color00
+color tree          color03 default
+color signature     color05 default
 
 # Status
 set status_format = '  %f   Messages: %?M?%M of ?%m    New: %n    Flag: %F    Tag: %t%> (%P)   '
@@ -76,56 +76,61 @@ color status        color04       color18 'Tag'
 
 # Index
 set index_format = ' %4C %Z  %-15.15L (%?l?%4l&%4c?) %s %*· %?X?[%X] &?%<[y?%<[m?%<[d?%[ %H:%M]&%[%a %d]>&%[%b %d]>&%[%Y-%m]> '
-color index         color19       color00 '~R'
-color index_author  color20       color00 '~R'
-color index_subject color20       color00 '~R'
-color index         brightcolor19 color00 '~N'
-color index_author  brightcolor15 color00 '~N'
-color index_subject brightcolor15 color00 '~N'
+color index         color19       default '~R'
+color index_author  color20       default '~R'
+color index_subject color20       default '~R'
+color index         brightcolor19 default '~N'
+color index_author  brightcolor15 default '~N'
+color index_subject brightcolor15 default '~N'
 color index_flags   color00       color04 '~T'
 color index_flags   color00       color05 '~F'
-color index_number  color02       color00
+color index_number  color02       default
 
 # Sidebar
-color sidebar_new       brightcolor15 color00
+color sidebar_new       brightcolor15 default
 color sidebar_divider   color18       color18
-color sidebar_highlight brightcolor14 color00
+color sidebar_highlight brightcolor14 default
 
 # Links
-color body color06 color00 '[-a-z_0-9.%$]+@[-a-z_0-9.]+\\.[-a-z][-a-z]+'
-color body blue    color00 "([a-z][a-z0-9+-]*://(((([a-z0-9_.!~*'();:&=+$,-]|%[0-9a-f][0-9a-f])*@)?((([a-z0-9]([a-z0-9-]*[a-z0-9])?)\\.)*([a-z]([a-z0-9-]*[a-z0-9])?)\\.?|[0-9]+\\.[0-9]+\\.[0-9]+\\.[0-9]+)(:[0-9]+)?)|([a-z0-9_.!~*'()$,;:@&=+-]|%[0-9a-f][0-9a-f])+)(/([a-z0-9_.!~*'():@&=+$,-]|%[0-9a-f][0-9a-f])*(;([a-z0-9_.!~*'():@&=+$,-]|%[0-9a-f][0-9a-f])*)*(/([a-z0-9_.!~*'():@&=+$,-]|%[0-9a-f][0-9a-f])*(;([a-z0-9_.!~*'():@&=+$,-]|%[0-9a-f][0-9a-f])*)*)*)?(\\?([a-z0-9_.!~*'();/?:@&=+$,-]|%[0-9a-f][0-9a-f])*)?(#([a-z0-9_.!~*'();/?:@&=+$,-]|%[0-9a-f][0-9a-f])*)?|(www|ftp)\\.(([a-z0-9]([a-z0-9-]*[a-z0-9])?)\\.)*([a-z]([a-z0-9-]*[a-z0-9])?)\\.?(:[0-9]+)?(/([-a-z0-9_.!~*'():@&=+$,]|%[0-9a-f][0-9a-f])*(;([-a-z0-9_.!~*'():@&=+$,]|%[0-9a-f][0-9a-f])*)*(/([-a-z0-9_.!~*'():@&=+$,]|%[0-9a-f][0-9a-f])*(;([-a-z0-9_.!~*'():@&=+$,]|%[0-9a-f][0-9a-f])*)*)*)?(\\?([-a-z0-9_.!~*'();/?:@&=+$,]|%[0-9a-f][0-9a-f])*)?(#([-a-z0-9_.!~*'();/?:@&=+$,]|%[0-9a-f][0-9a-f])*)?)[^].,:;!)? \t\r\n<>\"]"
+color body color06 default '[-a-z_0-9.%$]+@[-a-z_0-9.]+\\.[-a-z][-a-z]+'
+color body blue    default "([a-z][a-z0-9+-]*://(((([a-z0-9_.!~*'();:&=+$,-]|%[0-9a-f][0-9a-f])*@)?((([a-z0-9]([a-z0-9-]*[a-z0-9])?)\\.)*([a-z]([a-z0-9-]*[a-z0-9])?)\\.?|[0-9]+\\.[0-9]+\\.[0-9]+\\.[0-9]+)(:[0-9]+)?)|([a-z0-9_.!~*'()$,;:@&=+-]|%[0-9a-f][0-9a-f])+)(/([a-z0-9_.!~*'():@&=+$,-]|%[0-9a-f][0-9a-f])*(;([a-z0-9_.!~*'():@&=+$,-]|%[0-9a-f][0-9a-f])*)*(/([a-z0-9_.!~*'():@&=+$,-]|%[0-9a-f][0-9a-f])*(;([a-z0-9_.!~*'():@&=+$,-]|%[0-9a-f][0-9a-f])*)*)*)?(\\?([a-z0-9_.!~*'();/?:@&=+$,-]|%[0-9a-f][0-9a-f])*)?(#([a-z0-9_.!~*'();/?:@&=+$,-]|%[0-9a-f][0-9a-f])*)?|(www|ftp)\\.(([a-z0-9]([a-z0-9-]*[a-z0-9])?)\\.)*([a-z]([a-z0-9-]*[a-z0-9])?)\\.?(:[0-9]+)?(/([-a-z0-9_.!~*'():@&=+$,]|%[0-9a-f][0-9a-f])*(;([-a-z0-9_.!~*'():@&=+$,]|%[0-9a-f][0-9a-f])*)*(/([-a-z0-9_.!~*'():@&=+$,]|%[0-9a-f][0-9a-f])*(;([-a-z0-9_.!~*'():@&=+$,]|%[0-9a-f][0-9a-f])*)*)*)?(\\?([-a-z0-9_.!~*'();/?:@&=+$,]|%[0-9a-f][0-9a-f])*)?(#([-a-z0-9_.!~*'();/?:@&=+$,]|%[0-9a-f][0-9a-f])*)?)[^].,:;!)? \t\r\n<>\"]"
 
 # Attachments
 color attach_headers brightcolor00 yellow     '\[-- Attachment.*'
 
 # Header
-color hdrdefault color19       color00
-color header     brightcolor15 color00 '^(Subject)'
-color header     color02       color00 '^(From)'
+color hdrdefault color19       default
+color header     brightcolor15 default '^(Subject)'
+color header     color02       default '^(From)'
 
 # Body
-color bold        brightcolor20 color00
+color bold        brightcolor20 default
 
 # Quoted text
-color quoted  color04 color00 # Quote level 1: Blue
-color quoted1 color06 color00 # Quote level 2: Cyan
-color quoted2 color03 color00 # Quote level 3: Yellow
-color quoted3 color01 color00 # Quote level 4: Red
-color quoted4 color02 color00 # Quote level 5: Green
-color quoted5 color04 color00 # Quote level 6: Blue
-color quoted6 color06 color00 # Quote level 7: Cyan
-color quoted7 color03 color00 # Quote level 8: Yellow
-color quoted8 color01 color00 # Quote level 9: Red
+color quoted  color04 default # Quote level 1: Blue
+color quoted1 color06 default # Quote level 2: Cyan
+color quoted2 color03 default # Quote level 3: Yellow
+color quoted3 color01 default # Quote level 4: Red
+color quoted4 color02 default # Quote level 5: Green
+color quoted5 color04 default # Quote level 6: Blue
+color quoted6 color06 default # Quote level 7: Cyan
+color quoted7 color03 default # Quote level 8: Yellow
+color quoted8 color01 default # Quote level 9: Red
 
 # PGP
-color body    color01 color00 '(BAD signature)'
-color body    color06 color00 '(Good signature)'
-color body    color02 color00 '^gpg: Good signature .*'
-color body    color03 color00 '^gpg: '
-color body    color01 color00 '^gpg: BAD signature from.*'
+color body    color01 default '(BAD signature)'
+color body    color06 default '(Good signature)'
+color body    color02 default '^gpg: Good signature .*'
+color body    color03 default '^gpg: '
+color body    color01 default '^gpg: BAD signature from.*'
+
+# vcal
+color body    brightcolor15 default '^Subject:   .*'
+color body    brightgreen   default '^Start:     .*'
+color body    brightgreen   default '^End:       .*'
 
 # Border lines.
-color body        color04 color00 '( *[-+=#*~_]){6,}'
+color body        color04 default '( *[-+=#*~_]){6,}'
 
 # Headers
 ignore      *
@@ -134,14 +139,14 @@ unhdr_order *
 hdr_order   subject from to cc date
 
 # Shortcuts
-set my_macro_open_html = "<view-attachments>/html<enter><enter>q"
-set my_macro_urlview   = "urlview<Enter>"
-macro index,pager      o "$my_macro_open_html"             'Open HTML mail in browser'
+set my_macro_urlview   = "urlscan -d<Enter>"
 macro index,pager    \cb "<pipe-message>$my_macro_urlview" 'Call urlview on message'
 macro attach,compose \cb "<pipe-entry>$my_macro_urlview"   'Call urlview on message'
 macro compose        \eh "<filter-entry>pandoc -s -f markdown -t html<enter>y<edit-type>text/html; charset=us-ascii<enter>"   'Convert markdown to html'
 macro compose        \em "<filter-entry>pandoc -s -f html -t markdown<enter>y<edit-type>text/plain; charset=us-ascii<enter>"  'Convert html to markdown'
 macro index            L "<shell-escape>read -p 'Search messages: ' x; echo \$x >~/.cache/mutt_terms<enter><enter-command>virtual-mailboxes \"\`cat ~/.cache/mutt_terms\`\" \"notmuch://?query=\`cat ~/.cache/mutt_terms\`\"<enter><change-vfolder>?"
+macro index,pager      o "<enter-command>unset pipe_decode<enter><pipe-message>~/bin/viewhtmlmail<enter><enter-command>set pipe_decode<enter>" "View HTML in browser"
+macro index,pager    \cr "<enter-command>echo \"Checking mail...\"<enter><enter-command>set my_tmp=\`offlineimap -a \$from -f INBOX -u quiet\`<enter>"
 
 bind  editor       <Tab> complete-query
 bind  editor     <space> noop

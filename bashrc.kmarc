@@ -1,8 +1,5 @@
 #/usr/bin/env bash
 
-source /usr/share/fzf/completion.bash
-source /usr/share/fzf/key-bindings.bash
-
 export PAGER=less
 export EDITOR=vim
 
@@ -54,8 +51,10 @@ alias did="vim +'normal ggO' +'r!date +\%Y-\%m-\%d\ \%a' $(xdg-user-dir DOCUMENT
 alias diff='diff --color=auto'
 alias grep='grep --color=auto'
 alias mutt='neomutt'
-alias t="todo.sh"
+alias t="todo-txt"
 complete -F _todo t
 
 # Source bash compatible base colorscheme defines
 source "$HOME"/.theme.bashrc
+
+source "$HOME"/.base16_theme

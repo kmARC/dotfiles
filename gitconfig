@@ -1,6 +1,7 @@
 [user]
 	email = korondi.mark@gmail.com
 	name = Mark Korondi
+	signingkey = korondi.mark@gmail.com
 [gui]
 	fontui = -family \"Noto Sans\" -size 9 -weight normal -slant roman -underline 0 -overstrike 0
 	fontdiff = -family Hack -size 9 -weight normal -slant roman -underline 0 -overstrike 0

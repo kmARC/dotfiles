@@ -16,32 +16,34 @@ if [ "$1" == "nosuspend" ]; then
     (sleep 1; xset dpms force off) &
 fi
 
-i3lock                \
---insidevercolor=$C   \
---ringvercolor=$V     \
-\
---insidewrongcolor=$C \
---ringwrongcolor=$W   \
-\
---insidecolor=$B      \
---ringcolor=$D        \
---linecolor=$B        \
---separatorcolor=$D   \
-\
---verifcolor=$T        \
---timecolor=$T        \
---datecolor=$T        \
---keyhlcolor=$W       \
---bshlcolor=$W        \
-\
---blur=0.2 \
---clock               \
---indicator           \
---timestr="%H:%M:%S"  \
---datestr="%Y-%m-%d, %A" \
-\
-"$NOFORK"
+# i3lock                \
+# --insidevercolor=$C   \
+# --ringvercolor=$V     \
+# \
+# --insidewrongcolor=$C \
+# --ringwrongcolor=$W   \
+# \
+# --insidecolor=$B      \
+# --ringcolor=$D        \
+# --linecolor=$B        \
+# --separatorcolor=$D   \
+# \
+# --verifcolor=$T        \
+# --timecolor=$T        \
+# --datecolor=$T        \
+# --keyhlcolor=$W       \
+# --bshlcolor=$W        \
+# \
+# --blur=0.2 \
+# --clock               \
+# --indicator           \
+# --timestr="%H:%M:%S"  \
+# --datestr="%Y-%m-%d, %A" \
+# \
+# "$NOFORK"
 
+i3lock-fancy-rapid 3 &
+sleep 2
 
 if [ "$1" == "nosuspend" ]; then
     xset dpms 300 300 300

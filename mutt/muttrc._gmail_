@@ -24,15 +24,9 @@ exec check-stats
 # Addressbook
 setenv user $my_user
 setenv pass $my_pass
-set query_command = "goobook -c .config/goobook/goobookrc-$from query '%s'"
-macro index,pager a "<pipe-message>goobook -c .config/goobook/goobookrc-$from add<return>" "add sender to google contacts"
+set query_command = "khard email -a $from -p '%s'"
 
 # Variable-dependent shortcuts
-macro index,pager e "\
-<enter-command>set resolve=no confirmappend=no<enter>\
-<clear-flag>N\
-<save-message>$mbox<enter>\
-<sync-mailbox>\
-<enter-command>set resolve=yes confirmappend=yes<enter>" "Archive"
+macro index,pager a "<pipe-message>khard add-email -a $from" "Add sender to addressbook"
 
 # vim: set ft=neomuttrc:

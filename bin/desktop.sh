@@ -27,6 +27,18 @@ function is_primary {
            > /dev/null
 }
 
+function remove_unneeded_desktops {
+  # Remove desktops with a name that is not a number
+  for desktop in $(bspc query -D --names | grep -E -v '[0-9]+'); do
+    bspc desktop "$desktop" -r
+  done
+
+  # Remove extra desktops
+  for desktop in $(bspc query -D | tail -n +11); do
+    bspc desktop "$desktop" -r
+  done
+}
+
 # Focus the first desktops on all displays to prevent stale / removed desktops
 CUR=$(bspc query -D -d)
 # bspc desktop -f 6
@@ -52,11 +64,15 @@ if [[ ${#MONS[@]} == 1 || $POSITION == 'mirror' ]]; then
     for desktop in 1 2 3 4 5 6 7 8 9 0; do
         bspc desktop $desktop -m "$PRI"
     done
+
+    # Enable / disable monitors
     if [[ ${#MONS[@]} == 2 ]]; then
         xrandr --output "$PRI" --mode "$MOD_PRI" --rate 60 --primary \
                --output "$SEC" --mode "$MOD_SEC" --rate 60 --same-as "$PRI"
         bspc monitor "$SEC" -r
     fi
+
+    remove_unneeded_desktops
 
     # Fix desktop order
     bspc monitor "$PRI" -o 1 2 3 4 5 6 7 8 9 0
@@ -68,6 +84,7 @@ if [[ ${#MONS[@]} == 1 || $POSITION == 'mirror' ]]; then
     # polybar -m | head -n1 | awk -F':' '{ print $1 }' > /tmp/polybar-monitor.txt
     echo "$PRI" > /tmp/polybar-monitor.txt
     # echo "HDMI1" > /tmp/polybar-monitor.txt
+
 else
     # Choose primary and secondary
     PRI=${MONS[1]}
@@ -86,6 +103,8 @@ else
     fi
     xrandr --output "$SEC" --mode "$MOD_SEC" \
            --output "$PRI" --mode "$MOD_PRI" --"$POSITION" "$SEC" --primary
+
+    remove_unneeded_desktops
 
     # Move around desktops
     for desktop in 1 2 3 4 5; do

@@ -9,7 +9,7 @@
 
 [colors]
 ; {{{
-foreground=${xrdb:base05:#ffffff}
+foreground=#fff
 foreground-alt=${xrdb:base05:#ffffff}
 background=${xrdb:base00_ahtml:#000000}
 
@@ -27,18 +27,19 @@ margin-right = 0
 fixed-center = true
 wm-restack = bspwm
 
-background = ${colors.background}
+background-0 = #44000000
+background-1 = #00000000
 foreground = ${colors.foreground}
 
 line-size = 3
 module-margin = 2
 
-font-0 = "Droid Sans:style=Bold:size=10;2"
+font-0 = "Noto Sans:style=Bold:size=9;2"
 font-1 = "MaterialIcons:size=14;4"
 
 modules-left = bspwm xwindow
 modules-center = date
-modules-right = xkeyboard filesystem memory cpu battery temperature xbacklight volume
+modules-right = mpd xkeyboard filesystem memory cpu battery temperature xbacklight volume
 
 scroll-up = bspwm-desknext
 scroll-down = bspwm-deskprev
@@ -121,18 +122,19 @@ label-empty-padding = 2
 [module/mpd]
 ; {{{
 type = internal/mpd
-format-online =  <toggle>   <label-song><icon-stop>   <bar-progress>
+format-online =  <toggle>   <label-song><icon-prev><icon-stop><icon-next>   <bar-progress>
 format-stopped = %{O9}•%{O1}•%{O1}•%{O1}•%{O1}•%{O1}•%{O1}•%{O1}•%{O1}•%{O1}•%{O1}
 format-stopped-foreground = ${colors.foreground-alt}
 format-paused-foreground = ${colors.foreground-alt}
-format-offline = %{O9}•%{O1}•%{O1}•%{O1}•%{O1}•%{O1}•%{O1}•%{O1}•%{O1}•%{O1}•%{O1}
+format-offline = ${self.format-stopped}
 format-offline-foreground = ${colors.foreground-alt}
 
-icon-play = 
-icon-pause = 
-icon-stop = 
-icon-prev = 
-icon-next = 
+icon-foreground = 
+icon-play = 
+icon-pause = 
+icon-stop = 
+icon-prev = 
+icon-next = 
 icon-seekb = 
 icon-seekf = 
 icon-random = 
@@ -141,6 +143,8 @@ icon-repeatone = 
 icon-play-foreground = ${colors.theme}
 icon-pause-foreground = ${self.icon-play-foreground}
 icon-stop-foreground = ${self.icon-play-foreground}
+icon-next-foreground = ${self.icon-play-foreground}
+icon-prev-foreground = ${self.icon-play-foreground}
 
 bar-progress-width = 10
 bar-progress-fill = •%{O1}
@@ -149,7 +153,7 @@ bar-progress-indicator = •%{O1}
 bar-progress-empty = •%{O1}
 bar-progress-empty-foreground = ${colors.foreground-alt}
 
-label-song = %title:0:20:...% (%artist:0:20:...%)%{O8}
+label-song = %title:0:20:...% ( %artist:0:20:...% )%{O8}
 
 toggle-on-foreground = ${colors.foreground-alt}
 toggle-off-foreground = ${colors.foreground}

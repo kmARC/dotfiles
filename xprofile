@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 
+# Update systemctl user slice with $DISPLAY
+systemctl --user import-environment DISPLAY
+
 # Unlock gnome-keyring
 eval $(gnome-keyring-daemon --replace --components=pkcs11,secrets,ssh)
 export SSH_AUTH_SOCK
 export GNOME_KEYRING_CONTROL
-
-# Update systemctl user slice with $DISPLAY
-systemctl --user import-environment DISPLAY
 
 exec bspwm

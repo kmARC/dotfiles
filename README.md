@@ -32,6 +32,14 @@ I used to depend on [base16] however currently I configure colorization from
 
 [base16]: https://github.com/chriskempson/base16
 
+## Packages
+```bash
+sudo -H pip install gitlint grip
+sudo -H pip install khal khard vdirsyncer offlineimap urlscan requests-oauthlib
+sudo -H npm -g install livedown
+```
+
+
 ## Desktop
 
 ### Set up terminal
@@ -118,12 +126,7 @@ feh --bg-fill path_to_wallpaper
 ### (Optional) Install Mopidy (Spotify & TuneIn)
 
 ``` bash
-wget -q -O - https://apt.mopidy.com/mopidy.gpg | sudo apt-key add -
-sudo wget -q -O /etc/apt/sources.list.d/mopidy.list https://apt.mopidy.com/jessie.list
-sudo apt update
-sudo apt install -y mopidy mopidy-spotify
-sudo -H pip install Mopidy-TuneIn Mopidy-Spotify-Web Mopidy-SoundCloud \
-                    Mopidy-MPRIS
+sudo -H pip2 install mopidy{,-spotify,-spotify-web,-soundcloud,-tunein,-mpris}
 ```
 
 

@@ -1,32 +1,33 @@
 #!/usr/bin/env bash
 
-export QT_QPA_PLATFORMTHEME="qt5ct"
+export QT_QPA_PLATFORMTHEME="gtk2"
 export _JAVA_OPTIONS="\
           -Dawt.useSystemAAFontSettings=lcd \
           -Dswing.aatext=true \
           -Dswing.crossplatformlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel"
 export SAL_USE_VCLPLUGIN=gtk # LibreOffice scrolling
+export XDG_CURRENT_DESKTOP=XFCE # Trick xdg-open to believe it's XFCE
 
 # X settings
 xrdb -load "$HOME/.Xresources"
 xsetroot -cursor_name left_ptr
 
-# Configure desktop
-"$HOME/bin/desktop.sh"
-xset dpms 300 300 300
-
 # Daemons
 /usr/lib/xfce4/notifyd/xfce4-notifyd &
-/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
+/usr/lib/policykit-1-gnome/polkit-gnome-authentication-agent-1 &
 /usr/lib/geoclue-2.0/demos/agent &
 systemctl --user restart redshift &
 system-config-printer-applet &
 sxhkd &
 compton -b
 syndaemon -i 0.5 -K -R -d
-xautolock -locker "$HOME/bin/lock.sh" -time 5 -detectsleep -corners '----' &
+xautolock -locker "i3lock-fancy" -time 5 -detectsleep -corners '----' &
 xcape -t 250 -e 'Caps_Lock=Escape'
 "$HOME/bin/start-mopidy.sh" &
+
+# Configure desktop
+"$HOME/bin/desktop.sh"
+xset dpms 300 300 300
 
 # Tray applets
 hp-systray &
