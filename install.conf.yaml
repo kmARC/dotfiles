@@ -19,6 +19,9 @@
         path: config/sxhkd/sxhkdrc
     ~/.config/xfce4/terminal/terminalrc:
         path: config/xfce4/terminal/terminalrc
+    ~/.config/xfce4/xfconf/xfce-perchannel-xml/:
+        glob: true
+        path: config/xfce4/xfconf/xfce-perchannel-xml/*
     ~/.fonts/dotbot:
         path: fonts/dotbot
     ~/.mutt/:
