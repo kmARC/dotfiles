@@ -18,7 +18,7 @@ set smtp_url   = smtp://$from@smtp.gmail.com:587/
 
 # Mailboxes
 unmailboxes *
-mailboxes `find ~/.mutt/$from/ -type d -name cur -printf '"%h" ' | sort`
+mailboxes `find ~/.mutt/$from/ -type d -name cur -printf '"%h" '`
 exec check-stats
 
 # Addressbook

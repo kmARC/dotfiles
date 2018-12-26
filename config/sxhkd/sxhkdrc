@@ -134,7 +134,8 @@ super + {+,shift +} r
 	bspc node @/ -R {90, 270}
 
 ctrl + alt + l
-	xscreensaver-command -lock
+# xscreensaver-command -lock
+	light-locker-command -l
 
 XF86Display
 	~/bin/desktop.sh
@@ -203,4 +204,4 @@ super + space; x
 	xfce4-terminal -x bash -ci 'tmux-session'
 
 super + space; e
-	~/.local/src/splatmoji/splatmoji type
+	splatmoji type

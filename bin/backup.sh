@@ -3,7 +3,7 @@
 # set -e
 
 DEST_S3_BUCKET="$USER-backup-2"
-DEST="${DEST:-/media/kmarc/Backup/Backup}"
+DEST="${DEST:-/run/media/kmarc/Backup/Backup}"
 EXCLUDES="/tmp/backup_excludes.txt"
 LOCK_FILE="/tmp/lock.backup"
 
@@ -25,6 +25,9 @@ $HOME/.bitcoin/blocks
 $HOME/.bitcoin/chainstate
 $HOME/.m2
 $HOME/.npm
+$HOME/.nvm
+$HOME/.rustup
+$HOME/.thumbnails
 $HOME/.vagrant.d/boxes
 $HOME/.vim/vimswap
 $HOME/.vim/vimundo
@@ -35,6 +38,7 @@ $HOME/VirtualBox VMs
 $HOME/vmware
 $HOME/.local/share/Trash
 $HOME/.local/share/Steam
+$HOME/.local/src
 **/*.bak
 **/*.ova
 **/*.pyc

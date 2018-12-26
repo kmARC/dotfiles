@@ -35,7 +35,8 @@ I used to depend on [base16] however currently I configure colorization from
 ## Packages
 ```bash
 sudo -H pip install gitlint grip
-sudo -H pip install khal khard vdirsyncer offlineimap urlscan requests-oauthlib
+sudo -H pip install khal khard vdirsyncer urlscan requests-oauthlib mutt_ics
+sudo -H pip2 install offlineimap
 sudo -H npm -g install livedown
 ```
 

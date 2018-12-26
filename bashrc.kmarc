@@ -54,7 +54,14 @@ alias mutt='neomutt'
 alias t="todo-txt"
 complete -F _todo t
 
+source "$HOME"/.base16_theme
+
 # Source bash compatible base colorscheme defines
 source "$HOME"/.theme.bashrc
 
-source "$HOME"/.base16_theme
+source /usr/share/fzf/key-bindings.bash
+source /usr/share/fzf/completion.bash
+
+export FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS --black --border"
+
+eval "$(direnv hook bash)"
