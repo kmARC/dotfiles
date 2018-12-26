@@ -1,10 +1,10 @@
 # kmARC's dotfiles
 
-<center>
+<p align="center">
 <a href="images/desktop-terminal.png"><img src="images/desktop-terminal.png"></a>
 <a href="images/desktop-full.png"><img src="images/desktop-full.png" width="48%"></a>
 <a href="images/desktop-empty.png"><img src="images/desktop-empty.png" width="48%"></a>
-</center>
+</p>
 
 (Wallpaper: https://github.com/elementary/wallpapers/blob/master/Ashim%20DSilva.jpg)
 
