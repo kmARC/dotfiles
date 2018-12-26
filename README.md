@@ -1,9 +1,9 @@
 # kmARC's dotfiles
 
 <p align="center">
-<a href="images/desktop-terminal.png"><img src="images/desktop-terminal.png"></a>
-<a href="images/desktop-full.png"><img src="images/desktop-full.png" width="48%"></a>
-<a href="images/desktop-empty.png"><img src="images/desktop-empty.png" width="48%"></a>
+  <a href="images/desktop-terminal.png"><img src="images/desktop-terminal.png"></a>
+  <a href="images/desktop-full.png"><img src="images/desktop-full.png" width="48%"></a>
+  <a href="images/desktop-empty.png"><img src="images/desktop-empty.png" width="48%"></a>
 </p>
 
 (Wallpaper: https://github.com/elementary/wallpapers/blob/master/Ashim%20DSilva.jpg)
@@ -16,7 +16,11 @@ I'm using [yay] to acquire packages from [AUR].
 
 ``` bash
 # Install preqrequisited
-sudo pacman -S --noconfirm base-devel
+sudo pacman -Syu
+sudo pacman -S base-devel git
+
+# Don't forget to tune /etc/makepkg.conf (MAKEFLAGS="-j3" / "-j5")
+sudo vi /etc/makepkg.conf
 
 # Acquire yay PKGBUILD
 mkdir -p ~/.local/src
@@ -24,10 +28,7 @@ git clone https://aur.archlinux.org/yay.git ~/.local/src/yay
 cd ~/.local/src/yay
 
 # Install yay
-makepkg -si --noconfirm
-
-# Don't forget to tune /etc/makepkg.conf (MAKEFLAGS="-j3" / "-j5")
-sudo vi /etc/makepkg.conf
+makepkg -si
 ```
 
 [yay]: https://aur.archlinux.org/packages/yay/
@@ -37,7 +38,7 @@ sudo vi /etc/makepkg.conf
 
 ``` bash
 # Install prerequisites
-sudo pacman -S git python tmux
+sudo pacman -S python tmux
 
 # Clone dotfiles repository
 git clone --recursive --depth=1 https://github.com/kmARC/dotfiles ~/.dotfiles
@@ -98,6 +99,7 @@ yay -S urlscan mutt-ics
 sudo pacman -S notmuch  # Fast email indexing support
 sudo pacman -S pandoc   # HTML email editing support
 yay -S davmail          # o365 synchronization support
+
 # Calendar + Contacts
 sudo pacman -S khal khard vdirsyncer python-requests-oauthlib
 ```
@@ -112,15 +114,27 @@ by this repository.
 [khal]: https://lostpackets.de/khal/
 [khard]: https://github.com/scheibler/khard/
 
+### Graphical system
+
+You most probably want Xorg and a login manager (some apps require it).
+
+``` bash
+sudo pacman -S \
+  lightdm-gtk-greeter \
+  xorg-xserver
+```
+
 ### Desktop: tiled window manager and panel
 
 Window manager is provided  by [bspwm], hotkeys by [sxhkd], compositing by  [compton], a launcher by
 [rofi] and a fancy panel by [polybar].
 
 ``` bash
-# Install window manager
+# Install window manager & tools
 sudo pacman -S bspwm sxhkd compton rofi
-yay -S polybar
+sudo pacman -S libmpdclient # Media Player Daemon support
+sudo pacman -S pulseaudio   # Pulseaudio support
+yay -S polybar ttf-{emojione,material-icons}
 
 # Install startx / desktop.sh dependencies
 sudo pacman -S \
@@ -170,13 +184,17 @@ Have a look at the [sxhkd configuration](config/sxhkd/sxhkdrc) and customize the
 tools
 
 ``` bash
+# Sxhkd shortcuts
 sudo pacman -S \
   firefox \
   mpc \
   thunar \
   xfce4-terminal
-
 yay -S splatmoji-git
+
+# Other tools
+sudo pacman -S \
+  hplip
 ```
 
 ### Restart your desktop
