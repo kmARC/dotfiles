@@ -103,34 +103,29 @@ done < <(sed -n 's%^.*\([0-fA-F]\{2\}\)/\([0-fA-F]\{2\}\)/\([0-fA-F]\{2\}\).*Bas
 # EOF
 # # }}}
 
-# GTK theme {{{
-cat > "$HOME/.themes/colors.rc" << EOF
-gtk-color-scheme = "bg_color:$(_html ${base[6]})"
-gtk-color-scheme = "fg_color:$(_html ${base[0]})"
-gtk-color-scheme = "base_color:$(_html ${base[7]})"
-gtk-color-scheme = "text_color:$(_html ${base[0]})"
-gtk-color-scheme = "selected_bg_color:$(_html ${base[$THEME]})"
-gtk-color-scheme = "selected_fg_color:$(_html ${base[1]})"
-gtk-color-scheme = "tooltip_bg_color:$(_html ${base[4]})"
-gtk-color-scheme = "tooltip_fg_color:$(_html ${base[1]})"
-gtk-color-scheme = "titlebar_bg_color:$(_html ${base[7]})"
-gtk-color-scheme = "titlebar_fg_color:$(_html ${base[0]})"
-gtk-color-scheme = "menubar_bg_color:$(_html ${base[0]})"
-gtk-color-scheme = "menubar_fg_color:$(_html ${base[5]})"
-gtk-color-scheme = "toolbar_bg_color:$(_html ${base[6]})"
-gtk-color-scheme = "toolbar_fg_color:$(_html ${base[0]})"
-gtk-color-scheme = "menu_bg_color:$(_html ${base[1]})"
-gtk-color-scheme = "menu_fg_color:$(_html ${base[5]})"
-gtk-color-scheme = "panel_bg_color:$(_html ${base[0]})"
-gtk-color-scheme = "panel_fg_color:$(_html ${base[5]})"
-gtk-color-scheme = "link_color:$(_html ${base[13]})"
-EOF
-# }}}
-
-# Stalonetray {{{
-sed -i --follow-symlink "s/^tint_color.*$/tint_color \"$(_html "${base[0]}")\"/" "$HOME/.stalonetrayrc"
-sed -i --follow-symlink "s/^tint_level.*$/tint_level ${ALPHA_LEVEL}/" "$HOME/.stalonetrayrc"
-# }}}
+# # GTK theme {{{
+# cat > "$HOME/.themes/colors.rc" << EOF
+# gtk-color-scheme = "bg_color:$(_html ${base[6]})"
+# gtk-color-scheme = "fg_color:$(_html ${base[0]})"
+# gtk-color-scheme = "base_color:$(_html ${base[7]})"
+# gtk-color-scheme = "text_color:$(_html ${base[0]})"
+# gtk-color-scheme = "selected_bg_color:$(_html ${base[$THEME]})"
+# gtk-color-scheme = "selected_fg_color:$(_html ${base[1]})"
+# gtk-color-scheme = "tooltip_bg_color:$(_html ${base[4]})"
+# gtk-color-scheme = "tooltip_fg_color:$(_html ${base[1]})"
+# gtk-color-scheme = "titlebar_bg_color:$(_html ${base[7]})"
+# gtk-color-scheme = "titlebar_fg_color:$(_html ${base[0]})"
+# gtk-color-scheme = "menubar_bg_color:$(_html ${base[0]})"
+# gtk-color-scheme = "menubar_fg_color:$(_html ${base[5]})"
+# gtk-color-scheme = "toolbar_bg_color:$(_html ${base[6]})"
+# gtk-color-scheme = "toolbar_fg_color:$(_html ${base[0]})"
+# gtk-color-scheme = "menu_bg_color:$(_html ${base[1]})"
+# gtk-color-scheme = "menu_fg_color:$(_html ${base[5]})"
+# gtk-color-scheme = "panel_bg_color:$(_html ${base[0]})"
+# gtk-color-scheme = "panel_fg_color:$(_html ${base[5]})"
+# gtk-color-scheme = "link_color:$(_html ${base[13]})"
+# EOF
+# # }}}
 
 # Clean up {{{
 unset printf_template

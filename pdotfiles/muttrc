@@ -1,0 +1,25 @@
+# Folder-based accounts
+
+
+
+folder-hook 'example@gmail.com/INBOX' '\
+  set from = example@gmail.com; \
+  set pgp_default_key = 0xAAAAAAAA; \
+  set pgp_sign_as = 0xAAAAAAAA; \
+  my_hdr X-PGP-Key: https://keybase.io/EXAMPLE_USER/pgp_keys.asc; \
+  source ~/.mutt/muttrc._gmail_'
+
+folder-hook 'example@mycompany.com/INBOX' '\
+  set from = example@mycompany.com; \
+  set pgp_default_key = 0xAAAAAAAA; \
+  set pgp_sign_as = 0xAAAAAAAA; \
+  my_hdr X-PGP-Key: http://hkps.pool.sks-keyservers.net/pks/lookup?search=0xAAAAAAAA&fingerprint=on&hash=on&options=mr&op=get; \
+  source ~/.mutt/muttrc._owa_'
+
+macro index,pager <F2> '<change-folder>~/.mutt/example@gmail.com/INBOX<enter>'
+macro index,pager <F3> '<change-folder>~/.mutt/example@mycompany.com/INBOX<enter>'
+
+set realname = 'Firstname Lastname'
+
+set from = 'example@gmail.com'
+source ~/.mutt/muttrc._gmail_

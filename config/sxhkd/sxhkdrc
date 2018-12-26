@@ -156,10 +156,10 @@ XF86MonBrightness{Up,Down}
 	xbacklight -{inc,dec} 5
 
 Print
-	flameshot screen -p $HOME/Pictures/Screenshots
+	scrot -e 'mv $f ~/Pictures/Screenshots'
 
-shift + Print
-	flameshot gui -p $HOME/Pictures/Screenshots
+super + Print
+	scrot -s -e 'mv $f ~/Pictures/Screenshots'
 
 # Daemons
 super + space; M
@@ -191,7 +191,7 @@ super + space; w
 	~/bin/rofi-wifi-menu.sh
 
 super + space; o
-	FILE=$(locate -r '^/home/kmarc/.*\..*' |grep -v '/\.' | rofi -dmenu -i) && exo-open "$FILE"
+	FILE=$(locate -r '^/home/kmarc/.*\..*' |grep -v '/\.' | rofi -dmenu -i) && xdg-open "$FILE"
 
 # Terminal apps
 super + space; f

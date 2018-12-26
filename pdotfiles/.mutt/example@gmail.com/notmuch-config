@@ -1,0 +1,19 @@
+[database]
+path=~/.mutt/example@gmail.com/
+
+[user]
+name=Firstname Lastname
+primary_email=example@gmail.com
+other_email=example.2@gmail.com
+
+[new]
+tags=unread;inbox;
+ignore=
+
+[search]
+exclude_tags=deleted;spam;
+
+[maildir]
+synchronize_flags=true
+
+# vim: set ft=dosini:

@@ -1,0 +1,49 @@
+[general]
+metadata    = ~/.offlineimap
+accounts    = example@gmail.com,example@mycompany.com
+pythonfile  = ~/bin/offlineimap.py
+maxsyncaccounts = 3
+
+[Account example@gmail.com]
+localrepository  = example@gmail.com-local
+remoterepository = example@gmail.com-remote
+synclabels       = yes
+postsynchook     = notmuch --config=$HOME/.mutt/example@gmail.com/notmuch-config new
+
+[Repository example@gmail.com-local]
+type         = GmailMaildir
+localfolders = ~/.mutt/example@gmail.com
+
+[Repository example@gmail.com-remote]
+type              = Gmail
+remoteuser        = example@gmail.com
+remotepasseval    = get_pass("gmail", "example@gmail.com")
+sslcacertfile     = /etc/ssl/certs/ca-certificates.crt
+realdelete        = no
+maxconnections    = 10
+; usecompression    = yes
+createfolders     = True
+ssl_version       = tls1_2
+tls_level         = tls_secure
+; folderfilter      = lambda foldername: foldername not in ['[Gmail]/All Mail']
+
+[Account example@mycompany.com]
+localrepository  = example@mycompany.com-local
+remoterepository = example@mycompany.com-remote
+synclabels       = yes
+postsynchook     = notmuch --config=$HOME/.mutt/example@mycompany.com/notmuch-config new
+
+[Repository example@mycompany.com-local]
+type = Maildir
+localfolders = ~/.mutt/example@mycompany.com
+
+[Repository example@mycompany.com-remote]
+type = IMAP
+ssl = no
+remotehost = localhost
+remoteport = 1143
+remoteuser = corp\example
+remotepasseval = get_pass("owa", "example@mycompany.com")
+maxconnections    = 10
+
+; vim: set ft=dosini:

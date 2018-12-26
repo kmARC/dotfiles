@@ -1,0 +1,104 @@
+[general]
+status_path = "~/.vdirsyncer/status/"
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;  GMail Contacts - example@gmail.com  ;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+[pair gmail_contacts]
+a = "gmail_contacts_local"
+b = "gmail_contacts_remote"
+collections = ["from a", "from b"]
+
+[storage gmail_contacts_local]
+type = "filesystem"
+path = "~/.contacts/example@gmail.com/"
+fileext = ".vcf"
+
+[storage gmail_contacts_remote]
+type = "google_contacts"
+token_file = "~/.vdirsyncer/token_gmail_contacts"
+client_id = "..."
+client_secret = "..."
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;  GMail Calendar - example@gmail.com  ;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+[pair gmail_calendar]
+a = "gmail_calendar_local"
+b = "gmail_calendar_remote"
+collections = ["from a", "from b"]
+
+[storage gmail_calendar_local]
+type = "filesystem"
+path = "~/.calendar/gmail"
+fileext = ".ics"
+
+[storage gmail_calendar_remote]
+type = "google_calendar"
+token_file = "~/.vdirsyncer/token_gmail_calendar"
+client_id = "..."
+client_secret = "..."
+
+;;;;;;;;;;;;;;;;;;;;;;;
+;  Facebook Calendar  ;
+;;;;;;;;;;;;;;;;;;;;;;;
+
+[pair facebook]
+a = "facebook_local"
+b = "facebook_remote"
+collections = null
+
+[storage facebook_local]
+type = "filesystem"
+path = "~/.calendar/facebook/"
+fileext = ".ics"
+
+[storage facebook_remote]
+type = "http"
+url = "https://web.facebook.com/ical/u.php?uid=...&key=..."
+useragent = "Mozilla/5.0"
+
+;;;;;;;;;;;;;;;;;;;;;;;;
+;  mycompany Calendar  ;
+;;;;;;;;;;;;;;;;;;;;;;;;
+
+[pair mycompany_calendar]
+a = "mycompany_calendar_local"
+b = "mycompany_calendar_remote"
+collections = ["from a", "from b"]
+conflict_resolution = "b wins"
+
+[storage mycompany_calendar_local]
+type = "filesystem"
+path = "~/.calendar/mycompany/"
+fileext = ".ics"
+
+[storage mycompany_calendar_remote]
+type = "caldav"
+url = "http://localhost:1080/users/example/calendar/"
+username = "example@mycompany.com"
+password.fetch = ["command", "secret-tool", "lookup", "owa-pass", "example@mycompany.com"]
+
+;;;;;;;;;;;;;;;;;;;;;;;;
+;  mycompany Contacts  ;
+;;;;;;;;;;;;;;;;;;;;;;;;
+
+[pair mycompany_contacts]
+a = "mycompany_contacts_local"
+b = "mycompany_contacts_remote"
+collections = ["from a", "from b"]
+
+[storage mycompany_contacts_local]
+type = "filesystem"
+path = "~/.contacts/example@mycompany.com/"
+fileext = ".vcf"
+
+[storage mycompany_contacts_remote]
+type = "carddav"
+url = "http://localhost:1080/users/example@mycompany.com/contacts"
+username = "example@mycompany.com"
+password.fetch = ["command", "secret-tool", "lookup", "owa-pass", "example@mycompany.com"]
+
+; vim: set ft=dosini:

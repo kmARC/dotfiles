@@ -1,126 +1,183 @@
 # kmARC's dotfiles
 
-<a href="images/desktop-empty.png"><img src="images/desktop-empty.png"></a>
 <center>
+<a href="images/desktop-terminal.png"><img src="images/desktop-terminal.png"></a>
 <a href="images/desktop-full.png"><img src="images/desktop-full.png" width="48%"></a>
-<a href="images/desktop-terminal.png"><img src="images/desktop-terminal.png" width="48%"></a>
+<a href="images/desktop-empty.png"><img src="images/desktop-empty.png" width="48%"></a>
 </center>
 
-(Wallpaper: http://gallery.world/wallpaper/520.html)
+(Wallpaper: https://github.com/elementary/wallpapers/blob/master/Ashim%20DSilva.jpg)
 
-## Console
+## Installation on Arch Linux
 
-Tested on Ubuntu Server 16.10
+### AUR packages (`yay`)
+
+I'm using [yay] to acquire packages from [AUR].
 
 ``` bash
-sudo apt install -y git python
-git clone https://github.com/kmARC/dotfiles ~/.dotfiles
-cd ~/.dotfiles && git submodule update --init
-sudo ./install-packages-console
-sudo ./install-packages-gui
-./install
-sudo ./install-system
-cd -
+# Install preqrequisited
+sudo pacman -S --noconfirm base-devel
+
+# Acquire yay PKGBUILD
+mkdir -p ~/.local/src
+git clone https://aur.archlinux.org/yay.git ~/.local/src/yay
+cd ~/.local/src/yay
+
+# Install yay
+makepkg -si --noconfirm
+
+# Don't forget to tune /etc/makepkg.conf (MAKEFLAGS="-j3" / "-j5")
+sudo vi /etc/makepkg.conf
+```
+
+[yay]: https://aur.archlinux.org/packages/yay/
+[AUR]: https://aur.archlinux.org
+
+### Dotfiles
+
+``` bash
+# Install prerequisites
+sudo pacman -S git python tmux
+
+# Clone dotfiles repository
+git clone --recursive --depth=1 https://github.com/kmARC/dotfiles ~/.dotfiles
+
+# Install symlinks
+~/.dotfiles/install
 ```
 
 Re-login / restart bash.
 
-### Configuration
+### Theme
 
-I used to depend on [base16] however currently I configure colorization from
-`color.kmarc`. I'll clean this up in the future
+This setup heavily depends on the brilliant [base16] project.
+
+``` bash
+# Install prerequisites
+sudo pacman -S xorg-xrdb
+yay -S base16-manager
+
+# Install and select a theme
+base16-manager install chriskempson/base16-shell
+base16-manager set solarized-dark
+
+# Populate theming variables
+bin/colorize.sh
+```
 
 [base16]: https://github.com/chriskempson/base16
 
-## Packages
+### Bash customizations
+
+There are some customizations in my bashrc. Install and enable them as you like.
+
+``` bash
+# Install prerequisites (select what you need)
+sudo pacman -S fzf xdg-user-dirs
+yay -S nvm direnv todotxt
+
+# Enable bashrc customizations
+echo "source $HOME/.bashrc.kmarc" >> "$HOME/.bashrc"
+```
+
+## Misc dependencies
+
+Have a look at [install.conf.yaml](install.conf.yaml) to get a hint on what software is configured with these
+dotfiles. Here is a categorization of what you might want to use from my repo.
+
+### Productivity: Mail + Calendar + Contacts
+
+I have a 95% terminal-based workflow for Mail ([neomutt]), Calendar ([khal]), and Contacts
+([khard]). All configured to work together with GMail/Google Suite, and Office 365. Calendars are
+syncronized from all these sources and from facebook. All from terminal!
+
 ```bash
-sudo -H pip install gitlint grip
-sudo -H pip install khal khard vdirsyncer urlscan requests-oauthlib mutt_ics
-sudo -H pip2 install offlineimap
-sudo -H npm -g install livedown
+# Mail
+sudo pacman -S neomutt offlineimap libsecret
+yay -S urlscan mutt-ics
+sudo pacman -S notmuch  # Fast email indexing support
+sudo pacman -S pandoc   # HTML email editing support
+yay -S davmail          # o365 synchronization support
+# Calendar + Contacts
+sudo pacman -S khal khard vdirsyncer python-requests-oauthlib
 ```
 
+Neomutt  configuration resides  in [muttrc](muttrc)  and [mutt/muttrc.\_gmail_](mutt/muttrc._gmail_)
+and [mutt/muttrc.\_owa_](mutt/muttrc._owa_).  However, it  sources `~/.pdotfiles/muttrc`,  where _p_
+stands  for _private_,  thus not  included  in this  repository. You  can  find examples  on how  to
+configure tools in  the [pdotfiles](pdotfiles) directory. Note: *.pdotfiles* setup  is not automated
+by this repository.
 
-## Desktop
+[neomutt]: https://neomutt.org/
+[khal]: https://lostpackets.de/khal/
+[khard]: https://github.com/scheibler/khard/
 
-### Set up terminal
+### Desktop: tiled window manager and panel
 
-I use rxvt-unicode-256color as my terminal. To enable the daemon mode of it, use
-the `urxvtcd` binary for x-terminal-emulator.
-
-```bash
-sudo update-alternatives --install /etc/alternatives/x-terminal-emulator urxvtcd /usr/bin/urxvtcd 20
-```
-
-### Install bspwm and sxhkd
+Window manager is provided  by [bspwm], hotkeys by [sxhkd], compositing by  [compton], a launcher by
+[rofi] and a fancy panel by [polybar].
 
 ``` bash
-mkdir -p ~/.local/src
+# Install window manager
+sudo pacman -S bspwm sxhkd compton rofi
+yay -S polybar
 
-# bspwm
-git clone https://github.com/baskerville/bspwm.git ~/.local/src/bspwm
-cd ~/.local/src/bspwm
-make
-sudo make install
-cd -
-sudo mkdir -p /usr/share/xsessions
-sudo ln -s /usr/local/share/xsessions/bspwm.desktop /usr/share/xsessions/
+# Install startx / desktop.sh dependencies
+sudo pacman -S \
+  dex \
+  feh \
+  geoclue2 \
+  jq \
+  libpulse \
+  light-locker \
+  polkit-gnome \
+  redshift \
+  system-config-printer \
+  wmname \
+  xcape \
+  xdotool \
+  xf86-input-synaptics \
+  xfce4-{notifyd,panel} \
+  xorg-{xbacklight,xinput,xprop,xrandr,xsetroot,xwininfo}
 
-# sxhkd
-git clone https://github.com/baskerville/sxhkd.git ~/.local/src/sxhkd
-cd ~/.local/src/sxhkd
-make
-sudo make install
-cd -
-```
-
-### Install Polybar
-
-[FontAwesome]
-
-``` bash
-mkdir -p ~/.fonts
-wget http://fontawesome.io/assets/font-awesome-4.7.0.zip -P /tmp
-unzip /tmp/font-awesome-4.7.0.zip -d ~/.fonts
-fc-cache -f
-```
-
-[Polybar]
-
-``` bash
-git clone --recursive https://github.com/jaagr/polybar ~/.local/src/polybar
-mkdir ~/.local/src/polybar/build
-cd ~/.local/src/polybar/build
-cmake ..
-make -j5
-sudo make install
-cd -
-```
-
-[FontAwesome]: http://fontawesome.io/
-[Polybar]: https://github.com/jaagr/polybar
-
-### Install hideIt.sh
-
-``` bash
-git clone https://github.com/Tadly/hideIt.sh ~/.local/src/hideIt.sh
-```
-
-### Configuration
-
-To select a wallpaper, use `feh`.
-
-``` bash
-~/bin/colorize.sh ~/.colors.kmarc
+# Set a wallpaper
 feh --bg-fill path_to_wallpaper
 ```
 
-### (Optional) Install Mopidy (Spotify & TuneIn)
+[bspwm]: https://github.com/baskerville/bspwm
+[sxhkd]: https://github.com/baskerville/sxhkd
+[compton]: https://github.com/chjj/compton
+[polybar]: https://github.com/jaagr/polybar
+[rofi]: https://github.com/DaveDavenport/rofi
+
+### Music player
+
+An MPD compatible daemon, [mopidy] is responsible for my daily music intake. For configuration, see
+examples in [pdotfiles/](pdotfiles/)
 
 ``` bash
+# Install mopidy
+sudo pacman -S python2-pip
+yay -S libspotify
 sudo -H pip2 install mopidy{,-spotify,-spotify-web,-soundcloud,-tunein,-mpris}
 ```
 
+[mopidy]: https://www.mopidy.com/
+
+### Apps & Tools
+
+Have a look at the [sxhkd configuration](config/sxhkd/sxhkdrc) and customize the launchable apps /
+tools
+
+``` bash
+sudo pacman -S \
+  firefox \
+  mpc \
+  thunar \
+  xfce4-terminal
+
+yay -S splatmoji-git
+```
 
 ### Restart your desktop
 

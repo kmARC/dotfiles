@@ -31,8 +31,9 @@ xcape -t 250 -e 'Caps_Lock=Escape'
 # Configure desktop
 "$HOME/bin/desktop.sh"
 
-# Tray applets
+# Autostart
+for app in ~/.config/autostart/*.desktop; do
+  dex $app;
+done
+
 hp-systray &
-dex /usr/share/applications/insync.desktop
-dex /usr/share/applications/nm-applet.desktop
-dex /usr/share/applications/flameshot.desktop

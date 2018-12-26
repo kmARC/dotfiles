@@ -1,19 +1,9 @@
 #/usr/bin/env bash
 
-export PAGER=less
-export EDITOR=vim
-
-# Colorized less / man / pydoc
-export LESS=-R
-export LESS_TERMCAP_mb=$'\e[0;49;39m'
-export LESS_TERMCAP_md=$'\e[1;49;35m'
-export LESS_TERMCAP_me=$'\e[0;49;39m'
-export LESS_TERMCAP_so=$'\e[1;46;97m'
-export LESS_TERMCAP_se=$'\e[0;49;39m'
-export LESS_TERMCAP_us=$'\e[1;49;36m'
-export LESS_TERMCAP_ue=$'\e[0;49;39m'
-
-# Based on FZF's __fzf_cd__()
+#########
+#  FZF  #
+#########
+# ALT-O opens selected file with xdg-open
 function __fzf_open__() {
   local cmd file
   cmd="${FZF_ALT_O_COMMAND:-"command find -L . \\( -path '*/\\.*' -o -fstype 'devfs' -o -fstype 'devtmpfs' -o -fstype 'proc' \\) -prune \
@@ -31,6 +21,13 @@ else
   bind -m vi-command '"\eo": "ddi`__fzf_open__`\C-x\C-e\C-x\C-r\C-m"'
 fi
 
+source /usr/share/fzf/key-bindings.bash
+source /usr/share/fzf/completion.bash
+export FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS --black --border"
+
+###################
+#  NODE.JS - NVM  #
+###################
 function nvm_activate() {
     unalias nvm
     export NVM_DIR="$HOME/.nvm"
@@ -38,30 +35,51 @@ function nvm_activate() {
     [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
     nvm "$@"
 }
+alias nvm="nvm_activate"
 
+##########
+#  TMUX  #
+##########
+alias tmux-session="tmux attach -t Session || tmux new -s Session"
 function ssh-tmux() {
     ssh $1 -t 'tmux attach'
 }
 
-alias ls="ls --color -h --group-directories-first"
-alias gits="git status"
-alias nvm="nvm_activate"
-alias tmux-session="tmux attach -t Session || tmux new -s Session"
+############
+#  DIRENV  #
+############
+eval "$(direnv hook bash)"
+
+##############
+#  TODO.TXT  #
+##############
 alias did="vim +'normal ggO' +'r!date +\%Y-\%m-\%d\ \%a' $(xdg-user-dir DOCUMENTS)/did.txt"
+alias t="todo.sh"
+complete -F _todo t
+
+#############
+#  THEMING  #
+#############
+source "$HOME"/.base16_theme
+source "$HOME"/.theme.bashrc
+
+# Colorized less / man / pydoc
+export LESS=-R
+export LESS_TERMCAP_mb=$'\e[0;49;39m'
+export LESS_TERMCAP_md=$'\e[1;49;35m'
+export LESS_TERMCAP_me=$'\e[0;49;39m'
+export LESS_TERMCAP_so=$'\e[1;46;97m'
+export LESS_TERMCAP_se=$'\e[0;49;39m'
+export LESS_TERMCAP_us=$'\e[1;49;36m'
+export LESS_TERMCAP_ue=$'\e[0;49;39m'
+
+#########################
+#  EXPORTS AND ALIASES  #
+#########################
+export PAGER=less
+export EDITOR=vim
+
+alias ls="ls --color -h --group-directories-first"
 alias diff='diff --color=auto'
 alias grep='grep --color=auto'
 alias mutt='neomutt'
-alias t="todo-txt"
-complete -F _todo t
-
-source "$HOME"/.base16_theme
-
-# Source bash compatible base colorscheme defines
-source "$HOME"/.theme.bashrc
-
-source /usr/share/fzf/key-bindings.bash
-source /usr/share/fzf/completion.bash
-
-export FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS --black --border"
-
-eval "$(direnv hook bash)"

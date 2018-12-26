@@ -39,7 +39,7 @@ font-1 = "MaterialIcons:size=14;4"
 
 modules-left = bspwm xwindow
 modules-center = date
-modules-right = mpd xkeyboard filesystem memory cpu battery temperature xbacklight volume
+modules-right = xkeyboard filesystem memory cpu battery temperature xbacklight volume
 
 scroll-up = bspwm-desknext
 scroll-down = bspwm-deskprev

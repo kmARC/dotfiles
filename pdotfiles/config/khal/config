@@ -1,0 +1,37 @@
+[default]
+default_calendar = gmail/example@gmail.com
+highlight_event_days = True
+
+[keybindings]
+external_edit = E
+
+[view]
+frame = color
+bold_for_light_color = false
+
+[calendars]
+
+[[gmail/example@gmail.com]]
+path = ~/.calendar/gmail/example@gmail.com
+color = dark green
+
+[[gmail/holidays_in_switzerland]]
+path = ~/.calendar/gmail/...@virtual
+color = dark red
+
+[[facebook]]
+path = ~/.calendar/facebook/
+color = dark blue
+
+[[mycompany]]
+path = ~/.calendar/mycompany/calendar/
+color = light cyan
+
+[locale]
+timeformat = %H:%M
+dateformat = %Y-%m-%d
+longdateformat = %Y-%m-%d %a
+datetimeformat = %Y-%m-%d %H:%M
+longdatetimeformat = %Y-%m-%d %a %H:%M
+
+# vim: set ft=dosini:
