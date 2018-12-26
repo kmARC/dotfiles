@@ -17,6 +17,8 @@
         path: config/ranger/rc.conf
     ~/.config/sxhkd/sxhkdrc:
         path: config/sxhkd/sxhkdrc
+    ~/.config/xfce4/terminal/terminalrc:
+        path: config/xfce4/terminal/terminalrc
     ~/.fonts/dotbot:
         path: fonts/dotbot
     ~/.mutt/:
