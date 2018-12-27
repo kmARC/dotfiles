@@ -6,7 +6,8 @@
   <a href="images/desktop-empty.png"><img src="images/desktop-empty.png" width="48%"></a>
 </p>
 
-(Wallpaper: https://github.com/elementary/wallpapers/blob/master/Ashim%20DSilva.jpg)
+- Wallpaper: https://github.com/elementary/wallpapers/blob/master/Ashim%20DSilva.jpg
+- VIM configuration: https://githu.bom/kmarc/vim
 
 ## Installation on Arch Linux
 
@@ -49,14 +50,14 @@ git clone --recursive --depth=1 https://github.com/kmARC/dotfiles ~/.dotfiles
 
 Re-login / restart bash.
 
-### Theme
+### Shell & color theme
 
 This setup heavily depends on the brilliant [base16] project.
 
 ``` bash
 # Install prerequisites
 sudo pacman -S xorg-xrdb
-yay -S base16-manager
+yay -S base16-manager liquidprompt
 
 # Install and select a theme
 base16-manager install chriskempson/base16-shell
@@ -83,13 +84,13 @@ echo "source $HOME/.bashrc.kmarc" >> "$HOME/.bashrc"
 
 ## Misc dependencies
 
-Have a look at [install.conf.yaml](install.conf.yaml) to get a hint on what software is configured with these
-dotfiles. Here is a categorization of what you might want to use from my repo.
+Have a look at  [install.conf.yaml](install.conf.yaml) to get a hint on  what software is configured
+with these dotfiles. Here is a categorization of what you might want to use from my repo.
 
 ### Productivity: Mail + Calendar + Contacts
 
-I have a 95% terminal-based workflow for Mail ([neomutt]), Calendar ([khal]), and Contacts
-([khard]). All configured to work together with GMail/Google Suite, and Office 365. Calendars are
+I  have  a  95% terminal-based  workflow  for  Mail  ([neomutt]),  Calendar ([khal]),  and  Contacts
+([khard]). All configured  to work together with  GMail/Google Suite, and Office  365. Calendars are
 syncronized from all these sources and from facebook. All from terminal!
 
 ```bash
@@ -199,7 +200,7 @@ sudo pacman -S \
 
 ### GUI themes
 
-I keep it simple: using [Arc] GTK and icon themes, configured Qt/KDE applications to pick up gtk2
+I keep it  simple: using [Arc] GTK and  icon themes, configured Qt/KDE applications to  pick up gtk2
 theme settings. `lxappearance` is a handy tool to set gtk2/3 themes.
 
 [Arc]: https://github.com/horst3180/Arc-theme
