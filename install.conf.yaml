@@ -27,8 +27,6 @@
     ~/.mutt/:
         glob: true
         path: mutt/*
-    # ~/.local/src/rxvt:
-    #     path: local/src/rxvt
     ~/.tmux/plugins/tpm:
         path: tmux/plugins/tpm
     ~/bin:
@@ -38,6 +36,7 @@
     ~/.bashrc.kmarc:
     ~/.compton.conf:
     ~/.gitconfig:
+    ~/.liquidpromptrc:
     ~/.mailcap:
     ~/.muttrc:
     ~/.rtorrent.rc:

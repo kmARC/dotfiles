@@ -83,3 +83,9 @@ alias ls="ls --color -h --group-directories-first"
 alias diff='diff --color=auto'
 alias grep='grep --color=auto'
 alias mutt='neomutt'
+
+##################
+#  LIQUIDPROMPT  #
+##################
+[[ $- = *i* ]] && source /usr/bin/liquidprompt
+
