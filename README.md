@@ -197,6 +197,18 @@ sudo pacman -S \
   hplip
 ```
 
+### GUI themes
+
+I keep it simple: using [Arc] GTK and icon themes, configured Qt/KDE applications to pick up gtk2
+theme settings. `lxappearance` is a handy tool to set gtk2/3 themes.
+
+[Arc]: https://github.com/horst3180/Arc-theme
+
+``` bash
+pacman -S arc-{gtk,icon}-theme elementary-icon-theme gtk-engine-murrine lxappearance \
+          qt5-styleplugins
+```
+
 ### Restart your desktop
 
 You can use either `startx` or selecting any desktop environments from lightdm
