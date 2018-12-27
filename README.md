@@ -209,6 +209,12 @@ pacman -S arc-{gtk,icon}-theme elementary-icon-theme gtk-engine-murrine lxappear
           qt5-styleplugins
 ```
 
+### Quirks
+
+I am using Xfce's panel `xfce4-panel` to display the notification's icon and system tray
+(by default hidden when out of focus). It's started automatically by [xstart](xstart). You might
+need to disable / tweak it's look as you like
+
 ### Restart your desktop
 
 You can use either `startx` or selecting any desktop environments from lightdm
