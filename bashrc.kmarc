@@ -87,5 +87,5 @@ alias mutt='neomutt'
 ##################
 #  LIQUIDPROMPT  #
 ##################
-[[ $- = *i* ]] && source /usr/bin/liquidprompt
+[[ -z "$MC_SID" && $- = *i* ]] && source /usr/bin/liquidprompt
 
