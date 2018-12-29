@@ -27,10 +27,10 @@
     <property name="muted_applications" type="array">
     </property>
   </property>
-  <property name="primary-monitor" type="uint" value="1"/>
+  <property name="primary-monitor" type="uint" value="0"/>
   <property name="log-level" type="uint" value="0"/>
   <property name="log-level-apps" type="uint" value="0"/>
-  <property name="do-not-disturb" type="bool" value="false"/>
+  <property name="do-not-disturb" type="bool" value="true"/>
   <property name="do-slideout" type="bool" value="true"/>
   <property name="expire-timeout" type="int" value="5"/>
   <property name="do-fadeout" type="bool" value="true"/>
