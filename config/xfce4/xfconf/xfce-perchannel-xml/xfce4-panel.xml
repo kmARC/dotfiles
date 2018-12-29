@@ -22,6 +22,7 @@
   <property name="plugins" type="empty">
     <property name="plugin-6" type="string" value="systray">
       <property name="names-visible" type="array">
+        <value type="string" value="vlc"/>
         <value type="string" value="redshift-gtk"/>
         <value type="string" value="networkmanager applet"/>
         <value type="string" value="electron"/>

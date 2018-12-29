@@ -17,11 +17,10 @@
         path: config/ranger/rc.conf
     ~/.config/sxhkd/sxhkdrc:
         path: config/sxhkd/sxhkdrc
-    ~/.config/xfce4/terminal/terminalrc:
-        path: config/xfce4/terminal/terminalrc
-    ~/.config/xfce4/xfconf/xfce-perchannel-xml/:
-        glob: true
-        path: config/xfce4/xfconf/xfce-perchannel-xml/*
+    ~/.config/xfce4/terminal:
+        path: config/xfce4/terminal
+    ~/.config/xfce4/xfconf:
+        path: config/xfce4/xfconf
     ~/.fonts/dotbot:
         path: fonts/dotbot
     ~/.mutt/:
