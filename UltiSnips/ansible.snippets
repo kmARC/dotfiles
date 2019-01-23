@@ -49,6 +49,25 @@ snippet apti "Ansible apt module with_items" b
 		- ${3}
 endsnippet
 
+snippet pkg "Ansible package module" b
+- name: Install $1 package
+	${2:become: true}
+	${1:apt}:
+		name: ${1}
+		$0
+endsnippet
+
+snippet pkgi "Ansible package module with_items" b
+- name: Install $1 packages
+	${2:become: true}
+	${1:apt}:
+		name: "{{ item }}"
+		${4:update_cache: yes}
+		$0
+	with_items:
+		- ${3}
+endsnippet
+
 snippet template "Ansible template module" b
 - name: Copy template $2
 	template:
@@ -111,3 +130,9 @@ snippet servicei "Ansible service module with_items" b
 		- $2
 	become: true
 endsnippet
+
+snippet flush "Flush handlers"
+- name: Flush handlers
+	meta: flush_handlers
+endsnippet
+
