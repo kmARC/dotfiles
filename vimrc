@@ -1,67 +1,70 @@
 call plug#begin('~/.vim/plugged')
+"--- Look&Feel ---
+Plug 'itchyny/lightline.vim'
+Plug 'daviesjamie/vim-base16-lightline'
+Plug 'chriskempson/base16-vim'
 "--- Tools ---
 Plug 'gcmt/taboo.vim'
-Plug 'junegunn/fzf'             , {'dir': '~/.fzf', 'do': './install --all'}
 Plug 'junegunn/fzf.vim'
-Plug 'scrooloose/nerdtree'      , {'on': ['NERDTreeToggle', 'NERDTreeFind'] }
+Plug 'scrooloose/nerdtree'          , {'on': ['NERDTreeToggle', 'NERDTreeFind']}
 Plug 'tpope/vim-unimpaired'
-" Plug 'tpope/vim-rsi' " Bugs with macros :-(
 Plug 'tpope/vim-obsession'
+Plug 'claytron/lodgeit-vim'
+" Plug 'tpope/vim-rsi' " FIXME: breaks with macros
+"--- Editing ---
+Plug 'Raimondi/delimitMate'
+Plug 'godlygeek/tabular'            , {'on': 'Tabularize'}
+Plug 'michaeljsmith/vim-indent-object'
+Plug 'tpope/vim-surround'
 "--- Git ---
 Plug 'airblade/vim-gitgutter'
 Plug 'mattn/gist-vim'
 Plug 'shumphrey/fugitive-gitlab.vim'
+Plug 'kmarc/vim-fubitive'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-rhubarb'
 "--- TMUX ---
 Plug 'jpalardy/vim-slime'
 Plug 'christoomey/vim-tmux-navigator'
-Plug 'tmux-plugins/vim-tmux'    , {'for': 'tmux'}
-"--- Editing ---
-Plug 'Raimondi/delimitMate'
-Plug 'godlygeek/tabular'        , {'on': 'Tabularize'}
-Plug 'michaeljsmith/vim-indent-object'
-Plug 'tpope/vim-surround'
-"--- Look&Feel ---
-Plug 'itchyny/lightline.vim'
-Plug 'daviesjamie/vim-base16-lightline'
-Plug 'chriskempson/base16-vim'
+Plug 'ferreum/completor-tmux'
+Plug 'tmux-plugins/vim-tmux'        , {'for': 'tmux'}
 "--- Programming ---
+Plug 'andymass/vim-matchup'
+Plug 'AndrewRadev/splitjoin.vim'
 Plug 'SirVer/ultisnips'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'honza/vim-snippets'
-Plug 'majutsushi/tagbar'
+Plug 'majutsushi/tagbar'            , {'on': ['TagbarToggle']}
 Plug 'maralla/completor.vim'
 Plug 'tpope/vim-commentary'
 Plug 'w0rp/ale'
-"--- Markdown ---
-Plug 'plasticboy/vim-markdown'  , {'for': 'markdown'}
-Plug 'shime/vim-livedown'       , {'for': 'markdown'}
+Plug 'dbeniamine/cheat.sh-vim'
+"--- Markdown, Wiki, Todo ---
+Plug 'plasticboy/vim-markdown'      , {'for': 'markdown'}
+Plug 'shime/vim-livedown'           , {'for': 'markdown'}
+Plug 'freitass/todo.txt-vim'        , {'for': 'todo'}
+Plug 'vimwiki/vimwiki'
 "--- HTML ---
-Plug 'mattn/emmet-vim'          , {'for': ['html', '*jsx']}
-Plug 'othree/html5.vim'         , {'for': ['html', '*jsx']}
+Plug 'mattn/emmet-vim'              , {'for': ['html', '*jsx']}
+Plug 'othree/html5.vim'             , {'for': ['html', '*jsx']}
 "--- CSS ---
-Plug 'groenewege/vim-less'      , {'for': 'css'}
-"--- Dependencies
-Plug 'mattn/webapi-vim'
-Plug 'tpope/vim-repeat'
-"--- Java ---
-Plug 'artur-shaik/vim-javacomplete2', {'for': 'java' }
+Plug 'groenewege/vim-less'          , {'for': 'css'}
 "--- JavaScript ---
-Plug 'moll/vim-node'            , {'for': 'javascript*'}
-Plug 'heavenshell/vim-jsdoc'    , {'for': 'javascript*'}
-Plug 'othree/yajs.vim'          , {'for': 'javascript*'}
-Plug 'pangloss/vim-javascript'  , {'for': 'javascript*'}
+Plug 'moll/vim-node'                , {'for': 'javascript*'}
+Plug 'heavenshell/vim-jsdoc'        , {'for': 'javascript*'}
+Plug 'othree/yajs.vim'              , {'for': 'javascript*'}
+Plug 'pangloss/vim-javascript'      , {'for': 'javascript*'}
 "--- React ---
-Plug 'mxw/vim-jsx'              , {'for': '*.jsx'}
+Plug 'mxw/vim-jsx'                  , {'for': '*jsx'}
 "--- TypeScript ---
-Plug 'leafgarland/typescript-vim'  , {'for': 'typescript*'}
+Plug 'leafgarland/typescript-vim'   , {'for': 'typescript*'}
+Plug 'maralla/completor-typescript' , {'for': 'typescript*'}
 "--- DevOps ---
-Plug 'hashivim/vim-terraform'   , {'for': 'terraform'}
-Plug 'pearofducks/ansible-vim'  , {'for': 'ansible*'}
+Plug 'hashivim/vim-terraform'       , {'for': 'terraform'}
+Plug 'pearofducks/ansible-vim'      , {'for': 'ansible*'}
+"--- Dependencies ---
+Plug 'tpope/vim-repeat'
 call plug#end()
-
-runtime macros/matchit.vim
 
 syntax on
 filetype plugin indent on
@@ -111,37 +114,44 @@ set switchbuf+=usetab
 set wildignorecase
 set wildmode=full
 set wildcharm=<C-z>
-set grepprg=ag\ --vimgrep\ $*
+set grepprg=rg\ --vimgrep\ $*
 set foldlevel=0
 set noshowmode
 set signcolumn=yes
-set sw=2 sts=2 ts=2
+set shiftwidth=2
+set softtabstop=2
+set tabstop=2
 
 "--- Look & Feel ----
 let base16colorspace=256
 set background=dark
 silent! source $HOME/.vimrc_background
 
-" highlight VertSplit ctermbg=00 ctermfg=18
-set fillchars+=vert:\│,stlnc:-
+highlight VertSplit ctermbg=00 ctermfg=18
+set fillchars+=vert:\│
 
 highlight link ALEWarningSign ToDo
-highlight link ALEErrorSign DiffDelete
+highlight link ALEErrorSign   DiffDelete
+highlight TabLineSel          ctermbg=8     ctermfg=15
+highlight TabModified         ctermbg=1     ctermfg=15 cterm=bold
+highlight TabModifiedSelected ctermbg=1     ctermfg=15 cterm=bold
+highlight Spellbad                          ctermfg=0  cterm=reverse gui=undercurl
+highlight Normal              ctermbg=NONE
 
 "--- Mappings ----
 cmap w!!                   w !sudo tee > /dev/null %
 nnoremap <C-e>             2<C-e>
 nnoremap <C-y>             2<C-y>
-nnoremap <C-p>             :GFiles<CR>
+nnoremap <C-p>             :Files<CR>
 nnoremap <expr> <F7>       expand('%') == '' ? ":NERDTreeToggle<CR>" : ":NERDTreeFind<CR>"
 nnoremap <space>           :ls<CR>:sbuffer 
 nnoremap <F8>              :TagbarToggle<CR>
 nnoremap <F9>              :lclose<CR>:cclose<CR>:pclose<CR>
 nnoremap {               :bn!<CR>
 nnoremap }               :bp!<CR>
-nnoremap <leader>fa        :call fzf#vim#grep('ag --nogroup --column --color "(?=.)"', 1, {'options':'--exact --delimiter : --nth 4..'})<CR>
-nnoremap <leader>fA        :call fzf#vim#grep('ag --nogroup --column --color "(?=.)"', 1, {'options':'--exact --delimiter : --nth 4.. --query=<C-r><C-w> +i'})<CR>
-nnoremap <leader>ft        :call fzf#vim#tags('',             {'options':'--exact -i'})<CR>
+nnoremap <leader>fg        :Rg<CR>
+nnoremap <leader>fG        :call fzf#vim#grep('rg --column --line-number --no-heading --color=always --smart-case ""', 1, {'options':'--exact --delimiter : --nth 4.. --query=<C-r><C-w> +i'})<CR>
+nnoremap <leader>ft        :Tags<CR>
 nnoremap <leader>fT        :call fzf#vim#tags('^<C-r><C-w> ', {'options':'--exact +i'})<CR>
 nnoremap <leader>fb        :Buffers<CR>
 nnoremap <leader>fw        :Windows<CR>
@@ -174,9 +184,9 @@ nnoremap n                 nzz
 nnoremap N                 Nzz
 nnoremap [h                :GitGutterPrevHunk<CR>
 nnoremap ]h                :GitGutterNextHunk<CR>
-nnoremap <leader>aa :!xdg-open http://docs.ansible.com/ansible/latest/list_of_all_modules.html<CR>
-nnoremap <leader>am :!xdg-open http://docs.ansible.com/ansible/latest/<C-R><C-W>_module.html\#options<CR>
-nnoremap <leader>as :!xdg-open https://www.google.com/search?q=site:docs.ansible.com+\"<C-R><C-W>\"<CR>
+nnoremap <leader>aa :!xdg-open https://docs.ansible.com/ansible/latest/list_of_all_modules.html<CR>
+nnoremap <leader>am :!xdg-open https://docs.ansible.com/ansible/latest/<C-R><C-W>_module.html\#options<CR>
+nnoremap <leader>as :!xdg-open https://docs.ansible.com/ansible/latest/reference_appendices/playbooks_keywords.html?highlight=<C-R><C-W><CR>
 
 "--- Autocommands ---
 augroup vimrc
@@ -185,13 +195,11 @@ augroup vimrc
   autocmd FileType vim                            setlocal keywordprg=:help
   autocmd FileType javascript*,typescript*        let &l:keywordprg=fnamemodify($MYVIMRC, ":h") . "/devdocs.sh " . &l:filetype
   autocmd FileType css,less,scss                  let &l:keywordprg=fnamemodify($MYVIMRC, ":h") . "/devdocs.sh " . &l:filetype
-  autocmd FileType ansible*                       let &l:keywordprg=fnamemodify($MYVIMRC, ":h") . "/devdocs.sh " . &l:filetype
+  autocmd FileType ansible                        let &l:keywordprg=fnamemodify($MYVIMRC, ":h") . "/devdocs.sh " . &l:filetype
+  autocmd FileType python                         let &l:keywordprg=fnamemodify($MYVIMRC, ":h") . "/devdocs.sh " . &l:filetype
   "----- mappings
   autocmd FileType markdown                       nnoremap <buffer> <F6> :LivedownToggle<CR>
   autocmd FileType markdown                       nnoremap <buffer> <F8> :Toc<CR><C-w>L<C-w>50<bar>:setlocal winfixwidth<CR>
-  autocmd FileType c,cpp                          nnoremap <buffer> <Leader>] :YcmCompleter GoTo<CR>
-  autocmd FileType python                         nnoremap <buffer> <Leader>] :YcmCompleter GoTo<CR>
-  autocmd FileType javascript*,typescript*        nnoremap <buffer> <Leader>] :YcmCompleter GoTo<CR>
   "----- formatting
   autocmd FileType terraform                      setlocal commentstring=#%s
   autocmd FileType plaintex,text,markdown         setlocal tw=100 colorcolumn=101 formatprg=par\ -jw100
@@ -200,34 +208,35 @@ augroup vimrc
   "----- filetypes
   autocmd BufRead,BufNewFile Vagrantfile          setlocal filetype=ruby
   autocmd BufRead,BufNewFile *.tsx                setlocal filetype=typescript.jsx
-  autocmd FileType ansible                        setlocal filetype=ansible.yaml
+  autocmd FileType ansible                        setlocal filetype=yaml.ansible
   "----- marks
-  autocmd BufUnload *.css,*.less,*.scss            normal! mC
-  autocmd BufUnload *.html                         normal! mH
-  autocmd BufUnload *.js,*.jsx,*.ts,*.tsx          normal! mJ
-  autocmd BufUnload *.md                           normal! mM
-  autocmd BufUnload *.py                           normal! mP
-  autocmd BufUnload *.sh                           normal! mS
-  autocmd BufUnload *.yml                          normal! mY
-  autocmd BufUnload *.vim,vimrc                    normal! mV
+  autocmd BufWritePost *.css,*.less,*.scss        normal! mC
+  autocmd BufWritePost *.html                     normal! mH
+  autocmd BufWritePost *.js,*.jsx,*.ts,*.tsx      normal! mJ
+  autocmd BufWritePost *.md                       normal! mM
+  autocmd BufWritePost *.py                       normal! mP
+  autocmd BufWritePost *.sh                       normal! mS
+  autocmd BufWritePost *.yml                      normal! mY
+  autocmd BufWritePost *.vim,vimrc                normal! mV
   "----- buffer/window opts
-  autocmd WinEnter *                              if &l:buftype == "" | setlocal nu rnu
-  autocmd WinEnter *                              set cursorline
-  " autocmd WinEnter *                              set colorcolumn=81
-  autocmd WinLeave *                              if &l:buftype == "" | setlocal nu nornu
-  autocmd WinLeave *                              set nocursorline
-  " autocmd WinLeave *                              set colorcolumn=0
-  autocmd WinEnter *                              call ExitIfNoListedBufsDisplayed()
+  autocmd WinEnter *                              if &l:buftype == "" | setlocal nu   rnu | set   cursorline
+  autocmd WinLeave *                              if &l:buftype == "" | setlocal nu nornu | set nocursorline
   autocmd FileType nerdtree                       nnoremap <buffer> <F7> :NERDTreeToggle<CR>
-  autocmd BufWinEnter,WinEnter *vim/**/doc/*      wincmd L | 80 wincmd | | setlocal winfixwidth
-  autocmd BufReadPost fugitive://*                set bufhidden=delete
-  autocmd BufReadPost *.git/index                 set nobuflisted
+  autocmd FileType help                           wincmd L | 80 wincmd | | setlocal winfixwidth
+  autocmd BufReadPost fugitive://*                setlocal bufhidden=delete
+  autocmd BufReadPost *.git/index                 setlocal nobuflisted
   "----- startup
   autocmd VimEnter * call CheckProject()
+  "----- include/define
+  autocmd FileType javascript*,typescript*        setlocal include=from
+                                              \ | setlocal define=export.\\{-\\}\\(interface\\\|function\\\|const\\\|type\\\|class\\\|var\\)
   "----- misc
-  autocmd BufWrite /home/kmarc/Documents/Home/index.md  silent !pandoc -o /home/kmarc/Documents/Home/index.html -c github-pandoc.css %
-  autocmd FileType java setlocal omnifunc=javacomplete#Complete
-  autocmd InsertEnter *.java call UnmapJcMappings()
+  autocmd BufWrite ~/Documents/Home/index.md      silent !pandoc --output ~/Documents/Home/index.html
+                                                               \ --css github-pandoc.css
+                                                               \ --standalone
+                                                               \ %
+  "----- skeleton
+  autocmd BufNewFile *.sh                         0r ~/.vim/skeleton/skeleton.sh
 augroup end
 
 
@@ -248,18 +257,6 @@ function! ToggleFold()
   endif
 endfunction
 
-function! BufferNext()
-  if &l:buftype == '' && &l:buflisted
-    bn
-  endif
-endfunction
-
-function! BufferPrev()
-  if &l:buftype == '' && &l:buflisted
-    bp
-  endif
-endfunction
-
 function! BufferClose()
   if &l:buftype != '' || ! &l:buflisted
     quit
@@ -273,16 +270,6 @@ endfunction
 
 function! BufferCloseAll()
   bufdo if &l:buftype == '' | call BufferClose() | endif
-endfunction
-
-function! ExitIfNoListedBufsDisplayed()
-  let wins = 0
-  for buf in getbufinfo({'buflisted':1})
-    let wins += len(buf.windows)
-  endfor
-  if wins == 0
-    qall
-  endif
 endfunction
 
 let s:sess = fnamemodify($MYVIMRC, ":h") . '/sessions/' . substitute($PWD, '\/', '%', 'g')
@@ -307,34 +294,25 @@ function! CheckProject()
       call Project()
     endif
 endfunction
-
-function! UnmapJcMappings()
-  silent! iunmap <buffer> <C-J>I
-  silent! iunmap <buffer> <C-j>R
-  silent! iunmap <buffer> <C-j>i
-  silent! iunmap <buffer> <C-j>ii
-  silent! iunmap <buffer> <C-j>jM
-  silent! iunmap <buffer> <C-j>s
-  silent! iunmap <buffer> <C-j>g
-  silent! iunmap <buffer> <C-j>a
-endfunction
 " }}}
 
 "--- Plugin configurations ---
 let NERDTreeRespectWildIgnore = 1
-let delimitMate_expand_cr = 0
+let NERDTreeQuitOnOpen = 1
 let g:EditorConfig_exclude_patterns = ['fugitive://.*']
 let g:UltiSnipsEditSplit = "vertical"
 let g:UltiSnipsExpandTrigger = "<c-j>"
 let g:UltiSnipsListSnippets = "<c-h>"
+let g:ale_python_pylint_change_directory = 0
 let g:ale_sh_shellcheck_options = '-x'
-let g:completor_java_omni_trigger = '(\w+\.)$'
+let g:CheatSheetProviders = [ 'loclist', 'quickfix']
 let g:completor_refresh_always = 0
-let g:diminactive_use_syntax = 1
+let g:delimitMate_expand_cr = 2
 let g:fugitive_gitlab_domains = [ 'https://gitlab.tools.in.pan-net.eu/' ]
+let g:fugitive_bitbucket_domains = [ 'https://git.acronis.com' ]
 let g:fzf_buffers_jump = 1
 let g:fzf_files_options = '--exact'
-let g:fzf_tags_command = '(git ls-files || ag -l) | ctags -L-'
+let g:fzf_tags_command = 'git ls-files | ctags -L-'
 let g:jsdoc_enable_es6 = 1
 let g:lightline = {
   \ 'colorscheme': 'base16',
@@ -352,11 +330,19 @@ let g:netrw_home = expand("~/.vim/misc")
 let g:netrw_liststyle = 3
 let g:slime_paste_file = tempname()
 let g:slime_target = "tmux"
-let g:taboo_renamed_tab_format =' [%N] %l%m |'
-let g:taboo_tab_format = ' [%N] %f%m |'
+let g:taboo_renamed_tab_format =' %N %l%m '
+let g:taboo_tab_format = ' %N %f%m '
+let g:taboo_modified_tab_flag = '*'
 let g:tagbar_autoclose = 1
 let g:tagbar_autofocus = 1
 let g:vim_markdown_folding_disabled = 1
+let g:vimwiki_list = [{
+  \ 'path': '~/Documents/Notes', 
+  \ 'path_html': '~/Documents/Notes/html/',
+  \ 'ext': '.md', 
+  \ 'syntax': 'markdown',
+  \ 'auto_tags': 1
+  \ }]
 
 set modeline
 set exrc
