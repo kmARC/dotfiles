@@ -149,6 +149,7 @@ nnoremap <F8>              :TagbarToggle<CR>
 nnoremap <F9>              :lclose<CR>:cclose<CR>:pclose<CR>
 nnoremap {               :bn!<CR>
 nnoremap }               :bp!<CR>
+nnoremap <leader>fp        :call fzf#vim#files(0, {'options':'--query=' . expand('%:e') . '$\ '})<CR>
 nnoremap <leader>fg        :Rg<CR>
 nnoremap <leader>fG        :call fzf#vim#grep('rg --column --line-number --no-heading --color=always --smart-case ""', 1, {'options':'--exact --delimiter : --nth 4.. --query=<C-r><C-w> +i'})<CR>
 nnoremap <leader>ft        :Tags<CR>
