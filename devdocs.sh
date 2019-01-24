@@ -1,2 +1,2 @@
 #!/usr/bin/env bash
-firefox "http://devdocs.io/#q=$1+$2"
+xdg-open "https://devdocs.io/#q=$1+$2"
