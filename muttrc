@@ -15,9 +15,11 @@ set crypt_use_gpgme
 set crypt_autosign = yes
 set delete
 set fast_reply
+set forward_format = 'Fwd: %s'
 set mail_check = 10
 set mail_check_stats
 set mbox_type = Maildir
+set mime_forward
 set menu_scroll
 set pager_context = 3
 set pager_index_lines = 10
@@ -40,7 +42,7 @@ set folder_format = '%2C %t %N %f'
 
 # MIME
 set implicit_autoview
-alternative_order text/enriched text/calendar text/plain text/html 
+alternative_order  multipart/mixed text/calendar text/plain text/enriched text/html
 
 # Sidebar
 bind  index,pager \cP sidebar-prev
@@ -92,11 +94,13 @@ color sidebar_divider   color18       color18
 color sidebar_highlight brightcolor14 default
 
 # Links
-color body color06 default '[-a-z_0-9.%$]+@[-a-z_0-9.]+\\.[-a-z][-a-z]+'
+color body color06 default '[-a-z_0-9.%$]+@[-a-z_0-9.]+\.[-a-z][-a-z]+'
 color body blue    default "([a-z][a-z0-9+-]*://(((([a-z0-9_.!~*'();:&=+$,-]|%[0-9a-f][0-9a-f])*@)?((([a-z0-9]([a-z0-9-]*[a-z0-9])?)\\.)*([a-z]([a-z0-9-]*[a-z0-9])?)\\.?|[0-9]+\\.[0-9]+\\.[0-9]+\\.[0-9]+)(:[0-9]+)?)|([a-z0-9_.!~*'()$,;:@&=+-]|%[0-9a-f][0-9a-f])+)(/([a-z0-9_.!~*'():@&=+$,-]|%[0-9a-f][0-9a-f])*(;([a-z0-9_.!~*'():@&=+$,-]|%[0-9a-f][0-9a-f])*)*(/([a-z0-9_.!~*'():@&=+$,-]|%[0-9a-f][0-9a-f])*(;([a-z0-9_.!~*'():@&=+$,-]|%[0-9a-f][0-9a-f])*)*)*)?(\\?([a-z0-9_.!~*'();/?:@&=+$,-]|%[0-9a-f][0-9a-f])*)?(#([a-z0-9_.!~*'();/?:@&=+$,-]|%[0-9a-f][0-9a-f])*)?|(www|ftp)\\.(([a-z0-9]([a-z0-9-]*[a-z0-9])?)\\.)*([a-z]([a-z0-9-]*[a-z0-9])?)\\.?(:[0-9]+)?(/([-a-z0-9_.!~*'():@&=+$,]|%[0-9a-f][0-9a-f])*(;([-a-z0-9_.!~*'():@&=+$,]|%[0-9a-f][0-9a-f])*)*(/([-a-z0-9_.!~*'():@&=+$,]|%[0-9a-f][0-9a-f])*(;([-a-z0-9_.!~*'():@&=+$,]|%[0-9a-f][0-9a-f])*)*)*)?(\\?([-a-z0-9_.!~*'();/?:@&=+$,]|%[0-9a-f][0-9a-f])*)?(#([-a-z0-9_.!~*'();/?:@&=+$,]|%[0-9a-f][0-9a-f])*)?)[^].,:;!)? \t\r\n<>\"]"
 
 # Attachments
 color attach_headers brightcolor00 yellow     '\[-- Attachment.*'
+color attach_headers color00       color19    '\[-- Autoview.*'
+
 
 # Header
 color hdrdefault color19       default
@@ -118,16 +122,14 @@ color quoted7 color03 default # Quote level 8: Yellow
 color quoted8 color01 default # Quote level 9: Red
 
 # PGP
-color body    color01 default '(BAD signature)'
-color body    color06 default '(Good signature)'
-color body    color02 default '^gpg: Good signature .*'
-color body    color03 default '^gpg: '
-color body    color01 default '^gpg: BAD signature from.*'
+color body    color00       color01 '(BAD signature)'
+color body    brightcolor00 color02 '(Good signature)'
 
 # vcal
 color body    brightcolor15 default '^Subject:   .*'
-color body    brightgreen   default '^Start:     .*'
-color body    brightgreen   default '^End:       .*'
+color body    color02       default '^Organizer: .*'
+color body    brightcolor05 default '^Start:     .*'
+color body    brightcolor05 default '^End:       .*'
 
 # Border lines.
 color body        color04 default '( *[-+=#*~_]){6,}'
@@ -146,7 +148,7 @@ macro compose        \eh "<filter-entry>pandoc -s -f markdown -t html<enter>y<ed
 macro compose        \em "<filter-entry>pandoc -s -f html -t markdown<enter>y<edit-type>text/plain; charset=us-ascii<enter>"  'Convert html to markdown'
 macro index            L "<shell-escape>read -p 'Search messages: ' x; echo \$x >~/.cache/mutt_terms<enter><enter-command>virtual-mailboxes \"\`cat ~/.cache/mutt_terms\`\" \"notmuch://?query=\`cat ~/.cache/mutt_terms\`\"<enter><change-vfolder>?"
 macro index,pager      o "<enter-command>unset pipe_decode<enter><pipe-message>~/bin/viewhtmlmail<enter><enter-command>set pipe_decode<enter>" "View HTML in browser"
-macro index,pager    \cr "<enter-command>echo \"Checking mail...\"<enter><enter-command>set my_tmp=\`offlineimap -a \$from -f INBOX -u quiet\`<enter>"
+macro index,pager    \cr "<enter-command>echo \"Checking mail...\"<enter><enter-command>set my_tmp=\`offlineimap -a \$from -f INBOX -u quiet -q\`<enter>"
 
 bind  editor       <Tab> complete-query
 bind  editor     <space> noop

@@ -18,7 +18,7 @@ set smtp_url   = smtp://$from@smtp.gmail.com:587/
 
 # Mailboxes
 unmailboxes *
-mailboxes `find ~/.mutt/$from/ -type d -name cur -printf '"%h" '`
+mailboxes `find ~/.mutt/$from/ -type d -name cur ! -wholename *All\ Mail* -printf '"%h" ' | sort`
 exec check-stats
 
 # Addressbook
@@ -27,6 +27,6 @@ setenv pass $my_pass
 set query_command = "khard email -a $from -p '%s'"
 
 # Variable-dependent shortcuts
-macro index,pager a "<pipe-message>khard add-email -a $from" "Add sender to addressbook"
+macro index,pager a "<pipe-message>khard add-email -a $from<return>" "Add sender to addressbook"
 
 # vim: set ft=neomuttrc:

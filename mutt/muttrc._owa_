@@ -27,12 +27,6 @@ setenv pass $my_pass
 set query_command = "~/bin/ldap_owa_query.sh %s"
 
 # Variable-dependent shortcuts
-macro index,pager e "\
-<enter-command>unset resolve<enter>\
-<clear-flag>N\
-<save-message>$mbox<enter><enter>\
-<sync-mailbox>\
-<enter-command>set resolve<enter>"               "Archive"
 macro index,pager a "<pipe-message>khard add-email -a $from<return>" "Add sender to addressbook"
 
 # vim: set ft=neomuttrc:
