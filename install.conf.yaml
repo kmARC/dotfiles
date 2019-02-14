@@ -9,6 +9,8 @@
     # Explicit paths
     ~/.config/bspwm/bspwmrc:
         path: config/bspwm/bspwmrc
+    ~/.config/compton.conf:
+        path: config/compton.conf
     ~/.config/mopidy/mopidy.conf:
         path: config/mopidy/mopidy.conf
     ~/.config/polybar/config:
@@ -33,7 +35,6 @@
 
     # Top levels
     ~/.bashrc.kmarc:
-    ~/.compton.conf:
     ~/.gitconfig:
     ~/.liquidpromptrc:
     ~/.mailcap:
