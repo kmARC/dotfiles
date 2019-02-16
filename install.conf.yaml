@@ -19,6 +19,8 @@
         path: config/ranger/rc.conf
     ~/.config/sxhkd/sxhkdrc:
         path: config/sxhkd/sxhkdrc
+    ~/.config/urlscan/config.json:
+        path: config/urlscan/config.json
     ~/.config/xfce4/terminal:
         path: config/xfce4/terminal
     ~/.config/xfce4/xfconf:
