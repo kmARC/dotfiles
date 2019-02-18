@@ -10,11 +10,11 @@ LOCK_FILE="/tmp/lock.backup"
 if [ ! -d "$DEST" ]; then
     echo "Destination directory ($DEST) not available."
     echo "Exiting."
-    exit -1
+    exit 255
 fi
 
 if [[ "$1" == "sync" ]]; then
-    aws s3 sync "${DEST}" "s3://${DEST_S3_BUCKET}"
+    aws --profile s3-backup s3 sync "${DEST}" "s3://${DEST_S3_BUCKET}"
     exit 0
 fi
 
@@ -28,6 +28,7 @@ $HOME/.npm
 $HOME/.nvm
 $HOME/.rustup
 $HOME/.thumbnails
+$HOME/.tor-browser
 $HOME/.vagrant.d/boxes
 $HOME/.vim/vimswap
 $HOME/.vim/vimundo
@@ -100,7 +101,7 @@ rm -rf "$LOCK_FILE"
 
 echo
 echo "Sync to s3:"
-echo "    aws s3 sync ${DEST} s3://${DEST_S3_BUCKET}"
+echo "    aws --profile s3-backup s3 sync ${DEST} s3://${DEST_S3_BUCKET}"
 echo
 
 echo "======"
