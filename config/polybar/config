@@ -39,12 +39,20 @@ font-1 = "MaterialIcons:size=14;4"
 
 modules-left = bspwm xwindow
 modules-center = date
-modules-right = xkeyboard filesystem memory cpu battery temperature xbacklight volume
+modules-right = bluetooth dnd xkeyboard filesystem memory cpu battery temperature xbacklight volume
 
 scroll-up = bspwm-desknext
 scroll-down = bspwm-deskprev
 
 padding = 3
+
+tray-position = right
+tray-offset-x = -560
+tray-detached = true
+tray-padding = 5
+
+enable-ipc = true
+
 ; }}}
 
 [module/music]
@@ -56,6 +64,26 @@ label = %output%
 exec = ~/bin/mpris.sh
 
 ; }}}
+
+[module/bluetooth]
+type = custom/ipc
+
+initial = 1
+hook-0 = ~/bin/polybar-bt.sh
+click-left = "(bluetoothctl show | grep Powered:.*yes && bluetoothctl power off || bluetoothctl power on) && polybar-msg -p %pid% hook bluetooth 1"
+click-right = blueman-manager &
+
+format-foreground = ${colors.theme}
+
+[module/dnd]
+type = custom/ipc
+
+initial = 1
+hook-0 = [ "xtrue" == "x$(xfconf-query -c xfce4-notifyd -p /do-not-disturb)" ] && echo  || echo 
+click-left = "xfconf-query -c xfce4-notifyd -p /do-not-disturb -T && polybar-msg -p %pid% hook dnd 1"
+click-right = xfce4-notifyd-settings &
+
+format-foreground = ${colors.theme}
 
 [module/xwindow]
 ; {{{

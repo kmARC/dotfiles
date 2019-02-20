@@ -2,10 +2,11 @@
 
 <channel name="xfce4-notifyd" version="1.0">
   <property name="notify-location" type="uint" value="2"/>
-  <property name="theme" type="string" value="Retro"/>
+  <property name="theme" type="string" value="Bright"/>
   <property name="initial-opacity" type="empty"/>
   <property name="applications" type="empty">
     <property name="known_applications" type="array">
+      <value type="string" value="anypaste"/>
       <value type="string" value="Blueman"/>
       <value type="string" value="Electron"/>
       <value type="string" value="Firefox"/>
@@ -17,6 +18,7 @@
       <value type="string" value="notify-send"/>
       <value type="string" value="Skype"/>
       <value type="string" value="Slack"/>
+      <value type="string" value="Syncthing GTK"/>
       <value type="string" value="System Config Printer Notification"/>
       <value type="string" value="Thunar"/>
       <value type="string" value="weechat"/>
@@ -28,9 +30,9 @@
     </property>
   </property>
   <property name="primary-monitor" type="uint" value="0"/>
-  <property name="log-level" type="uint" value="0"/>
+  <property name="log-level" type="uint" value="1"/>
   <property name="log-level-apps" type="uint" value="0"/>
-  <property name="do-not-disturb" type="bool" value="true"/>
+  <property name="do-not-disturb" type="bool" value="false"/>
   <property name="do-slideout" type="bool" value="true"/>
   <property name="expire-timeout" type="int" value="5"/>
   <property name="do-fadeout" type="bool" value="true"/>

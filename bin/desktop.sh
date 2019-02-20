@@ -27,21 +27,8 @@ function is_primary {
            > /dev/null
 }
 
-function remove_unneeded_desktops {
-  # Remove desktops with a name that is not a number
-  for desktop in $(bspc query -D --names | grep -E -v '[0-9]+'); do
-    bspc desktop "$desktop" -r
-  done
-
-  # Remove extra desktops
-  for desktop in $(bspc query -D | tail -n +11); do
-    bspc desktop "$desktop" -r
-  done
-}
-
 # Focus the first desktops on all displays to prevent stale / removed desktops
 CUR=$(bspc query -D -d)
-# bspc desktop -f 6
 bspc desktop -f 1
 
 # Configure monitors
@@ -72,8 +59,6 @@ if [[ ${#MONS[@]} == 1 || $POSITION == 'mirror' ]]; then
         bspc monitor "$SEC" -r
     fi
 
-    remove_unneeded_desktops
-
     # Fix desktop order
     bspc monitor "$PRI" -o 1 2 3 4 5 6 7 8 9 0
 
@@ -103,8 +88,6 @@ else
     fi
     xrandr --output "$SEC" --mode "$MOD_SEC" \
            --output "$PRI" --mode "$MOD_PRI" --"$POSITION" "$SEC" --primary
-
-    remove_unneeded_desktops
 
     # Move around desktops
     for desktop in 1 2 3 4 5; do
@@ -146,7 +129,7 @@ done
 # Add tray space on primary monitor
 bspc config -m "$PRI" top_padding 28
 # Remove tray space from secondary monitor
-bspc config -m "$SEC" top_padding 0
+[ -n "$SEC" ] && bspc config -m "$SEC" top_padding 0
 
 # Set wallpaper
 ~/.fehbg
@@ -168,9 +151,6 @@ synclient TapButton2=3
 synclient TapButton3=2
 synclient ClickPad=1
 
-# Fix Java nonreparenting WM issue
-~/bin/java_nonreparenting_wm_hack.sh
-
 # Help polybar by calculating it's desired width
 xrandr | grep primary \
        | sed -r 's/^.*[^0-9]([0-9]+)x[0-9]+.*$/\1/g' \
@@ -187,8 +167,8 @@ touch -m "$HOME"/.config/polybar/config
 # Setting WM name to something java compatible
 wmname LG3D
 
-# Fix tray
-~/bin/tray.sh &
+# Fix Java nonreparenting WM issue
+~/bin/java_nonreparenting_wm_hack.sh
 
 SINK=$(pactl list sinks | awk -v RS="" -F'#' '{ print $2 }' | tail -n0)
 SINK_INPUTS=($(pactl list sink-inputs | awk -F'#' '/^Sink Input/{ print $2 }'))
