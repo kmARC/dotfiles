@@ -62,6 +62,7 @@ Plug 'maralla/completor-typescript' , {'for': 'typescript*'}
 "--- DevOps ---
 Plug 'hashivim/vim-terraform'       , {'for': 'terraform'}
 Plug 'pearofducks/ansible-vim'      , {'for': 'ansible*'}
+Plug 'andrewstuart/vim-kubernetes'  , {'for': '*gotexttmpl'}
 "--- Dependencies ---
 Plug 'tpope/vim-repeat'
 call plug#end()
@@ -196,6 +197,7 @@ augroup vimrc
   autocmd FileType css,less,scss                  let &l:keywordprg=fnamemodify($MYVIMRC, ":h") . "/devdocs.sh " . &l:filetype
   autocmd FileType ansible                        let &l:keywordprg=fnamemodify($MYVIMRC, ":h") . "/devdocs.sh " . &l:filetype
   autocmd FileType python                         let &l:keywordprg=fnamemodify($MYVIMRC, ":h") . "/devdocs.sh " . &l:filetype
+  autocmd FileType dockerfile                     setlocal keywordprg=:call\ DockerHelp()
   "----- mappings
   autocmd FileType markdown                       nnoremap <buffer> <F6> :LivedownToggle<CR>
   autocmd FileType markdown                       nnoremap <buffer> <F8> :Toc<CR><C-w>L<C-w>50<bar>:setlocal winfixwidth<CR>
@@ -292,6 +294,11 @@ function! CheckProject()
   if filereadable(s:sess) && argc() == 0
       call Project()
     endif
+endfunction
+
+function! DockerHelp()
+  exec "!xdg-open https://docs.docker.com/engine/reference/builder/\\#"
+        \ . tolower(expand("<cword>"))
 endfunction
 " }}}
 
