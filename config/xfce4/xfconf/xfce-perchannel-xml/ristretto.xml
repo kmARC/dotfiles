@@ -10,18 +10,18 @@
     <property name="thumbnails" type="empty">
       <property name="show" type="bool" value="true"/>
     </property>
-    <property name="bgcolor-override" type="bool" value="false"/>
+    <property name="bgcolor-override" type="bool" value="true"/>
     <property name="show-clock" type="bool" value="true"/>
     <property name="toolbar" type="empty">
       <property name="show" type="bool" value="false"/>
     </property>
     <property name="statusbar" type="empty">
-      <property name="show" type="bool" value="true"/>
+      <property name="show" type="bool" value="false"/>
     </property>
     <property name="bgcolor" type="array">
-      <value type="uint" value="0"/>
-      <value type="uint" value="0"/>
-      <value type="uint" value="0"/>
+      <value type="uint" value="12079"/>
+      <value type="uint" value="13364"/>
+      <value type="uint" value="16191"/>
       <value type="uint" value="65535"/>
     </property>
   </property>
@@ -32,6 +32,6 @@
     <property name="limit-quality" type="bool" value="true"/>
   </property>
   <property name="desktop" type="empty">
-    <property name="type" type="string" value="none"/>
+    <property name="type" type="string" value="xfce"/>
   </property>
 </channel>

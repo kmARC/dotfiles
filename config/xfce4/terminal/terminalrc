@@ -33,11 +33,14 @@ MiscRewrapOnResize=TRUE
 MiscUseShiftArrowsToScroll=FALSE
 MiscSlimTabs=FALSE
 MiscNewTabAdjacent=FALSE
-BackgroundDarkness=0.900000
+BackgroundDarkness=0.950000
 ColorBoldIsBright=FALSE
 ShortcutsNoHelpkey=TRUE
 ScrollingOnOutput=FALSE
-BackgroundMode=TERMINAL_BACKGROUND_TRANSPARENT
 ScrollingUnlimited=TRUE
 CellHeightScale=1.250000
+BackgroundImageShading=0.900000
+BackgroundImageFile=/home/kmarc/Pictures/Wallpapers/Ashim DSilva.jpg
+BackgroundMode=TERMINAL_BACKGROUND_TRANSPARENT
+BackgroundImageStyle=TERMINAL_BACKGROUND_STYLE_CENTERED
 
