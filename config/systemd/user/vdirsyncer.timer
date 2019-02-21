@@ -1,0 +1,9 @@
+[Unit]
+Description=Vdirsyncer timer
+
+[Timer]
+OnBootSec=1m
+OnUnitInactiveSec=30m
+
+[Install]
+WantedBy=default.target

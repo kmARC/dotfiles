@@ -1,0 +1,11 @@
+[Unit]
+Description=Vdirsyncer service
+
+[Service]
+Type=dbus
+Type=oneshot
+ExecStart=vdirsyncer sync
+TimeoutStopSec=120
+
+[Install]
+WantedBy=default.target

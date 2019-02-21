@@ -1,0 +1,11 @@
+[Unit]
+Description=Borg backup service
+
+[Service]
+Type=dbus
+Type=oneshot
+ExecStart=%h/bin/backup.sh sync
+TimeoutStopSec=120
+
+[Install]
+WantedBy=default.target
