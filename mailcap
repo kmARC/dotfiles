@@ -16,7 +16,9 @@ application/octet-stream; mutt.octet.filter '%s';                     copiousout
 application/msword;       antiword -w 96 '%s' 2>/dev/null;            copiousoutput;
 application/ics;          mutt-ics;                                   copiousoutput;
 text/calendar;            mutt-ics;                                   copiousoutput;
-application/pdf;          pdftotext -fixed 8 -l 2 '%s' - 2>/dev/null; copiousoutput;
+application/pdf;          pdftotext -fixed 4 -l 2 '%s' - 2>/dev/null; copiousoutput;
+application/x-pdf;        pdftotext -fixed 4 -l 2 '%s' - 2>/dev/null; copiousoutput;
 application/ms-tnef;      tnef -w %s;                                 copiousoutput;
-text/html;                w3m -dump -cols 100 -ppc 2 -graph -s \
-                          -I %{charset} -T text/html; needsterminal;  copiousoutput;
+
+text/html;                w3m -dump -cols 100 -ppc 2 -graph -s -I %{charset} -T text/html; \
+                                                      needsterminal;  copiousoutput;
