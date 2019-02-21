@@ -8,32 +8,32 @@
 - link:
     # Explicit paths
     ~/.config/bspwm/bspwmrc:
-        path: config/bspwm/bspwmrc
+      path: config/bspwm/bspwmrc
     ~/.config/compton.conf:
-        path: config/compton.conf
+      path: config/compton.conf
     ~/.config/mopidy/mopidy.conf:
-        path: config/mopidy/mopidy.conf
+      path: config/mopidy/mopidy.conf
     ~/.config/polybar/config:
-        path: config/polybar/config
+      path: config/polybar/config
     ~/.config/ranger/rc.conf:
-        path: config/ranger/rc.conf
+      path: config/ranger/rc.conf
     ~/.config/sxhkd/sxhkdrc:
-        path: config/sxhkd/sxhkdrc
+      path: config/sxhkd/sxhkdrc
     ~/.config/urlscan/config.json:
-        path: config/urlscan/config.json
+      path: config/urlscan/config.json
     ~/.config/xfce4/terminal:
-        path: config/xfce4/terminal
+      path: config/xfce4/terminal
     ~/.config/xfce4/xfconf:
-        path: config/xfce4/xfconf
+      path: config/xfce4/xfconf
     ~/.fonts/dotbot:
-        path: fonts/dotbot
+      path: fonts/dotbot
     ~/.mutt/:
-        glob: true
-        path: mutt/*
+      glob: true
+      path: mutt/*
     ~/.tmux/plugins/tpm:
-        path: tmux/plugins/tpm
+      path: tmux/plugins/tpm
     ~/bin:
-        path: bin
+      path: bin
 
     # Top levels
     ~/.bashrc.kmarc:

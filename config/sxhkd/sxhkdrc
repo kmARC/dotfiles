@@ -156,10 +156,10 @@ XF86MonBrightness{Up,Down}
 	xbacklight -{inc,dec} 5
 
 Print
-	scrot -e 'mv $f ~/Pictures/Screenshots'
+	flameshot full --path ~/Pictures/Screenshots
 
-super + Print
-	scrot -s -e 'mv $f ~/Pictures/Screenshots'
+shift + Print
+	flameshot gui --path ~/Pictures/Screenshots --raw
 
 # Daemons
 super + space; M
@@ -185,7 +185,10 @@ super + space; v
 	virtualbox
 
 super + space; h
-	bspc node -o 0.65 && gvim ~/Documents/Home/index.md
+	bspc node -o 0.65 && xfce4-terminal -x bash -ci 'home'
+
+super + space; n
+	xfce4-terminal -x bash -ci 'notes'
 
 super + space; w
 	~/bin/rofi-wifi-menu.sh
