@@ -24,18 +24,20 @@ set menu_scroll
 set pager_context = 3
 set pager_index_lines = 10
 set pager_stop
-set pipe_decode
+# set pipe_decode
 set quit
 set save_history = 1000
 set sort = threads
 set sort_aux = reverse-last-date-received
 set thorough_search
-set timeout = 10
+set timeout = 60
 set wrap = 100
 unset mark_old
 unset move
 unset copy
 unset wait_key
+
+timeout-hook 'exec sync-mailbox'
 
 # Folder
 set folder_format = '%2C %t %N %f'
@@ -77,13 +79,16 @@ color status        color05       color18 'Flag'
 color status        color04       color18 'Tag'
 
 # Index
-set index_format = ' %4C %Z  %-15.15L (%?l?%4l&%4c?) %s %*· %?X?[%X] &?%<[y?%<[m?%<[d?%[ %H:%M]&%[%a %d]>&%[%b %d]>&%[%Y-%m]> '
+set index_format = ' %4C %Z  %-15.15L (%?l?%4l&%4c?) %s %*· %?X?{%X} &?%<[y?%<[m?%<[d?%[ %H:%M]&%[%a %d]>&%[%b %d]>&%[%Y-%m]> '
 color index         color19       default '~R'
 color index_author  color20       default '~R'
 color index_subject color20       default '~R'
+color index_date    color20       default
 color index         brightcolor19 default '~N'
 color index_author  brightcolor15 default '~N'
 color index_subject brightcolor15 default '~N'
+color index_flags   color04       default '~g'
+color index_flags   color04       default '~G'
 color index_flags   color00       color04 '~T'
 color index_flags   color00       color05 '~F'
 color index_number  color02       default
@@ -100,7 +105,7 @@ color body blue    default "([a-z][a-z0-9+-]*://(((([a-z0-9_.!~*'();:&=+$,-]|%[0
 # Attachments
 color attach_headers brightcolor00 yellow     '\[-- Attachment.*'
 color attach_headers color00       color19    '\[-- Autoview.*'
-
+color attach_headers brightcolor00 color02    '\[-- The following data is.*'
 
 # Header
 color hdrdefault color19       default
@@ -131,6 +136,13 @@ color body    color02       default '^Organizer: .*'
 color body    brightcolor05 default '^Start:     .*'
 color body    brightcolor05 default '^End:       .*'
 
+# Compose
+color compose header           color19       default
+color compose security_encrypt brightcolor02 default
+color compose security_sign    brightcolor02 default
+color compose security_both    brightcolor02 default
+color compose security_none    brightcolor01 default
+
 # Border lines.
 color body        color04 default '( *[-+=#*~_]){6,}'
 
@@ -146,8 +158,8 @@ macro index,pager    \cb "<pipe-message>$my_macro_urlview" 'Call urlview on mess
 macro attach,compose \cb "<pipe-entry>$my_macro_urlview"   'Call urlview on message'
 macro compose        \eh "<filter-entry>pandoc -s -f markdown -t html<enter>y<edit-type>text/html; charset=us-ascii<enter>"   'Convert markdown to html'
 macro compose        \em "<filter-entry>pandoc -s -f html -t markdown<enter>y<edit-type>text/plain; charset=us-ascii<enter>"  'Convert html to markdown'
-macro index            L "<shell-escape>read -p 'Search messages: ' x; echo \$x >~/.cache/mutt_terms<enter><enter-command>virtual-mailboxes \"\`cat ~/.cache/mutt_terms\`\" \"notmuch://?query=\`cat ~/.cache/mutt_terms\`\"<enter><change-vfolder>?"
-macro index,pager      o "<enter-command>unset pipe_decode<enter><pipe-message>~/bin/viewhtmlmail<enter><enter-command>set pipe_decode<enter>" "View HTML in browser"
+macro index            L "<shell-escape>read -p 'Search messages: ' x; echo \$x >~/.cache/mutt_terms<enter><enter-command>virtual-%Smailboxes \"\`cat ~/.cache/mutt_terms\`\" \"notmuch://?query=\`cat ~/.cache/mutt_terms\`\"<enter><change-vfolder>?"
+macro index,pager      o "<pipe-message>~/bin/viewhtmlmail<enter>" "View HTML in browser"
 macro index,pager    \cr "<enter-command>echo \"Checking mail...\"<enter><enter-command>set my_tmp=\`offlineimap -a \$from -f INBOX -u quiet -q\`<enter>"
 
 bind  editor       <Tab> complete-query
