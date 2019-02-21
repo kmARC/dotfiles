@@ -1,19 +1,29 @@
 [user]
-	email = korondi.mark@gmail.com
 	name = Mark Korondi
-	signingkey = korondi.mark@gmail.com
+[credential]
+	helper = /usr/share/doc/git/contrib/credential/gnome-keyring/git-credential-gnome-keyring
+[merge]
+	tool = vimdiff
+[commit]
+	gpgsign = true
+[tag]
+	forcesignannotated = true
+[log]
+	showsignature = true
+
+[alias]
+	stag = tag -s
+
+[tig]
+	mouse = true
+[tig "color"]
+	cursor = black cyan
+	main-tag = green default bold
 [gui]
 	fontui = -family \"Noto Sans\" -size 9 -weight normal -slant roman -underline 0 -overstrike 0
 	fontdiff = -family Hack -size 9 -weight normal -slant roman -underline 0 -overstrike 0
 	tabsize = 4
 	spellingdictionary = en_US
-[http]
-	sslVerify = false
-[credential]
-	helper = /usr/share/doc/git/contrib/credential/gnome-keyring/git-credential-gnome-keyring
-[gitreview]
-	username = oro
+
 [github]
 	user = kmarc
-[merge]
-	tool = vimdiff
