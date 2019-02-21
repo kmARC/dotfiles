@@ -113,7 +113,7 @@ set diffopt+=vertical   " Always vsplit. Helps with fugitive too
 set sessionoptions+=tabpages,globals,localoptions
 set switchbuf+=usetab
 set wildignorecase
-set wildmode=full
+set wildmode=list:full
 set wildcharm=<C-z>
 set grepprg=rg\ --vimgrep\ $*
 set foldlevel=0
@@ -128,16 +128,17 @@ let base16colorspace=256
 set background=dark
 silent! source $HOME/.vimrc_background
 
-highlight VertSplit ctermbg=00 ctermfg=18
-set fillchars+=vert:\│
+" set fillchars+=vert:\│
 
-highlight link ALEWarningSign ToDo
-highlight link ALEErrorSign   DiffDelete
+highlight VertSplit ctermbg=00 ctermfg=18
+" highlight link ALEWarningSign ToDo
+" highlight link ALEErrorSign   DiffDelete
 highlight TabLineSel          ctermbg=8     ctermfg=15
 highlight TabModified         ctermbg=1     ctermfg=15 cterm=bold
 highlight TabModifiedSelected ctermbg=1     ctermfg=15 cterm=bold
-highlight Spellbad                          ctermfg=0  cterm=reverse gui=undercurl
 highlight Normal              ctermbg=NONE
+highlight SpellBad ctermfg=0
+highlight WildMenu                          ctermfg=0
 
 "--- Mappings ----
 cmap w!!                   w !sudo tee > /dev/null %
@@ -146,6 +147,7 @@ nnoremap <C-y>             2<C-y>
 nnoremap <C-p>             :Files<CR>
 nnoremap <expr> <F7>       expand('%') == '' ? ":NERDTreeToggle<CR>" : ":NERDTreeFind<CR>"
 nnoremap <space>           :ls<CR>:sbuffer 
+nnoremap <leader><space>   :edit **/*.<C-r>=expand('%:e')<return><C-z><C-p><C-u>edit **/*
 nnoremap <F8>              :TagbarToggle<CR>
 nnoremap <F9>              :lclose<CR>:cclose<CR>:pclose<CR>
 nnoremap <leader>fp        :call fzf#vim#files(0, {'options':'--query=' . expand('%:e') . '$\ '})<CR>
