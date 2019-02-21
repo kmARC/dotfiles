@@ -19,6 +19,9 @@
       path: config/ranger/rc.conf
     ~/.config/sxhkd/sxhkdrc:
       path: config/sxhkd/sxhkdrc
+    ~/.config/systemd/user:
+      glob: true
+      path: config/systemd/user/*
     ~/.config/urlscan/config.json:
       path: config/urlscan/config.json
     ~/.config/xfce4/terminal:
@@ -54,8 +57,5 @@
 
 - shell:
     - [git submodule update --init --recursive, Installing/updating submodules]
-    # - [~/.dotfiles/hooks/bash.sh, Setting up bashrc]
-    # - [~/.dotfiles/hooks/font.sh SourceCodePro, Installing font]
-    # - [~/.fzf/install --all, Installing FZF]
     - [~/.tmux/plugins/tpm/bin/install_plugins, Installing new TMUX plugins]
     - [~/.tmux/plugins/tpm/bin/update_plugins all, Upgrading TMUX plugins]

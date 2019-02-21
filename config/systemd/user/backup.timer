@@ -1,0 +1,9 @@
+[Unit]
+Description=Backup timer
+
+[Timer]
+OnCalendar=daily
+Persistent=true
+
+[Install]
+WantedBy=default.target

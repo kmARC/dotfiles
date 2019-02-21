@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
-
-# set -e
+set -euo pipefail
 
 DEST_S3_BUCKET="$USER-backup-2"
 DEST="${DEST:-/run/media/kmarc/Backup/Backup}"
@@ -8,12 +7,12 @@ EXCLUDES="/tmp/backup_excludes.txt"
 LOCK_FILE="/tmp/lock.backup"
 
 if [ ! -d "$DEST" ]; then
-    echo "Destination directory ($DEST) not available."
-    echo "Exiting."
+    >&2 echo "Destination directory ($DEST) not available."
+    >&2 echo "Exiting."
     exit 255
 fi
 
-if [[ "$1" == "sync" ]]; then
+if [[ $# -gt 0 && "$1" == "synconly" ]]; then
     aws --profile s3-backup s3 sync "${DEST}" "s3://${DEST_S3_BUCKET}"
     exit 0
 fi
@@ -51,25 +50,29 @@ $HOME/.local/src
 EOF
 
 if [ -f "$LOCK_FILE" ]; then
-    echo "Lock file exists at $LOCK_FILE."
-    echo "Exiting."
-    exit -1
+    >&2 echo "Lock file exists at $LOCK_FILE. Running processes for $0:"
+    ps aux | grep "$0"
+    >&2 echo "Exiting."
+    exit 255
 fi
-
-# mkdir -p "$DEST"
-
-# goofys --region "$DEST_S3_REGION" "$DEST_S3_BUCKET" "$DEST"
 
 BORG_PASSPHRASE=$(secret-tool lookup type borg_passphrase)
 export BORG_PASSPHRASE
 
 if [ -z "$BORG_PASSPHRASE" ]; then
-    echo "No password specified. Check your secrets. Seahorse, secret-tool"
-    echo "Exiting."
-    exit -1
+    >&2 echo "No password specified. Check your secrets. Seahorse, secret-tool"
+    >&2 echo "Exiting."
+    exit 255
 fi
 
+function cleanup {
+  rm -f "$LOCK_FILE" "$EXCLUDES";
+  exit $?
+}
+
 touch "$LOCK_FILE"
+trap cleanup TERM EXIT
+
 echo "======"
 echo "    Backup script starting @ $(date) - $HOME => $DEST"
 echo "======"
@@ -96,14 +99,17 @@ fi
 
 sync
 
-# fusermount -u "$DEST"
-rm -rf "$LOCK_FILE"
-
 echo
-echo "Sync to s3:"
-echo "    aws --profile s3-backup s3 sync ${DEST} s3://${DEST_S3_BUCKET}"
+if [[ $# -gt 0 && "$1" == "sync" ]]; then
+    echo "======"
+    echo "    Syncing to s3://${DEST_S3_BUCKET}"
+    echo "======"
+    aws --profile s3-backup s3 sync "${DEST}" "s3://${DEST_S3_BUCKET}"
+else
+    echo "To sync to s3:"
+    echo "    $0 synconly"
+fi
 echo
-
 echo "======"
 echo "    Backup script exiting @ $(date)."
 echo "======"
