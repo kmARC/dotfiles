@@ -302,8 +302,10 @@ let g:EditorConfig_exclude_patterns = ['fugitive://.*']
 let g:UltiSnipsEditSplit = "vertical"
 let g:UltiSnipsExpandTrigger = "<c-j>"
 let g:UltiSnipsListSnippets = "<c-h>"
+let g:UltiSnipsSnippetsDir = "~/.vim/UltiSnips"
 let g:ale_python_pylint_change_directory = 0
 let g:ale_sh_shellcheck_options = '-x'
+let g:ale_lint_delay = 2000
 let g:CheatSheetProviders = [ 'loclist', 'quickfix']
 let g:completor_refresh_always = 0
 let g:delimitMate_expand_cr = 2
@@ -334,6 +336,35 @@ let g:taboo_tab_format = ' %N %f%m '
 let g:taboo_modified_tab_flag = '*'
 let g:tagbar_autoclose = 1
 let g:tagbar_autofocus = 1
+let g:tagbar_type_typescript = {
+  \   'ctagstype': 'typescript',
+  \   'kinds': [
+  \     'I:imports:1',
+  \     'i:interfaces',
+  \     'n:modules',
+  \     'e:enums',
+  \     'c:classes',
+  \     'f:functions:1',
+  \     'l:lambdas',
+  \     'm:members',
+  \     'v:variables',
+  \   ],
+  \   'sro': '.',
+  \   'kind2scope': {
+  \     'c': 'class',
+  \     'm': 'member',
+  \     'v': 'variable',
+  \     'f': 'function',
+  \   },
+  \   'scope2kind': {
+  \     'class': 'c',
+  \     'member': 'm',
+  \     'variable': 'v',
+  \     'function': 'f',
+  \   },
+  \   'deffile': '~/.ctags.d/typescript.ctags'
+  \ }
+let g:tagbar_type_jsx = g:tagbar_type_typescript
 let g:vim_markdown_folding_disabled = 1
 let g:vimwiki_list = [{
   \ 'path': '~/Documents/Notes', 
@@ -342,6 +373,7 @@ let g:vimwiki_list = [{
   \ 'syntax': 'markdown',
   \ 'auto_tags': 1
   \ }]
+let g:vimwiki_global_ext = 0
 
 set modeline
 set exrc

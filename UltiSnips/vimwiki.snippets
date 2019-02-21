@@ -1,0 +1,44 @@
+global !p
+import re
+import subprocess
+
+def lookup_names():
+	if snip.tabstop == 0:
+		entries = subprocess.check_output(["khard", "list"], universal_newlines=True).split('\n')
+		lines = []
+		for line in snip.buffer[snip.tabstops[3].start[0]:snip.tabstops[3].end[0]+1]:
+			(email, name) = (None, None)
+			for entry in entries:
+					if entry.lower().find(line[2:].lower()) > 0:
+							try:
+									matches = re.match(r"(\S.*\S)\s\s+(\S.*\S)\s\s+(\S.*\S)\s\s+(\S.*\S)\s\s+(\S.*\S)\s\s+(\S.*\S)\s*", entry)
+									name = matches.group(2)
+									if name.lower().find(line[2:].lower()) > 0:
+										email_field = matches.group(4)
+										email = re.match(r".*\s(\S+@\S+)", email_field).group(1)
+										break
+							except:
+									pass
+			if email:
+				lines += [f'- {name} <{email}>']
+			else:
+				lines += [f'{line}']
+		snip.buffer[snip.tabstops[3].start[0]:snip.tabstops[3].end[0]+1] = lines
+endglobal
+
+post_jump "lookup_names()"
+snippet meeting "Meeting minutes" b
+# Meeting - ${1:Title}
+
+(`!v strftime("%Y-%m-%d %H:%M")`)
+
+## Participants:
+- `getent passwd $(whoami) | cut -d : -f 5` <${2:korondi.mark@gmail.com}>
+- ${3:Participant #1}
+
+## Minutes
+$0
+
+## Todos
+- 
+endsnippet
