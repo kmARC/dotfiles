@@ -1,7 +1,5 @@
+# Environment variables
 setenv from $from
-
-set my_user = "`secret-tool lookup owa-user $from`"
-set my_pass = "`secret-tool lookup owa-pass $from`"
 
 # Folders
 set folder     = ~/.mutt/$from
@@ -13,8 +11,8 @@ set trash      = +Trash
 set signature  = ~/.mutt/sig/sig-$from.txt
 
 # Sending
-set smtp_pass  = $my_pass
-set smtp_url   = smtp://$my_user:$my_pass@localhost:1025/
+set smtp_pass  = `secret-tool lookup owa-pass $from`
+set smtp_url   = smtp://`secret-tool lookup owa-user $from`:$smtp_pass@localhost:1025/
 
 # Mailboxes
 unmailboxes *
@@ -22,11 +20,6 @@ mailboxes `find ~/.mutt/$from/ -type d -name cur -printf '"%h" ' | sort`
 exec check-stats
 
 # Addressbook
-setenv user $my_user
-setenv pass $my_pass
-set query_command = "~/bin/ldap_owa_query.sh %s"
-
-# Variable-dependent shortcuts
-macro index,pager a "<pipe-message>khard add-email -a $from<return>" "Add sender to addressbook"
+set query_command = "~/bin/ldap_owa_query.sh '$from' '$smtp_pass'  %s"
 
 # vim: set ft=neomuttrc:
