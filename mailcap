@@ -1,24 +1,20 @@
-# Dependencies#
-#   sudo -H pip install mutt-ics
-
 # GUI programs
-text/html;                firefox '%s' && sleep 2;
-application/*;            xdg-open '%s' && read _;
-image/*;                  xdg-open '%s' && read _;
+application/*;            mutt-open.sh %s
+image/*;                  mutt-open.sh %s
+text/*;                   mutt-open.sh %s
 
 # Terminal programs
-application/ics;          khal import '%s'; needsterminal;
-text/calendar;            khal import '%s'; needsterminal;
-application/ms-tnef;      tnef -w %s;       needsterminal
+application/ics;          khal import %s; needsterminal
+text/calendar;            khal import %s; needsterminal
+application/ms-tnef;      tnef -w %s;     needsterminal
 
 # Autoview
-application/octet-stream; mutt.octet.filter '%s';                     copiousoutput;
-application/msword;       antiword -w 96 '%s' 2>/dev/null;            copiousoutput;
-application/ics;          mutt-ics;                                   copiousoutput;
-text/calendar;            mutt-ics;                                   copiousoutput;
-application/pdf;          pdftotext -fixed 4 -l 2 '%s' - 2>/dev/null; copiousoutput;
-application/x-pdf;        pdftotext -fixed 4 -l 2 '%s' - 2>/dev/null; copiousoutput;
-application/ms-tnef;      tnef -w %s;                                 copiousoutput;
-
+application/octet-stream; mutt.octet.filter %s;                   copiousoutput
+application/msword;       antiword -w 96 %s 2>/dev/null;          copiousoutput
+application/ics;          mutt-ics;                               copiousoutput
+text/calendar;            mutt-ics;                               copiousoutput
+application/pdf;          pdftotext -fixed 4 -l 2 %s 2>/dev/null; copiousoutput
+application/x-pdf;        pdftotext -fixed 4 -l 2 %s 2>/dev/null; copiousoutput
+application/ms-tnef;      tnef -w %s;                             copiousoutput
 text/html;                w3m -dump -cols 100 -ppc 2 -graph -s -I %{charset} -T text/html; \
-                                                      needsterminal;  copiousoutput;
+                                                                  copiousoutput
