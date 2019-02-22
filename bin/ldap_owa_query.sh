@@ -4,10 +4,10 @@ echo ""
 ldapsearch -h localhost \
            -p 1389 \
            -x \
-           -D$user \
-           -w$pass \
+           -D$1 \
+           -w$2 \
            -b 'ou=people' \
-           "(|(sn=$1*)(mail=$1*)(givenName=$1*))" \
+           "(|(sn=$3*)(mail=$3*)(givenName=$3*))" \
            'mail' \
            'title' \
   | awk -F': ' \

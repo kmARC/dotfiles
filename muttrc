@@ -11,6 +11,7 @@ set allow_ansi
 set arrow_cursor
 set auto_tag
 set beep_new
+set collapse_all
 set crypt_use_gpgme
 set crypt_autosign = yes
 set delete
@@ -18,6 +19,7 @@ set fast_reply
 set forward_format = 'Fwd: %s'
 set mail_check = 10
 set mail_check_stats
+set markers = no
 set mbox_type = Maildir
 set mime_forward
 set menu_scroll
@@ -31,11 +33,13 @@ set sort = threads
 set sort_aux = reverse-last-date-received
 set thorough_search
 set timeout = 60
+set ts_enabled
 set wrap = 100
 unset mark_old
 unset move
 unset copy
 unset wait_key
+#set flag_chars = "*!🗑drO📨on-✉"
 
 timeout-hook 'exec sync-mailbox'
 
@@ -61,7 +65,6 @@ color normal        color07 default
 color error         color01 default
 color tilde         color20 default
 color message       color06 default
-color markers       color18 color19
 color attachment    color19 default
 color search        color05 default
 color indicator     color18 color06
@@ -69,7 +72,7 @@ color tree          color03 default
 color signature     color05 default
 
 # Status
-set status_format = '  %f   Messages: %?M?%M of ?%m    New: %n    Flag: %F    Tag: %t%> (%P)   '
+set status_format = '%f   Messages: %?M?%M of ?%m    New: %n    Flag: %F    Tag: %t%> (%P) '
 
 color status        color08       color18
 color status        color06       color18 '=(.*)Messages' 1
@@ -78,20 +81,24 @@ color status        brightcolor15 color18 'New'
 color status        color05       color18 'Flag'
 color status        color04       color18 'Tag'
 
+# Pager
+set pager_format = '-%Z- %C/%m: %-20.20n   %s%*  -- (%P)'
+
 # Index
-set index_format = ' %4C %Z  %-15.15L (%?l?%4l&%4c?) %s %*· %?X?{%X} &?%<[y?%<[m?%<[d?%[ %H:%M]&%[%a %d]>&%[%b %d]>&%[%Y-%m]> '
-color index         color19       default '~R'
-color index_author  color20       default '~R'
-color index_subject color20       default '~R'
-color index_date    color20       default
-color index         brightcolor19 default '~N'
-color index_author  brightcolor15 default '~N'
-color index_subject brightcolor15 default '~N'
-color index_flags   color04       default '~g'
-color index_flags   color04       default '~G'
-color index_flags   color00       color04 '~T'
-color index_flags   color00       color05 '~F'
-color index_number  color02       default
+set index_format = '%4C %Z %-15.15L (%?l?%4l&%4c?) %s%?M? (%M)? %*·%?X? {%X} & ?%<[y?%<[m?%<[d?%[ %H:%M]&%[%a %d]>&%[%b %d]>&%[%Y-%m]> '
+color index           color19       default '~R'
+color index_author    color20       default '~R'
+color index_subject   color20       default '~R'
+color index_date      color20       default
+color index_collapsed brightcolor03 default
+color index           brightcolor19 default '~N'
+color index_author    brightcolor15 default '~N'
+color index_subject   brightcolor15 default '~N'
+color index_flags     color04       default '~g'
+color index_flags     color04       default '~G'
+color index_flags     color00       color04 '~T'
+color index_flags     color00       color05 '~F'
+color index_number    color02       default
 
 # Sidebar
 color sidebar_new       brightcolor15 default
@@ -103,9 +110,10 @@ color body color06 default '[-a-z_0-9.%$]+@[-a-z_0-9.]+\.[-a-z][-a-z]+'
 color body blue    default "([a-z][a-z0-9+-]*://(((([a-z0-9_.!~*'();:&=+$,-]|%[0-9a-f][0-9a-f])*@)?((([a-z0-9]([a-z0-9-]*[a-z0-9])?)\\.)*([a-z]([a-z0-9-]*[a-z0-9])?)\\.?|[0-9]+\\.[0-9]+\\.[0-9]+\\.[0-9]+)(:[0-9]+)?)|([a-z0-9_.!~*'()$,;:@&=+-]|%[0-9a-f][0-9a-f])+)(/([a-z0-9_.!~*'():@&=+$,-]|%[0-9a-f][0-9a-f])*(;([a-z0-9_.!~*'():@&=+$,-]|%[0-9a-f][0-9a-f])*)*(/([a-z0-9_.!~*'():@&=+$,-]|%[0-9a-f][0-9a-f])*(;([a-z0-9_.!~*'():@&=+$,-]|%[0-9a-f][0-9a-f])*)*)*)?(\\?([a-z0-9_.!~*'();/?:@&=+$,-]|%[0-9a-f][0-9a-f])*)?(#([a-z0-9_.!~*'();/?:@&=+$,-]|%[0-9a-f][0-9a-f])*)?|(www|ftp)\\.(([a-z0-9]([a-z0-9-]*[a-z0-9])?)\\.)*([a-z]([a-z0-9-]*[a-z0-9])?)\\.?(:[0-9]+)?(/([-a-z0-9_.!~*'():@&=+$,]|%[0-9a-f][0-9a-f])*(;([-a-z0-9_.!~*'():@&=+$,]|%[0-9a-f][0-9a-f])*)*(/([-a-z0-9_.!~*'():@&=+$,]|%[0-9a-f][0-9a-f])*(;([-a-z0-9_.!~*'():@&=+$,]|%[0-9a-f][0-9a-f])*)*)*)?(\\?([-a-z0-9_.!~*'();/?:@&=+$,]|%[0-9a-f][0-9a-f])*)?(#([-a-z0-9_.!~*'();/?:@&=+$,]|%[0-9a-f][0-9a-f])*)?)[^].,:;!)? \t\r\n<>\"]"
 
 # Attachments
-color attach_headers brightcolor00 yellow     '\[-- Attachment.*'
+color attach_headers brightcolor00 color03    '\[-- Attachment.*'
 color attach_headers color00       color19    '\[-- Autoview.*'
 color attach_headers brightcolor00 color02    '\[-- The following data is.*'
+color attach_headers color03       default    '\[-- Type: .*'
 
 # Header
 color hdrdefault color19       default
@@ -153,17 +161,31 @@ unhdr_order *
 hdr_order   subject from to cc date
 
 # Shortcuts
-set my_macro_urlview   = "urlscan -d<Enter>"
-macro index,pager    \cb "<pipe-message>$my_macro_urlview" 'Call urlview on message'
-macro attach,compose \cb "<pipe-entry>$my_macro_urlview"   'Call urlview on message'
-macro compose        \eh "<filter-entry>pandoc -s -f markdown -t html<enter>y<edit-type>text/html; charset=us-ascii<enter>"   'Convert markdown to html'
-macro compose        \em "<filter-entry>pandoc -s -f html -t markdown<enter>y<edit-type>text/plain; charset=us-ascii<enter>"  'Convert html to markdown'
-macro index            L "<shell-escape>read -p 'Search messages: ' x; echo \$x >~/.cache/mutt_terms<enter><enter-command>virtual-%Smailboxes \"\`cat ~/.cache/mutt_terms\`\" \"notmuch://?query=\`cat ~/.cache/mutt_terms\`\"<enter><change-vfolder>?"
-macro index,pager      o "<pipe-message>~/bin/viewhtmlmail<enter>" "View HTML in browser"
-macro index,pager    \cr "<enter-command>echo \"Checking mail...\"<enter><enter-command>set my_tmp=\`offlineimap -a \$from -f INBOX -u quiet -q\`<enter>"
-
 bind  editor       <Tab> complete-query
 bind  editor     <space> noop
+macro index,pager    \cb "<pipe-message>urlscan -d<enter>" 'Call urlview on message'
+macro attach,compose \cb "<pipe-entry>urlscan -d<enter>"   'Call urlview on message'
+macro compose        \eh "<filter-entry>pandoc -s -f markdown -t html<enter>y<edit-type>text/html; charset=us-ascii<enter>"   'Convert markdown to html'
+macro compose        \em "<filter-entry>pandoc -s -f html -t markdown<enter>y<edit-type>text/plain; charset=us-ascii<enter>"  'Convert html to markdown'
+macro index,pager    \eo "<pipe-message>viewhtmlmail<enter>" "View HTML in browser"
+macro index,pager      a "<pipe-message>khard add-email -a \$from<return>" "Add sender to addressbook"
+
+macro index,pager    \cr "\
+<enter-command>echo   'Checking mail...'                                                      <enter>\
+<enter-command>set    my_record_old = \$record                                                <enter>\
+<enter-command>set    record        = ^                                                       <enter>\
+<enter-command>set    my_current    = \$record                                                <enter>\
+<enter-command>set    record        = \$my_record_old                                         <enter>\
+<enter-command>setenv current         \$my_current                                            <enter>\
+<enter-command>set    my_temp       = \`offlineimap -a \$from -f \${current##*=} -u quiet -q\`<enter>"
+
+macro index            L "\
+<shell-escape>read -p 'Search messages: ' x;\
+              echo \$x >~/.cache/mutt_terms<enter>\
+<enter-command>set my_query = \`cat ~/.cache/mutt_terms\`<enter>\
+<enter-command>virtual-mailboxes \"\$my_query\" \"notmuch://?query=\$my_query\"<enter>\
+<enter-command>source ~/.mutt/keybinding.muttrc<enter>\
+<F10>"
 
 source ~/.pdotfiles/muttrc
 

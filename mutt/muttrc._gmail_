@@ -1,7 +1,5 @@
+# Environment variables
 setenv from $from
-
-set my_user = $from
-set my_pass = `secret-tool lookup gmail-pass $from`
 
 # Folders
 set folder     = ~/.mutt/$from
@@ -13,7 +11,7 @@ set trash      = +[Gmail].Trash
 set signature  = ~/.mutt/sig/sig-$from.txt
 
 # Sending
-set smtp_pass  = $my_pass
+set smtp_pass  = `secret-tool lookup gmail-pass $from`
 set smtp_url   = smtp://$from@smtp.gmail.com:587/
 
 # Mailboxes
@@ -22,11 +20,6 @@ mailboxes `find ~/.mutt/$from/ -type d -name cur ! -wholename *All\ Mail* ! -who
 exec check-stats
 
 # Addressbook
-setenv user $my_user
-setenv pass $my_pass
-set query_command = "khard email -a $from -p '%s'"
-
-# Variable-dependent shortcuts
-macro index,pager a "<pipe-message>khard add-email -a $from<return>" "Add sender to addressbook"
+set query_command = "khard email -a '$from' -p '%s'"
 
 # vim: set ft=neomuttrc:

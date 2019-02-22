@@ -1,0 +1,4 @@
+macro index <F10> "<change-vfolder>$my_query<enter>"
+
+# vim: set ft=neomuttrc:
+
