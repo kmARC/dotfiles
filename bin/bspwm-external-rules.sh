@@ -15,11 +15,14 @@ wmname=$(xprop -id "$wid" _NET_WM_NAME)
 } >> /tmp/bspwm-debug.txt
 
 if [[ "$(xprop -id "$wid" _NET_WM_STATE)" == *"_NET_WM_STATE_ABOVE"* ]]; then
-    echo "border = off state = floating"
+    echo "state = floating"
 elif [[ "$(xprop -id "$wid" _NET_WM_WINDOW_TYPE)" == *"_NET_WM_WINDOW_TYPE_DIALOG"* ]]; then
     echo "state = floating"
-elif [[ "$(xprop -id "$wid" _NET_WM_WINDOW_TYPE)" == *"_NET_WM_WINDOW_TYPE_NORMAL"* ]]; then
-    echo "state = tiled"
+fi
+
+if [[ $class =~ zoom && "$(xprop -id "$wid" _MOTIF_WM_HINTS)" == *"0x"?", 0x"?", 0x0, 0x"?", 0x"* ]]; then
+    # Zoom join call window
+    echo "border = off"
 fi
 
 if [[ $class =~ Slack ]]; then
