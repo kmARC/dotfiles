@@ -1,3 +1,5 @@
+source ~/.pdotfiles/muttrc
+
 # Directories
 set alias_file       = ~/.mutt/alias
 set header_cache     = ~/.mutt/cache/headers
@@ -7,6 +9,8 @@ set tmpdir           = ~/.mutt/temp
 set mailcap_path     = ~/.mailcap
 
 # General
+set abort_noattach = ask-yes
+set abort_noattach_regex = "\\<attach(|ed|ments?)\\>"
 set allow_ansi
 set arrow_cursor
 set auto_tag
@@ -31,6 +35,7 @@ set quit
 set save_history = 1000
 set sort = threads
 set sort_aux = reverse-last-date-received
+set text_flowed = yes
 set thorough_search
 set timeout = 60
 set ts_enabled
@@ -39,9 +44,9 @@ unset mark_old
 unset move
 unset copy
 unset wait_key
-#set flag_chars = "*!🗑drO📨on-✉"
 
 timeout-hook 'exec sync-mailbox'
+folder-hook '.*' 'set status_format = " %f ····· Messages: %?M?%M of ?%m · New: %n · Flag: %F · Tag: %t %*· $from · (%P) "'
 
 # Folder
 set folder_format = '%2C %t %N %f'
@@ -71,11 +76,9 @@ color indicator     color18 color06
 color tree          color03 default
 color signature     color05 default
 
-# Status
-set status_format = '%f   Messages: %?M?%M of ?%m    New: %n    Flag: %F    Tag: %t%> (%P) '
-
 color status        color08       color18
-color status        color06       color18 '=(.*)Messages' 1
+color status        color06       color18 '=([^ ]*).*Messages' 1
+color status        color03       color18 '([^ ]+@[^ ]+)'
 color status        color02       color18 'Messages'
 color status        brightcolor15 color18 'New'
 color status        color05       color18 'Flag'
@@ -186,7 +189,5 @@ macro index            L "\
 <enter-command>virtual-mailboxes \"\$my_query\" \"notmuch://?query=\$my_query\"<enter>\
 <enter-command>source ~/.mutt/keybinding.muttrc<enter>\
 <F10>"
-
-source ~/.pdotfiles/muttrc
 
 # vim: set ft=neomuttrc:
