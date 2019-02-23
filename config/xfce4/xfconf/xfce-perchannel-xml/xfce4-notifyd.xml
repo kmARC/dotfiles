@@ -20,6 +20,7 @@
       <value type="string" value="Slack"/>
       <value type="string" value="Syncthing GTK"/>
       <value type="string" value="System Config Printer Notification"/>
+      <value type="string" value="telegramdesktop"/>
       <value type="string" value="Thunar"/>
       <value type="string" value="weechat"/>
       <value type="string" value="Xfce volume daemon"/>
