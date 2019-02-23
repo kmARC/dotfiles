@@ -240,6 +240,8 @@ augroup vimrc
                                                                \ %
   "----- skeleton
   autocmd BufNewFile *.sh                         0r ~/.vim/skeleton/skeleton.sh
+  "----- mail
+  autocmd FileType mail                           setlocal formatoptions+=watqc nojoinspaces nosmartindent | match ErrorMsg '\s\+$'
 augroup end
 
 
