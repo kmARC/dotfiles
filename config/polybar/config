@@ -247,9 +247,10 @@ label = %date% %time%
 [module/weather]
 ; {{{
 type = custom/script
-exec = ~/bin/openweathermap-detailed.sh
-interval = 600
-click-left = "xdg-open https://openweathermap.org"
+exec = ~/bin/polybar-weather.sh
+click-left = kill -HUP %pid%
+click-middle = xdg-open https://openweathermap.org
+tail = true
 ; }}}
 
 [module/volume]
