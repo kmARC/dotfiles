@@ -27,8 +27,7 @@ margin-right = 0
 fixed-center = true
 wm-restack = bspwm
 
-background-0 = #44000000
-background-1 = #00000000
+background = #60000000
 foreground = ${colors.foreground}
 
 line-size = 3
@@ -36,11 +35,11 @@ module-margin = 2
 
 font-0 = "Noto Sans:style=Bold:size=9;2"
 font-1 = "MaterialIcons:size=14;4"
-font-2 = "Weather Icons:size=12;2"
+font-2 = "Weather Icons:style=Bold:size=12;2"
 
 modules-left = bspwm xwindow
-modules-center = date weather
-modules-right = bluetooth dnd xkeyboard filesystem memory cpu battery temperature xbacklight volume
+modules-center = weather date
+modules-right = xkeyboard filesystem memory cpu battery temperature xbacklight volume dnd
 
 scroll-up = bspwm-desknext
 scroll-down = bspwm-deskprev
@@ -48,8 +47,8 @@ scroll-down = bspwm-deskprev
 padding = 3
 
 tray-position = right
-tray-offset-x = -560
-tray-detached = true
+; tray-offset-x = -560
+; tray-detached = true
 tray-padding = 5
 
 enable-ipc = true
@@ -66,28 +65,14 @@ exec = ~/bin/mpris.sh
 
 ; }}}
 
-[module/bluetooth]
-; {{{
-type = custom/ipc
-
-initial = 1
-hook-0 = ~/bin/polybar-bt.sh
-click-left = "(bluetoothctl show | grep Powered:.*yes && bluetoothctl power off || bluetoothctl power on) && polybar-msg -p %pid% hook bluetooth 1"
-click-right = blueman-manager &
-
-format-foreground = ${colors.theme}
-; }}}
-
 [module/dnd]
 ; {{{
 type = custom/ipc
 
 initial = 1
-hook-0 = [ "xtrue" == "x$(xfconf-query -c xfce4-notifyd -p /do-not-disturb)" ] && echo  || echo 
-click-left = "xfconf-query -c xfce4-notifyd -p /do-not-disturb -T && polybar-msg -p %pid% hook dnd 1"
-click-right = xfce4-notifyd-settings &
-
-format-foreground = ${colors.theme}
+hook-0 = [ "xtrue" == "x$(xfconf-query -c xfce4-notifyd -p /do-not-disturb)" ] && echo %{F${base08_html}} || echo 
+click-left = xfconf-query -c xfce4-notifyd -p /do-not-disturb -T && polybar-msg -p %pid% hook dnd 1
+click-middle = xfce4-notifyd-config &
 ; }}}
 
 [module/xwindow]
@@ -275,12 +260,14 @@ type = internal/battery
 battery = BAT0
 adapter = ACAD
 
+click-middle = xfce4-power-manager-settings &
+
 format-charging = <label-charging>
 format-charging-prefix = %{O4}
 format-charging-prefix-foreground = ${colors.theme}
 
 format-discharging = <label-discharging>
-format-discharging-prefix = %{A3:x-terminal-emulator -ls -e bash -ci 'sudo powertop' &:} %{O4}
+format-discharging-prefix = %{A2:xfce4-power-manager-settings &:} %{O4}
 format-discharging-prefix-foreground = ${colors.theme}
 format-discharging-suffix = %{A}
 
