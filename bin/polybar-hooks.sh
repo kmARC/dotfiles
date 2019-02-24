@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-HOOKS=(bluetooth dnd)
+HOOKS=(dnd)
 
 while true; do
   for hook in "${HOOKS[@]}"; do

@@ -57,12 +57,14 @@ query_weather() {
       weather_temp=$(echo "$weather" | jq ".main.temp" | cut -d "." -f 1)
       weather_icon=$(echo "$weather" | jq -r ".weather[0].icon")
 
-      echo "$(get_icon "$weather_icon")   $weather_desc  $weather_temp$SYMBOL"
+      echo "%{F$theme_html}$(get_icon "$weather_icon")%{F}   $weather_desc  $weather_temp$SYMBOL"
   fi
 }
 trap 'echo Loading...' HUP
 
+echo Loading...
 while true; do
+  sleep 3
   query_weather
   sleep 600 &
   wait $!
