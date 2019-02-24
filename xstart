@@ -25,6 +25,7 @@ compton -b
 syndaemon -i 0.5 -K -R -d
 # xscreensaver -nosplash &
 light-locker --no-late-locking --lock-on-suspend &
+xfce4-power-manager
 xcape -t 250 -e 'Caps_Lock=Escape'
 "$HOME/bin/start-mopidy.sh" &
 "$HOME/bin/polybar-hooks.sh" &
