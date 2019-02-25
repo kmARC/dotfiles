@@ -65,6 +65,7 @@ Plug 'pearofducks/ansible-vim'      , {'for': 'ansible*'}
 Plug 'andrewstuart/vim-kubernetes'  , {'for': '*gotexttmpl'}
 "--- Dependencies ---
 Plug 'tpope/vim-repeat'
+Plug 'mattn/webapi-vim'             " for: gist-vim
 call plug#end()
 
 syntax on
@@ -322,11 +323,10 @@ let g:ale_lint_delay = 2000
 let g:CheatSheetProviders = [ 'loclist', 'quickfix']
 let g:completor_refresh_always = 0
 let g:delimitMate_expand_cr = 2
-let g:fugitive_gitlab_domains = [ 'https://gitlab.tools.in.pan-net.eu/' ]
-let g:fugitive_bitbucket_domains = [ 'https://git.acronis.com' ]
 let g:fzf_buffers_jump = 1
 let g:fzf_files_options = '--exact'
 let g:fzf_tags_command = 'git ls-files | ctags -L-'
+let g:gist_open_browser_after_post = 1
 let g:jsdoc_enable_es6 = 1
 let g:lightline = {
   \ 'colorscheme': 'base16',
@@ -370,8 +370,8 @@ let g:tagbar_type_typescript = {
   \     'f': 'function',
   \   },
   \   'scope2kind': {
-  \     'class': 'c',
-  \     'member': 'm',
+  \     'class':    'c',
+  \     'member':   'm',
   \     'variable': 'v',
   \     'function': 'f',
   \   },
@@ -380,10 +380,10 @@ let g:tagbar_type_typescript = {
 let g:tagbar_type_jsx = g:tagbar_type_typescript
 let g:vim_markdown_folding_disabled = 1
 let g:vimwiki_list = [{
-  \ 'path': '~/Documents/Notes', 
+  \ 'path':      '~/Documents/Notes',
   \ 'path_html': '~/Documents/Notes/html/',
-  \ 'ext': '.md', 
-  \ 'syntax': 'markdown',
+  \ 'syntax':    'markdown',
+  \ 'ext':       '.md',
   \ 'auto_tags': 1
   \ }]
 let g:vimwiki_global_ext = 0
