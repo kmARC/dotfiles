@@ -211,6 +211,8 @@ augroup vimrc
   "----- filetypes
   autocmd BufRead,BufNewFile Vagrantfile          setlocal filetype=ruby
   autocmd BufRead,BufNewFile *.tsx                setlocal filetype=typescript.jsx
+  autocmd BufRead,BufNewFile {default,group_var,task}s/**.y*ml
+                                                \ setlocal filetype=yaml.ansible
   autocmd FileType ansible                        setlocal filetype=yaml.ansible
   "----- marks
   autocmd BufWritePost *.css,*.less,*.scss        normal! mC
@@ -389,5 +391,7 @@ let g:vimwiki_global_ext = 0
 set modeline
 set exrc
 set secure
+
+source ~/.pdotfiles/vim/vimrc
 
 " vim: fdm=marker fdl=0 fen

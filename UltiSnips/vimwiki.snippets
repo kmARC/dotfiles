@@ -6,7 +6,7 @@ def lookup_names():
 	if snip.tabstop == 0:
 		entries = subprocess.check_output(["khard", "list"], universal_newlines=True).split('\n')
 		lines = []
-		for line in snip.buffer[snip.tabstops[3].start[0]:snip.tabstops[3].end[0]+1]:
+		for line in snip.buffer[snip.tabstops[6].start[0]:snip.tabstops[6].end[0]+1]:
 			(email, name) = (None, None)
 			for entry in entries:
 					if entry.lower().find(line[2:].lower()) > 0:
@@ -23,18 +23,18 @@ def lookup_names():
 				lines += [f'- {name} <{email}>']
 			else:
 				lines += [f'{line}']
-		snip.buffer[snip.tabstops[3].start[0]:snip.tabstops[3].end[0]+1] = lines
+		snip.buffer[snip.tabstops[6].start[0]:snip.tabstops[6].end[0]+1] = lines
 endglobal
 
 post_jump "lookup_names()"
-snippet meeting "Meeting minutes" b
-# Meeting - ${1:Title}
+snippet minutes "Meeting minutes" b
+# ${1:Meeting} - ${2:Title}
 
-(`!v strftime("%Y-%m-%d %H:%M")`)
+(${3:`!v strftime("%Y-%m-%d")`} ${4:`!v strftime("%H:%M")`})
 
 ## Participants:
-- `getent passwd $(whoami) | cut -d : -f 5` <${2:korondi.mark@gmail.com}>
-- ${3:Participant #1}
+- `getent passwd $(whoami) | cut -d : -f 5` <${5:korondi.mark@gmail.com}>
+- ${6:Participant #1}
 
 ## Minutes
 $0
