@@ -20,7 +20,7 @@
 ; (gtk_accel_path "<Actions>/terminal-window/paste" "<Primary><Shift>v")
 ; (gtk_accel_path "<Actions>/terminal-window/copy" "<Primary><Shift>c")
 ; (gtk_accel_path "<Actions>/terminal-window/edit-menu" "")
-; (gtk_accel_path "<Actions>/terminal-window/fullscreen" "F11")
+(gtk_accel_path "<Actions>/terminal-window/fullscreen" "")
 (gtk_accel_path "<Actions>/terminal-window/goto-tab-6" "<Alt>6")
 ; (gtk_accel_path "<Actions>/terminal-window/read-only" "")
 ; (gtk_accel_path "<Actions>/terminal-window/detach-tab" "<Primary><Shift>d")
