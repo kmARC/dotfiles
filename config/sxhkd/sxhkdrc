@@ -208,3 +208,6 @@ super + space; x
 
 super + space; e
 	splatmoji type
+
+super + {v,V}; {a,d}
+	nmcli connection {up,down} {Acronis,Datera}
