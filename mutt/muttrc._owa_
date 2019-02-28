@@ -1,6 +1,3 @@
-# Environment variables
-setenv from $from
-
 # Folders
 set folder     = ~/.mutt/$from
 set spoolfile  = +INBOX
@@ -8,18 +5,12 @@ set record     = +Sent
 set mbox       = +Archive
 set postponed  = +Drafts
 set trash      = +Trash
-set signature  = ~/.mutt/sig/sig-$from.txt
 
 # Sending
-set smtp_pass  = `secret-tool lookup owa-pass $from`
+set smtp_pass  = "`secret-tool lookup owa-pass $from`"
 set smtp_url   = smtp://`secret-tool lookup owa-user $from`:$smtp_pass@localhost:1025/
 
-# Mailboxes
-unmailboxes *
-mailboxes `find ~/.mutt/$from/ -type d -name cur -printf '"%h" ' | sort`
-exec check-stats
-
 # Addressbook
-set query_command = "~/bin/ldap_owa_query.sh '$from' '$smtp_pass'  %s"
+set query_command = "~/bin/ldap_owa_query.sh '$from' '$smtp_pass' '%s'"
 
 # vim: set ft=neomuttrc:

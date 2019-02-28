@@ -1,5 +1,3 @@
-source ~/.pdotfiles/muttrc
-
 # Directories
 set alias_file       = ~/.mutt/alias
 set header_cache     = ~/.mutt/cache/headers
@@ -46,7 +44,16 @@ unset copy
 unset wait_key
 
 timeout-hook 'exec sync-mailbox'
+
+# Folder hooks for multiple accounts
+source ~/.pdotfiles/muttrc
+folder-hook '.*' 'setenv from $from'
 folder-hook '.*' 'set status_format = " %f ····· Messages: %?M?%M of ?%m · New: %n · Flag: %F · Tag: %t %*· $from · (%P) "'
+folder-hook '.*' 'set ts_status_format = "NeoMutt with %?m?%m messages&no messages?%?n? [%n NEW]? - $from"'
+folder-hook '.*' 'set signature  = ~/.mutt/sig/sig-$from.txt'
+folder-hook '.*' 'unmailboxes *'
+folder-hook '.*' "mailboxes \`find ~/.mutt/\$from/ -type d -name cur  ! -wholename *All\\ Mail* ! -wholename *Spam* -printf '\"%h\" ' | sort\`"
+folder-hook '.*' 'exec check-stats'
 
 # Folder
 set folder_format = '%2C %t %N %f'
