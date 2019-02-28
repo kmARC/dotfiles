@@ -1,6 +1,3 @@
-# Environment variables
-setenv from $from
-
 # Folders
 set folder     = ~/.mutt/$from
 set spoolfile  = +INBOX
@@ -8,16 +5,10 @@ set record     = +[Gmail].Sent\ Mail
 set mbox       = +[Gmail].All\ Mail
 set postponed  = +[Gmail].Drafts
 set trash      = +[Gmail].Trash
-set signature  = ~/.mutt/sig/sig-$from.txt
 
 # Sending
-set smtp_pass  = `secret-tool lookup gmail-pass $from`
+set smtp_pass  = "`secret-tool lookup gmail-pass $from`"
 set smtp_url   = smtp://$from@smtp.gmail.com:587/
-
-# Mailboxes
-unmailboxes *
-mailboxes `find ~/.mutt/$from/ -type d -name cur ! -wholename *All\ Mail* ! -wholename *Spam* -printf '"%h" ' | sort`
-exec check-stats
 
 # Addressbook
 set query_command = "khard email -a '$from' -p '%s'"
