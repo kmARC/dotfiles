@@ -33,6 +33,8 @@
     ~/.mutt/:
       glob: true
       path: mutt/*
+    ~/.newsboat/config:
+      path: newsboat/config
     ~/.tmux/plugins/tpm:
       path: tmux/plugins/tpm
     ~/bin:
