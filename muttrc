@@ -126,9 +126,10 @@ color attach_headers brightcolor00 color02    '\[-- The following data is.*'
 color attach_headers color03       default    '\[-- Type: .*'
 
 # Header
+set header_color_partial
 color hdrdefault color19       default
-color header     brightcolor15 default '^(Subject)'
-color header     color02       default '^(From)'
+color header     brightcolor15 default '^(Subject).*'
+color header     color02       default '^(From).*'
 
 # Body
 color bold        brightcolor20 default
@@ -187,14 +188,16 @@ macro index,pager    \cr "\
 <enter-command>set    my_current    = \$record                                                <enter>\
 <enter-command>set    record        = \$my_record_old                                         <enter>\
 <enter-command>setenv current         \$my_current                                            <enter>\
-<enter-command>set    my_temp       = \`offlineimap -a \$from -f \${current##*=} -u quiet -q\`<enter>"
+<enter-command>set    my_temp       = \`offlineimap -a \$from -f \${current##*=} -u quiet -q\`<enter>\
+<enter-command>unset  my_record_old my_current my_temp                                        <enter>"\
+                                                                                "Sync currnet mailbox"
 
 macro index            L "\
-<shell-escape>read -p 'Search messages: ' x;\
-              echo \$x >~/.cache/mutt_terms<enter>\
-<enter-command>set my_query = \`cat ~/.cache/mutt_terms\`<enter>\
-<enter-command>virtual-mailboxes \"\$my_query\" \"notmuch://?query=\$my_query\"<enter>\
-<enter-command>source ~/.mutt/keybinding.muttrc<enter>\
-<F10>"
+<shell-escape>read -p 'Search messages: ' x;\ echo \$x >~/.cache/mutt_terms     <enter>\
+<enter-command>set               my_query = \`cat ~/.cache/mutt_terms\`         <enter>\
+<enter-command>virtual-mailboxes \"\$my_query\" \"notmuch://?query=\$my_query\" <enter>\
+<enter-command>push              \"<change-vfolder>\$my_query\"          <enter><enter>\
+<enter-command>unset             my_query                                       <enter>"\
+                                                                         "Query notmuch"
 
 # vim: set ft=neomuttrc:
