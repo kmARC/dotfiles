@@ -1,12 +1,12 @@
-# GUI programs
-application/*;            mutt-open.sh %s
-image/*;                  mutt-open.sh %s
-text/*;                   mutt-open.sh %s
-
 # Terminal programs
 application/ics;          khal import %s; needsterminal
 text/calendar;            khal import %s; needsterminal
 application/ms-tnef;      tnef -w %s;     needsterminal
+
+# GUI programs
+application/*;            mutt-open.sh %s
+image/*;                  mutt-open.sh %s
+text/*;                   mutt-open.sh %s
 
 # Autoview
 application/octet-stream; mutt.octet.filter %s;                   copiousoutput
@@ -16,5 +16,5 @@ text/calendar;            mutt-ics;                               copiousoutput
 application/pdf;          pdftotext -fixed 4 -l 2 %s 2>/dev/null; copiousoutput
 application/x-pdf;        pdftotext -fixed 4 -l 2 %s 2>/dev/null; copiousoutput
 application/ms-tnef;      tnef -w %s;                             copiousoutput
-text/html;                w3m -dump -cols 100 -ppc 2 -graph -s -I %{charset} -T text/html; \
+text/html;                w3m -dump -cols 100 -ppc 8 -o display_link_number=true -o graphic_char=4 -o display_image=false -o auto_image=FALSE -graph -s -I %{charset} -T text/html; \
                                                                   copiousoutput
