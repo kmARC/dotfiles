@@ -4,7 +4,7 @@
 
 # terminal emulator
 super + Return
-	xfce4-terminal
+	kitty -1
 
 # program launcher
 super + space; super + space
@@ -198,16 +198,16 @@ super + space; o
 
 # Terminal apps
 super + space; f
-	xfce4-terminal -x bash -ci 'cd ~/Documents/; ranger'
+	kitty -1 bash -ci 'cd ~/Documents/; ranger'
 
 super + space; m
-	xfce4-terminal -x bash -ci 'ncmpcpp'
+	kitty -1 bash -ci 'ncmpcpp'
 
 super + space; x
-	xfce4-terminal -x bash -ci 'tmux-session'
+	kitty -1 bash -ci 'tmux-session'
 
 super + space; e
-	splatmoji type
+	splatmoji copy
 
 super + {v,V}; {a,d}
 	nmcli connection {up,down} {Acronis,Datera}

@@ -26,7 +26,7 @@ get_icon() {
 }
 
 KEY="4b3f444258e3512349fecb3d1a36d2a7"
-CITY="Dublin"
+# CITY="Dublin"
 UNITS="metric"
 SYMBOL="°"
 

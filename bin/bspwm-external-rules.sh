@@ -17,15 +17,13 @@ debug " \`--> type:   ${props[2]}"
 debug " \`--> hints:  ${props[3]}"
 debug " \`--> wmname: ${props[0]}"
 
-if   [[ "${props[1]}" == *"_NET_WM_STATE_ABOVE"*          ]]; then
+if   [[ $class == Slack ]]; then
+  [[ ${props[0],,} == *call\ minipanel* ]] && echo "state = floating sticky = true"
+elif [[ ${props[1]} == *"_NET_WM_STATE_ABOVE"*          ]]; then
   echo "state = floating"
-elif [[ "${props[2]}" == *"_NET_WM_WINDOW_TYPE_DIALOG"*   ]]; then
+elif [[ ${props[2]} == *"_NET_WM_WINDOW_TYPE_DIALOG"*   ]]; then
   echo "state = floating"
-elif [[ "${props[3]}" == *"0x"?", 0x"?", 0x0, 0x"?", 0x"* ]]; then
-  [[ $class =~ zoom ]]                     && echo "border = off"
-elif [[ $class =~ Slack ]]; then
-  [[ ${props[0],,} == *Call\ Minipanel* ]] && echo "state = floating"
 elif [ -z "$class" ]; then
-  [[ ${props[0],,} == *spotify* ]]         && echo "desktop = 8 follow = on"
+  [[ ${props[0],,} == *spotify* ]] && echo "desktop = 8 follow = on"
 fi
 
