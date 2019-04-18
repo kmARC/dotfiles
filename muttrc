@@ -14,6 +14,7 @@ set arrow_cursor
 set auto_tag
 set beep_new
 set collapse_all
+set collapse_unread = no
 set crypt_use_gpgme
 set crypt_autosign = yes
 set delete
@@ -60,7 +61,7 @@ set folder_format = '%2C %t %N %f'
 
 # MIME
 set implicit_autoview
-alternative_order  multipart/mixed text/calendar text/plain text/enriched text/html
+alternative_order  multipart/related multipart/mixed text/calendar text/html text/enriched text/plain
 
 # Sidebar
 bind  index,pager \cP sidebar-prev
@@ -77,7 +78,7 @@ color normal        color07 default
 color error         color01 default
 color tilde         color20 default
 color message       color06 default
-color attachment    color19 default
+color attachment    color08 default
 color search        color05 default
 color indicator     color18 color06
 color tree          color03 default
@@ -96,19 +97,19 @@ set pager_format = '-%Z- %C/%m: %-20.20n   %s%*  -- (%P)'
 
 # Index
 set index_format = '%4C %Z %-15.15L (%?l?%4l&%4c?) %s%?M? (%M)? %*·%?X? {%X} & ?%<[y?%<[m?%<[d?%[ %H:%M]&%[%a %d]>&%[%b %d]>&%[%Y-%m]> '
-color index           color19       default '~R'
+color index           color08       default '~R'
 color index_author    color20       default '~R'
 color index_subject   color20       default '~R'
-color index_date      color20       default
-color index_collapsed brightcolor03 default
-color index           brightcolor19 default '~N'
+color index           brightcolor08 default '~N'
 color index_author    brightcolor15 default '~N'
 color index_subject   brightcolor15 default '~N'
-color index_flags     color04       default '~g'
-color index_flags     color04       default '~G'
-color index_flags     color00       color04 '~T'
-color index_flags     color00       color05 '~F'
+color index_flags     color04       default '~g' # signed
+color index_flags     color04       default '~G' # encrypted
+color index_flags     color00       color04 '~T' # tagged
+color index_flags     color00       color05 '~F' # flagged
 color index_number    color02       default
+color index_date      color20       default
+color index_collapsed brightcolor03 default
 
 # Sidebar
 color sidebar_new       brightcolor15 default
@@ -118,16 +119,18 @@ color sidebar_highlight brightcolor14 default
 # Links
 color body color06 default '[-a-z_0-9.%$]+@[-a-z_0-9.]+\.[-a-z][-a-z]+'
 color body blue    default "([a-z][a-z0-9+-]*://(((([a-z0-9_.!~*'();:&=+$,-]|%[0-9a-f][0-9a-f])*@)?((([a-z0-9]([a-z0-9-]*[a-z0-9])?)\\.)*([a-z]([a-z0-9-]*[a-z0-9])?)\\.?|[0-9]+\\.[0-9]+\\.[0-9]+\\.[0-9]+)(:[0-9]+)?)|([a-z0-9_.!~*'()$,;:@&=+-]|%[0-9a-f][0-9a-f])+)(/([a-z0-9_.!~*'():@&=+$,-]|%[0-9a-f][0-9a-f])*(;([a-z0-9_.!~*'():@&=+$,-]|%[0-9a-f][0-9a-f])*)*(/([a-z0-9_.!~*'():@&=+$,-]|%[0-9a-f][0-9a-f])*(;([a-z0-9_.!~*'():@&=+$,-]|%[0-9a-f][0-9a-f])*)*)*)?(\\?([a-z0-9_.!~*'();/?:@&=+$,-]|%[0-9a-f][0-9a-f])*)?(#([a-z0-9_.!~*'();/?:@&=+$,-]|%[0-9a-f][0-9a-f])*)?|(www|ftp)\\.(([a-z0-9]([a-z0-9-]*[a-z0-9])?)\\.)*([a-z]([a-z0-9-]*[a-z0-9])?)\\.?(:[0-9]+)?(/([-a-z0-9_.!~*'():@&=+$,]|%[0-9a-f][0-9a-f])*(;([-a-z0-9_.!~*'():@&=+$,]|%[0-9a-f][0-9a-f])*)*(/([-a-z0-9_.!~*'():@&=+$,]|%[0-9a-f][0-9a-f])*(;([-a-z0-9_.!~*'():@&=+$,]|%[0-9a-f][0-9a-f])*)*)*)?(\\?([-a-z0-9_.!~*'();/?:@&=+$,]|%[0-9a-f][0-9a-f])*)?(#([-a-z0-9_.!~*'();/?:@&=+$,]|%[0-9a-f][0-9a-f])*)?)[^].,:;!)? \t\r\n<>\"]"
+color body red     default "\\[[0-9]+\\]"
+color body color19 default "[┌┬┐├┼┤└┴┘│─]"
+color body color08 default "[━]"
 
 # Attachments
+color attach_headers brightcolor00 color02    '\[-- The following data is signed.*'
 color attach_headers brightcolor00 color03    '\[-- Attachment.*'
-color attach_headers color00       color19    '\[-- Autoview.*'
-color attach_headers brightcolor00 color02    '\[-- The following data is.*'
 color attach_headers color03       default    '\[-- Type: .*'
 
 # Header
 set header_color_partial
-color hdrdefault color19       default
+color hdrdefault color08       default
 color header     brightcolor15 default '^(Subject).*'
 color header     color02       default '^(From).*'
 
@@ -150,13 +153,13 @@ color body    color00       color01 '(BAD signature)'
 color body    brightcolor00 color02 '(Good signature)'
 
 # vcal
-color body    brightcolor15 default '^Subject:   .*'
-color body    color02       default '^Organizer: .*'
-color body    brightcolor05 default '^Start:     .*'
-color body    brightcolor05 default '^End:       .*'
+color body    brightcolor15 default '^Subject:.*'
+color body    color02       default '^Organizer:.*'
+color body    brightcolor05 default '^Start:.*'
+color body    brightcolor05 default '^End:.*'
 
 # Compose
-color compose header           color19       default
+color compose header           color08       default
 color compose security_encrypt brightcolor02 default
 color compose security_sign    brightcolor02 default
 color compose security_both    brightcolor02 default
@@ -174,8 +177,8 @@ hdr_order   subject from to cc date
 # Shortcuts
 bind  editor       <Tab> complete-query
 bind  editor     <space> noop
-macro index,pager    \cb "<pipe-message>urlscan -d<enter>" 'Call urlview on message'
-macro attach,compose \cb "<pipe-entry>urlscan -d<enter>"   'Call urlview on message'
+macro index,pager    \cb "<pipe-message>urlscan -c -d<enter>" 'Call urlview on message'
+macro attach,compose \cb "<pipe-entry>urlscan -c -d<enter>"   'Call urlview on message'
 macro compose        \eh "<filter-entry>pandoc -s -f markdown -t html<enter>y<edit-type>text/html; charset=us-ascii<enter>"   'Convert markdown to html'
 macro compose        \em "<filter-entry>pandoc -s -f html -t markdown<enter>y<edit-type>text/plain; charset=us-ascii<enter>"  'Convert html to markdown'
 macro index,pager    \eo "<pipe-message>viewhtmlmail<enter>" "View HTML in browser"
@@ -199,5 +202,8 @@ macro index            L "\
 <enter-command>push              \"<change-vfolder>\$my_query\"          <enter><enter>\
 <enter-command>unset             my_query                                       <enter>"\
                                                                          "Query notmuch"
+# Trigger changing folder to default
+set folder = ~/.mutt/$from
+push "<change-folder>~/.mutt/$from/INBOX<enter>"
 
 # vim: set ft=neomuttrc:
