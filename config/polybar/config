@@ -46,11 +46,6 @@ scroll-down = bspwm-deskprev
 
 padding = 3
 
-tray-position = right
-; tray-offset-x = -560
-; tray-detached = true
-tray-padding = 5
-
 enable-ipc = true
 
 ; }}}
@@ -133,7 +128,7 @@ label-urgent-background = ${colors.theme}
 label-urgent-padding = 2
 
 label-empty = "%{O2}•%{O1}"
-label-empty-foreground = ${colors.foreground-alt}
+label-empty-foreground = ${colors.foreground}
 label-empty-padding = 2
 ; }}}
 

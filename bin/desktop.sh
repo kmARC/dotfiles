@@ -183,4 +183,7 @@ for unknown in $(xrandr | awk '/unknown/{ print $1 }'); do
   xrandr --output "$unknown" --auto
 done
 
+# Fix tray position
+"$HOME"/bin/tray.sh
+
 xbacklight -set "$PREF_BRGHT" -time 500
