@@ -7,8 +7,11 @@ set postponed  = +[Gmail].Drafts
 set trash      = +[Gmail].Trash
 
 # Sending
-set smtp_pass  = "`secret-tool lookup gmail-pass $from`"
-set smtp_url   = smtp://$from@smtp.gmail.com:587/
+set ssl_starttls   = yes
+set ssl_force_tls  = no
+set smtp_pass      = "`secret-tool lookup gmail-pass $from`"
+set smtp_url       = smtp://$from@smtp.gmail.com:587/
+unset smtp_authenticators
 
 # Addressbook
 set query_command = "khard email -a '$from' -p '%s'"
