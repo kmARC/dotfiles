@@ -24,24 +24,25 @@ bind-key K prev-feed
 # Look and feel
 articlelist-format "%4i %f (%5L) %?T?|%-17T|  ?%t %>· %D"
 
-color listfocus         color18 color14
 color listnormal        white   default
 color listnormal_unread color15 default bold
-color listfocus_unread  color15 color14 bold
-color info              color19 color18
-color article           white   black
+color listfocus         color18 color14
+color listfocus_unread  color0  color14 bold
+color info              color8  color18
+color article           white   default
 
 highlight article     "https?://[^ ]+"           color4
-highlight article     "^(Link|Date):.*"          color19
+highlight article     "\\((link|image)\\)"       color1
+highlight article     "^(Link|Date):.*"          color8
 highlight article     "^(Feed):.*"               color3
 highlight article     "^(Title):.*"              color15 default bold
 highlight article     "^(Author):.*"             color2
 
 highlight feedlist    "^[0-9 ]{4} "              color2
-highlight feedlist    "[N ]+ \\([0-9/]+\\) "     color19
+highlight feedlist    "[N ]+\\([0-9/]+\\) "      color8
 
 highlight articlelist "^[0-9 ]{4} "              color2
-highlight articlelist "[N! ]+ \\([0-9K. ]+\\) "  color19
-highlight articlelist "·"                        color19
+highlight articlelist "[N! ]+\\([0-9K. ]+\\) "   color8
+highlight articlelist "·"                        color8
 
 # vim: set ft=conf:
