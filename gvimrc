@@ -1,5 +1,5 @@
 if has('gui_running')
-    set guifont=Hack\ Bold\ 10
+    set guifont=Fira\ Code\ Medium\ 9
     set guioptions=agit
-    set linespace=3
+    set linespace=1
 endif

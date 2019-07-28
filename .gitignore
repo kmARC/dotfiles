@@ -6,6 +6,6 @@ misc/*
 sessions/*
 !*/.gitkeep
 plugged
-eclim
 plugin
 autoload/plug.vim.old
+colorscheme.vim
