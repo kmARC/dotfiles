@@ -1,16 +1,16 @@
 call plug#begin('~/.vim/plugged')
 "--- Look&Feel ---
-Plug 'itchyny/lightline.vim'
-Plug 'daviesjamie/vim-base16-lightline'
 Plug 'chriskempson/base16-vim'
+Plug 'daviesjamie/vim-base16-lightline'
+Plug 'itchyny/lightline.vim'
 "--- Tools ---
+Plug 'claytron/lodgeit-vim'
+Plug 'direnv/direnv.vim'
 Plug 'gcmt/taboo.vim'
 Plug 'junegunn/fzf.vim'
 Plug 'scrooloose/nerdtree'          , {'on': ['NERDTreeToggle', 'NERDTreeFind']}
-Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-obsession'
-Plug 'claytron/lodgeit-vim'
-Plug 'direnv/direnv.vim'
+Plug 'tpope/vim-unimpaired'
 " Plug 'tpope/vim-rsi' " FIXME: breaks with macros
 "--- Editing ---
 Plug 'Raimondi/delimitMate'
@@ -19,41 +19,40 @@ Plug 'michaeljsmith/vim-indent-object'
 Plug 'tpope/vim-surround'
 "--- Git ---
 Plug 'airblade/vim-gitgutter'
+Plug 'kmarc/vim-fubitive'
 Plug 'mattn/gist-vim'
 Plug 'shumphrey/fugitive-gitlab.vim'
-Plug 'kmarc/vim-fubitive'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-rhubarb'
 "--- TMUX ---
-Plug 'jpalardy/vim-slime'
 Plug 'christoomey/vim-tmux-navigator'
-" Plug 'ferreum/completor-tmux'
+Plug 'jpalardy/vim-slime'
 Plug 'tmux-plugins/vim-tmux'        , {'for': 'tmux'}
 "--- Programming ---
-Plug 'andymass/vim-matchup'
 Plug 'AndrewRadev/splitjoin.vim'
 Plug 'SirVer/ultisnips'
+Plug 'andymass/vim-matchup'
+Plug 'benmills/vimux'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'honza/vim-snippets'
+Plug 'janko/vim-test'
+Plug 'ludovicchabant/vim-gutentags'
 Plug 'majutsushi/tagbar'            , {'on': ['TagbarToggle']}
 Plug 'maralla/completor.vim'
 Plug 'tpope/vim-commentary'
 Plug 'w0rp/ale'
-Plug 'ludovicchabant/vim-gutentags'
-Plug 'janko/vim-test'
-Plug 'benmills/vimux'
 "--- Markdown, Wiki, Todo ---
+Plug 'freitass/todo.txt-vim'        , {'for': 'todo'}
 Plug 'plasticboy/vim-markdown'      , {'for': 'markdown'}
 Plug 'shime/vim-livedown'           , {'for': 'markdown'}
-Plug 'freitass/todo.txt-vim'        , {'for': 'todo'}
 "--- HTML ---
 Plug 'mattn/emmet-vim'              , {'for': ['html', '*jsx']}
 Plug 'othree/html5.vim'             , {'for': ['html', '*jsx']}
 "--- CSS ---
 Plug 'groenewege/vim-less'          , {'for': 'css'}
 "--- JavaScript ---
-Plug 'moll/vim-node'                , {'for': 'javascript*'}
 Plug 'heavenshell/vim-jsdoc'        , {'for': 'javascript*'}
+Plug 'moll/vim-node'                , {'for': 'javascript*'}
 Plug 'othree/yajs.vim'              , {'for': 'javascript*'}
 Plug 'pangloss/vim-javascript'      , {'for': 'javascript*'}
 "--- React ---
@@ -62,12 +61,12 @@ Plug 'mxw/vim-jsx'                  , {'for': '*jsx'}
 Plug 'leafgarland/typescript-vim'   , {'for': 'typescript*'}
 Plug 'maralla/completor-typescript' , {'for': 'typescript*'}
 "--- DevOps ---
+Plug 'andrewstuart/vim-kubernetes'
 Plug 'hashivim/vim-terraform'       , {'for': 'terraform'}
 Plug 'pearofducks/ansible-vim'
-Plug 'andrewstuart/vim-kubernetes'
 "--- Dependencies ---
-Plug 'tpope/vim-repeat'
 Plug 'mattn/webapi-vim'             " for: gist-vim
+Plug 'tpope/vim-repeat'
 call plug#end()
 
 syntax on
@@ -112,7 +111,7 @@ set wildignore+=.direnv,.mypy_cache
 set completeopt=preview,longest,menuone
 set splitbelow
 set splitright
-set diffopt+=vertical   " Always vsplit. Helps with fugitive too
+set diffopt+=vertical,algorithm:patience
 set sessionoptions+=tabpages,globals,localoptions
 set switchbuf+=usetab
 set wildignorecase
@@ -126,6 +125,8 @@ set shiftwidth=2
 set softtabstop=2
 set tabstop=2
 set tagcase=match
+set clipboard=unnamedplus,autoselectplus
+set breakindent
 
 "--- Look & Feel ----
 let base16colorspace=256
@@ -136,11 +137,19 @@ if has_key(environ(), "TMUX")
 endif
 
 augroup MyColors
-  autocmd ColorScheme * highlight Normal   ctermbg=NONE
-                    \ | highlight SpellBad ctermbg=19   ctermfg=1   cterm=bold,underline
-                    \ | highlight SpellCap ctermbg=19   ctermfg=3   cterm=bold,underline
+  autocmd ColorScheme * highlight Normal              ctermbg=NONE
+                    \ | highlight SpellBad            ctermbg=1    ctermfg=0   cterm=bold,underline
+                    \ | highlight SpellCap            ctermbg=0    ctermfg=3   cterm=underline
+                    \ | highlight TabModified         ctermbg=1    ctermfg=0   cterm=bold
+                    \ | highlight TabModifiedSelected ctermbg=1    ctermfg=0   cterm=bold
+                    \ | highlight TabLine             ctermbg=0    ctermfg=7
+                    \ | highlight TabLineSel          ctermbg=NONE ctermfg=7   cterm=bold
+                    \ | highlight TabLineFill         ctermbg=0
+                    \ | highlight VertSplit           ctermbg=0    ctermfg=0
 augroup end
-source $HOME/.vim/colorscheme.vim
+
+colors default  " Fallback colorscheme; FIXME: Wthout this line, vim resets to default
+silent! source $HOME/.vim/colorscheme.vim
 
 "--- Mappings ----
 cmap w!!                   w !sudo tee > /dev/null %
@@ -152,14 +161,19 @@ nnoremap <space>           :ls<CR>:sbuffer
 nnoremap <leader><space>   :edit **/*.<C-r>=expand('%:e')<return><C-z><C-p><C-u>edit **/*
 nnoremap <F8>              :TagbarToggle<CR>
 nnoremap <F9>              :lclose<CR>:cclose<CR>:pclose<CR>
-nnoremap <leader>fp        :call fzf#vim#files(0, {'options':'--query=' . expand('%:e') . '$\ '})<CR>
+nnoremap <leader>fp        :call fzf#vim#files(
+  \   0, {'options':'--query=' . expand('%:e') . '$\ '}
+  \ )<CR> " FZF files with the same extension as current
 nnoremap <leader>fg        :call fzf#vim#grep(
   \   'rg --column --line-number --no-heading --color=always --smart-case ""',
   \   1, {'options':'--delimiter : --nth 4..'}
-  \ )<CR>
-nnoremap <leader>fG        :call fzf#vim#grep('rg --column --line-number --no-heading --color=always --smart-case ""', 1, {'options':'--delimiter : --nth 4.. --exact --query=<C-r><C-w> +i'})<CR>
+  \ )<CR> " FZF grep only in file content, not in file name
+nnoremap <leader>fG        :call fzf#vim#grep(
+  \   'rg --column --line-number --no-heading --color=always --smart-case ""',
+  \   1, {'options':'--delimiter : --nth 4.. --exact --query=<C-r><C-w> +i'}
+  \ )<CR> " FZF grep current word only in file content
 nnoremap <leader>ft        :Tags<CR>
-nnoremap <leader>fT        :call fzf#vim#tags('^<C-r><C-w> ', {'options':'--exact +i'})<CR>
+nnoremap <leader>fT        :Tags '<C-r><C-w><CR>
 nnoremap <leader>fb        :Buffers<CR>
 nnoremap <leader>fw        :Windows<CR>
 nnoremap <leader>w         :call BufferClose()<CR>
@@ -187,28 +201,32 @@ nnoremap <ScrollWheelDown> 2<C-E>
 nnoremap <ScrollWheelUp>   2<C-Y>
 nnoremap <M-ScrollWheelDown> 4zl
 nnoremap <M-ScrollWheelUp>   4zh
+nnoremap j                 gj
+nnoremap k                 gk
+nnoremap gj                j
+nnoremap gk                k
 nnoremap n                 nzz
 nnoremap N                 Nzz
 nnoremap [h                :GitGutterPrevHunk<CR>
 nnoremap ]h                :GitGutterNextHunk<CR>
-nnoremap <leader>aa :!xdg-open https://docs.ansible.com/ansible/latest/list_of_all_modules.html<CR>
-nnoremap <leader>am :!xdg-open https://docs.ansible.com/ansible/latest/<C-R><C-W>_module.html\#options<CR>
-nnoremap <leader>as :!xdg-open https://docs.ansible.com/ansible/latest/reference_appendices/playbooks_keywords.html?highlight=<C-R><C-W><CR>
-nnoremap <silent> t<C-n> :TestNearest<CR>
-nnoremap <silent> t<C-f> :TestFile<CR>
-nnoremap <silent> t<C-s> :TestSuite<CR>
-nnoremap <silent> t<C-l> :TestLast<CR>
-nnoremap <silent> t<C-g> :TestVisit<CR>
+nnoremap <leader>aa        :!xdg-open https://docs.ansible.com/ansible/latest/list_of_all_modules.html<CR>
+nnoremap <leader>am        :!xdg-open https://docs.ansible.com/ansible/latest/<C-R><C-W>_module.html\#options<CR>
+nnoremap <leader>as        :!xdg-open https://docs.ansible.com/ansible/latest/reference_appendices/playbooks_keywords.html?highlight=<C-R><C-W><CR>
+nnoremap <silent> t<C-n>   :TestNearest<CR>
+nnoremap <silent> t<C-f>   :TestFile<CR>
+nnoremap <silent> t<C-s>   :TestSuite<CR>
+nnoremap <silent> t<C-l>   :TestLast<CR>
+nnoremap <silent> t<C-g>   :TestVisit<CR>
 
 "--- Autocommands ---
 augroup vimrc
   autocmd!
   "----- keywordprg
   autocmd FileType vim                            setlocal keywordprg=:help
-  autocmd FileType javascript*,typescript*        let &l:keywordprg=fnamemodify($MYVIMRC, ":h") . "/devdocs.sh " . &l:filetype
-  autocmd FileType css,less,scss                  let &l:keywordprg=fnamemodify($MYVIMRC, ":h") . "/devdocs.sh " . &l:filetype
-  autocmd FileType yaml.ansible                   let &l:keywordprg=fnamemodify($MYVIMRC, ":h") . "/devdocs.sh " . &l:filetype
-  autocmd FileType python                         let &l:keywordprg=fnamemodify($MYVIMRC, ":h") . "/devdocs.sh " . &l:filetype
+  autocmd FileType javascript*,typescript*        setlocal keywordprg=:DevdocsHelp
+  autocmd FileType css,less,scss                  setlocal keywordprg=:DevdocsHelp
+  autocmd FileType yaml.ansible                   setlocal keywordprg=:DevdocsHelp
+  autocmd FileType python                         setlocal keywordprg=:DevdocsHelp
   autocmd FileType dockerfile                     setlocal keywordprg=:DockerHelp
   autocmd FileType *gotexttmpl,yaml.kubernetes    setlocal keywordprg=:KubeHelp
   "----- mappings
@@ -221,13 +239,14 @@ augroup vimrc
   "----- folding
   autocmd FileType make,dockerfile,yaml,dosini,conf
                                                 \ setlocal foldmethod=expr foldexpr=getline(v:lnum)=~'^\\s*'.&commentstring[0]
-  autocmd BufRead,BufNewFile **/tasks/**.y*ml,playbook-*.y*ml
+  autocmd BufRead,BufNewFile **/tasks/**.y*ml
                                                 \ setlocal foldmethod=indent foldlevelstart=1 foldnestmax=1
   autocmd FileType python                         setlocal foldmethod=indent foldlevelstart=2 foldnestmax=2 colorcolumn=101 textwidth=100
   "----- filetypes
   autocmd BufRead,BufNewFile Vagrantfile          setlocal filetype=ruby
   autocmd BufRead,BufNewFile *.tsx                setlocal filetype=typescript.jsx
   autocmd BufRead,BufNewFile playbook-*.y*ml      setlocal filetype=yaml.ansible
+  autocmd BufRead,BufNewFile *.yml.j2             setlocal filetype=yaml.jinja2
   autocmd BufRead,BufNewFile .yamllint            setlocal filetype=yaml
   "----- marks
   autocmd BufWritePost *.css,*.less,*.scss        normal! mC
@@ -259,6 +278,10 @@ augroup vimrc
   autocmd BufNewFile *.sh                         0r ~/.vim/skeleton/skeleton.sh
   "----- mail
   autocmd FileType mail                           setlocal formatoptions+=watqc nojoinspaces nosmartindent | match ErrorMsg '\s\+$'
+  "----- test
+  autocmd BufWrite *                              if test#exists() | TestFile
+  "----- prevent vim to clear clipboard upon exiting
+  autocmd VimLeave *                              call system("xsel -ib", getreg('+'))
 augroup END
 
 
@@ -324,18 +347,34 @@ function! DockerHelp(keyword)
 endfunction
 command! -nargs=1 DockerHelp :call DockerHelp(<f-args>)
 
+function! DevdocsHelp(keyword)
+  exec "silent !xdg-open https://devdocs.io/\\#q="
+        \ . tolower(&l:filetype) . "+" . tolower(a:keyword)
+  exec 'redraw!'
+endfunction
+command! -nargs=1 DevdocsHelp :call DevdocsHelp(<f-args>)
+
 function! KubeHelp(keyword)
+  " This function opens the Kubernetes reference docs scrolled to the
+  " kind / apiversion of the yaml described object the cursor currently
+  " positioned at.
+  "
+  " l:keyword is unused; Unfortunately the reference docs doesn't have
+  " hash-based html ids to navigate to exact keywords
+  let l:kindLine = getline(search('^kind', 'bn'))
   let l:versionLine = getline(search('^apiVersion', 'bn'))
-  if l:versionLine == ''
-    echom 'Cannot find docs (no apiVersion)'
+  if l:kindLine == '' ||  l:versionLine == ''
+    echom 'Cannot find docs (no kind / apiVersion)'
     return
   endif
+  let l:kind = substitute(l:kindLine, '\v.*kind:\s+([^ \t]+)', '\1', 'g')
   let l:path = substitute(l:versionLine, '\v.*apiVersion:\s+([^/ ]+)/([^/ ]+)\s*$', '\2-\1', 'g')
+  " Checking if version is core
   if l:path == l:versionLine
     let l:path = substitute(l:versionLine, '\v.*apiVersion:\s+([^/ ]+)\s*$', '\1-core', 'g')
   endif
-  let l:hash = '\\#' . tolower(a:keyword) . '-' . l:path
-  exec 'silent !xdg-open https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.14/'
+  let l:hash = '\\#' . tolower(l:kind) . '-' . l:path
+  exec 'silent !xdg-open https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.16/'
         \ . l:hash
   exec 'redraw!'
 endfunction
@@ -361,7 +400,7 @@ let g:fzf_tags_command = 'git ls-files | ctags -L-'
 let g:gist_open_browser_after_post = 1
 let g:gutentags_cache_dir = s:dir_misc
 let g:jsdoc_enable_es6 = 1
-let g:lightline = { 'colorscheme': 'base16', 'component': { 'filename': '%t'} }
+let g:lightline = { 'colorscheme': 'base16', 'component': { 'filename': '%t'}, 'mode_map': {'c': 'COMMAND'} }
 let g:lightline.active = {
     \ 'left': [ [ 'mode', 'paste' ],
     \           [ 'readonly', 'relativepath', 'modified' ] ],
@@ -379,7 +418,6 @@ let g:slime_paste_file = tempname()
 let g:slime_target = "tmux"
 let g:taboo_renamed_tab_format =' %N %l%m '
 let g:taboo_tab_format = ' %N %f%m '
-let g:taboo_modified_tab_flag = '*'
 let g:tagbar_autoclose = 1
 let g:tagbar_autofocus = 1
 let g:tagbar_type_typescript = {
@@ -419,12 +457,6 @@ let g:tagbar_type_jsx = g:tagbar_type_typescript
 let g:vim_markdown_folding_disabled = 1
 let g:vim_markdown_frontmatter = 1
 let test#strategy = 'vimux'
-augroup test
-  autocmd!
-  autocmd BufWrite * if test#exists() |
-    \   TestFile |
-    \ endif
-augroup END
 
 set modeline
 set exrc
