@@ -5,27 +5,29 @@ export _JAVA_OPTIONS="\
           -Dawt.useSystemAAFontSettings=lcd \
           -Dswing.aatext=true \
           -Dswing.crossplatformlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel"
-export SAL_USE_VCLPLUGIN=gtk # LibreOffice scrolling
+# export SAL_USE_VCLPLUGIN=gtk # LibreOffice scrolling
 export XDG_CURRENT_DESKTOP=XFCE # Trick xdg-open to believe it's XFCE
-export GTK_MODULES=canberra-gtk-module
+# export GTK_MODULES=canberra-gtk-module
 export LIBVA_DRIVER_NAME=iHD
 
 # X settings
 xrdb -load "$HOME/.Xresources"
 xsetroot -cursor_name left_ptr
 
+# Set WM name to something java compatible
+wmname LG3D
+
 # Daemons
-xfce4-panel --disable-wm-check &
 /usr/lib/xfce4/notifyd/xfce4-notifyd &
 /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
 /usr/lib/geoclue-2.0/demos/agent &
-systemctl --user restart redshift &
+# systemctl --user restart redshift &
 system-config-printer-applet &
 sxhkd -m -1 &
-compton -b
+picom -b
 syndaemon -i 0.5 -K -R -d
-light-locker &
 xfce4-power-manager
+xfce4-screensaver &
 xcape -t 250 -e 'Caps_Lock=Escape'
 "$HOME/bin/start-mopidy.sh" &
 "$HOME/bin/polybar-hooks.sh" &
