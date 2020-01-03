@@ -1,6 +1,7 @@
 #!/usr/bin/env sh
 set -euo pipefail
 
+echo $@
 TMP=$(basename $1)
 TMP=~/.cache/mutt.tmp."${TMP##*.}"
 TMP="${TMP%%__}"
