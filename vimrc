@@ -4,7 +4,9 @@ Plug 'chriskempson/base16-vim'
 Plug 'daviesjamie/vim-base16-lightline'
 Plug 'itchyny/lightline.vim'
 "--- Tools ---
-silent! Plug 'claytron/lodgeit-vim'
+if has("python")
+  Plug 'claytron/lodgeit-vim'
+endif
 Plug 'direnv/direnv.vim'
 Plug 'gcmt/taboo.vim'
 Plug 'junegunn/fzf.vim'
