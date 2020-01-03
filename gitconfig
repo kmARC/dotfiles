@@ -1,30 +1,62 @@
 [user]
-	name = Mark Korondi
-[credential]
-	helper = /usr/share/doc/git/contrib/credential/gnome-keyring/git-credential-gnome-keyring
+  name = Mark Korondi
+
 [merge]
-	tool = vimdiff
+  tool = vimdiff
+	conflictstyle = diff3
+
+[rebase]
+  autostash = true
+
+[includeIf "gitdir:~/git-acronis/"]
+  path = ~/.config/git/acronis
+
+[includeIf "gitdir:~/git-github/kmARC/"]
+  path = ~/.config/git/github
+
 [commit]
-	gpgsign = true
+  gpgsign = true
+
 [tag]
-	forcesignannotated = true
+  forceSignAnnotated = true
+  gpgSign = true
+
 [log]
-	showsignature = true
+  showsignature = true
 
 [alias]
-	stag = tag -s
+  stag = tag -s
 
 [tig]
-	mouse = true
+  ignore-space = yes
+  mouse = true
+  main-view = line-number:no,interval=5 id:yes date:relative author:full commit-title:yes,graph,refs,overflow=no
+
 [tig "color"]
-	cursor = black cyan
-	main-tag = green default bold
+  cursor = black cyan
+  main-tag = green default bold
+  title-blur = 19 18
+  title-focus = 7 19
+
 [gui]
-	fontui = -family \"Noto Sans\" -size 9 -weight normal -slant roman -underline 0 -overstrike 0
-	fontdiff = -family Hack -size 9 -weight normal -slant roman -underline 0 -overstrike 0
-	tabsize = 4
-	spellingdictionary = en_US
-	diffopts = --word-diff --patience
+  fontui = -family \"Noto Sans\" -size 9 -weight normal -slant roman -underline 0 -overstrike 0
+  fontdiff = -family \"Fira Code Medium\" -size 9 -weight normal -slant roman -underline 0 -overstrike 0
+  tabsize = 4
+  spellingdictionary = en_US
+  diffopts = --word-diff --patience
 
 [github]
-	user = kmarc
+  user = kmarc
+
+[credential]
+  helper = /usr/lib/git-core/git-credential-libsecret
+
+[diff]
+	tool = vimdiff
+	algorithm = patience
+[difftool]
+	prompt = false
+[core]
+	pager = less -F -X
+
+# vim: set ft=gitconfig:

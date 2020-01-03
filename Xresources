@@ -24,8 +24,8 @@ Xcursor.theme:              DMZ-Black
 *xterm*borderWidth:         0
 *xterm*cursorBlink:         true
 *xterm*disallowedWindowOps: 20,21,SetXprop
-*xterm*faceName:            Hack:size=9
-*xterm*faceSize:            9.0
+*xterm*faceName:            Source Code Pro Semibold:style=Semibold:size=10
+*xterm*faceSize:            10
 *xterm*faceSize1:           6.0
 *xterm*faceSize2:           7.5
 *xterm*faceSize3:           9.0
@@ -35,10 +35,10 @@ Xcursor.theme:              DMZ-Black
 *xterm*internalBorder:      0
 *xterm*loginShell:          true
 *xterm*metaSendsEscape:     true
-*xterm*scaleHeight:         1.1
+*xterm*scaleHeight:         1.05
 *xterm*scrollBar:           false
 *xterm*useClipping:         false
-*xterm*boldColors:          false
+*xterm*boldColors:          true
 *xterm*veryBoldColors:      true
 *xterm*termName:            xterm-256color
 *xterm*forceBoxChars:       true
@@ -63,7 +63,7 @@ URxvt*cutchars:        │
 URxvt*cursorBlink:     1
 URxvt*externalBorder:  0
 URxvt*internalBorder:  0
-URxvt.font:         xft:Noto Color Emoji
+URxvt.font:         xft:Source Code Pro Semibold:style=Semibold:size=10
 URxvt*keysym.C-Delete: matcher:select
 URxvt*keysym.C-M-0:      command:\033]710;xft:Hack-Regular:style=bold:size=10.0\007
 URxvt*keysym.C-M-1:      command:\033]710;xft:Hack-Regular:style=bold:size=7.0\007
@@ -98,5 +98,5 @@ URxvt*iso14755_52:     false
 
 ! Rofi
 rofi.color-enabled:         true
-rofi.font:                  Noto Sans Mono Bold 15
+rofi.font:                  Source Code Pro Semibold 15
 rofi.bw: 0

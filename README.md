@@ -144,7 +144,6 @@ sudo pacman -S \
   geoclue2 \
   jq \
   libpulse \
-  light-locker \
   polkit-gnome \
   redshift \
   system-config-printer \
@@ -152,7 +151,7 @@ sudo pacman -S \
   xcape \
   xdotool \
   xf86-input-synaptics \
-  xfce4-{notifyd,panel} \
+  xfce4-notifyd \
   xorg-{xbacklight,xinput,xprop,xrandr,xsetroot,xwininfo}
 
 # Set a wallpaper
@@ -172,9 +171,8 @@ examples in [pdotfiles/](pdotfiles/)
 
 ``` bash
 # Install mopidy
-sudo pacman -S python2-pip
 yay -S libspotify
-sudo -H pip2 install mopidy{,-spotify,-spotify-web,-soundcloud,-tunein,-mpris}
+sudo -H pip install mopidy{,-spotify,-spotify-web,-soundcloud,-tunein,-mpris,-mpd}
 ```
 
 [mopidy]: https://www.mopidy.com/
