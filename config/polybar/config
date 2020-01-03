@@ -8,12 +8,10 @@
 ;=====================================================
 
 [colors]
-; {{{
-foreground=#fff
-foreground-alt=${xrdb:base05:#ffffff}
-background=${xrdb:base00_ahtml:#000000}
 
-theme=${xrdb:theme:#ff0000}
+; {{{
+primary = ${xrdb:*primary:#ff0000}
+foreground = ${xrdb:*background:#00ff00}
 ; }}}
 
 [bar/kmarc]
@@ -26,14 +24,17 @@ margin-left = 0
 margin-right = 0
 fixed-center = true
 wm-restack = bspwm
+override-redirect = true
 
-background = #60000000
+background-0 = #ff000000
+background-1 = #00000000
+dim-value = 0.90
 foreground = ${colors.foreground}
 
 line-size = 3
 module-margin = 2
 
-font-0 = "Noto Sans:style=Bold:size=9;2"
+font-0 = ${xrdb:polybar.font}
 font-1 = "MaterialIcons:size=14;4"
 font-2 = "Weather Icons:style=Bold:size=12;2"
 
@@ -47,6 +48,8 @@ scroll-down = bspwm-deskprev
 padding = 3
 
 enable-ipc = true
+
+tray-position = right
 
 ; }}}
 
@@ -65,7 +68,7 @@ exec = ~/bin/mpris.sh
 type = custom/ipc
 
 initial = 1
-hook-0 = [ "xtrue" == "x$(xfconf-query -c xfce4-notifyd -p /do-not-disturb)" ] && echo %{F${base08_html}} || echo 
+hook-0 = [ "xtrue" == "x$(xfconf-query -c xfce4-notifyd -p /do-not-disturb)" ] && echo %{F#ff0000} || echo 
 click-left = xfconf-query -c xfce4-notifyd -p /do-not-disturb -T && polybar-msg -p %pid% hook dnd 1
 click-middle = xfce4-notifyd-config &
 ; }}}
@@ -75,7 +78,7 @@ click-middle = xfce4-notifyd-config &
 type = internal/xwindow
 label = %title:0:60:...%
 format-prefix = %{O5}
-format-prefix-foreground = ${colors.theme}
+format-prefix-foreground = ${colors.primary}
 ; }}}
 
 [module/xkeyboard]
@@ -84,7 +87,7 @@ type = internal/xkeyboard
 blacklist-0 = num lock
 
 format-prefix = 
-format-prefix-foreground = ${colors.theme}
+format-prefix-foreground = ${colors.primary}
 
 label-layout = %layout:4%
 
@@ -101,7 +104,7 @@ mount-0 = /
 format-mounted-prefix = %{A3:x-terminal-emulator -ls -e bash -ci 'dfc -f; read' &:} 
 format-mounted-suffix = %{A}
 label-mounted = %percentage_used:4%%
-format-mounted-prefix-foreground = ${colors.theme}
+format-mounted-prefix-foreground = ${colors.primary}
 ; }}}
 
 [module/bspwm]
@@ -111,12 +114,12 @@ type = internal/bspwm
 format = <label-monitor> <label-state> <label-mode>
 
 label-monitor = 
-label-monitor-foreground = ${colors.theme}
+label-monitor-foreground = ${colors.primary}
 
 pin-workspaces = false
 
 label-focused = %index%
-label-focused-foreground = ${colors.theme}
+label-focused-foreground = ${colors.primary}
 label-focused-padding = 2
 
 label-occupied = %index%
@@ -124,7 +127,8 @@ label-occupied-padding = 2
 label-occupied-foreground = ${colors.foreground}
 
 label-urgent = %index%
-label-urgent-background = ${colors.theme}
+label-urgent-background = ${colors.primary}
+label-urgent-foreground = ${colors.foreground}
 label-urgent-padding = 2
 
 label-empty = "%{O2}•%{O1}"
@@ -137,10 +141,10 @@ label-empty-padding = 2
 type = internal/mpd
 format-online =  <toggle>   <label-song><icon-prev><icon-stop><icon-next>   <bar-progress>
 format-stopped = %{O9}•%{O1}•%{O1}•%{O1}•%{O1}•%{O1}•%{O1}•%{O1}•%{O1}•%{O1}•%{O1}
-format-stopped-foreground = ${colors.foreground-alt}
-format-paused-foreground = ${colors.foreground-alt}
+format-stopped-foreground = ${colors.foreground}
+format-paused-foreground = ${colors.foreground}
 format-offline = ${self.format-stopped}
-format-offline-foreground = ${colors.foreground-alt}
+format-offline-foreground = ${colors.foreground}
 
 icon-foreground = 
 icon-play = 
@@ -153,7 +157,7 @@ icon-seekf = 
 icon-random = 
 icon-repeat = 
 icon-repeatone = 
-icon-play-foreground = ${colors.theme}
+icon-play-foreground = ${colors.primary}
 icon-pause-foreground = ${self.icon-play-foreground}
 icon-stop-foreground = ${self.icon-play-foreground}
 icon-next-foreground = ${self.icon-play-foreground}
@@ -161,14 +165,14 @@ icon-prev-foreground = ${self.icon-play-foreground}
 
 bar-progress-width = 10
 bar-progress-fill = •%{O1}
-bar-progress-fill-foreground = ${colors.theme}
+bar-progress-fill-foreground = ${colors.primary}
 bar-progress-indicator = •%{O1}
 bar-progress-empty = •%{O1}
-bar-progress-empty-foreground = ${colors.foreground-alt}
+bar-progress-empty-foreground = ${colors.foreground}
 
 label-song = %title:0:20:...% ( %artist:0:20:...% )%{O8}
 
-toggle-on-foreground = ${colors.foreground-alt}
+toggle-on-foreground = ${colors.foreground}
 toggle-off-foreground = ${colors.foreground}
 ; }}}
 
@@ -181,7 +185,7 @@ label = %percentage:4%%
 format-label-foreground = ${colors.foreground}
 
 format-prefix = 
-format-prefix-foreground = ${colors.theme}
+format-prefix-foreground = ${colors.primary}
 
 format-suffix = %{A}%{A}
 ; }}}
@@ -191,7 +195,7 @@ format-suffix = %{A}%{A}
 type = internal/cpu
 interval = 2
 format-prefix = %{A3:x-terminal-emulator -ls -e bash -ci 'htop' &:} 
-format-prefix-foreground = ${colors.theme}
+format-prefix-foreground = ${colors.primary}
 format-suffix = %{A}
 label = %percentage:4:2%%
 
@@ -203,7 +207,7 @@ format = <label>
 type = internal/memory
 interval = 2
 format-prefix = 
-format-prefix-foreground = ${colors.theme}
+format-prefix-foreground = ${colors.primary}
 label = %percentage_used:4%%
 ; }}}
 
@@ -219,7 +223,7 @@ time-alt = %H:%M
 time =   %H:%M
 
 format-prefix = " "
-format-prefix-foreground = ${colors.theme}
+format-prefix-foreground = ${colors.primary}
 
 label = %date% %time%
 ; }}}
@@ -242,11 +246,11 @@ format-volume =  <label-volume>
 label-volume = %{A3:pavucontrol:}%percentage:4%%%{A}
 label-volume-foreground = ${colors.foreground}
 format-volume-prefix = %{A3:pavucontrol:}%{A}
-format-volume-foreground = ${colors.theme}
+format-volume-foreground = ${colors.primary}
 label-muted = %percentage:4%%
 label-muted-foreground = ${colors.foreground}
 format-muted-prefix = 
-format-muted-foreground = ${colors.theme}
+format-muted-foreground = ${colors.primary}
 ; }}}
 
 [module/battery]
@@ -259,15 +263,15 @@ click-middle = xfce4-power-manager-settings &
 
 format-charging = <label-charging>
 format-charging-prefix = %{O4}
-format-charging-prefix-foreground = ${colors.theme}
+format-charging-prefix-foreground = ${colors.primary}
 
 format-discharging = <label-discharging>
 format-discharging-prefix = %{A2:xfce4-power-manager-settings &:} %{O4}
-format-discharging-prefix-foreground = ${colors.theme}
+format-discharging-prefix-foreground = ${colors.primary}
 format-discharging-suffix = %{A}
 
 format-full-prefix = %{O4}
-format-full-prefix-foreground = ${colors.theme}
+format-full-prefix-foreground = ${colors.primary}
 ; }}}
 
 [module/temperature]
@@ -281,12 +285,12 @@ format-warn = <ramp> <label-warn>
 
 label = %temperature-c%
 label-warn = %temperature-c%
-label-warn-foreground = ${colors.theme}
+label-warn-foreground = ${colors.primary}
 
 ramp-0 = "  "
 ; ramp-1 = "  "
 ; ramp-2 = "  "
-ramp-foreground = ${colors.theme}
+ramp-foreground = ${colors.primary}
 ; }}}
 
 [settings]

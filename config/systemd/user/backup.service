@@ -4,7 +4,7 @@ Description=Borg backup service
 [Service]
 Type=dbus
 Type=oneshot
-ExecStart=%h/bin/backup.sh sync
+ExecStart=%h/bin/backup.sh backup -s
 TimeoutStopSec=120
 
 [Install]

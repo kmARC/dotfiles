@@ -4,7 +4,7 @@
 
 # terminal emulator
 super + Return
-	kitty -1
+	xfce4-terminal
 
 # program launcher
 super + space; super + space
@@ -135,7 +135,7 @@ super + {+,shift +} r
 
 ctrl + alt + l
 # xscreensaver-command -lock
-	light-locker-command -l
+	xfce4-screensaver-command -l
 
 XF86Display
 	~/bin/desktop.sh
@@ -198,13 +198,13 @@ super + space; o
 
 # Terminal apps
 super + space; f
-	kitty -1 bash -ci 'cd ~/Documents/; ranger'
+	xfce4-terminal -x bash -ci 'cd ~/Documents/; ranger'
 
 super + space; m
-	kitty -1 bash -ci 'ncmpcpp'
+	xfce4-terminal -x bash -ci 'ncmpcpp'
 
 super + space; x
-	kitty -1 bash -ci 'tmux-session'
+	xfce4-terminal -x bash -ci 'tmux-session'
 
 super + space; e
 	splatmoji copy

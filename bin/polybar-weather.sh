@@ -26,11 +26,12 @@ get_icon() {
 }
 
 KEY="4b3f444258e3512349fecb3d1a36d2a7"
-# CITY="Dublin"
 UNITS="metric"
 SYMBOL="°"
 
 API="https://api.openweathermap.org/data/2.5"
+
+PRIMARY=$(xrdb -query | awk '/^*primary:/{ print $2 }')
 
 query_weather() {
   if [ -n "$CITY" ]; then
@@ -57,7 +58,7 @@ query_weather() {
       weather_temp=$(echo "$weather" | jq ".main.temp" | cut -d "." -f 1)
       weather_icon=$(echo "$weather" | jq -r ".weather[0].icon")
 
-      echo "%{F$theme_html}$(get_icon "$weather_icon")%{F}   $weather_desc  $weather_temp$SYMBOL"
+      echo "%{F$PRIMARY}$(get_icon "$weather_icon")%{F}   $weather_desc  $weather_temp$SYMBOL"
   fi
 }
 trap 'echo Loading...' HUP

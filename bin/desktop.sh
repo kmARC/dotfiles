@@ -6,7 +6,6 @@ BUILTIN_MON=${BUILTIN_MON:-eDP1}
 MONS=($(xrandr | grep $BUILTIN_MON | awk '/ connected /{print $1}'))
 MONS=(${MONS[@]} $(xrandr | grep -v $BUILTIN_MON | awk '/ connected /{print $1}'))
 POSITION=${1:-left-of}
-PREF_BRGHT=0
 
 # Prints largest resolution mode
 function largest_res {
@@ -21,6 +20,7 @@ function common_res {
            | head -1
 }
 
+# Determines if given monitor is primary
 function is_primary {
     xrandr | grep "$1" \
            | grep primary \
@@ -62,13 +62,11 @@ if [[ ${#MONS[@]} == 1 || $POSITION == 'mirror' ]]; then
     # Fix desktop order
     bspc monitor "$PRI" -o 1 2 3 4 5 6 7 8 9 0
 
-    # Set preferred brightness to 20%
-    PREF_BRGHT=20
+    # Set preferred brightness
+    xbacklight -set 20 -time 500
 
     # Save primary monitor for polybar
-    # polybar -m | head -n1 | awk -F':' '{ print $1 }' > /tmp/polybar-monitor.txt
     echo "$PRI" > /tmp/polybar-monitor.txt
-    # echo "HDMI1" > /tmp/polybar-monitor.txt
 
 else
     # Choose primary and secondary
@@ -101,8 +99,8 @@ else
     bspc monitor "$PRI" -o 1 2 3 4 5
     bspc monitor "$SEC" -o 6 7 8 9 0
 
-    # Set preferred brightness to maximum
-    PREF_BRGHT=100
+    # Set preferred brightness
+    xbacklight -set 100 -time 500
 
     # Save primary monitor for polybar
     echo "$PRI" > /tmp/polybar-monitor.txt
@@ -151,21 +149,14 @@ synclient TapButton2=3
 synclient TapButton3=2
 synclient ClickPad=1
 
-# Help polybar by calculating it's desired width
-xrandr | grep primary \
-       | sed -r 's/^.*[^0-9]([0-9]+)x[0-9]+.*$/\1/g' \
-    > /tmp/polybar-width.txt
-
+# Focus previously focused desktop
 bspc desktop -f "$CUR"
 
-# Spawn panel
+# Spawn polybar
 if ! pgrep -x polybar >/dev/null; then
   polybar -r kmarc &
 fi
 touch -m "$HOME"/.config/polybar/config
-
-# Setting WM name to something java compatible
-wmname LG3D
 
 # Fix Java nonreparenting WM issue
 ~/bin/java_nonreparenting_wm_hack.sh
@@ -182,8 +173,3 @@ sleep 1
 for unknown in $(xrandr | awk '/unknown/{ print $1 }'); do
   xrandr --output "$unknown" --auto
 done
-
-# Fix tray position
-"$HOME"/bin/tray.sh
-
-xbacklight -set "$PREF_BRGHT" -time 500
