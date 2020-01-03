@@ -4,22 +4,20 @@ import subprocess
 
 def lookup_names():
 	if snip.tabstop == 0:
-		entries = subprocess.check_output(["khard", "list"], universal_newlines=True).split('\n')
+		entries = subprocess.check_output(["khard", "email", "-p"], universal_newlines=True).split('\n')
 		lines = []
 		for line in snip.buffer[snip.tabstops[6].start[0]:snip.tabstops[6].end[0]+1]:
 			(email, name) = (None, None)
 			for entry in entries:
-					if entry.lower().find(line[2:].lower()) > 0:
-							try:
-									matches = re.match(r"(\S.*\S)\s\s+(\S.*\S)\s\s+(\S.*\S)\s\s+(\S.*\S)\s\s+(\S.*\S)\s\s+(\S.*\S)\s*", entry)
-									name = matches.group(2)
-									if name.lower().find(line[2:].lower()) > 0:
-										email_field = matches.group(4)
-										email = re.match(r".*\s(\S+@\S+)", email_field).group(1)
-										break
-							except:
-									pass
-			if email:
+				if entry.lower().find(line[2:].lower()) > -1:
+						try:
+								matches = re.match(r"^([^\t]+)\t([^\t]+).*$", entry)
+								name = matches.group(2)
+								email = matches.group(1)
+								break
+						except:
+								pass
+			if name:
 				lines += [f'- {name} <{email}>']
 			else:
 				lines += [f'{line}']
