@@ -9,7 +9,7 @@
     <property name="show-tray-icon" type="bool" value="true"/>
     <property name="inactivity-sleep-mode-on-battery" type="uint" value="1"/>
     <property name="inactivity-on-battery" type="uint" value="15"/>
-    <property name="inactivity-on-ac" type="uint" value="14"/>
+    <property name="inactivity-on-ac" type="uint" value="240"/>
     <property name="critical-power-level" type="uint" value="3"/>
     <property name="critical-power-action" type="uint" value="1"/>
     <property name="brightness-on-battery" type="uint" value="40"/>
@@ -22,12 +22,15 @@
     <property name="brightness-level-on-ac" type="uint" value="1"/>
     <property name="general-notification" type="bool" value="true"/>
     <property name="lid-action-on-battery" type="uint" value="1"/>
-    <property name="logind-handle-lid-switch" type="bool" value="true"/>
+    <property name="logind-handle-lid-switch" type="bool" value="false"/>
     <property name="lid-action-on-ac" type="uint" value="1"/>
-    <property name="sleep-button-action" type="uint" value="0"/>
-    <property name="hibernate-button-action" type="uint" value="0"/>
-    <property name="brightness-level-on-battery" type="uint" value="5"/>
+    <property name="sleep-button-action" type="uint" value="1"/>
+    <property name="hibernate-button-action" type="uint" value="1"/>
+    <property name="brightness-level-on-battery" type="uint" value="1"/>
     <property name="presentation-mode" type="bool" value="false"/>
     <property name="lock-screen-suspend-hibernate" type="bool" value="true"/>
+    <property name="battery-button-action" type="uint" value="1"/>
+    <property name="brightness-on-ac" type="uint" value="9"/>
+    <property name="dpms-enabled" type="bool" value="true"/>
   </property>
 </channel>

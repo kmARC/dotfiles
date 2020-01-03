@@ -1,8 +1,7 @@
 #!/usr/bin/env bash
 
 echo ""
-ldapsearch -h localhost \
-           -p 1389 \
+ldapsearch -H ldaps://cloud-beta.korondi.ch:1389 \
            -x \
            -D$1 \
            -w$2 \
