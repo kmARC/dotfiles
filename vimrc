@@ -39,6 +39,7 @@ Plug 'janko/vim-test'
 Plug 'ludovicchabant/vim-gutentags'
 Plug 'majutsushi/tagbar'            , {'on': ['TagbarToggle']}
 Plug 'maralla/completor.vim'
+Plug 'sheerun/vim-polyglot'
 Plug 'tpope/vim-commentary'
 Plug 'w0rp/ale'
 "--- Markdown, Wiki, Todo ---
@@ -138,6 +139,7 @@ endif
 
 augroup MyColors
   autocmd ColorScheme * highlight Normal              ctermbg=NONE
+                    \ | highlight CursorlineNr                                 cterm=NONE
                     \ | highlight SpellBad            ctermbg=1    ctermfg=0   cterm=bold,underline
                     \ | highlight SpellCap            ctermbg=0    ctermfg=3   cterm=underline
                     \ | highlight TabModified         ctermbg=1    ctermfg=0   cterm=bold
@@ -282,6 +284,8 @@ augroup vimrc
   autocmd BufWrite *                              if test#exists() | TestFile
   "----- prevent vim to clear clipboard upon exiting
   autocmd VimLeave *                              call system("xsel -ib", getreg('+'))
+  "----- ALE
+  autocmd BufRead,BufNewFile /tmp/*.yml           ALEDisable
 augroup END
 
 
@@ -414,6 +418,7 @@ let g:lightline.inactive = {
 let g:netrw_bufsettings = "rnu"
 let g:netrw_home = s:dir_misc
 let g:netrw_liststyle = 3
+let g:polyglot_disabled = ['markdown']
 let g:slime_paste_file = tempname()
 let g:slime_target = "tmux"
 let g:taboo_renamed_tab_format =' %N %l%m '
