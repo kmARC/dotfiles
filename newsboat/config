@@ -22,7 +22,7 @@ bind-key J next-feed
 bind-key K prev-feed
 
 # Look and feel
-articlelist-format "%4i %f (%5L) %?T?|%-17T|  ?%t %>· %D"
+articlelist-format "%4i %f (%4L) %?T?|%-17T|  ?%t  %> %D"
 
 color listnormal        white   default
 color listnormal_unread color15 default bold
@@ -39,10 +39,9 @@ highlight article     "^(Title):.*"              color15 default bold
 highlight article     "^(Author):.*"             color2
 
 highlight feedlist    "^[0-9 ]{4} "              color2
-highlight feedlist    "[N ]+\\([0-9/]+\\) "      color8
+highlight feedlist    "[N ]*\\([0-9/]+\\) "      color8
 
 highlight articlelist "^[0-9 ]{4} "              color2
-highlight articlelist "[N! ]+\\([0-9K. ]+\\) "   color8
-highlight articlelist "·"                        color8
+highlight articlelist "\\(([0-9 ][0-9. ][0-9.][0-9.K ])\\) " color8
 
 # vim: set ft=conf:
