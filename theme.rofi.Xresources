@@ -1,9 +1,0 @@
-! vim: set ft=xdefaults:
-! State:           bg,      fg,     bgalt,   hlbg,   hlfg
-rofi.color-normal: argb:00000000, base05, base01, theme,  base00
-rofi.color-urgent: argb:00000000, base08, argb:00000000, base08, base00
-rofi.color-active: argb:00000000, base0b, argb:00000000, base0b, base00
-
-!                  background, border, separator
-rofi.color-window: base00,     base00, theme
-

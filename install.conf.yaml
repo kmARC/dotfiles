@@ -28,6 +28,8 @@
       path: config/xfce4/terminal
     ~/.config/xfce4/xfconf:
       path: config/xfce4/xfconf
+    ~/.config/youtube-dl/config:
+      path: config/youtube-dl/config
     ~/.fonts/dotbot:
       path: fonts/dotbot
     ~/.mutt/:
@@ -37,6 +39,8 @@
       path: newsboat/config
     ~/.tmux/plugins/tpm:
       path: tmux/plugins/tpm
+    ~/.tmux/theme.conf:
+      path: tmux/theme.conf
     ~/bin:
       path: bin
 
@@ -47,8 +51,8 @@
     ~/.mailcap:
     ~/.muttrc:
     ~/.rtorrent.rc:
-    ~/.theme.rofi.Xresources:
     ~/.tmux.conf:
+    ~/.tigrc:
     ~/.todo.cfg:
     ~/.toprc:
     ~/.Xresources:
