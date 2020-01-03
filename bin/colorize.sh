@@ -60,32 +60,15 @@ done < <(sed -n 's%^.*\([0-fA-F]\{2\}\)/\([0-fA-F]\{2\}\)/\([0-fA-F]\{2\}\).*Bas
 
 # }}}
 
-# Bash variables {{{
-{
-    for i in $(seq 0 15); do
-        printf "export base%.2x_html=%s\n" "$i" "$(_html ${base[$i]})"
-    done
-    printf "export theme_html=%s\n" "$(_html ${base[$THEME]})"
-    printf "export theme=%s\n" "${map[$THEME]}"
-} > "$HOME/.theme.bashrc"
-# }}}
-
-# Xresources {{{
-{
-    for i in $(seq 0 15); do
-        printf "base%.2x: %s\n" "$i" "$(_html ${base[$i]})"
-        printf "#define base%.2x %s\n" "$i" "$(_html ${base[$i]})"
-        printf "base%.2x_argb: %s\n" "$i" "$(_argb ${base[$i]} $alpha_hex)"
-        printf "#define base%.2x_argb %s\n" "$i" "$(_argb ${base[$i]} $alpha_hex)"
-        printf "base%.2x_ahtml: %s\n" "$i" "$(_html ${base[$i]} $alpha_hex)"
-        printf "#define base%.2x_ahtml %s\n" "$i" "$(_html ${base[$i]} $alpha_hex)"
-        printf "base%.2x_rgba: %s\n" "$i" "$(_rgba ${base[$i]} $alpha_hex)"
-        printf "#define base%.2x_rgba %s\n" "$i" "$(_rgba ${base[$i]} $alpha_hex)"
-    done
-    printf "theme: %s\n" "$(_html ${base[$THEME]})"
-    printf "#define theme %s\n" "$(_html ${base[$THEME]})"
-} > "$HOME/.theme.defines.Xresources"
-# }}}
+# # Bash variables {{{
+# {
+#     for i in $(seq 0 15); do
+#         printf "export base%.2x_html=%s\n" "$i" "$(_html ${base[$i]})"
+#     done
+#     printf "export theme_html=%s\n" "$(_html ${base[$THEME]})"
+#     printf "export theme=%s\n" "${map[$THEME]}"
+# } > "$HOME/.theme.bashrc"
+# # }}}
 
 # # Firefox {{{
 # # Write userChrome.css
