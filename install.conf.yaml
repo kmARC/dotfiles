@@ -5,6 +5,9 @@
 
 - clean: ['~']
 
+- create:
+  - ~/.ssh/controlmasters
+
 - link:
     # Explicit paths
     ~/.config/bspwm/bspwmrc:
@@ -32,8 +35,6 @@
       path: config/xfce4/xfconf
     ~/.config/youtube-dl/config:
       path: config/youtube-dl/config
-    ~/.fonts/dotbot:
-      path: fonts/dotbot
     ~/.mutt/:
       glob: true
       path: mutt/*
