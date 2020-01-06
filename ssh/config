@@ -1,0 +1,6 @@
+# Example SSH config
+
+Include ~/.ssh/all_hosts.conf
+
+Host example.com
+  User test

@@ -39,6 +39,8 @@
       path: mutt/*
     ~/.newsboat/config:
       path: newsboat/config
+    ~/.ssh/all_hosts.conf:
+      path: ssh/all_hosts.conf
     ~/.tmux/plugins/tpm:
       path: tmux/plugins/tpm
     ~/.tmux/theme.conf:
