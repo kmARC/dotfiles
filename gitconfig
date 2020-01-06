@@ -1,5 +1,5 @@
-[user]
-  name = Mark Korondi
+[include]
+  path = ~/.pdotfiles/gitconfig
 
 [merge]
   tool = vimdiff
@@ -7,12 +7,6 @@
 
 [rebase]
   autostash = true
-
-[includeIf "gitdir:~/git-acronis/"]
-  path = ~/.config/git/acronis
-
-[includeIf "gitdir:~/git-github/kmARC/"]
-  path = ~/.config/git/github
 
 [commit]
   gpgsign = true
@@ -44,9 +38,6 @@
   tabsize = 4
   spellingdictionary = en_US
   diffopts = --word-diff --patience
-
-[github]
-  user = kmarc
 
 [credential]
   helper = /usr/lib/git-core/git-credential-libsecret
