@@ -9,6 +9,9 @@ if has("python")
 endif
 Plug 'direnv/direnv.vim'
 Plug 'gcmt/taboo.vim'
+if has("mac")
+  Plug '/usr/local/opt/fzf'
+endif
 Plug 'junegunn/fzf.vim'
 Plug 'scrooloose/nerdtree'          , {'on': ['NERDTreeToggle', 'NERDTreeFind']}
 Plug 'tpope/vim-obsession'
