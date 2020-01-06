@@ -33,11 +33,14 @@ elif [[ ${props[2]} == *_TYPE_DIALOG*              ]]; then
 elif [[ "${props[3]}" =~ 0x3,\ 0x.,\ 0x0,\ 0x.,\ 0x. ]]; then
   debug "case 5"
   echo "state = floating"
-elif [[ "${props[0]}" == *Loading\ Microsoft\ Teams* ]]; then
+elif [[ "${props[3]}" =~ 0x2,\ 0x.,\ 0x1,\ 0x.,\ 0x. ]]; then
   debug "case 6"
+  echo "state = tiled"
+elif [[ "${props[0]}" == *Loading\ Microsoft\ Teams* ]]; then
+  debug "case 7"
   echo "border = true"
 elif [ -z "$class" ]; then
-  debug "case 7"
+  debug "case 8"
   [[ ${props[0],,} == *spotify* ]] && echo "desktop = 8 follow = on"
 fi
 
