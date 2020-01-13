@@ -207,15 +207,15 @@ macro compose        \em "\
 <edit-type>text/plain; charset=us-ascii   <enter>"                        'Convert HTML to Markdown'
 
 macro index,pager    \cr "\
-<enter-command>echo   'Checking mail...'                                                      <enter>\
-<enter-command>set    my_record_old = \$record                                                <enter>\
-<enter-command>set    record        = ^                                                       <enter>\
-<enter-command>set    my_current    = \$record                                                <enter>\
-<enter-command>set    record        = \$my_record_old                                         <enter>\
-<enter-command>setenv current         \$my_current                                            <enter>\
-<enter-command>set    my_temp       = \`offlineimap -a \$from -f \${current##*=} -u quiet -q\`<enter>\
-<enter-command>unset  my_record_old my_current my_temp                                        <enter>"\
-                                                                            'Check new email in currenct folder'
+<enter-command>echo   'Checking mail...'                     <enter>\
+<enter-command>set    my_record_old = \$record               <enter>\
+<enter-command>set    record        = ^                      <enter>\
+<enter-command>set    my_current    = \$record               <enter>\
+<enter-command>set    record        = \$my_record_old        <enter>\
+<enter-command>setenv current         \$my_current           <enter>\
+<shell-escape>offlineimap -a $from -f $(basename $current) -q<enter>\
+<enter-command>unset  my_record_old my_current               <enter>"       'Check new email in currenct folder'
+
 macro index            L "\
 <shell-escape>read -p 'Search messages: ' x;\ echo \$x >~/.cache/mutt_terms     <enter>\
 <enter-command>set               my_query = \`cat ~/.cache/mutt_terms\`         <enter>\
