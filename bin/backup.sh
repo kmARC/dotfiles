@@ -97,7 +97,7 @@ repair() {
   echo "======"
   echo "    Repair '$DEST'"
   echo "======"
-  borg check --repair "$DEST"
+  borg check --repair --verbose --progress "$DEST"
   echo "======"
   echo "    Done."
   echo "======"
