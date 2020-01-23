@@ -213,7 +213,7 @@ macro index,pager    \cr "\
 <enter-command>set    my_current    = \$record               <enter>\
 <enter-command>set    record        = \$my_record_old        <enter>\
 <enter-command>setenv current         \$my_current           <enter>\
-<shell-escape>offlineimap -a $from -f $(basename $current) -q<enter>\
+<shell-escape>offlineimap -a \$from -f $(basename $current) -q<enter>\
 <enter-command>unset  my_record_old my_current               <enter>"       'Check new email in currenct folder'
 
 macro index            L "\
