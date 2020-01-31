@@ -87,6 +87,15 @@ mount_repo() {
 }
 
 sync_to_s3() {
+  CONNS=($(nmcli connection show --active | tail +2 | sed 's/.*\([0-9a-f]\{8\}-[0-9a-f]\{4\}-[0-9a-f]\{4\}-[0-9a-f]\{4\}-[0-9a-f]\{12\}\).*/\1/g'))
+  for c in ${CONNS[@]}; do
+    IS_METERED=$(nmcli connection show $c | awk  "/metered/{ print \$2 }")
+    if [ "$IS_METERED" == "yes" ]; then
+      echo "Not syncing to S3; Metered connection"
+      return 0
+    fi
+  done
+
   echo "======"
   echo "    Syncing to s3://$S3_BUCKET"
   echo "======"
