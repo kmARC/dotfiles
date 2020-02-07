@@ -1,3 +1,6 @@
+[fetch]
+	recurseSubmodules = on-demand
+
 [include]
   path = ~/.pdotfiles/gitconfig
 
