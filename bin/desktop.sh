@@ -133,7 +133,11 @@ bspc config -m "$PRI" top_padding 28
 ~/.fehbg
 
 # Set X keyboard related settings
-setxkbmap us,hu ,102_qwerty_dot_dead -option "grp:shifts_toggle,caps:ctrl_modifier"
+OPTIONS="grp:shifts_toggle,caps:ctrl_modifier"
+if xinput | grep "Logitech Craft.*keyboard" -q; then
+  OPTIONS="$OPTIONS,altwin:swap_lalt_lwin"
+fi
+setxkbmap us,hu ,102_qwerty_dot_dead -option "$OPTIONS"
 
 # Set X mouse related settings
 for ID in $(xinput | grep pointer \
