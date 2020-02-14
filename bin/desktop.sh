@@ -3,13 +3,17 @@
 # xbacklight -set 0 -time 500
 
 BUILTIN_MON=${BUILTIN_MON:-eDP1}
-MONS=($(xrandr | grep $BUILTIN_MON | awk '/ connected /{print $1}'))
-MONS=(${MONS[@]} $(xrandr | grep -v $BUILTIN_MON | awk '/ connected /{print $1}'))
+MONS=($(xrandr | grep "$BUILTIN_MON" | awk '/ connected /{print $1}'))
+MONS+=($(xrandr | grep -v "$BUILTIN_MON" | awk '/ connected /{print $1}'))
 POSITION=${1:-left-of}
+
+function debug {
+  [ "x$DEBUG" != "x" ] && echo "$*"
+}
 
 # Prints largest resolution mode
 function largest_res {
-    xrandr | awk -v PAT="^$1" '$0 ~ PAT {getline; print $1}'
+    xrandr | awk -v PAT="^$1 " '$0 ~ PAT {getline; print $1}'
 }
 
 # Prints common resolution of multiple monitors
@@ -22,7 +26,7 @@ function common_res {
 
 # Determines if given monitor is primary
 function is_primary {
-    xrandr | grep "$1" \
+    xrandr | grep "$1 " \
            | grep primary \
            > /dev/null
 }
@@ -134,13 +138,19 @@ bspc config -m "$PRI" top_padding 28
 
 # Set X keyboard related settings
 OPTIONS="grp:shifts_toggle,caps:ctrl_modifier"
-if xinput | grep "Logitech Craft.*keyboard" -q; then
-  OPTIONS="$OPTIONS,altwin:swap_lalt_lwin"
+setxkbmap -layout us,hu -variant ,102_qwerty_dot_dead -model pc105 -option -option "$OPTIONS"
+
+MAC_KB=$(xinput | grep "Logitech Craft.*keyboard" \
+                | sed 's/^.*id=\([0-9]*\).*$/\1/g')
+if [ -n "$MAC_KB" ]; then
+  echo "Found a MAC Keyboard! ID: $MAC_KB - Remapping"
+  OPTIONS="$OPTIONS,altwin:swap_alt_win"
+  setxkbmap -device "$MAC_KB" -layout us,hu -variant ,102_qwerty_dot_dead -model pc105 -option -option "$OPTIONS"
+  xmodmap -e 'keycode 94 = grave asciitilde'
 fi
-setxkbmap us,hu ,102_qwerty_dot_dead -option "$OPTIONS"
 
 # Set X mouse related settings
-for ID in $(xinput | grep pointer \
+for ID in $(xinput | grep "pointer" \
                    | grep -Eiv 'Virtual|Touch|Track|Synaptics' \
                    | sed 's/^.*id=\([0-9]*\).*$/\1/g'); do
     xinput set-button-map "$ID" 3 2 1
@@ -159,12 +169,14 @@ bspc desktop -f "$CUR"
 # Spawn polybar
 if ! pgrep -x polybar >/dev/null; then
   polybar -r kmarc &
+else
+  touch -m "$HOME"/.config/polybar/config
 fi
-touch -m "$HOME"/.config/polybar/config
 
 # Fix Java nonreparenting WM issue
 ~/bin/java_nonreparenting_wm_hack.sh
 
+# Set up pulseaudio outputs properly
 SINK=$(pactl list sinks | awk -v RS="" -F'#' '{ print $2 }' | tail -n0)
 SINK_INPUTS=($(pactl list sink-inputs | awk -F'#' '/^Sink Input/{ print $2 }'))
 for input in "${SINK_INPUTS[@]}"; do
