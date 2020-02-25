@@ -223,6 +223,8 @@ macro index            L "\
 <enter-command>push              \"<change-vfolder>\$my_query\"          <enter><enter>\
 <enter-command>unset             my_query                                       <enter>"\
                                                                             'Query notmuch'
+
+macro index,pager    \cA "<pipe-message>~/bin/mutt-add-todo.py<enter>"      'Add todo'
 # Trigger changing folder to default
 set folder = ~/.mutt/$from
 push "<change-folder>~/.mutt/$from/INBOX<enter>"
