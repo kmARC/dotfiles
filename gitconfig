@@ -1,28 +1,56 @@
-[fetch]
-	recurseSubmodules = on-demand
-
 [include]
   path = ~/.pdotfiles/gitconfig
 
-[merge]
-  tool = vimdiff
-	conflictstyle = diff3
-
-[rebase]
-  autostash = true
+[alias]
+  stag = tag -s
 
 [commit]
   gpgsign = true
 
-[tag]
-  forceSignAnnotated = true
-  gpgSign = true
+[core]
+  pager = less -F -X
+
+[credential]
+  helper = /usr/lib/git-core/git-credential-libsecret
+
+[diff]
+  tool = vimdiff
+  algorithm = patience
+
+[difftool]
+  prompt = false
+
+[fetch]
+  recurseSubmodules = on-demand
+  prune = true
+  pruneTags = true
+
+[gui]
+  fontui = -family \"Noto Sans\" -size 9 -weight normal -slant roman -underline 0 -overstrike 0
+  fontdiff = -family \"Fira Code Medium\" -size 9 -weight normal -slant roman -underline 0 -overstrike 0
+  tabsize = 4
+  spellingdictionary = en_US
+  diffopts = --word-diff --patience
 
 [log]
   showsignature = true
 
-[alias]
-  stag = tag -s
+[merge]
+  tool = vimdiff
+  conflictstyle = diff3
+
+[pull]
+  rebase = true
+
+[push]
+  default = current
+
+[rebase]
+  autostash = true
+
+[tag]
+  forceSignAnnotated = true
+  gpgSign = true
 
 [tig]
   ignore-space = yes
@@ -34,23 +62,5 @@
   main-tag = green default bold
   title-blur = 19 18
   title-focus = 7 19
-
-[gui]
-  fontui = -family \"Noto Sans\" -size 9 -weight normal -slant roman -underline 0 -overstrike 0
-  fontdiff = -family \"Fira Code Medium\" -size 9 -weight normal -slant roman -underline 0 -overstrike 0
-  tabsize = 4
-  spellingdictionary = en_US
-  diffopts = --word-diff --patience
-
-[credential]
-  helper = /usr/lib/git-core/git-credential-libsecret
-
-[diff]
-	tool = vimdiff
-	algorithm = patience
-[difftool]
-	prompt = false
-[core]
-	pager = less -F -X
 
 # vim: set ft=gitconfig:
