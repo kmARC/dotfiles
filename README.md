@@ -24,9 +24,9 @@ sudo pacman -S base-devel git
 sudo vi /etc/makepkg.conf
 
 # Acquire yay PKGBUILD
-mkdir -p ~/.local/src
-git clone https://aur.archlinux.org/yay.git ~/.local/src/yay
-cd ~/.local/src/yay
+mkdir -p /tmp/yay
+git clone https://aur.archlinux.org/yay.git /tmp/yay
+cd /tmp/yay
 
 # Install yay
 makepkg -si
@@ -36,6 +36,8 @@ makepkg -si
 [AUR]: https://aur.archlinux.org
 
 ### Dotfiles
+
+> Note: You might want to create your own fork from this repo and `clone` the fork.
 
 ``` bash
 # Install prerequisites
@@ -57,7 +59,7 @@ This setup heavily depends on the brilliant [base16] project.
 ``` bash
 # Install prerequisites
 sudo pacman -S xorg-xrdb
-yay -S base16-manager liquidprompt
+yay -S base16-manager
 
 # Install and select a theme
 base16-manager install chriskempson/base16-shell
@@ -74,9 +76,14 @@ bin/colorize.sh
 There are some customizations in my bashrc. Install and enable them as you like.
 
 ``` bash
-# Install prerequisites (select what you need)
-sudo pacman -S fzf xdg-user-dirs
-yay -S nvm direnv todotxt
+# Install prerequisites (select what you need. Order is the same as in .bashrc.kmarc)
+yay -S fzf \
+       nvm \
+       tmux \
+       direnv \
+       todotxt xdg-user-dirs \
+       ripgrep \
+       liquidprompt
 
 # Enable bashrc customizations
 echo "source $HOME/.bashrc.kmarc" >> "$HOME/.bashrc"
@@ -127,12 +134,12 @@ sudo pacman -S \
 
 ### Desktop: tiled window manager and panel
 
-Window manager is provided  by [bspwm], hotkeys by [sxhkd], compositing by  [compton], a launcher by
+Window manager is provided  by [bspwm], hotkeys by [sxhkd], compositing by  [picom], a launcher by
 [rofi] and a fancy panel by [polybar].
 
 ``` bash
 # Install window manager & tools
-sudo pacman -S bspwm sxhkd compton rofi
+sudo pacman -S bspwm sxhkd picom rofi
 sudo pacman -S libmpdclient # Media Player Daemon support
 sudo pacman -S pulseaudio   # Pulseaudio support
 yay -S polybar ttf-{emojione,material-icons}
@@ -170,9 +177,9 @@ An MPD compatible daemon, [mopidy] is responsible for my daily music intake. For
 examples in [pdotfiles/](pdotfiles/)
 
 ``` bash
-# Install mopidy
+# Install / upgrade mopidy
 yay -S libspotify
-sudo -H pip install mopidy{,-spotify,-spotify-web,-soundcloud,-tunein,-mpris,-mpd}
+sudo -H pip install -U mopidy{,-spotify,-spotify-web,-soundcloud,-tunein,-mpris,-mpd}
 ```
 
 [mopidy]: https://www.mopidy.com/
@@ -187,6 +194,7 @@ tools
 sudo pacman -S \
   firefox \
   mpc \
+  ranger \
   thunar \
   xfce4-terminal
 yay -S splatmoji-git
@@ -204,13 +212,13 @@ theme settings. `lxappearance` is a handy tool to set gtk2/3 themes.
 [Arc]: https://github.com/horst3180/Arc-theme
 
 ``` bash
-pacman -S arc-{gtk,icon}-theme elementary-icon-theme gtk-engine-murrine lxappearance \
+sudo pacman -S arc-{gtk,icon}-theme elementary-icon-theme gtk-engine-murrine lxappearance \
           qt5-styleplugins
 ```
 
 ### Quirks
 
-I am using Xfce's panel `xfce4-panel` to display the notification's icon and system tray
+Sometimes I use Xfce's panel `xfce4-panel` to display the notification's icon and system tray
 (by default hidden when out of focus). It's started automatically by [xstart](xstart). You might
 need to disable / tweak it's look as you like
 
