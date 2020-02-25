@@ -10,8 +10,8 @@ set trash      = +Trash
 set ssl_starttls   = no
 set ssl_force_tls  = yes
 set smtp_pass      = "`secret-tool lookup owa-pass $from`"
-set smtp_url       = "smtps://$from:$smtp_pass@cloud-beta.korondi.ch:1025/"
-set smtp_authenticators = "login"
+set smtp_url       = "smtps://$from@cloud-beta.korondi.ch:1025/"
+# set smtp_authenticators = "login"
 
 # Addressbook
 set query_command = "~/bin/ldap_owa_query.sh '$from' '$smtp_pass' '%s'"
