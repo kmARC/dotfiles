@@ -1,7 +1,7 @@
 # Terminal programs
-application/ics;          khal import %s; needsterminal
-text/calendar;            khal import %s; needsterminal
-application/ms-tnef;      tnef -w %s;     needsterminal
+application/ics;          khal import -a $from %s; needsterminal
+text/calendar;            khal import -a $from %s; needsterminal
+application/ms-tnef;      tnef -w %s;              needsterminal
 
 # GUI programs
 application/*;            mutt-open.sh %s
