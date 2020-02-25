@@ -31,8 +31,6 @@
       path: config/urlscan/config.json
     ~/.config/xfce4/terminal:
       path: config/xfce4/terminal
-    ~/.config/xfce4/xfconf:
-      path: config/xfce4/xfconf
     ~/.config/youtube-dl/config:
       path: config/youtube-dl/config
     ~/.mutt/:
