@@ -11,6 +11,9 @@ function debug {
   [ "x$DEBUG" != "x" ] && echo "$*"
 }
 
+brlt
+
+
 # Prints largest resolution mode
 function largest_res {
     xrandr | awk -v PAT="^$1 " '$0 ~ PAT {getline; print $1}'
@@ -144,7 +147,7 @@ MAC_KB=$(xinput | grep "Logitech Craft.*keyboard" \
                 | sed 's/^.*id=\([0-9]*\).*$/\1/g')
 if [ -n "$MAC_KB" ]; then
   echo "Found a MAC Keyboard! ID: $MAC_KB - Remapping"
-  OPTIONS="$OPTIONS,altwin:swap_alt_win"
+  OPTIONS="$OPTIONS,altwin:swap_alt_win,altwin:alt_super_win"
   setxkbmap -device "$MAC_KB" -layout us,hu -variant ,102_qwerty_dot_dead -model pc105 -option -option "$OPTIONS"
   xmodmap -e 'keycode 94 = grave asciitilde'
 fi
