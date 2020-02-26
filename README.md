@@ -54,22 +54,16 @@ Re-login / restart bash.
 
 ### Shell & color theme
 
-This setup heavily depends on the brilliant [base16] project.
+This setup is based on the [solarized] theme. Follow the instructions there to customize / set it up
+properly.
 
-``` bash
-# Install prerequisites
-sudo pacman -S xorg-xrdb
-yay -S base16-manager
+Some configuration files with solarized color palette:
 
-# Install and select a theme
-base16-manager install chriskempson/base16-shell
-base16-manager set solarized-dark
+* [config/bspwm/colors](config/bspwm/colors)
+* [config/polybar/config](config/polybar/config)
+* [config/xfce4/terminal/terminalrc](config/xfce4/terminal/terminalrc)
 
-# Populate theming variables
-bin/colorize.sh
-```
-
-[base16]: https://github.com/chriskempson/base16
+[solarized]: https://github.com/altercation/solarized
 
 ### Bash customizations
 
@@ -197,7 +191,8 @@ sudo pacman -S \
   ranger \
   thunar \
   xfce4-terminal
-yay -S splatmoji-git
+yay -S \
+  rofi-emoji
 
 # Other tools
 sudo pacman -S \

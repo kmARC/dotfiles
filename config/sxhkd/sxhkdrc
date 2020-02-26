@@ -207,7 +207,7 @@ super + space; x
 	xfce4-terminal -x bash -ci 'tmux-session'
 
 super + space; e
-	splatmoji copy
+	rofi -show emoji -modi emoji
 
 super + {v,V}; {d,k}
 	nmcli connection {up,down} {Datera\ California,K-lab}
