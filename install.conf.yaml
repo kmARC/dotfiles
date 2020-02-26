@@ -1,3 +1,5 @@
+---
+
 - defaults:
     link:
       create: true
@@ -6,7 +8,7 @@
 - clean: ['~']
 
 - create:
-  - ~/.ssh/controlmasters
+    - ~/.ssh/controlmasters
 
 - link:
     # Explicit paths
@@ -42,8 +44,6 @@
       path: ssh/all_hosts.conf
     ~/.tmux/plugins/tpm:
       path: tmux/plugins/tpm
-    ~/.tmux/theme.conf:
-      path: tmux/theme.conf
     ~/bin:
       path: bin
 

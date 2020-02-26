@@ -1,7 +1,4 @@
 ! vim: set fdm=marker:
-! #include ".theme.Xresources"
-#include "/home/kmarc/.theme.defines.Xresources"
-#include "/home/kmarc/.theme.rofi.Xresources"
 
 ! Reset all fonts
 *font: fixed

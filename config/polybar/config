@@ -10,8 +10,9 @@
 [colors]
 
 ; {{{
-primary = ${xrdb:*primary:#ff0000}
-foreground = ${xrdb:*background:#00ff00}
+primary = #2aa198
+foreground = #fdf6e3
+background = #002b36
 ; }}}
 
 [bar/kmarc]
@@ -26,15 +27,14 @@ fixed-center = true
 wm-restack = bspwm
 override-redirect = true
 
-background-0 = #ff000000
-background-1 = #00000000
 dim-value = 0.90
 foreground = ${colors.foreground}
+background = ${colors.background}
 
 line-size = 3
 module-margin = 2
 
-font-0 = ${xrdb:polybar.font}
+font-0 = "NotoSans:style=Bold:size=9"
 font-1 = "MaterialIcons:size=14;4"
 font-2 = "Weather Icons:style=Bold:size=12;2"
 
@@ -50,16 +50,6 @@ padding = 3
 enable-ipc = true
 
 tray-position = right
-
-; }}}
-
-[module/music]
-; {{{
-type = custom/script
-interval = 2
-
-label = %output%
-exec = ~/bin/mpris.sh
 
 ; }}}
 

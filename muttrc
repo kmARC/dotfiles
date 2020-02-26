@@ -74,101 +74,117 @@ set sidebar_sort_method = 'path'
 
 # Colors
 # Default
-color normal        color07 default
+color normal        default default
 color error         color01 default
 color tilde         color20 default
 color message       color06 default
-color attachment    red default
+color attachment    color01 default
 color search        color05 default
-color indicator     color18 color06
+color indicator     color15 color06
 color tree          color03 default
-color signature     color05 default
+color signature     color14 default
 
-color status        color08       color18
-color status        color06       color18 '=([^·]*).*Messages' 1
-color status        color03       color18 '([^ ]+@[^ ]+)'
-color status        color02       color18 'Messages'
-color status        brightcolor15 color18 'New'
-color status        color05       color18 'Flag'
-color status        color04       color18 'Tag'
+color status        color14       color15
+color status        color06       color15 '=([^·]*).*Messages' 1
+color status        color03       color15 '([^ ]+@[^ ]+)'
+color status        color02       color15 'Messages'
+color status        brightcolor00 color15 'New'
+color status        color05       color15 'Flag'
+color status        color04       color15 'Tag'
 
 # Pager
 set pager_format = '-%Z- %C/%m: %-20.20n   %s%*  -- (%P)'
 
 # Index
-set index_format = '%4C %Z %-20.20L (%?l?%4l&%4c?) %?M?{%2M} ?%s %*  %?X?%X?%<[y?%<[m?%<[d?%[  %H:%M]&%[ %a %d]>&%[ %b %d]>&%[ %Y-%m]> '
-color index           color08       default '~R'
-color index_author    default       default '~R'
-color index_subject   default       default '~R'
+set index_format = '%4C %Z %-20.20L (%?l?%4l&%4c?) %?M?{%2M} ?%s %*  %?X?   [%X]?%<[y?%<[m?%<[d?%[  %H:%M]&%[ %a %d]>&%[ %b %d]>&%[ %Y-%m]> '
+color index           color12       default '~R'
+color index_author    color10       default '~R'
+color index_subject   color10       default '~R'
 color index           brightcolor08 default '~N'
-color index_author    brightcolor15 default '~N'
-color index_subject   brightcolor15 default '~N'
+color index_author    brightcolor08 default '~N'
+color index_subject   brightcolor08 default '~N'
+color index_author    color04       default '%f internal' # internal group
 color index_flags     color05       default '~g' # signed
 color index_flags     color05       default '~G' # encrypted
-color index_flags     default       color05 '~F' # flagged
-color index_flags     default       color04 '~T' # tagged
+color index_flags     color15       color05 '~F' # flagged
+color index_flags     color15       color04 '~T' # tagged
 color index_number    color02       default
-color index_date      color08       default
+color index_date      color12       default
 color index_collapsed brightcolor03 default
 
 # Sidebar
-color sidebar_new       brightcolor15 default
-color sidebar_divider   color18       color18
-color sidebar_highlight brightcolor14 default
+color sidebar_new       brightcolor00 default
+color sidebar_ordinary  color10       default
+color sidebar_divider   color15       color15
+color sidebar_highlight brightcolor06 default
 
 # Attachments
-color attach_headers brightcolor00 color02    '\[-- The following data is.*signed.*'
-color attach_headers brightcolor00 color05    '\[-- Attachment.*'
-color attach_headers color08       default    '\[-- Attachment #[0-9]+ --\]' # unnamed attachments
-color attach_headers color08       default    '\[-- Type: .*'
-color attach_headers color08       default    '\[-- Autoview.*'
-color attach_headers color08       default    '\[-- (Begin|End) signature .*'
+color attach_headers brightcolor15 color02    '\[-- The following data is.*signed.*'
+color attach_headers brightcolor15 color05    '\[-- Attachment.*'
+color attach_headers color14       default    '\[-- Attachment #[0-9]+ --\]' # unnamed attachments
+color attach_headers color14       default    '\[-- Type: .*'
+color attach_headers color14       default    '\[-- Autoview.*'
+color attach_headers color14       default    '\[-- (Begin|End) signature .*'
 color attach_headers color02       default    '\[-- (BEGIN|END) PGP SIGNED MESSAGE.*'
 color attach_headers color01       default    '\[-- (BEGIN|END) PGP MESSAGE.*'
 color attach_headers color05       default    '\[-- (BEGIN|END) PGP PUBLIC KEY.*'
 
 # Header
 set header_color_partial
-color hdrdefault color08       default
-color header     brightcolor15 default '^(Subject).*'
-color header     color02       default '^(From).*'
+color hdrdefault color14       default
+color header     brightcolor00 default '^(Subject).*'
+color header     brightcolor02 default '^(From).*'
 
 # Body
 color bold        brightcolor20 red
 color underline   brightcolor20 red
 
 # Quoted text
-color quoted  color04 default # Quote level 1: Blue
-color quoted1 color06 default # Quote level 2: Cyan
-color quoted2 color03 default # Quote level 3: Yellow
-color quoted3 color01 default # Quote level 4: Red
-color quoted4 color02 default # Quote level 5: Green
-color quoted5 color04 default # Quote level 6: Blue
-color quoted6 color06 default # Quote level 7: Cyan
-color quoted7 color03 default # Quote level 8: Yellow
-color quoted8 color01 default # Quote level 9: Red
+color quoted  color10 default
+color quoted1 color11 default
+color quoted2 color12 default
+color quoted3 color14 default
+color quoted4 color14 default
+color quoted5 color14 default
+color quoted6 color14 default
+color quoted7 color14 default
+color quoted8 color14 default
 
 # Links
 color body color06 default '[-a-z_0-9.%$]+@[-a-z_0-9.]+\.[-a-z][-a-z]+'
 color body blue    default "([a-z][a-z0-9+-]*://(((([a-z0-9_.!~*'();:&=+$,-]|%[0-9a-f][0-9a-f])*@)?((([a-z0-9]([a-z0-9-]*[a-z0-9])?)\\.)*([a-z]([a-z0-9-]*[a-z0-9])?)\\.?|[0-9]+\\.[0-9]+\\.[0-9]+\\.[0-9]+)(:[0-9]+)?)|([a-z0-9_.!~*'()$,;:@&=+-]|%[0-9a-f][0-9a-f])+)(/([a-z0-9_.!~*'():@&=+$,-]|%[0-9a-f][0-9a-f])*(;([a-z0-9_.!~*'():@&=+$,-]|%[0-9a-f][0-9a-f])*)*(/([a-z0-9_.!~*'():@&=+$,-]|%[0-9a-f][0-9a-f])*(;([a-z0-9_.!~*'():@&=+$,-]|%[0-9a-f][0-9a-f])*)*)*)?(\\?([a-z0-9_.!~*'();/?:@&=+$,-]|%[0-9a-f][0-9a-f])*)?(#([a-z0-9_.!~*'();/?:@&=+$,-]|%[0-9a-f][0-9a-f])*)?|(www|ftp)\\.(([a-z0-9]([a-z0-9-]*[a-z0-9])?)\\.)*([a-z]([a-z0-9-]*[a-z0-9])?)\\.?(:[0-9]+)?(/([-a-z0-9_.!~*'():@&=+$,]|%[0-9a-f][0-9a-f])*(;([-a-z0-9_.!~*'():@&=+$,]|%[0-9a-f][0-9a-f])*)*(/([-a-z0-9_.!~*'():@&=+$,]|%[0-9a-f][0-9a-f])*(;([-a-z0-9_.!~*'():@&=+$,]|%[0-9a-f][0-9a-f])*)*)*)?(\\?([-a-z0-9_.!~*'();/?:@&=+$,]|%[0-9a-f][0-9a-f])*)?(#([-a-z0-9_.!~*'();/?:@&=+$,]|%[0-9a-f][0-9a-f])*)?)[^].,:;!)? \t\r\n<>\"]"
 color body color01 default "\\[[0-9]+\\]"
-color body color18 default "[┌┬┐├┼┤└┴┘│─]"
-color body color08 default "[━]"
+color body color15 default "[┌┬┐├┼┤└┴┘│─]"
+color body color14 default "[━]"
 
 # PGP
 color body    color00       color01 '(\*BAD\* signature)'
-color body    brightcolor00 color02 '(Good signature)'
-color body    brightcolor00 color01 '^Error: decryption/verification failed:.*'
+color body    brightcolor15 color02 '(Good signature)'
+color body    brightcolor15 color01 '^Error: decryption/verification failed:.*'
 
 # Atlassian
-color body    brightcolor00 color04 '( OPEN )'
-color body    brightcolor00 color02 '( APPROVED | MERGED | RESOLVED )'
-color body    brightcolor00 color01 '( UNAPPROVED | DECLINED )'
-color body    brightcolor00 color03 '( NEEDS WORK )'
+color body    brightcolor15 color04 '( OPEN )'
+color body    brightcolor15 color02 '( APPROVED | MERGED | RESOLVED )'
+color body    brightcolor15 color01 '( UNAPPROVED | DECLINED )'
+color body    brightcolor15 color03 '( NEEDS WORK )'
+
+# GitHub
+color body    color06 default '-- Commit Summary --'
+color body    color06 default '-- File Changes --'
+color body    color01 default '^    D [^(]*'
+color body    color03 default '^    M [^(]*'
+color body    color02 default '^    N [^(]*'
+color body    color02 default '^  \*.*succeeded '
+color body    color01 default '^  \*.*failed '
+color body    color15 color03 '^Reopened #[0-9]+\.'
+color body    color15 color02 '^Closed #[0-9]+\.'
+color body    color06 default '@[a-zA-Z]+'
+color body    color10 default '[a-zA-Z/_]+#[0-9]+'
+color body    color13 default '[a-f0-9]{40}'
 
 # vcal
-# color body    brightcolor15 default '^Subject:.*'
-color body    color02       default '^Organizer:.*'
+color body    brightcolor00 default '^Subject:.*'
+color body    brightcolor02 default '^Organizer:.*'
 color body    brightcolor05 default '^Start:.*'
 color body    brightcolor05 default '^End:.*'
 
@@ -176,7 +192,7 @@ color body    brightcolor05 default '^End:.*'
 color body    color04       default '( *[-+=#*~_]){6,}'
 
 # Compose
-color compose header           color08       default
+color compose header           color14       default
 color compose security_encrypt brightcolor02 default
 color compose security_sign    brightcolor02 default
 color compose security_both    brightcolor02 default
@@ -195,7 +211,7 @@ bind  editor     <space> noop
 macro index       <Esc>a "c<enter>"                                         'Jump to next unread mailbox (as in weechat)'
 macro index,pager    \cb "<pipe-message>urlscan -d               <enter>"   'Call urlview on message'
 macro attach,compose \cb "<pipe-entry>urlscan -d                 <enter>"   'Call urlview on message'
-macro index,pager    \eo "<pipe-message>viewhtmlmail             <enter>"   'View HTML in browser'
+macro index,pager    \eo "<pipe-message>~/bin/viewhtmlmail       <enter>"   'View HTML in browser'
 macro index,pager      a "<pipe-message>khard add-email -a \$from<enter>"   'Add sender to addressbook'
 
 macro compose        \eh "\
