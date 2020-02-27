@@ -123,7 +123,7 @@ You most probably want Xorg and a login manager (some apps require it).
 ``` bash
 sudo pacman -S \
   lightdm-gtk-greeter \
-  xorg-xserver
+  xorg-server
 ```
 
 ### Desktop: tiled window manager and panel

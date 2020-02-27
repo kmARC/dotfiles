@@ -5,7 +5,15 @@ set header_cache     = ~/.mutt/cache/headers
 set mailcap_path     = ~/.mailcap
 set message_cachedir = ~/.mutt/cache/bodies
 set tmpdir           = ~/.mutt/temp
-# set attach_save_dir  = `xdg-user-dir DOWNLOAD`
+set attach_save_dir  = `xdg-user-dir DOWNLOAD`
+
+# Mailing lists
+subscribe .*@noreply\\.github\\.com
+subscribe .*-announce@.*
+
+# Contact groups
+group -group internal `khard email -p | awk '{printf "-rx %s ", $1} END { print ""} '`
+
 
 # General
 set abort_noattach = ask-yes
@@ -13,6 +21,7 @@ set abort_noattach_regex = \<attach(|ed|ments?)\>
 set allow_ansi
 set arrow_cursor
 set auto_tag
+set auto_subscribe
 set beep_new
 set collapse_all
 set crypt_autosign
@@ -78,7 +87,7 @@ color normal        default default
 color error         color01 default
 color tilde         color20 default
 color message       color06 default
-color attachment    color01 default
+color attachment    color14 default
 color search        color05 default
 color indicator     color15 color06
 color tree          color03 default
@@ -103,9 +112,14 @@ color index_subject   color10       default '~R'
 color index           brightcolor08 default '~N'
 color index_author    brightcolor08 default '~N'
 color index_subject   brightcolor08 default '~N'
+color index_flags     color04       default '%f internal' # internal group
 color index_author    color04       default '%f internal' # internal group
+color index_flags     color06       default '~l' # list
+color index_author    color06       default '~l' # list
 color index_flags     color05       default '~g' # signed
+color index_author    color05       default '~g' # signed
 color index_flags     color05       default '~G' # encrypted
+color index_author    color05       default '~G' # encrypted
 color index_flags     color15       color05 '~F' # flagged
 color index_flags     color15       color04 '~T' # tagged
 color index_number    color02       default
@@ -120,11 +134,8 @@ color sidebar_highlight brightcolor06 default
 
 # Attachments
 color attach_headers brightcolor15 color02    '\[-- The following data is.*signed.*'
+color attach_headers brightcolor15 color02    '\[-- End of signed data.*'
 color attach_headers brightcolor15 color05    '\[-- Attachment.*'
-color attach_headers color14       default    '\[-- Attachment #[0-9]+ --\]' # unnamed attachments
-color attach_headers color14       default    '\[-- Type: .*'
-color attach_headers color14       default    '\[-- Autoview.*'
-color attach_headers color14       default    '\[-- (Begin|End) signature .*'
 color attach_headers color02       default    '\[-- (BEGIN|END) PGP SIGNED MESSAGE.*'
 color attach_headers color01       default    '\[-- (BEGIN|END) PGP MESSAGE.*'
 color attach_headers color05       default    '\[-- (BEGIN|END) PGP PUBLIC KEY.*'
@@ -169,18 +180,23 @@ color body    brightcolor15 color01 '( UNAPPROVED | DECLINED )'
 color body    brightcolor15 color03 '( NEEDS WORK )'
 
 # GitHub
-color body    color06 default '-- Commit Summary --'
-color body    color06 default '-- File Changes --'
+color body    color06 default '^-- [a-zA-Z ]+ --$'
 color body    color01 default '^    D [^(]*'
 color body    color03 default '^    M [^(]*'
-color body    color02 default '^    N [^(]*'
+color body    color02 default '^    A [^(]*'
 color body    color02 default '^  \*.*succeeded '
-color body    color01 default '^  \*.*failed '
-color body    color15 color03 '^Reopened #[0-9]+\.'
-color body    color15 color02 '^Closed #[0-9]+\.'
-color body    color06 default '@[a-zA-Z]+'
+color body    color01 default '^  \* [0-9a-f-]+ failed '
+color body    color15 color04 '^Reopened #[0-9]+'
+color body    color15 color02 '^Closed #[0-9]+'
+color body    color15 color02 '^Merged #[0-9]+'
+color body    color06 default '@[a-zA-Z0-9]+'        # mentions
 color body    color10 default '[a-zA-Z/_]+#[0-9]+'
 color body    color13 default '[a-f0-9]{40}'
+
+# Gerrit
+color body    color01 default '^D .*'
+color body    color03 default '^M .*'
+color body    color02 default '^A .*'
 
 # vcal
 color body    brightcolor00 default '^Subject:.*'
