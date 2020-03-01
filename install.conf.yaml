@@ -58,6 +58,7 @@
     ~/.todo.cfg:
     ~/.toprc:
     ~/.Xresources:
+    ~/.Xresources.d:
     ~/.xinitrc: xprofile
     ~/.xprofile:
     ~/.xstart:

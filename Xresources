@@ -1,46 +1,46 @@
-! vim: set fdm=marker:
+#include ".Xresources.d/colors"
+#include ".Xresources.d/defines"
+#include ".Xresources.d/rofi"
 
-! Reset all fonts
-*font: fixed
-*SimpleMenu*menuLabel.font: fixed
+! Polybar
+polybar.font: _FONT:size=_FONT_SIZE:style=Bold;2
 
 ! Xft
-Xft.autohint:               0
-Xft.lcdfilter:              lcdlight
-Xft.hintstyle:              hintslight
-Xft.hinting:                1
-Xft.antialias:              1
-Xft.rgba:                   rgb
-Xft.dpi:                    95
+Xft.antialias: 1
+Xft.autohint:  0
+Xft.dpi:       96
+Xft.hinting:   1
+Xft.hintstyle: hintslight
+Xft.lcdfilter: lcdlight
+Xft.rgba:      rgb
 
 ! Xcursor
-Xcursor.theme:              DMZ-Black
+Xcursor.theme: DMZ-Black
 
 ! XTerm
 *xterm*activeIcon:          true
 *xterm*borderWidth:         0
 *xterm*cursorBlink:         true
 *xterm*disallowedWindowOps: 20,21,SetXprop
-*xterm*faceName:            Source Code Pro Semibold:style=Semibold:size=10
-*xterm*faceSize:            10
+*xterm*faceName:            xft:_MONOFONT:style=Retina:size=_FONT_SIZE
 *xterm*faceSize1:           6.0
 *xterm*faceSize2:           7.5
 *xterm*faceSize3:           9.0
-*xterm*faceSize4:           10.0
+*xterm*faceSize4:           11.0
 *xterm*faceSize5:           15.0
 *xterm*faceSize6:           20.0
 *xterm*internalBorder:      0
 *xterm*loginShell:          true
 *xterm*metaSendsEscape:     true
-*xterm*scaleHeight:         1.05
+*xterm*scaleHeight:         1.2
 *xterm*scrollBar:           false
 *xterm*useClipping:         false
-*xterm*boldColors:          true
-*xterm*veryBoldColors:      true
+*xterm*boldColors:          1
+*xterm*veryBoldColors:      1
 *xterm*termName:            xterm-256color
 *xterm*forceBoxChars:       true
 *VT100*translations:        #override \n\
-    Meta <Btn1Up>:          exec-formatted("x-www-browser '%t'", PRIMARY) \n\
+    Meta <Btn1Up>:          exec-formatted("x-www-browser '%t'", _PRIMARY) \n\
     Ctrl Meta <Key> 0:      set-vt-font("d") \n\
     Ctrl Meta <Key> 1:      set-vt-font(1) \n\
     Ctrl Meta <Key> 2:      set-vt-font(2) \n\
@@ -55,45 +55,42 @@ Xcursor.theme:              DMZ-Black
 *xterm*ttyModes:            erase ^?
 
 ! Rxvt
-URxvt*borderLess:      0
-URxvt*cutchars:        │
-URxvt*cursorBlink:     1
-URxvt*externalBorder:  0
-URxvt*internalBorder:  0
-URxvt.font:         xft:Source Code Pro Semibold:style=Semibold:size=10
-URxvt*keysym.C-Delete: matcher:select
-URxvt*keysym.C-M-0:      command:\033]710;xft:Hack-Regular:style=bold:size=10.0\007
-URxvt*keysym.C-M-1:      command:\033]710;xft:Hack-Regular:style=bold:size=7.0\007
-URxvt*keysym.C-M-2:      command:\033]710;xft:Hack-Regular:style=bold:size=9.0\007
-URxvt*keysym.C-M-3:      command:\033]710;xft:Hack-Regular:style=bold:size=10.0\007
-URxvt*keysym.C-M-4:      command:\033]710;xft:Hack-Regular:style=bold:size=12.0\007
-URxvt*keysym.C-M-5:      command:\033]710;xft:Hack-Regular:style=bold:size=15.0\007
-URxvt*keysym.C-M-6:      command:\033]710;xft:Hack-Regular:style=bold:size=20.0\007
-URxvt*keysym.C-Tab:    \033{
-URxvt.keysym.Control-Shift-ISO_Left_Tab: \033}
-URxvt*keysym.F1:       \033OP
-URxvt*keysym.F2:       \033OQ
-URxvt*keysym.F3:       \033OR
-URxvt*keysym.F4:       \033OS
-URxvt*keysym.KP_End:   \033OF
-URxvt*keysym.KP_Home:  \033OH
-URxvt*letterSpace:     -1
-URxvt*lineSpace:       2
-URxvt*matcher.button:  1
-URxvt*matcher.pattern.1: \\blocalhost:\\d+
-URxvt*matcher.rend.0:  Uline fg6
-URxvt*matcher.rend.1:  Uline fg6
-URxvt*perl-ext-common: default,matcher
-URxvt*scrollBar:       false
-URxvt*scrollTtyOutput: false
-URxvt*url-launcher:    /usr/bin/xdg-open
-URxvt*termName:        rxvt-unicode-256color
-URxvt*urgentOnBell:    true
-URxvt*visualBell:      true
-URxvt*iso14755:        false
-URxvt*iso14755_52:     false
+URxvt*borderLess:                        0
+URxvt*cursorBlink:                       1
+URxvt*cutchars:                          │
+URxvt*externalBorder:                    0
+URxvt*font:                              xft:_MONOFONT:size=_FONT_SIZE
+URxvt*intensityStyles:                   false
+URxvt*internalBorder:                    0
+URxvt*iso14755:                          false
+URxvt*iso14755_52:                       false
+URxvt*keysym.C-Delete:                   imatcher:select
+URxvt*keysym.C-M-0:                      command:\033]710;xft:_MONOFONT:size=_FONT_SIZE\007
+URxvt*keysym.C-M-1:                      command:\033]710;xft:_MONOFONT:size=6.0\007
+URxvt*keysym.C-M-2:                      command:\033]710;xft:_MONOFONT:size=7.5\007
+URxvt*keysym.C-M-3:                      command:\033]710;xft:_MONOFONT:size=9.0\007
+URxvt*keysym.C-M-4:                      command:\033]710;xft:_MONOFONT:size=11.0\007
+URxvt*keysym.C-M-5:                      command:\033]710;xft:_MONOFONT:size=15.0\007
+URxvt*keysym.C-M-6:                      command:\033]710;xft:_MONOFONT:size=20.0\007
+URxvt*keysym.C-Tab:                      \033{
+URxvt*keysym.Control-Shift-ISO_Left_Tab: \033}
+URxvt*keysym.F1:                         \033OP
+URxvt*keysym.F2:                         \033OQ
+URxvt*keysym.F3:                         \033OR
+URxvt*keysym.F4:                         \033OS
+URxvt*keysym.KP_End:                     \033OF
+URxvt*keysym.KP_Home:                    \033OH
+URxvt*letterSpace:                       -1
+URxvt*lineSpace:                         1.2
+URxvt*matcher.button:                    1
+URxvt*matcher.pattern.1:                 \\blocalhost: \\d+
+URxvt*matcher.rend.0:                    Uline fg6
+URxvt*matcher.rend.1:                    Uline fg6
+URxvt*perl-ext-common:                   default,matcher
+URxvt*scrollBar:                         false
+URxvt*scrollTtyOutput:                   false
+URxvt*termName:                          rxvt-unicode-256color
+URxvt*urgentOnBell:                      true
+URxvt*url-launcher:                      /usr/bin/xdg-open
+URxvt*visualBell:                        true
 
-! Rofi
-rofi.color-enabled:         true
-rofi.font:                  Source Code Pro Semibold 15
-rofi.bw: 0
