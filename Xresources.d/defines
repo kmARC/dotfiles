@@ -1,0 +1,12 @@
+! Defines
+#define _FONT       Noto Sans
+#define _MONOFONT   Fira Code Retina
+#define _FONT_SIZE  9
+#define _PRIMARY    S_blue
+#define _PRIMARY_SH 4
+
+! Exports
+*primary:    _PRIMARY
+*primary_sh: _PRIMARY_SH
+
+! vim: set ft=xdefaults:

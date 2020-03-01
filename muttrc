@@ -151,15 +151,15 @@ color bold        brightcolor20 red
 color underline   brightcolor20 red
 
 # Quoted text
-color quoted  color10 default
-color quoted1 color11 default
-color quoted2 color12 default
-color quoted3 color14 default
-color quoted4 color14 default
-color quoted5 color14 default
-color quoted6 color14 default
-color quoted7 color14 default
-color quoted8 color14 default
+color quoted  color06 default
+color quoted1 color05 default
+color quoted2 color09 default
+color quoted3 color13 default
+color quoted4 color11 default
+color quoted5 color12 default
+color quoted6 color12 default
+color quoted7 color12 default
+color quoted8 color12 default
 
 # Links
 color body color06 default '[-a-z_0-9.%$]+@[-a-z_0-9.]+\.[-a-z][-a-z]+'
