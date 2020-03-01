@@ -93,13 +93,13 @@ color indicator     color15 color06
 color tree          color03 default
 color signature     color14 default
 
-color status        color14       color15
-color status        color06       color15 '=([^·]*).*Messages' 1
-color status        color03       color15 '([^ ]+@[^ ]+)'
-color status        color02       color15 'Messages'
-color status        brightcolor00 color15 'New'
-color status        color05       color15 'Flag'
-color status        color04       color15 'Tag'
+color status        color14       color07
+color status        color06       color07 '=([^·]*).*Messages' 1
+color status        color03       color07 '([^ ]+@[^ ]+)'
+color status        color02       color07 'Messages'
+color status        brightcolor00 color07 'New'
+color status        color05       color07 'Flag'
+color status        color04       color07 'Tag'
 
 # Pager
 set pager_format = '-%Z- %C/%m: %-20.20n   %s%*  -- (%P)'
@@ -129,7 +129,7 @@ color index_collapsed brightcolor03 default
 # Sidebar
 color sidebar_new       brightcolor00 default
 color sidebar_ordinary  color10       default
-color sidebar_divider   color15       color15
+color sidebar_divider   color07       color07
 color sidebar_highlight brightcolor06 default
 
 # Attachments
