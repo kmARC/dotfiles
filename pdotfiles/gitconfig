@@ -1,0 +1,13 @@
+[user]
+  name = John Doe
+  email = jdoe@example.com
+
+[github]
+  user = jdoe
+
+[includeIf "gitdir:~/git-private/"]
+  path = ~/.config/git/private
+
+[includeIf "gitdir:~/git-github/"]
+  path = ~/.config/git/github
+

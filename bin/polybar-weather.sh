@@ -44,6 +44,7 @@ query_weather() {
       weather=$(curl -sf "$API/weather?appid=$KEY&$CITY_PARAM&units=$UNITS")
   else
       location=$(curl -sf https://location.services.mozilla.com/v1/geolocate?key=geoclue)
+      echo $location
 
       if [ -n "$location" ]; then
           location_lat="$(echo "$location" | jq '.location.lat')"
