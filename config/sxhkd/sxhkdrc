@@ -1,4 +1,4 @@
-#
+
 # wm independent hotkeys
 #
 
@@ -208,6 +208,9 @@ super + space; x
 
 super + space; e
 	rofi -show emoji -modi emoji
+
+super + space; p
+	bwmenu
 
 super + {v,V}; {d,k}
 	nmcli connection {up,down} {Datera\ California,K-lab}
