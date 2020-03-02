@@ -1,12 +1,8 @@
 call plug#begin('~/.vim/plugged')
 "--- Look&Feel ---
-Plug 'chriskempson/base16-vim'
-Plug 'daviesjamie/vim-base16-lightline'
 Plug 'itchyny/lightline.vim'
+Plug 'altercation/vim-colors-solarized'
 "--- Tools ---
-if has("python")
-  Plug 'claytron/lodgeit-vim'
-endif
 Plug 'direnv/direnv.vim'
 Plug 'gcmt/taboo.vim'
 if has("mac")
@@ -135,28 +131,23 @@ set clipboard=unnamedplus,autoselectplus
 set breakindent
 
 "--- Look & Feel ----
-let base16colorspace=256
 if has_key(environ(), "TMUX")
   " Set tmux-compatible title
   set t_ts=]2;
   set t_fs=\\
 endif
 
-augroup MyColors
-  autocmd ColorScheme * highlight Normal              ctermbg=NONE
-                    \ | highlight CursorlineNr                                 cterm=NONE
-                    \ | highlight SpellBad            ctermbg=1    ctermfg=0   cterm=bold,underline
-                    \ | highlight SpellCap            ctermbg=0    ctermfg=3   cterm=underline
-                    \ | highlight TabModified         ctermbg=1    ctermfg=0   cterm=bold
-                    \ | highlight TabModifiedSelected ctermbg=1    ctermfg=0   cterm=bold
-                    \ | highlight TabLine             ctermbg=0    ctermfg=7
-                    \ | highlight TabLineSel          ctermbg=NONE ctermfg=7   cterm=bold
-                    \ | highlight TabLineFill         ctermbg=0
-                    \ | highlight VertSplit           ctermbg=0    ctermfg=0
-augroup end
+let g:lightline = { 'colorscheme': 'solarized', 'component': { 'filename': '%t'}, 'mode_map': {'c': 'COMMAND'} }
+let g:solarized_underline=0
 
-colors default  " Fallback colorscheme; FIXME: Wthout this line, vim resets to default
-silent! source $HOME/.vim/colorscheme.vim
+set background=light
+colors solarized
+call lightline#enable()
+
+" Make background transparent
+highlight Normal              ctermbg=NONE
+" Remove underline from CursorLineNr
+highlight CursorlineNr                                 cterm=NONE
 
 "--- Mappings ----
 cmap w!!                   w !sudo tee > /dev/null %
@@ -409,7 +400,6 @@ let g:fzf_tags_command = 'git ls-files | ctags -L-'
 let g:gist_open_browser_after_post = 1
 let g:gutentags_cache_dir = s:dir_misc
 let g:jsdoc_enable_es6 = 1
-let g:lightline = { 'colorscheme': 'base16', 'component': { 'filename': '%t'}, 'mode_map': {'c': 'COMMAND'} }
 let g:lightline.active = {
     \ 'left': [ [ 'mode', 'paste' ],
     \           [ 'readonly', 'relativepath', 'modified' ] ],
