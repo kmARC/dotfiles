@@ -81,7 +81,7 @@ export LESS_TERMCAP_ue=$'\e[0;49;39m'
 export PAGER=less
 export EDITOR=vim
 export RIPGREP_CONFIG_PATH=~/.ripgreprc
-export PATH="$HOME/.local/bin/:$PATH"
+export PATH="$HOME/bin:$HOME/.local/bin/:$PATH"
 
 alias ls="ls --color --group-directories-first"
 alias diff='diff --color=auto'
