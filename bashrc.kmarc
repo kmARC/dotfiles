@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# shellcheck disable=SC2016
 
 #########
 #  FZF  #
@@ -29,7 +30,9 @@ export FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS --border"
 #  NODE.JS - NVM  #
 ###################
 export NVM_DIR="$HOME/.nvm"
+# shellcheck source=/dev/null
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" --no-use  # This loads nvm
+# shellcheck source=/dev/null
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 ##########
@@ -49,8 +52,8 @@ eval "$(direnv hook bash)"
 #  Journaling  #
 ################
 NOTES_DIR=$(xdg-user-dir DOCUMENTS)/Notes
-alias notes="(cd $NOTES_DIR && vim index.md)"
-alias did="  (cd $NOTES_DIR && vim did.txt +'normal ggO' +'r!date +\%Y-\%m-\%d\ \%a')"
+alias notes='(cd $NOTES_DIR && vim index.md)'
+alias   did='(cd $NOTES_DIR && vim did.txt +"normal ggO" +"r!date +\%Y-\%m-\%d\ \%a")'
 
 function minutes() {
   if [ -n "$1" ]; then local topic="-$1"; else local topic=""; fi
@@ -94,5 +97,7 @@ alias git-recursive-pull='for d in $(find . -type d -name .git -printf "%h\n"); 
 ##################
 [[ -z "$MC_SID" && $- = *i* ]] && source /usr/bin/liquidprompt
 
-[ -f "$HOME/.completion-minishift" ] && source "$HOME/.completion-minishift"
-[ -f "$HOME/.completion-oc" ]        && source "$HOME/.completion-oc"
+# shellcheck source=/dev/null
+if [ -f "$HOME/.completion-minishift" ]; then source "$HOME/.completion-minishift"; fi
+# shellcheck source=/dev/null
+if [ -f "$HOME/.completion-oc" ]; then        source "$HOME/.completion-oc"; fi
