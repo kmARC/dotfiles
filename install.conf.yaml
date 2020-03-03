@@ -16,8 +16,10 @@
       path: config/bspwm/bspwmrc
     ~/.config/bspwm/colors:
       path: config/bspwm/colors
-    ~/.config/compton.conf:
-      path: config/compton.conf
+    ~/.config/fontconfig:
+      path: config/fontconfig
+    ~/.config/picom.conf:
+      path: config/picom.conf
     ~/.config/mopidy/mopidy.conf:
       path: config/mopidy/mopidy.conf
     ~/.config/polybar/config:
