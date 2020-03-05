@@ -46,6 +46,8 @@
       path: ssh/all_hosts.conf
     ~/.tmux/plugins/tpm:
       path: tmux/plugins/tpm
+    ~/.todo.actions.d:
+      path: todo.actions.d
     ~/bin:
       path: bin
 
