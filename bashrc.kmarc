@@ -99,5 +99,3 @@ alias git-recursive-pull='for d in $(find . -type d -name .git -printf "%h\n"); 
 
 # shellcheck source=/dev/null
 if [ -f "$HOME/.completion-minishift" ]; then source "$HOME/.completion-minishift"; fi
-# shellcheck source=/dev/null
-if [ -f "$HOME/.completion-oc" ]; then        source "$HOME/.completion-oc"; fi
