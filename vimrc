@@ -71,7 +71,6 @@ Plug 'mattn/webapi-vim'             " for: gist-vim
 Plug 'tpope/vim-repeat'
 call plug#end()
 
-syntax on
 filetype plugin indent on
 
 set mouse+=a
@@ -139,6 +138,10 @@ endif
 
 let g:lightline = { 'colorscheme': 'solarized', 'component': { 'filename': '%t'}, 'mode_map': {'c': 'COMMAND'} }
 let g:solarized_underline=0
+
+
+let g:xml_syntax_folding=1
+syntax on
 
 set background=light
 colors solarized
@@ -246,6 +249,7 @@ augroup vimrc
   autocmd BufRead,BufNewFile playbook-*.y*ml      setlocal filetype=yaml.ansible
   autocmd BufRead,BufNewFile *.yml.j2             setlocal filetype=yaml.jinja2
   autocmd BufRead,BufNewFile .yamllint            setlocal filetype=yaml
+  autocmd FileType           xml                  setlocal foldmethod=syntax | %foldopen!
   "----- marks
   autocmd BufWritePost *.css,*.less,*.scss        normal! mC
   autocmd BufWritePost *.html                     normal! mH
