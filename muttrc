@@ -192,15 +192,20 @@ color body    color15 color02 '^Merged #[0-9]+'
 color body    color06 default '@[a-zA-Z0-9]+'        # mentions
 color body    color10 default '[a-zA-Z/_]+#[0-9]+'
 color body    color13 default '[a-f0-9]{40}'
+color body    brightdefault default '[A-Za-z0-9/_-]+#[0-9]+' # issue number
 
 # Gerrit
-color body    color01 default '^D .*'
-color body    color03 default '^M .*'
-color body    color02 default '^A .*'
+color body    color01 default '^D ([^ ]|\\ )+$'
+color body    color03 default '^M ([^ ]|\\ )+$'
+color body    color02 default '^A ([^ ]|\\ )+$'
 
-# vcal
-color body    brightcolor00 default '^Subject:.*'
-color body    brightcolor02 default '^Organizer:.*'
+# Header-like in body
+color body    color14       default '^(To|Date|Sent|Cc|Location|When|Where): .*$'
+color body    color14       default '^(An|Datum|Wann|Ort|Gesendet): .*$'
+color body    brightcolor00 default '^(Subject): .*'
+color body    brightcolor00 default '^(Betreff): .*'
+color body    brightcolor02 default '^(From|Organizer): .*$'
+color body    brightcolor02 default '^(Von): .*$'
 color body    brightcolor05 default '^Start:.*'
 color body    brightcolor05 default '^End:.*'
 
