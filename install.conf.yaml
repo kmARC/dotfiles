@@ -53,6 +53,7 @@
 
     # Top levels
     ~/.bashrc.kmarc:
+    ~/.curlrc:
     ~/.gitconfig:
     ~/.liquidpromptrc:
     ~/.mailcap:

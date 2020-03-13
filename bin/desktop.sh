@@ -11,9 +11,6 @@ function debug {
   [ "x$DEBUG" != "x" ] && echo "$*"
 }
 
-brlt
-
-
 # Prints largest resolution mode
 function largest_res {
     xrandr | awk -v PAT="^$1 " '$0 ~ PAT {getline; print $1}'
@@ -121,6 +118,25 @@ for AMON in "${ACTIVE_MONS[@]}"; do
         [[ "$CMON" == "$AMON" ]] && REMOVE=0
     done
     [[ "$REMOVE" -eq 1 ]] && xrandr --output "$AMON" --off
+done
+
+# Remove unrecognized monitors, e.g. monitors that show up by bspc but not
+# actually connected
+BSPC_MON_IDS=($(bspc query -M))
+for BMON in "${BSPC_MON_IDS[@]}"; do
+  REMOVE=1
+  for CMON in "${MONS[@]}"; do
+    [[ "$CMON" == "$(bspc query -m "$BMON" -M --names)" ]] && REMOVE=0
+  done
+  if [[ "$REMOVE" -eq 1 ]]; then
+    # Evacuate desktops before removal
+    EVAC_DESKTOPS=($(bspc query -D -m "$BMON"))
+    for ED in "${EVAC_DESKTOPS[@]}"; do
+      bspc desktop "$ED" -m "$PRI";
+    done
+    # Remove the monitor
+    bspc monitor "$BMON" -r
+  fi
 done
 
 for monitor in $PRI $SEC; do
