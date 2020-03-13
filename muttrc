@@ -11,13 +11,9 @@ set attach_save_dir  = `xdg-user-dir DOWNLOAD`
 subscribe .*@noreply\\.github\\.com
 subscribe .*-announce@.*
 
-# Contact groups
-group -group internal `khard email -p | awk '{printf "-rx %s ", $1} END { print ""} '`
-
-
 # General
 set abort_noattach = ask-yes
-set abort_noattach_regex = \<attach(|ed|ments?)\>
+set abort_noattach_regex = '\<(attach(|ed|ments?)|mellék[letvbn]+)\>'
 set allow_ansi
 set arrow_cursor
 set auto_tag
@@ -167,6 +163,7 @@ color body blue    default "([a-z][a-z0-9+-]*://(((([a-z0-9_.!~*'();:&=+$,-]|%[0
 color body color01 default "\\[[0-9]+\\]"
 color body color15 default "[┌┬┐├┼┤└┴┘│─]"
 color body color14 default "[━]"
+color body color05 color15 "\\[cid:[^]]+\\]"
 
 # PGP
 color body    color00       color01 '(\*BAD\* signature)'
@@ -219,7 +216,6 @@ color compose security_sign    brightcolor02 default
 color compose security_both    brightcolor02 default
 color compose security_none    brightcolor01 default
 
-
 # Headers
 ignore      *
 unignore    subject from to cc date
@@ -262,6 +258,10 @@ macro index            L "\
                                                                             'Query notmuch'
 
 macro index,pager    \cA "<pipe-message>~/bin/mutt-add-todo.py<enter>"      'Add todo'
+
+# Contact groups
+group -group internal `khard email --remove-first-line -p | awk '{printf "-rx %s ", $1} END { print ""} '`
+
 # Trigger changing folder to default
 set folder = ~/.mutt/$from
 push "<change-folder>~/.mutt/$from/INBOX<enter>"
