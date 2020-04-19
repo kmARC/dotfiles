@@ -31,6 +31,8 @@
       path: config/urlscan/config.json
     ~/.config/waybar:
       path: config/waybar
+    ~/.config/yay/config.json:
+      path: config/yay/config.json
     ~/.config/youtube-dl/config:
       path: config/youtube-dl/config
     ~/.mutt/:
