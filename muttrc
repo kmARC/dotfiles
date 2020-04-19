@@ -9,6 +9,7 @@ set attach_save_dir  = `xdg-user-dir DOWNLOAD`
 
 # Mailing lists
 subscribe .*@noreply\\.github\\.com
+subscribe .*@lists\\.openstack\\.org
 subscribe .*-announce@.*
 
 # General
@@ -54,7 +55,7 @@ timeout-hook 'exec sync-mailbox'
 
 # Folder hooks for multiple accounts
 source ~/.pdotfiles/muttrc
-folder-hook 'INBOX' 'set status_format    = " %-27.27f · Messages: %?M?%M of ?%m · New: %n · Flag: %F · Tag: %t %*  $from · (%P) "'
+folder-hook 'INBOX' 'set status_format    = "%f · Messages: %?M?(filter: %V) %M of ?%m · New: %n · Flag: %F · Tag: %t · Del: %d %*  $from · (%P) "'
 folder-hook 'INBOX' 'set ts_status_format = "NeoMutt with %?m?%m messages&no messages?%?n? [%n NEW]? - $from"'
 folder-hook 'INBOX' 'set signature        = "~/.mutt/sig/sig-$from.txt"'
 folder-hook 'INBOX' 'setenv from $from'
@@ -96,6 +97,7 @@ color status        color02       color07 'Messages'
 color status        brightcolor00 color07 'New'
 color status        color05       color07 'Flag'
 color status        color04       color07 'Tag'
+color status        brightcolor01 color07 'Del'
 
 # Pager
 set pager_format = '-%Z- %C/%m: %-20.20n   %s%*  -- (%P)'
@@ -108,12 +110,17 @@ color index_subject   color10       default '~R'
 color index           brightcolor08 default '~N'
 color index_author    brightcolor08 default '~N'
 color index_subject   brightcolor08 default '~N'
+color index_flags     brightcolor08 default '~(~N)'
+color index_author    brightcolor01 default '~D'
+color index_subject   brightcolor01 default '~D'
+color index_flags     brightcolor01 default '~(~D)'
 color index_flags     color04       default '%f internal' # internal group
 color index_author    color04       default '%f internal' # internal group
-color index_flags     color06       default '~l' # list
-color index_author    color06       default '~l' # list
 color index_flags     color05       default '~g' # signed
 color index_author    color05       default '~g' # signed
+color index_subject   color12       default '~l' # list
+color index_flags     color12       default '~l' # list
+color index_author    color12       default '~l' # list
 color index_flags     color05       default '~G' # encrypted
 color index_author    color05       default '~G' # encrypted
 color index_flags     color15       color05 '~F' # flagged
@@ -163,12 +170,13 @@ color body blue    default "([a-z][a-z0-9+-]*://(((([a-z0-9_.!~*'();:&=+$,-]|%[0
 color body color01 default "\\[[0-9]+\\]"
 color body color15 default "[┌┬┐├┼┤└┴┘│─]"
 color body color14 default "[━]"
-color body color05 color15 "\\[cid:[^]]+\\]"
+color body color05 color15 "\\[(cid|image):[^]]+\\]"
 
 # PGP
 color body    color00       color01 '(\*BAD\* signature)'
-color body    brightcolor15 color02 '(Good signature)'
 color body    brightcolor15 color01 '^Error: decryption/verification failed:.*'
+color body    brightcolor15 color02 '(Good signature)'
+color body    brightcolor15 color03 '(Problem signature)'
 
 # Atlassian
 color body    brightcolor15 color04 '( OPEN )'
@@ -195,6 +203,8 @@ color body    brightdefault default '[A-Za-z0-9/_-]+#[0-9]+' # issue number
 color body    color01 default '^D ([^ ]|\\ )+$'
 color body    color03 default '^M ([^ ]|\\ )+$'
 color body    color02 default '^A ([^ ]|\\ )+$'
+color body    brightcolor15 color01 '(Workflow|Code-Review|Verified)-[12]'
+color body    brightcolor15 color02 '(Workflow|Code-Review|Verified|Review-Priority)\+[12]'
 
 # Header-like in body
 color body    color14       default '^(To|Date|Sent|Cc|Location|When|Where): .*$'
@@ -203,6 +213,10 @@ color body    brightcolor00 default '^(Subject): .*'
 color body    brightcolor00 default '^(Betreff): .*'
 color body    brightcolor02 default '^(From|Organizer): .*$'
 color body    brightcolor02 default '^(Von): .*$'
+
+# vcal
+color body    brightcolor00 default '^Subject:.*'
+color body    brightcolor02 default '^Organizer:.*'
 color body    brightcolor05 default '^Start:.*'
 color body    brightcolor05 default '^End:.*'
 

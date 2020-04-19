@@ -97,5 +97,3 @@ alias git-recursive-pull='for d in $(find . -type d -name .git -printf "%h\n"); 
 ##################
 [[ -z "$MC_SID" && $- = *i* ]] && source /usr/bin/liquidprompt
 
-# shellcheck source=/dev/null
-if [ -f "$HOME/.completion-minishift" ]; then source "$HOME/.completion-minishift"; fi

@@ -57,12 +57,6 @@ Re-login / restart bash.
 This setup is based on the [solarized] theme. Follow the instructions there to customize / set it up
 properly.
 
-Some configuration files with solarized color palette:
-
-* [config/bspwm/colors](config/bspwm/colors)
-* [config/polybar/config](config/polybar/config)
-* [config/xfce4/terminal/terminalrc](config/xfce4/terminal/terminalrc)
-
 [solarized]: https://github.com/altercation/solarized
 
 ### Bash customizations
@@ -118,52 +112,14 @@ by this repository.
 
 ### Graphical system
 
-You most probably want Xorg and a login manager (some apps require it).
+Yay, this setup is using wayland now! Thes instructions will be updated on-demand. Feel free to
+contact me.
 
 ``` bash
 sudo pacman -S \
-  lightdm-gtk-greeter \
-  xorg-server
+  sway \
+  waybar
 ```
-
-### Desktop: tiled window manager and panel
-
-Window manager is provided  by [bspwm], hotkeys by [sxhkd], compositing by  [picom], a launcher by
-[rofi] and a fancy panel by [polybar].
-
-``` bash
-# Install window manager & tools
-sudo pacman -S bspwm sxhkd picom rofi
-sudo pacman -S libmpdclient # Media Player Daemon support
-sudo pacman -S pulseaudio   # Pulseaudio support
-yay -S polybar ttf-{emojione,material-icons}
-
-# Install startx / desktop.sh dependencies
-sudo pacman -S \
-  dex \
-  feh \
-  geoclue2 \
-  jq \
-  libpulse \
-  polkit-gnome \
-  redshift \
-  system-config-printer \
-  wmname \
-  xcape \
-  xdotool \
-  xf86-input-synaptics \
-  xfce4-notifyd \
-  xorg-{xbacklight,xinput,xprop,xrandr,xsetroot,xwininfo}
-
-# Set a wallpaper
-feh --bg-fill path_to_wallpaper
-```
-
-[bspwm]: https://github.com/baskerville/bspwm
-[sxhkd]: https://github.com/baskerville/sxhkd
-[compton]: https://github.com/chjj/compton
-[polybar]: https://github.com/jaagr/polybar
-[rofi]: https://github.com/DaveDavenport/rofi
 
 ### Music player
 
@@ -172,34 +128,30 @@ examples in [pdotfiles/](pdotfiles/)
 
 ``` bash
 # Install / upgrade mopidy
-yay -S libspotify
-sudo -H pip install -U mopidy{,-spotify,-spotify-web,-soundcloud,-tunein,-mpris,-mpd}
+yay -S mopidy-{spotify,soundcloud,tunein,mpris,mpd}
 ```
-
 [mopidy]: https://www.mopidy.com/
 
 ### Apps & Tools
 
-Have a look at the [sxhkd configuration](config/sxhkd/sxhkdrc) and customize the launchable apps /
+Have a look at the [sway configuration](config/sway/config) and customize the launchable apps /
 tools
 
 ``` bash
 # Sxhkd shortcuts
 sudo pacman -S \
+  alacritty \
   firefox \
   mpc \
   ranger \
-  thunar \
-  xfce4-terminal
+  thunar
 yay -S \
   rofi-emoji
-
-# Other tools
-sudo pacman -S \
-  hplip
 ```
 
 ### GUI themes
+
+That's a mess with Xorg/Wayland/Gtk2/Gtk3/Qt4/Qt5
 
 I keep it  simple: using [Arc] GTK and  icon themes, configured Qt/KDE applications to  pick up gtk2
 theme settings. `lxappearance` is a handy tool to set gtk2/3 themes.
@@ -210,14 +162,3 @@ theme settings. `lxappearance` is a handy tool to set gtk2/3 themes.
 sudo pacman -S arc-{gtk,icon}-theme elementary-icon-theme gtk-engine-murrine lxappearance \
           qt5-styleplugins
 ```
-
-### Quirks
-
-Sometimes I use Xfce's panel `xfce4-panel` to display the notification's icon and system tray
-(by default hidden when out of focus). It's started automatically by [xstart](xstart). You might
-need to disable / tweak it's look as you like
-
-### Restart your desktop
-
-You can use either `startx` or selecting any desktop environments from lightdm
-(unfortunately `.xinitrc` will override any options)
