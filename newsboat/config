@@ -42,6 +42,6 @@ highlight feedlist    "^[0-9 ]{4} "              color2
 highlight feedlist    "[N ]*\\([0-9/]+\\) "      color12
 
 highlight articlelist "^[0-9 ]{4} "              color2
-highlight articlelist "\\(([0-9]{3} |[0-9]\\.[0-9]K)\\) " color12
+highlight articlelist "\\(([0-9]{3} |[0-9]\\.[0-9]K|[ 0-9]{2}\\.[0-9])\\) " color12
 
 # vim: set ft=conf:

@@ -3,7 +3,7 @@ Description=Backup timer
 
 [Timer]
 OnCalendar=daily
-Persistent=false
+Persistent=true
 
 [Install]
 WantedBy=default.target

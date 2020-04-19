@@ -12,29 +12,25 @@
 
 - link:
     # Explicit paths
-    ~/.config/bspwm/bspwmrc:
-      path: config/bspwm/bspwmrc
-    ~/.config/bspwm/colors:
-      path: config/bspwm/colors
+    ~/.config/alacritty.yml:
+      path: config/alacritty.yml
     ~/.config/fontconfig:
       path: config/fontconfig
-    ~/.config/picom.conf:
-      path: config/picom.conf
     ~/.config/mopidy/mopidy.conf:
       path: config/mopidy/mopidy.conf
-    ~/.config/polybar/config:
-      path: config/polybar/config
     ~/.config/ranger/rc.conf:
       path: config/ranger/rc.conf
-    ~/.config/sxhkd/sxhkdrc:
-      path: config/sxhkd/sxhkdrc
+    ~/.config/redshift:
+      path: config/redshift
+    ~/.config/sway/config:
+      path: config/sway/config
     ~/.config/systemd/user:
       glob: true
       path: config/systemd/user/*
     ~/.config/urlscan/config.json:
       path: config/urlscan/config.json
-    ~/.config/xfce4/terminal:
-      path: config/xfce4/terminal
+    ~/.config/waybar:
+      path: config/waybar
     ~/.config/youtube-dl/config:
       path: config/youtube-dl/config
     ~/.mutt/:
@@ -62,12 +58,6 @@
     ~/.tmux.conf:
     ~/.todo.cfg:
     ~/.toprc:
-    ~/.Xresources:
-    ~/.Xresources.d:
-    ~/.xinitrc: xprofile
-    ~/.xprofile:
-    ~/.xstart:
-    ~/.xstop:
 
 - shell:
     - [git submodule update --init --recursive, Installing/updating submodules]
