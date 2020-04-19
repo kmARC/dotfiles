@@ -22,6 +22,8 @@
       path: config/ranger/rc.conf
     ~/.config/redshift:
       path: config/redshift
+    ~/.config/rofi:
+      path: config/rofi
     ~/.config/sway/config:
       path: config/sway/config
     ~/.config/systemd/user:
