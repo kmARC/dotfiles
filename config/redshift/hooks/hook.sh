@@ -7,11 +7,11 @@ case $1 in
         case $3 in
           daytime|none|transition)
             gsettings set org.gnome.desktop.interface gtk-theme 'Adwaita'
-            sed -i "s/^colors:\s\+\*\\(light\|dark\\)/colors: *light/g" $HOME/.config/alacritty.yml
+            sed --follow-symlinks -i "s/^colors:\s\+\*\\(light\|dark\\)/colors: *light/g" $HOME/.config/alacritty.yml
             ;;
           night)
             gsettings set org.gnome.desktop.interface gtk-theme 'Adwaita-dark'
-            sed -i "s/^colors:\s\+\*\\(light\|dark\\)/colors: *dark/g" $HOME/.config/alacritty.yml
+            sed --follow-symlinks -i "s/^colors:\s\+\*\\(light\|dark\\)/colors: *dark/g" $HOME/.config/alacritty.yml
             ;;
         esac
 
