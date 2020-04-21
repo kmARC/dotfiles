@@ -45,9 +45,6 @@ workspace 7 output eDP-1
 workspace 8 output eDP-1
 workspace 9 output eDP-1
 
-workspace 6
-workspace 1
-
 ### Idle configuration
 #
 # Example configuration:
@@ -239,8 +236,6 @@ mode "app" {
 }
 bindsym $mod+space mode "app"
 
-exec waybar
-
 client.focused '#4c7899' '#285577' '#ffffff' '#4c7899' '#4c7899'
 
 default_border pixel 3
@@ -264,6 +259,29 @@ bindsym ctrl+alt+l exec swaylock -f -c 000000
 bindsym $mod+F12 exec ~/bin/vpn-pannet.sh
 
 # Capture screen
-bindsym --release Print exec grim -g \"$(slurp)" - | wl-copy
+bindsym --release       Print exec grim                \"$HOME/Pictures/Screenshot from $(date '+%Y-%m-%d %H-%M-%S').png"
+bindsym --release shift+Print exec grim -g \"$(slurp)" \"$HOME/Pictures/Screenshot from $(date '+%Y-%m-%d %H-%M-%S').png"
+bindsym --release  $mod+Print exec grim -g \"$(swaymsg -t get_tree | jq -r '.. | select(.pid? and .visible?) | .rect | \"\(.x),\(.y) \(.width)x\(.height)"' | slurp)" \"$HOME/Pictures/Screenshot from $(date '+%Y-%m-%d %H-%M-%S').png"
+
+# Theming
+exec_always xrdb -load ~/.Xresources
+exec_always import-gsettings \
+              gtk-theme:gtk-theme-name \
+              icon-theme:gtk-icon-theme-name \
+              cursor-theme:gtk-cursor-theme-name
+exec "while swaymsg; do xsettingsd; done"
+
+# Autostart apps
+exec waybar
+exec dex ~/.config/autostart/*
+exec dex /etc/xdg/autostart/blueman.desktop
+
+assign '[class="Microsoft\ Teams\ -\ Preview"]' workspace 6
+assign '[class="Bitwarden"]' workspace 4
+assign '[app_id="selfservice"]' workspace 4
+
+workspace 6
+workspace 1
+
 
 include /etc/sway/config.d/*

@@ -7,11 +7,17 @@ case $1 in
         case $3 in
           daytime|none|transition)
             gsettings set org.gnome.desktop.interface gtk-theme 'Adwaita'
+            sed --follow-symlinks -i "s/^gtk-theme-name=.*/gtk-theme-name=Adwaita/g"      $HOME/.config/gtk-3.0/settings.ini
+            sed --follow-symlinks -i "s/^Net\/ThemeName.*/Net\/ThemeName \"Adwaita\"/g"   $HOME/.xsettingsd ; pkill xsettingsd
+            sed --follow-symlinks -i "s/^gtk-theme-name=.*/gtk-theme-name=\"Adwaita\"/g"  $HOME/.gtkrc-2.0
             sed --follow-symlinks -i "s/^colors:\s\+\*\\(light\|dark\\)/colors: *light/g" $HOME/.config/alacritty.yml
             ;;
           night)
             gsettings set org.gnome.desktop.interface gtk-theme 'Adwaita-dark'
-            sed --follow-symlinks -i "s/^colors:\s\+\*\\(light\|dark\\)/colors: *dark/g" $HOME/.config/alacritty.yml
+            sed --follow-symlinks -i "s/^gtk-theme-name=.*/gtk-theme-name=Adwaita-dark/g"     $HOME/.config/gtk-3.0/settings.ini
+            sed --follow-symlinks -i "s/^Net\/ThemeName.*/Net\/ThemeName \"Adwaita-dark\"/g"  $HOME/.xsettingsd ; pkill xsettingsd
+            sed --follow-symlinks -i "s/^gtk-theme-name=.*/gtk-theme-name=\"Adwaita-dark\"/g" $HOME/.gtkrc-2.0
+            sed --follow-symlinks -i "s/^colors:\s\+\*\\(light\|dark\\)/colors: *dark/g"      $HOME/.config/alacritty.yml
             ;;
         esac
 

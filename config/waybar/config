@@ -1,13 +1,12 @@
+// vim: set ft=json:
 {
-    "layer": "top", // Waybar at top layer
-    // "position": "bottom", // Waybar position (top|bottom|left|right)
-    "height": 30, // Waybar height (to be removed for auto height)
-    // "width": 1280, // Waybar width
-    // Choose the order of the modules
-    "modules-left": ["sway/workspaces", "sway/mode", "custom/media", "sway/window"],
+    "layer": "top",
+    "position": "top",
+    "height": 30,
+    "modules-left": ["sway/workspaces", "sway/mode", "sway/window"],
     "modules-center": ["clock"],
-    "modules-right": ["tray", "idle_inhibitor", "pulseaudio", "network", "cpu", "memory", "temperature", "backlight", "battery", "battery#bat2"],
-    // Modules configuration
+    "modules-right": ["tray", "idle_inhibitor", "pulseaudio", "network", "cpu", "memory", "temperature", "backlight", "battery"],
+
     "sway/workspaces": {
         "disable-scroll": true,
         "all-outputs": false,
@@ -61,11 +60,10 @@
         }
     },
     "tray": {
-        // "icon-size": 21,
-        "spacing": 10
+        "icon-size": 16,
+        "spacing": 20
     },
     "clock": {
-        // "timezone": "America/New_York",
         "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
         "format-alt": "{:%Y-%m-%d}"
     },
@@ -79,8 +77,8 @@
     "temperature": {
         // "thermal-zone": 2,
         // "hwmon-path": "/sys/class/hwmon/hwmon2/temp1_input",
-        "critical-threshold": 80,
         // "format-critical": "{temperatureC}°C {icon}",
+        "critical-threshold": 80,
         "format": "{temperatureC}°C {icon}",
         "format-icons": ["", "", ""]
     },
@@ -91,7 +89,7 @@
     },
     "battery": {
         "states": {
-            // "good": 95,
+            "good": 95,
             "warning": 30,
             "critical": 15
         },
@@ -123,7 +121,7 @@
         "format-source": "{volume}% ",
         "format-source-muted": "",
         "format-icons": {
-            "headphone": "",
+            "headphone": "",
             "hands-free": "",
             "headset": "",
             "phone": "",
