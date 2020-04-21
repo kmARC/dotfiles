@@ -62,6 +62,8 @@
     ~/.tmux.conf:
     ~/.todo.cfg:
     ~/.toprc:
+    ~/.Xresources:
+    ~/.Xdefaults: Xresources
 
 - shell:
     - [git submodule update --init --recursive, Installing/updating submodules]
