@@ -92,12 +92,16 @@ color signature     color14 default
 
 color status        color14       color07
 color status        color06       color07 '=([^·]*).*Messages' 1
-color status        color03       color07 '([^ ]+@[^ ]+)'
-color status        color02       color07 'Messages'
-color status        brightcolor00 color07 'New'
-color status        color05       color07 'Flag'
-color status        color04       color07 'Tag'
-color status        brightcolor01 color07 'Del'
+color status        color02       color07 '(Messages):' 1
+color status        brightcolor00 color07 '(New):' 1
+color status        color05       color07 '(Flag):' 1
+color status        color04       color07 '(Tag):' 1
+color status        brightcolor01 color07 '(Del):' 1
+color status        color03       color07 '([^ ]+@[^ ]+) ·' 1
+# Pager status
+color status        green         color07 '^-...- ([0-9]+)' 1 # number
+color status        brightgreen   color07 '/[0-9]+: (.{20})' 1 # author
+color status        brightcolor00 color07 '   (.*) --' 1     # subject
 
 # Pager
 set pager_format = '-%Z- %C/%m: %-20.20n   %s%*  -- (%P)'
