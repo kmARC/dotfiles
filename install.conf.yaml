@@ -12,6 +12,8 @@
 
 - link:
     # Explicit paths
+    ~/.ctags.d/config.ctags:
+      path: ctags
     ~/.config/alacritty.yml:
       path: config/alacritty.yml
     ~/.config/fontconfig:
@@ -67,6 +69,7 @@
     ~/.xsettingsd:
     ~/.Xdefaults: Xresources
     ~/.Xresources:
+    ~/.ctags:
 
 - shell:
     - [git submodule update --init --recursive, Installing/updating submodules]

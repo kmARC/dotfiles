@@ -1,0 +1,2 @@
+--langmap=yaml:.yml.yaml
+--regex-yaml=/^[ \t]*(.*):/\1/k,key,keys/
