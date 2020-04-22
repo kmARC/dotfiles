@@ -285,9 +285,10 @@ exec dex ~/.config/autostart/*
 exec dex /etc/xdg/autostart/blueman.desktop
 
 # Window rules
+assign '[class="Slack"]'                        workspace 6
 assign '[class="Microsoft\ Teams\ -\ Preview"]' workspace 6
-assign '[class="Bitwarden"]' workspace 4
-assign '[app_id="selfservice"]' workspace 4
+assign '[class="Bitwarden"]'                    workspace 4
+assign '[app_id="selfservice"]'                 workspace 4 # Citrix client
 
 for_window [title="zoom"] floating enable border none
 
