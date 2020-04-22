@@ -107,7 +107,8 @@ exec swayidle -w \
     floating_modifier $mod normal
 
     # Reload the configuration file
-    bindsym $mod+Shift+c reload
+    bindsym           $mod+Shift+c nop
+    bindsym --release $mod+Shift+c reload
 
     # Exit sway (logs you out of your Wayland session)
     bindsym $mod+Shift+e exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -b 'Yes, exit sway' 'swaymsg exit'
@@ -225,13 +226,14 @@ bindsym $mod+r mode "resize"
 mode "app" {
   bindsym p exec swaymsg mode "default" && bwmenu --auto-lock 86400
   bindsym b exec swaymsg mode "default" && firefox
-  bindsym v exec swaymsg mode "default" && virtualbox
+  bindsym v exec swaymsg mode "default" && env QT_QPA_PLATFORM=xcb virtualbox
   bindsym f exec swaymsg mode "default" && $term -e ranger
   bindsym x exec swaymsg mode "default" && $term -e bash -ci 'tmux-session'
   bindsym m exec swaymsg mode "default" && $term -e bash -ci 'ncmpcpp'
   bindsym n exec swaymsg mode "default" && $term -e bash -ci 'notes'
   bindsym h exec swaymsg mode "default" && $term -e bash -ci 'home'
-  bindsym o exec swaymsg mode "default" && FILE="\$(locate -r '^/home/kmarc/.*\..*' |grep -v '/\.' | rofi -dmenu -i)" && xdg-open "\$FILE"
+  bindsym o exec swaymsg mode "default" && xdg-open "$(locate -r $HOME'/.*\..*' | grep -v '/\.' | rofi -dmenu -i)"
+
   bindsym Escape mode "default"
 }
 bindsym $mod+space mode "app"
@@ -271,17 +273,25 @@ exec_always import-gsettings \
               cursor-theme:gtk-cursor-theme-name
 exec "while swaymsg; do xsettingsd; done"
 
+# Top bar
+bar {
+  position top
+  swaybar_command waybar
+}
+
 # Autostart apps
-exec waybar
 exec dex ~/.config/autostart/*
 exec dex /etc/xdg/autostart/blueman.desktop
 
+# Window rules
 assign '[class="Microsoft\ Teams\ -\ Preview"]' workspace 6
 assign '[class="Bitwarden"]' workspace 4
 assign '[app_id="selfservice"]' workspace 4
 
+for_window [title="zoom"] floating enable border none
+
+# Activate correct workspaces
 workspace 6
 workspace 1
-
 
 include /etc/sway/config.d/*

@@ -37,6 +37,8 @@
       path: config/yay/config.json
     ~/.config/youtube-dl/config:
       path: config/youtube-dl/config
+    ~/.gnupg/gpg-agent.conf:
+      path: gnupg/gpg-agent.conf
     ~/.mutt/:
       glob: true
       path: mutt/*
