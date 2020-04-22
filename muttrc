@@ -55,7 +55,7 @@ timeout-hook 'exec sync-mailbox'
 
 # Folder hooks for multiple accounts
 source ~/.pdotfiles/muttrc
-folder-hook 'INBOX' 'set status_format    = "%f · Messages: %?M?(filter: %V) %M of ?%m · New: %n · Flag: %F · Tag: %t · Del: %d %*  $from · (%P) "'
+folder-hook 'INBOX' 'set status_format    = "%f · Messages: %?M?(filter: %V) %M of ?%m · New: %n · Flag: %F · Tag: %t · Del: %d %*· $from · (%P) "'
 folder-hook 'INBOX' 'set ts_status_format = "NeoMutt with %?m?%m messages&no messages?%?n? [%n NEW]? - $from"'
 folder-hook 'INBOX' 'set signature        = "~/.mutt/sig/sig-$from.txt"'
 folder-hook 'INBOX' 'setenv from $from'
@@ -91,7 +91,7 @@ color tree          color03 default
 color signature     color14 default
 
 color status        color14       color07
-color status        color06       color07 '=([^·]*).*Messages' 1
+color status        color06       color07 '^=([^·]*).*Messages' 1
 color status        color02       color07 '(Messages):' 1
 color status        brightcolor00 color07 '(New):' 1
 color status        color05       color07 '(Flag):' 1
@@ -99,39 +99,39 @@ color status        color04       color07 '(Tag):' 1
 color status        brightcolor01 color07 '(Del):' 1
 color status        color03       color07 '([^ ]+@[^ ]+) ·' 1
 # Pager status
-color status        green         color07 '^-...- ([0-9]+)' 1 # number
-color status        brightgreen   color07 '/[0-9]+: (.{20})' 1 # author
-color status        brightcolor00 color07 '   (.*) --' 1     # subject
+color status        green         color07 '^  ([0-9]+)'      1 # number
+color status        brightgreen   color07 '/[0-9]+ ... (.{20})'  1 # author
+color status        brightcolor00 color07 ' · ([^·]*)·+ \('   1 # subject
 
 # Pager
-set pager_format = '-%Z- %C/%m: %-20.20n   %s%*  -- (%P)'
+set pager_format = '  %C/%m %Z %-20.20n · %s %*·· (%P) '
 
 # Index
 set index_format = '%4C %Z %-20.20L (%?l?%4l&%4c?) %?M?{%2M} ?%s %*  %?X?   [%X]?%<[y?%<[m?%<[d?%[  %H:%M]&%[ %a %d]>&%[ %b %d]>&%[ %Y-%m]> '
+color index_number    color02       default
+color index_collapsed brightcolor03 default
 color index           color12       default '~R'
 color index_author    color10       default '~R'
 color index_subject   color10       default '~R'
-color index           brightcolor08 default '~N'
-color index_author    brightcolor08 default '~N'
-color index_subject   brightcolor08 default '~N'
-color index_flags     brightcolor08 default '~(~N)'
+color index_author    color12       default '~l' # Lists
+color index_subject   color12       default '~l' # Lists
+color index_flags     color12       default '~l' # Lists
+color index           brightcolor00 default '~N'
+color index_author    brightcolor00 default '~N'
+color index_subject   brightcolor00 default '~N'
+color index_flags     brightcolor00 default '~N'
+color index           brightcolor00 default '~v~(~N)' # Collapsed threads
+color index_author    brightcolor00 default '~v~(~N)'
+color index_subject   brightcolor00 default '~v~(~N)'
+color index_flags     brightcolor00 default '~v~(~N)'
 color index_author    brightcolor01 default '~D'
 color index_subject   brightcolor01 default '~D'
-color index_flags     brightcolor01 default '~(~D)'
-color index_flags     color04       default '%f internal' # internal group
-color index_author    color04       default '%f internal' # internal group
-color index_flags     color05       default '~g' # signed
-color index_author    color05       default '~g' # signed
-color index_subject   color12       default '~l' # list
-color index_flags     color12       default '~l' # list
-color index_author    color12       default '~l' # list
-color index_flags     color05       default '~G' # encrypted
-color index_author    color05       default '~G' # encrypted
-color index_flags     color15       color05 '~F' # flagged
-color index_flags     color15       color04 '~T' # tagged
-color index_number    color02       default
-color index_date      color12       default
-color index_collapsed brightcolor03 default
+color index_flags     brightcolor01 default '~D'
+color index_flags     brightcolor04 default '%f internal' # internal group
+color index_flags     brightcolor05 default '~g' # signed
+color index_flags     brightcolor05 default '~G' # encrypted
+color index_flags     brightcolor15 color05 '~F' # flagged
+color index_flags     brightcolor15 color04 '~T' # tagged
 
 # Sidebar
 color sidebar_new       brightcolor00 default
