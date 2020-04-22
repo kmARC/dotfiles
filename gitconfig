@@ -32,9 +32,6 @@
   spellingdictionary = en_US
   diffopts = --word-diff --patience
 
-[log]
-  showsignature = true
-
 [merge]
   tool = vimdiff
   conflictstyle = diff3
@@ -60,8 +57,8 @@
 [tig "color"]
   cursor = black cyan
   main-tag = green default bold
-  title-blur = 19 18
-  title-focus = 7 19
+  title-blur = black white bold
+  title-focus = 12 white
 
 # vim: set ft=gitconfig:
 [http]
