@@ -57,6 +57,10 @@
     ~/bin:
       path: bin
 
+    # vim
+    ~/.vim:
+      path: vim
+
     # Top levels
     ~/.bashrc.kmarc:
     ~/.curlrc:
