@@ -141,6 +141,9 @@ exec swayidle -w \
 
     # Move focus to the parent container
     bindsym $mod+a focus parent
+
+    # Switch to previous workspace
+    bindsym Mod4+Tab workspace back_and_forth
 #
 # Scratchpad:
 #
@@ -231,8 +234,8 @@ bindsym XF86AudioMicMute      exec pactl         set-source-mute @DEFAULT_SOURCE
 bindsym XF86AudioPlay         exec playerctl     play-pause
 bindsym XF86AudioNext         exec playerctl     next
 bindsym XF86AudioPrev         exec playerctl     previous
-bindsym XF86MonBrightnessDown exec brightnessctl set             5%-
-bindsym XF86MonBrightnessUp   exec brightnessctl set             +5%
+bindsym XF86MonBrightnessDown exec brightnessctl set -s          5%-
+bindsym XF86MonBrightnessUp   exec brightnessctl set -s          +5%
 
 # Lock screen
 bindsym ctrl+alt+l exec swaylock -f -c 000000
@@ -241,9 +244,11 @@ bindsym ctrl+alt+l exec swaylock -f -c 000000
 bindsym $mod+F12 exec ~/bin/vpn-pannet.sh
 
 # Capture screen
-bindsym --release       Print exec grim                \"$HOME/Pictures/Screenshot from $(date '+%Y-%m-%d %H-%M-%S').png"
-bindsym --release shift+Print exec grim -g \"$(slurp)" \"$HOME/Pictures/Screenshot from $(date '+%Y-%m-%d %H-%M-%S').png"
-bindsym --release  $mod+Print exec grim -g \"$(swaymsg -t get_tree | jq -r '.. | select(.pid? and .visible?) | .rect | \"\(.x),\(.y) \(.width)x\(.height)"' | slurp)" \"$HOME/Pictures/Screenshot from $(date '+%Y-%m-%d %H-%M-%S').png"
+bindsym --release       Print exec export IMG=\"$HOME/Pictures/Screenshot from $(date '+%Y-%m-%d %H-%M-%S').png" \
+                                     && grim                "$IMG" && ksnip "$IMG"
+bindsym --release shift+Print exec export IMG=\"$HOME/Pictures/Screenshot from $(date '+%Y-%m-%d %H-%M-%S').png" \
+                                     && grim -g \"$(slurp)" "$IMG" && ksnip "$IMG"
+bindsym --release  $mod+Print exec $HOME/bin/screenshot.sh
 
 # Theming
 exec_always xrdb -load ~/.Xresources
@@ -274,6 +279,7 @@ assign [class="zoom"]                         workspace 7
 
 for_window [class="zoom" title="zoom"] floating enable
 for_window [class="zoom" title="zoom"] border none
+for_window [title="Firefox - Sharing Indicator"] floating enable
 
 # Activate correct workspaces
 workspace 6

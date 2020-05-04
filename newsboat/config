@@ -25,23 +25,23 @@ bind-key K prev-feed
 articlelist-format "%4i %f (%4L) %?T?|%-17T|  ?%t  %> %D"
 
 color listnormal        default default
-color listnormal_unread black   default bold
-color listfocus         white   cyan
-color listfocus_unread  white   cyan    bold
-color info              default color7
+color listnormal_unread default default bold
+color listfocus         color0   cyan
+color listfocus_unread  color0   cyan    bold
+color info              white   color8
 color article           default default
 
-highlight article     "https?://[^ ]+"           color4
-highlight article     "\\((link|image)\\)"       color1
-highlight article     "^(Link|Date):.*"          color12
-highlight article     "^(Feed):.*"               color3
-highlight article     "^(Title):.*"              black default bold
-highlight article     "^(Author):.*"             color2
+highlight article     "https?://[^ ]+"           blue
+highlight article     "\\((link|image)\\)"       red
+highlight article     "^(Link|Date):.*"          white
+highlight article     "^(Feed):.*"               yellow
+highlight article     "^(Title):.*"              default default bold
+highlight article     "^(Author):.*"             green
 
-highlight feedlist    "^[0-9 ]{4} "              color2
-highlight feedlist    "[N ]*\\([0-9/]+\\) "      color12
+highlight feedlist    "^[0-9 ]{4} "              green
+highlight feedlist    "[N ]*\\([0-9/]+\\) "      white
 
-highlight articlelist "^[0-9 ]{4} "              color2
-highlight articlelist "\\(([0-9]{3} |[0-9]\\.[0-9]K|[ 0-9]{2}\\.[0-9])\\) " color12
+highlight articlelist "^[0-9 ]{4} "              green
+highlight articlelist "\\(([0-9]{3} |[0-9]\\.[0-9]K|[ 0-9]{2}\\.[0-9])\\) " white
 
 # vim: set ft=conf:
