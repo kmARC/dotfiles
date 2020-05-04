@@ -3,14 +3,14 @@
 # Any items in the `env` entry below will be added as
 # environment variables. Some entries may override variables
 # set by alacritty itself.
-#env:
+env:
   # TERM variable
   #
   # This value is used to set the `$TERM` environment variable for
   # each instance of Alacritty. If it is not present, alacritty will
   # check the local terminfo database and use `alacritty` if it is
   # available, otherwise `xterm-256color` is used.
-  #TERM: alacritty
+  TERM: xterm-256color
 
 #window:
   # Window dimensions (changes require restart)
@@ -170,8 +170,56 @@ font:
 # If `true`, bold text is drawn using the bright color variants.
 draw_bold_text_with_bright_colors: false
 
+# Colors (Selenized dark)
+colors_selenized_dark: &dark
+  primary:
+    background: '0x103c48'
+    foreground: '0xadbcbc'
+  normal:
+    black:   '0x184956'
+    red:     '0xfa5750'
+    green:   '0x75b938'
+    yellow:  '0xdbb32d'
+    blue:    '0x4695f7'
+    magenta: '0xf275be'
+    cyan:    '0x41c7b9'
+    white:   '0x72898f'
+  bright:
+    black:   '0x2d5b69'
+    red:     '0xff665c'
+    green:   '0x84c747'
+    yellow:  '0xebc13d'
+    blue:    '0x58a3ff'
+    magenta: '0xff84cd'
+    cyan:    '0x53d6c7'
+    white:   '0xcad8d9'
+
+# Colors (Selenized light)
+colors_selenized_light: &light
+  primary:
+    background: '0xfbf3db'
+    foreground: '0x53676d'
+  normal:
+    black:   '0xece3cc'
+    red:     '0xd2212d'
+    green:   '0x489100'
+    yellow:  '0xad8900'
+    blue:    '0x0072d4'
+    magenta: '0xca4898'
+    cyan:    '0x009c8f'
+    white:   '0x909995'
+  bright:
+    black:   '0xd5cdb6'
+    red:     '0xcc1729'
+    green:   '0x428b00'
+    yellow:  '0xa78300'
+    blue:    '0x006dce'
+    magenta: '0xc44392'
+    cyan:    '0x00978a'
+    white:   '0x3a4d53'
+
 # Colors (Solarized Light)
-colors_solarized_light: &light
+colors_solarized_light:
   # Default colors
   primary:
     background: '#fdf6e3' # base3
@@ -205,7 +253,7 @@ colors_solarized_light: &light
     white:   '#fdf6e3' # base3
 
 # Colors (Solarized Dark)
-colors_solarized_dark: &dark
+colors_solarized_dark:
   # Default colors
   primary:
     background: '#002b36' # base03
@@ -239,7 +287,7 @@ colors_solarized_dark: &dark
     white:   '#fdf6e3' # base3
 
 
-colors: *dark
+colors: *light
 
 # Visual Bell
 #
@@ -263,8 +311,8 @@ colors: *dark
 #
 # Specifying a `duration` of `0` will disable the visual bell.
 visual_bell:
-  animation: EaseOutExpo
-#  duration: 0
+  animation: Ease
+  duration: 100
   color: '#ffffff'
 
 # Background opacity

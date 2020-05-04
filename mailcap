@@ -16,10 +16,4 @@ text/calendar;            mutt-ics;                                 copiousoutpu
 application/pdf;          pdftotext -fixed 8 -l 2 %s - 2>/dev/null; copiousoutput
 application/x-pdf;        pdftotext -fixed 8 -l 2 %s - 2>/dev/null; copiousoutput
 application/ms-tnef;      tnef -w %s;                               copiousoutput
-text/html;                w3m -dump -cols 100 -ppc 10 -graph -s -I %{charset} -T text/html; copiousoutput
-
-# text/html;                elinks -dump -dump-charset %{charset} -dump-width 100 %s; copiousoutput; nametemplate=%s.html
-# text/html;                links -dump -width 100 -codepage %{charset} -html-margin 0 -html-tables 1 -html-frames 1 %s; copiousoutput
-# text/html;                lynx -dump -width=100 -justify -nonumbers %s; copiousoutput; nametemplate=%s.html
-# text/html;                html2text2 -b 100 --ignore-images --ignore-links --ignore-tables %s; copiousoutput; nametemplate=%s.html
-
+text/html;                w3m -dump -cols ${COLUMNS:-100} -ppc 10 -graph -s -I %{charset} -T text/html; copiousoutput

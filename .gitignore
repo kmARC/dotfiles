@@ -2,3 +2,5 @@ fonts/dotbot/**
 **/*.pyc
 !**/.gitkeep
 *.retry
+.stignore
+.stversions

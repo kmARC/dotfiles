@@ -55,12 +55,13 @@ timeout-hook 'exec sync-mailbox'
 
 # Folder hooks for multiple accounts
 source ~/.pdotfiles/muttrc
-folder-hook 'INBOX' 'set status_format    = "%f · Messages: %?M?(filter: %V) %M of ?%m · New: %n · Flag: %F · Tag: %t · Del: %d %*· $from · (%P) "'
-folder-hook 'INBOX' 'set ts_status_format = "NeoMutt with %?m?%m messages&no messages?%?n? [%n NEW]? - $from"'
-folder-hook 'INBOX' 'set signature        = "~/.mutt/sig/sig-$from.txt"'
-folder-hook 'INBOX' 'setenv from $from'
-# folder-hook 'INBOX' 'unmailboxes *' # FIXME: waiting for https://github.com/neomutt/neomutt/issues/1880
-folder-hook 'INBOX' "mailboxes \`find ~/.mutt/\$from/ -type d -name cur  ! -wholename *All\\ Mail* ! -wholename *Spam* -printf '\"%h\" '\`"
+folder-hook 'INBOX' '\
+  set status_format    = "%f · Messages: %?M?(filter: %V) %M of ?%m · New: %n · Flag: %F · Tag: %t · Del: %d %*· $from · (%P) "; \
+  set ts_status_format = "NeoMutt with %?m?%m messages&no messages?%?n? [%n NEW]? - $from"; \
+  set signature        = "~/.mutt/sig/sig-$from.txt"; \
+  setenv from $from; \
+  unmailboxes *'
+folder-hook 'INBOX' "mailboxes \`find ~/.mutt/\$from/ -type d -name cur  -printf '\"%h\" '\`"
 
 # Folder
 set folder_format = '%2C %t %N %f'
@@ -69,14 +70,14 @@ set folder_format = '%2C %t %N %f'
 set implicit_autoview
 alternative_order  multipart/mixed text/calendar text/plain multipart/related text/html text/enriched
 
-# Sidebar
-bind  index,pager \cP sidebar-prev
-bind  index,pager \cN sidebar-next
-bind  index,pager \cO sidebar-open
-macro index,pager   b '<enter-command>toggle sidebar_visible<enter>'
-set sidebar_visible
-set sidebar_format      = '%B%* %?N?%N?'
-set sidebar_sort_method = 'path'
+# # Sidebar
+# bind  index,pager \cP sidebar-prev
+# bind  index,pager \cN sidebar-next
+# bind  index,pager \cO sidebar-open
+# macro index,pager   b '<enter-command>toggle sidebar_visible<enter>'
+# set sidebar_visible
+# set sidebar_format      = '%B%* %?N?%N?'
+# set sidebar_sort_method = 'path'
 
 # Colors
 # Default
@@ -84,73 +85,70 @@ color normal        default default
 color error         color01 default
 color tilde         color20 default
 color message       color06 default
-color attachment    color14 default
+color attachment    color07 default
 color search        color05 default
 color indicator     color15 color06
 color tree          color03 default
-color signature     color14 default
+color signature     color07 default
 
-color status        color14       color07
-color status        color06       color07 '^=([^·]*).*Messages' 1
-color status        color02       color07 '(Messages):' 1
-color status        brightcolor00 color07 '(New):' 1
-color status        color05       color07 '(Flag):' 1
-color status        color04       color07 '(Tag):' 1
-color status        brightcolor01 color07 '(Del):' 1
-color status        color03       color07 '([^ ]+@[^ ]+) ·' 1
+color status        color07       color08
+color status        color06       color08 '^=([^·]*).*Messages' 1
+color status        color02       color08 '(Messages):' 1
+color status        brightdefault color08 '(New):' 1
+color status        color05       color08 '(Flag):' 1
+color status        color04       color08 '(Tag):' 1
+color status        brightcolor01 color08 '(Del):' 1
+color status        color03       color08 '([^ ]+@[^ ]+) ·' 1
 # Pager status
-color status        green         color07 '^  ([0-9]+)'      1 # number
-color status        brightgreen   color07 '/[0-9]+ ... (.{20})'  1 # author
-color status        brightcolor00 color07 ' · ([^·]*)·+ \('   1 # subject
+color status        green         color08 '^  ([0-9]+)'      1 # number
+color status        brightgreen   color08 '/[0-9]+ ... (.{20})'  1 # author
+color status        brightdefault color08 ' · ([^·]*)·+ \('   1 # subject
 
 # Pager
 set pager_format = '  %C/%m %Z %-20.20n · %s %*·· (%P) '
 
 # Index
-set index_format = '%4C %Z %-20.20L (%?l?%4l&%4c?) %?M?{%2M} ?%s %*  %?X?   [%X]?%<[y?%<[m?%<[d?%[  %H:%M]&%[ %a %d]>&%[ %b %d]>&%[ %Y-%m]> '
+set index_format = '%4C %Z %-20.20F (%?l?%4l&%4c?) %?M?{%2M} ?%s %*  %?X?   [%X]?%<[y?%<[m?%<[d?%[  %H:%M]&%[ %a %d]>&%[ %b %d]>&%[ %Y-%m]> '
 color index_number    color02       default
 color index_collapsed brightcolor03 default
-color index           color12       default '~R'
-color index_author    color10       default '~R'
-color index_subject   color10       default '~R'
-color index_author    color12       default '~l' # Lists
-color index_subject   color12       default '~l' # Lists
-color index_flags     color12       default '~l' # Lists
-color index           brightcolor00 default '~N'
-color index_author    brightcolor00 default '~N'
-color index_subject   brightcolor00 default '~N'
-color index_flags     brightcolor00 default '~N'
-color index           brightcolor00 default '~v~(~N)' # Collapsed threads
-color index_author    brightcolor00 default '~v~(~N)'
-color index_subject   brightcolor00 default '~v~(~N)'
-color index_flags     brightcolor00 default '~v~(~N)'
+color index           color07       default '~R'
+color index_author    default       default '~R'
+color index_subject   default       default '~R'
+color index           brightdefault default '~N'
+color index_author    brightdefault default '~N'
+color index_subject   brightdefault default '~N'
+color index_flags     brightdefault default '~N'
+color index           brightdefault default '~v~(~N)' # Collapsed threads with new messages
+color index_author    brightdefault default '~v~(~N)'
+color index_subject   brightdefault default '~v~(~N)'
+color index_flags     brightdefault default '~v~(~N)'
 color index_author    brightcolor01 default '~D'
 color index_subject   brightcolor01 default '~D'
 color index_flags     brightcolor01 default '~D'
 color index_flags     brightcolor04 default '%f internal' # internal group
 color index_flags     brightcolor05 default '~g' # signed
 color index_flags     brightcolor05 default '~G' # encrypted
-color index_flags     brightcolor15 color05 '~F' # flagged
-color index_flags     brightcolor15 color04 '~T' # tagged
+color index_flags     brightcolor00 color05 '~F' # flagged
+color index_flags     brightcolor00 color04 '~T' # tagged
 
-# Sidebar
-color sidebar_new       brightcolor00 default
-color sidebar_ordinary  color10       default
-color sidebar_divider   color07       color07
-color sidebar_highlight brightcolor06 default
+# # Sidebar
+# color sidebar_new       brightcolor00 default
+# color sidebar_ordinary  color10       default
+# color sidebar_divider   color08       color08
+# color sidebar_highlight brightcolor06 default
 
 # Attachments
-color attach_headers brightcolor15 color02    '\[-- The following data is.*signed.*'
-color attach_headers brightcolor15 color02    '\[-- End of signed data.*'
-color attach_headers brightcolor15 color05    '\[-- Attachment.*'
+color attach_headers brightcolor00 color02    '\[-- The following data is.*signed.*'
+color attach_headers brightcolor00 color02    '\[-- End of signed data.*'
+color attach_headers brightcolor00 color05    '\[-- Attachment.*'
 color attach_headers color02       default    '\[-- (BEGIN|END) PGP SIGNED MESSAGE.*'
 color attach_headers color01       default    '\[-- (BEGIN|END) PGP MESSAGE.*'
 color attach_headers color05       default    '\[-- (BEGIN|END) PGP PUBLIC KEY.*'
 
 # Header
 set header_color_partial
-color hdrdefault color14       default
-color header     brightcolor00 default '^(Subject).*'
+color hdrdefault color07       default
+color header     brightdefault default '^(Subject).*'
 color header     brightcolor02 default '^(From).*'
 
 # Body
@@ -173,20 +171,20 @@ color body color06 default '[-a-z_0-9.%$]+@[-a-z_0-9.]+\.[-a-z][-a-z]+'
 color body blue    default "([a-z][a-z0-9+-]*://(((([a-z0-9_.!~*'();:&=+$,-]|%[0-9a-f][0-9a-f])*@)?((([a-z0-9]([a-z0-9-]*[a-z0-9])?)\\.)*([a-z]([a-z0-9-]*[a-z0-9])?)\\.?|[0-9]+\\.[0-9]+\\.[0-9]+\\.[0-9]+)(:[0-9]+)?)|([a-z0-9_.!~*'()$,;:@&=+-]|%[0-9a-f][0-9a-f])+)(/([a-z0-9_.!~*'():@&=+$,-]|%[0-9a-f][0-9a-f])*(;([a-z0-9_.!~*'():@&=+$,-]|%[0-9a-f][0-9a-f])*)*(/([a-z0-9_.!~*'():@&=+$,-]|%[0-9a-f][0-9a-f])*(;([a-z0-9_.!~*'():@&=+$,-]|%[0-9a-f][0-9a-f])*)*)*)?(\\?([a-z0-9_.!~*'();/?:@&=+$,-]|%[0-9a-f][0-9a-f])*)?(#([a-z0-9_.!~*'();/?:@&=+$,-]|%[0-9a-f][0-9a-f])*)?|(www|ftp)\\.(([a-z0-9]([a-z0-9-]*[a-z0-9])?)\\.)*([a-z]([a-z0-9-]*[a-z0-9])?)\\.?(:[0-9]+)?(/([-a-z0-9_.!~*'():@&=+$,]|%[0-9a-f][0-9a-f])*(;([-a-z0-9_.!~*'():@&=+$,]|%[0-9a-f][0-9a-f])*)*(/([-a-z0-9_.!~*'():@&=+$,]|%[0-9a-f][0-9a-f])*(;([-a-z0-9_.!~*'():@&=+$,]|%[0-9a-f][0-9a-f])*)*)*)?(\\?([-a-z0-9_.!~*'();/?:@&=+$,]|%[0-9a-f][0-9a-f])*)?(#([-a-z0-9_.!~*'();/?:@&=+$,]|%[0-9a-f][0-9a-f])*)?)[^].,:;!)? \t\r\n<>\"]"
 color body color01 default "\\[[0-9]+\\]"
 color body color15 default "[┌┬┐├┼┤└┴┘│─]"
-color body color14 default "[━]"
+color body color07 default "[━]"
 color body color05 color15 "\\[(cid|image):[^]]+\\]"
 
 # PGP
-color body    color00       color01 '(\*BAD\* signature)'
-color body    brightcolor15 color01 '^Error: decryption/verification failed:.*'
-color body    brightcolor15 color02 '(Good signature)'
-color body    brightcolor15 color03 '(Problem signature)'
+color body    brightcolor00 color01 '(\*BAD\* signature)'
+color body    brightcolor00 color01 '^Error: decryption/verification failed:.*'
+color body    brightcolor00 color02 '(Good signature)'
+color body    brightcolor00 color03 '(Problem signature)'
 
 # Atlassian
-color body    brightcolor15 color04 '( OPEN )'
-color body    brightcolor15 color02 '( APPROVED | MERGED | RESOLVED )'
-color body    brightcolor15 color01 '( UNAPPROVED | DECLINED )'
-color body    brightcolor15 color03 '( NEEDS WORK )'
+color body    brightcolor00 color04 '( OPEN )'
+color body    brightcolor00 color02 '( APPROVED | MERGED | RESOLVED )'
+color body    brightcolor00 color01 '( UNAPPROVED | DECLINED )'
+color body    brightcolor00 color03 '( NEEDS WORK )'
 
 # GitHub
 color body    color06 default '^-- [a-zA-Z ]+ --$'
@@ -195,24 +193,24 @@ color body    color03 default '^    M [^(]*'
 color body    color02 default '^    A [^(]*'
 color body    color02 default '^  \*.*succeeded '
 color body    color01 default '^  \* [0-9a-f-]+ failed '
-color body    color15 color04 '^Reopened #[0-9]+'
-color body    color15 color02 '^Closed #[0-9]+'
-color body    color15 color02 '^Merged #[0-9]+'
+color body    color00 color04 '^Reopened #[0-9]+'
+color body    color00 color02 '^Closed #[0-9]+'
+color body    color00 color02 '^Merged #[0-9]+'
 color body    color06 default '@[a-zA-Z0-9]+'        # mentions
-color body    color10 default '[a-zA-Z/_]+#[0-9]+'
-color body    color13 default '[a-f0-9]{40}'
+color body    color02 default '[a-zA-Z/_]+#[0-9]+'
+color body    color05 default '[a-f0-9]{40}'
 color body    brightdefault default '[A-Za-z0-9/_-]+#[0-9]+' # issue number
 
 # Gerrit
 color body    color01 default '^D ([^ ]|\\ )+$'
 color body    color03 default '^M ([^ ]|\\ )+$'
 color body    color02 default '^A ([^ ]|\\ )+$'
-color body    brightcolor15 color01 '(Workflow|Code-Review|Verified)-[12]'
-color body    brightcolor15 color02 '(Workflow|Code-Review|Verified|Review-Priority)\+[12]'
+color body    brightcolor00 color01 '(Workflow|Code-Review|Verified)-[12]'
+color body    brightcolor00 color02 '(Workflow|Code-Review|Verified|Review-Priority)\+[12]'
 
 # Header-like in body
-color body    color14       default '^(To|Date|Sent|Cc|Location|When|Where): .*$'
-color body    color14       default '^(An|Datum|Wann|Ort|Gesendet): .*$'
+color body    color07       default '^(To|Date|Sent|Cc|Location|When|Where): .*$'
+color body    color07       default '^(An|Datum|Wann|Ort|Gesendet): .*$'
 color body    brightcolor00 default '^(Subject): .*'
 color body    brightcolor00 default '^(Betreff): .*'
 color body    brightcolor02 default '^(From|Organizer): .*$'
@@ -228,7 +226,7 @@ color body    brightcolor05 default '^End:.*'
 color body    color04       default '( *[-+=#*~_]){6,}'
 
 # Compose
-color compose header           color14       default
+color compose header           color07       default
 color compose security_encrypt brightcolor02 default
 color compose security_sign    brightcolor02 default
 color compose security_both    brightcolor02 default

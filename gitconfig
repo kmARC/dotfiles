@@ -7,9 +7,6 @@
 [commit]
   gpgsign = true
 
-[core]
-  pager = less -F -X
-
 [credential]
   helper = /usr/lib/git-core/git-credential-libsecret
 
@@ -32,9 +29,17 @@
   spellingdictionary = en_US
   diffopts = --word-diff --patience
 
+[interactive]
+  diffFilter = /usr/share/git/diff-highlight/diff-highlight | less -F -X
+
 [merge]
   tool = vimdiff
   conflictstyle = diff3
+
+[pager]
+  log = /usr/share/git/diff-highlight/diff-highlight | less -F -X
+  show = /usr/share/git/diff-highlight/diff-highlight | less -F -X
+  diff = /usr/share/git/diff-highlight/diff-highlight | less -F -X
 
 [pull]
   rebase = true

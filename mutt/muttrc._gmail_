@@ -16,4 +16,6 @@ unset smtp_authenticators
 # Addressbook
 set query_command = "khard email -a '$from' -p '%s'"
 
+
+folder-hook 'INBOX' 'unmailboxes =[Gmail].All\ Mail =[Gmail].Spam'
 # vim: set ft=neomuttrc:

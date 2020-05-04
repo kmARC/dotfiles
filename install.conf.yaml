@@ -20,6 +20,8 @@
       path: config/fontconfig
     ~/.config/mopidy/mopidy.conf:
       path: config/mopidy/mopidy.conf
+    ~/.config/mako:
+      path: config/mako
     ~/.config/ranger/rc.conf:
       path: config/ranger/rc.conf
     ~/.config/redshift:
