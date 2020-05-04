@@ -1,0 +1,65 @@
+global !p
+import re
+import subprocess
+
+def lookup_names():
+	if snip.tabstop == 0:
+		entries = subprocess.check_output(["khard", "email", "-p"], universal_newlines=True).split('\n')
+		lines = []
+		for line in snip.buffer[snip.tabstops[6].start[0]:snip.tabstops[6].end[0]+1]:
+			(email, name) = (None, None)
+			for entry in entries:
+				if entry.lower().find(line[2:].lower()) > -1:
+						try:
+								matches = re.match(r"^([^\t]+)\t([^\t]+).*$", entry)
+								name = matches.group(2)
+								email = matches.group(1)
+								break
+						except:
+								pass
+			if name:
+				lines += [f'- {name} <{email}>']
+			else:
+				lines += [f'{line}']
+		snip.buffer[snip.tabstops[6].start[0]:snip.tabstops[6].end[0]+1] = lines
+
+import base64
+from pathlib import Path
+def insert_base64_img():
+	if snip.tabstop == 0:
+		path = snip.tabstops[2].current_text
+		# The current line that contains path. This path will be replaced
+		current_line = snip.buffer[snip.line]
+		try:
+			with open(Path(path).expanduser(), "rb") as img:
+				# Replace the path with the base64-encoded format of the image
+				snip.buffer[snip.tabstops[2].start[0]:snip.tabstops[2].end[0]+1] = [current_line.replace(path, "data:image/png;base64," + base64.b64encode(img.read()).decode('ascii'))]
+				snip.cursor.set(snip.line, len(snip.buffer[snip.line]))
+		except:
+			# Exceptions can happen when the file cannot be found
+			snip.buffer[snip.tabstops[2].start[0]:snip.tabstops[2].end[0]+1] = [current_line.replace(path, "Not found: " + path)]
+			snip.cursor.set(snip.line, snip.tabstops[2].start[1])
+endglobal
+
+post_jump "lookup_names()"
+snippet minutes "Meeting minutes" b
+# ${1:Meeting} - ${2:Title}
+
+(${3:`!v strftime("%Y-%m-%d")`} ${4:`!v strftime("%H:%M")`})
+
+## Participants:
+- `getent passwd $(whoami) | cut -d : -f 5` <${5:korondi.mark@gmail.com}>
+- ${6:Participant #1}
+
+## Minutes
+$0
+
+## Todos
+- 
+endsnippet
+
+
+post_jump "insert_base64_img()"
+snippet imgembed "Image"
+![${1:pic alt}](${2:path}${3/.+/ "/}${3:opt title}${3/.+/"/})$0
+endsnippet

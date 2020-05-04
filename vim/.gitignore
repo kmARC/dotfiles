@@ -1,0 +1,11 @@
+vimbackup/*
+vimswap/*
+vimundo/*
+spell/*
+misc/*
+sessions/*
+!*/.gitkeep
+plugged
+plugin
+autoload/plug.vim.old
+colorscheme.vim
