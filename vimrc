@@ -1,7 +1,7 @@
 call plug#begin('~/.vim/plugged')
 "--- Look&Feel ---
 Plug 'itchyny/lightline.vim'
-Plug 'altercation/vim-colors-solarized'
+Plug 'jan-warchol/selenized', {'rtp': 'editors/vim'}
 "--- Tools ---
 Plug 'direnv/direnv.vim'
 Plug 'gcmt/taboo.vim'
@@ -18,6 +18,7 @@ Plug 'Raimondi/delimitMate'
 Plug 'godlygeek/tabular'            , {'on': 'Tabularize'}
 Plug 'michaeljsmith/vim-indent-object'
 Plug 'tpope/vim-surround'
+Plug 'tpope/vim-abolish'
 "--- Git ---
 Plug 'airblade/vim-gitgutter'
 Plug 'kmarc/vim-fubitive'
@@ -42,6 +43,7 @@ Plug 'majutsushi/tagbar'            , {'on': ['TagbarToggle']}
 Plug 'maralla/completor.vim'
 Plug 'sheerun/vim-polyglot'
 Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-endwise'
 Plug 'w0rp/ale'
 "--- Markdown, Wiki, Todo ---
 Plug 'freitass/todo.txt-vim'        , {'for': 'todo'}
@@ -97,6 +99,7 @@ let &showbreak="\u21b5"
 set hidden
 set wildmenu
 set backup
+set backupcopy=yes
 set undofile
 set directory=~/.vim/vimswap//
 set backupdir=~/.vim/vimbackup//
@@ -126,31 +129,39 @@ set shiftwidth=2
 set softtabstop=2
 set tabstop=2
 set tagcase=match
-set clipboard=unnamedplus,autoselectplus
 set breakindent
 
-"--- Look & Feel ----
+"--- Fix wayland copy-paste
+if has_key(environ(), "WAYLAND_DISPLAY")
+  xnoremap "+y y:call system("wl-copy", @")<cr>
+  nnoremap "+p :let @+=substitute(system("wl-paste --no-newline"),           '<C-v><C-m>', '', 'g')<cr>"+p
+  nnoremap "*p :let @*=substitute(system("wl-paste --no-newline --primary"), '<C-v><C-m>', '', 'g')<cr>"*p
+end
+
+"--- TMUX integration
 if has_key(environ(), "TMUX")
   " Set tmux-compatible title
   set t_ts=]2;
   set t_fs=\\
+
+  let g:slime_target = "tmux"
+else
+  let g:slime_target = "vimterminal"
 endif
 
-let g:lightline = { 'colorscheme': 'solarized', 'component': { 'filename': '%t'}, 'mode_map': {'c': 'COMMAND'} }
-let g:solarized_underline=0
-
-
-let g:xml_syntax_folding=1
+"--- Look & Feel ----
 syntax on
+set t_Co=16
 
-set background=light
-colors solarized
-call lightline#enable()
+" Theme overrides
+augroup theme
+  autocmd!
+  autocmd ColorScheme * highlight Normal ctermbg=NONE
+                        \| let g:lightline = { 'colorscheme': g:colors_name . '_' . &g:background }
+                        \| call lightline#enable()
+augroup END
 
-" Make background transparent
-highlight Normal              ctermbg=NONE
-" Remove underline from CursorLineNr
-highlight CursorlineNr                                 cterm=NONE
+colors selenized
 
 "--- Mappings ----
 cmap w!!                   w !sudo tee > /dev/null %
@@ -404,22 +415,11 @@ let g:fzf_tags_command = 'git ls-files | ctags -L-'
 let g:gist_open_browser_after_post = 1
 let g:gutentags_cache_dir = s:dir_misc
 let g:jsdoc_enable_es6 = 1
-let g:lightline.active = {
-    \ 'left': [ [ 'mode', 'paste' ],
-    \           [ 'readonly', 'relativepath', 'modified' ] ],
-    \ 'right': [ [ 'lineinfo' ],
-    \            [ 'percent' ],
-    \            [ 'fileformat', 'fileencoding', 'filetype' ] ] }
-let g:lightline.inactive = {
-    \ 'left': [ [ 'relativepath' ] ],
-    \ 'right': [ [ 'lineinfo' ],
-    \            [ 'percent' ] ] }
 let g:netrw_bufsettings = "rnu"
 let g:netrw_home = s:dir_misc
 let g:netrw_liststyle = 3
 let g:polyglot_disabled = ['markdown']
 let g:slime_paste_file = tempname()
-let g:slime_target = "tmux"
 let g:taboo_renamed_tab_format =' %N %l%m '
 let g:taboo_tab_format = ' %N %f%m '
 let g:tagbar_autoclose = 1
@@ -460,6 +460,7 @@ let g:tagbar_type_typescript = {
 let g:tagbar_type_jsx = g:tagbar_type_typescript
 let g:vim_markdown_folding_disabled = 1
 let g:vim_markdown_frontmatter = 1
+let g:xml_syntax_folding=1
 let test#strategy = 'vimux'
 
 set modeline
