@@ -5,14 +5,10 @@ Plug 'jan-warchol/selenized', {'rtp': 'editors/vim'}
 "--- Tools ---
 Plug 'direnv/direnv.vim'
 Plug 'gcmt/taboo.vim'
-if has("mac")
-  Plug '/usr/local/opt/fzf'
-endif
 Plug 'junegunn/fzf.vim'
 Plug 'scrooloose/nerdtree'          , {'on': ['NERDTreeToggle', 'NERDTreeFind']}
 Plug 'tpope/vim-obsession'
 Plug 'tpope/vim-unimpaired'
-" Plug 'tpope/vim-rsi' " FIXME: breaks with macros
 "--- Editing ---
 Plug 'Raimondi/delimitMate'
 Plug 'godlygeek/tabular'            , {'on': 'Tabularize'}
@@ -67,7 +63,7 @@ Plug 'maralla/completor-typescript' , {'for': 'typescript*'}
 "--- DevOps ---
 Plug 'andrewstuart/vim-kubernetes'
 Plug 'hashivim/vim-terraform'       , {'for': 'terraform'}
-Plug 'pearofducks/ansible-vim'
+" Plug 'pearofducks/ansible-vim'
 "--- Dependencies ---
 Plug 'mattn/webapi-vim'             " for: gist-vim
 Plug 'tpope/vim-repeat'
@@ -130,6 +126,7 @@ set softtabstop=2
 set tabstop=2
 set tagcase=match
 set breakindent
+set virtualedit=block,onemore
 
 "--- Fix wayland copy-paste
 if has_key(environ(), "WAYLAND_DISPLAY")
@@ -165,8 +162,6 @@ colors selenized
 
 "--- Mappings ----
 cmap w!!                   w !sudo tee > /dev/null %
-nnoremap <C-e>             2<C-e>
-nnoremap <C-y>             2<C-y>
 nnoremap <C-p>             :Files<CR>
 nnoremap <expr> <F7>       expand('%') == '' ? ":NERDTreeToggle<CR>" : ":NERDTreeFind<CR>"
 nnoremap <space>           :ls<CR>:sbuffer 
@@ -184,18 +179,13 @@ nnoremap <leader>fG        :call fzf#vim#grep(
   \   'rg --column --line-number --no-heading --color=always --smart-case ""',
   \   1, {'options':'--delimiter : --nth 4.. --exact --query=<C-r><C-w> +i'}
   \ )<CR> " FZF grep current word only in file content
-nnoremap <leader>ft        :Tags<CR>
-nnoremap <leader>fT        :Tags '<C-r><C-w><CR>
-nnoremap <leader>fb        :Buffers<CR>
-nnoremap <leader>fw        :Windows<CR>
-nnoremap <leader>w         :call BufferClose()<CR>
-nnoremap <leader>W         :call BufferCloseAll()<CR>
-nnoremap <leader>z         :call ToggleFold()<CR>
+
 vnoremap <leader>t,        :Tabularize /^[^,]*,/l0l1<CR>
 vnoremap <leader>t:        :Tabularize /^[^:]*:/l0l1<CR>
 vnoremap <leader>t=        :Tabularize /^[^=]*\zs/l1c1l1<CR>
 vnoremap <leader>t<Space>  :Tabularize /\S\+/l1l0<CR>
 vnoremap <leader>t<bar>    :Tabularize /<bar>\+/l1c1<CR>
+
 nnoremap <leader>1         1gt
 nnoremap <leader>2         2gt
 nnoremap <leader>3         3gt
@@ -206,24 +196,19 @@ nnoremap <leader>7         7gt
 nnoremap <leader>8         8gt
 nnoremap <leader>9         9gt
 nnoremap <leader>0         0gt
-nnoremap <leader>"         :normal ysiW"<CR>
-nnoremap <leader>'         :normal ysiW'<CR>
-nnoremap <leader>)         :normal ysiW)<CR>
-nnoremap <ScrollWheelDown> 2<C-E>
-nnoremap <ScrollWheelUp>   2<C-Y>
-nnoremap <M-ScrollWheelDown> 4zl
-nnoremap <M-ScrollWheelUp>   4zh
+
 nnoremap j                 gj
 nnoremap k                 gk
 nnoremap gj                j
 nnoremap gk                k
-nnoremap n                 nzz
-nnoremap N                 Nzz
+
 nnoremap [h                :GitGutterPrevHunk<CR>
 nnoremap ]h                :GitGutterNextHunk<CR>
+
 nnoremap <leader>aa        :!xdg-open https://docs.ansible.com/ansible/latest/list_of_all_modules.html<CR>
 nnoremap <leader>am        :!xdg-open https://docs.ansible.com/ansible/latest/<C-R><C-W>_module.html\#options<CR>
 nnoremap <leader>as        :!xdg-open https://docs.ansible.com/ansible/latest/reference_appendices/playbooks_keywords.html?highlight=<C-R><C-W><CR>
+
 nnoremap <silent> t<C-n>   :TestNearest<CR>
 nnoremap <silent> t<C-f>   :TestFile<CR>
 nnoremap <silent> t<C-s>   :TestSuite<CR>
@@ -249,17 +234,14 @@ augroup vimrc
   autocmd FileType terraform                      setlocal commentstring=#%s
   autocmd FileType plaintex,text,markdown         setlocal tw=100 colorcolumn=101 formatprg=par\ -jw100
   "----- folding
-  autocmd FileType make,dockerfile,yaml,dosini,conf
-                                                \ setlocal foldmethod=expr foldexpr=getline(v:lnum)=~'^\\s*'.&commentstring[0]
-  autocmd BufRead,BufNewFile **/tasks/**.y*ml
-                                                \ setlocal foldmethod=indent foldlevelstart=1 foldnestmax=1
+  " autocmd FileType make,dockerfile,yaml,dosini,conf
+  "                                               \ setlocal foldmethod=expr foldexpr=getline(v:lnum)=~'^\\s*'.&commentstring[0]
+  " autocmd BufRead,BufNewFile **/tasks/**.y*ml
+  "                                               \ setlocal foldmethod=indent foldlevelstart=1 foldnestmax=1
   autocmd FileType python                         setlocal foldmethod=indent foldlevelstart=2 foldnestmax=2 colorcolumn=101 textwidth=100
   "----- filetypes
   autocmd BufRead,BufNewFile Vagrantfile          setlocal filetype=ruby
   autocmd BufRead,BufNewFile *.tsx                setlocal filetype=typescript.jsx
-  autocmd BufRead,BufNewFile playbook-*.y*ml      setlocal filetype=yaml.ansible
-  autocmd BufRead,BufNewFile *.yml.j2             setlocal filetype=yaml.jinja2
-  autocmd BufRead,BufNewFile .yamllint            setlocal filetype=yaml
   autocmd FileType           xml                  setlocal foldmethod=syntax | %foldopen!
   "----- marks
   autocmd BufWritePost *.css,*.less,*.scss        normal! mC
@@ -275,18 +257,15 @@ augroup vimrc
   autocmd WinLeave *                              if &l:buftype == "" | setlocal nu nornu | set nocursorline
   autocmd FileType nerdtree                       nnoremap <buffer> <F7> :NERDTreeToggle<CR>
   autocmd FileType help                           wincmd L | 80 wincmd | | setlocal winfixwidth
-  autocmd BufReadPost fugitive://*                setlocal bufhidden=delete
-  autocmd BufReadPost *.git/index                 setlocal nobuflisted
   "----- startup
   autocmd VimEnter * call CheckProject()
   "----- include/define
   autocmd FileType javascript*,typescript*        setlocal include=from
                                               \ | setlocal define=export.\\{-\\}\\(interface\\\|function\\\|const\\\|type\\\|class\\\|var\\)
   "----- misc
-  autocmd BufWritePost ~/Documents/Home/index.md  silent !pandoc --output ~/Documents/Home/index.html
-                                                               \ --css github-pandoc.css
-                                                               \ --standalone
-                                                               \ %
+  autocmd BufWritePost ~/Documents/Home/index.md
+          \ silent !pandoc --output ~/Documents/Home/index.html
+                         \ --css github-pandoc.css --standalone %
   "----- skeleton
   autocmd BufNewFile *.sh                         0r ~/.vim/skeleton/skeleton.sh
   "----- mail
@@ -301,37 +280,6 @@ augroup END
 
 
 "--- Functions --- {{{
-let s:fcw=2
-function! ToggleFold()
-  if &l:foldcolumn == s:fcw
-    normal zR
-    let &l:foldcolumn = 0
-  else
-    let &l:foldcolumn = s:fcw
-    let &l:foldlevel = 0
-  endif
-  if &l:foldmethod == 'manual'
-    let &l:foldmethod='indent'
-  elseif &l:foldmethod == 'indent'
-    let &l:foldmethod='manual'
-  endif
-endfunction
-
-function! BufferClose()
-  if &l:buftype != '' || ! &l:buflisted
-    quit
-  elseif len(getbufinfo({'buflisted':1})) == 1
-    bd
-  else
-    normal 
-    bd #
-  endif
-endfunction
-
-function! BufferCloseAll()
-  bufdo if &l:buftype == '' | call BufferClose() | endif
-endfunction
-
 let s:sess = fnamemodify($MYVIMRC, ":h") . '/sessions/' . substitute($PWD, '\/', '%', 'g')
 
 function! Project()
@@ -350,7 +298,7 @@ endfunction
 command! ProjectDelete call ProjectDelete()
 
 function! CheckProject()
-  if filereadable(s:sess) && argc() == 0
+  if argc() == 0 && &g:errorfile == 'errors.err' && filereadable(s:sess)
       call Project()
     endif
 endfunction
@@ -399,19 +347,15 @@ command! -nargs=1 KubeHelp :call KubeHelp(<f-args>)
 "--- Plugin configurations ---
 let NERDTreeRespectWildIgnore = 1
 let NERDTreeQuitOnOpen = 1
-let g:EditorConfig_exclude_patterns = ['fugitive://.*']
 let g:UltiSnipsEditSplit = "vertical"
 let g:UltiSnipsExpandTrigger = "<c-j>"
 let g:UltiSnipsListSnippets = "<c-h>"
 let g:UltiSnipsSnippetsDir = "~/.vim/UltiSnips"
 let g:ale_python_pylint_change_directory = 0
-let g:ale_sh_shellcheck_options = '-x'
+let g:ale_sh_shellcheck_options = '--external-sources'
 let g:ale_lint_delay = 2000
 let g:completor_completion_delay = 300
 let g:delimitMate_expand_cr = 2
-let g:fzf_buffers_jump = 1
-let g:fzf_files_options = '--exact'
-let g:fzf_tags_command = 'git ls-files | ctags -L-'
 let g:gist_open_browser_after_post = 1
 let g:gutentags_cache_dir = s:dir_misc
 let g:jsdoc_enable_es6 = 1
@@ -424,6 +368,7 @@ let g:taboo_renamed_tab_format =' %N %l%m '
 let g:taboo_tab_format = ' %N %f%m '
 let g:tagbar_autoclose = 1
 let g:tagbar_autofocus = 1
+" {{{
 let g:tagbar_type_typescript = {
   \   'ctagstype': 'typescript',
   \   'kinds': [
@@ -457,6 +402,7 @@ let g:tagbar_type_typescript = {
   \   },
   \   'deffile': '~/.ctags.d/typescript.ctags'
   \ }
+" }}}
 let g:tagbar_type_jsx = g:tagbar_type_typescript
 let g:vim_markdown_folding_disabled = 1
 let g:vim_markdown_frontmatter = 1
