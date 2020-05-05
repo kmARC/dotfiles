@@ -1,6 +1,8 @@
+# Yaml
 --langmap=yaml:.yml.yaml
 --regex-yaml=/^\s*([A-Za-z0-9_-]+):/\1/k,key,keys/
 
+# Shell
 --langmap=sh:+.env.envrc
 --regex-sh=/(^|\s)([A-Za-z0-9_]+)=[^\s]/\2/v,var,vars/
 --regex-sh=/for\s+([A-Za-z0-9_]+)\s+in/ \2/v,var,vars/

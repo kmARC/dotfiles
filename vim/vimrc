@@ -272,8 +272,6 @@ augroup vimrc
   autocmd FileType mail                           setlocal formatoptions+=watqc nojoinspaces nosmartindent | match ErrorMsg '\s\+$'
   "----- test
   autocmd BufWrite *                              if test#exists() | TestFile
-  "----- prevent vim to clear clipboard upon exiting
-  autocmd VimLeave *                              call system("xsel -ib", getreg('+'))
   "----- ALE
   autocmd BufRead,BufNewFile /tmp/*.yml           ALEDisable
 augroup END
