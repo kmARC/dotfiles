@@ -6,7 +6,6 @@ Plug 'jan-warchol/selenized', {'rtp': 'editors/vim'}
 Plug 'direnv/direnv.vim'
 Plug 'gcmt/taboo.vim'
 Plug 'junegunn/fzf.vim'
-Plug 'scrooloose/nerdtree'          , {'on': ['NERDTreeToggle', 'NERDTreeFind']}
 Plug 'tpope/vim-obsession'
 Plug 'tpope/vim-unimpaired'
 "--- Editing ---
@@ -163,7 +162,7 @@ colors selenized
 "--- Mappings ----
 cmap w!!                   w !sudo tee > /dev/null %
 nnoremap <C-p>             :Files<CR>
-nnoremap <expr> <F7>       expand('%') == '' ? ":NERDTreeToggle<CR>" : ":NERDTreeFind<CR>"
+nnoremap <F7>              :Lexplore<CR>
 nnoremap <space>           :ls<CR>:sbuffer 
 nnoremap <leader><space>   :edit **/*.<C-r>=expand('%:e')<return><C-z><C-p><C-u>edit **/*
 nnoremap <F8>              :TagbarToggle<CR>
@@ -255,7 +254,6 @@ augroup vimrc
   "----- buffer/window opts
   autocmd WinEnter *                              if &l:buftype == "" | setlocal nu   rnu | set   cursorline
   autocmd WinLeave *                              if &l:buftype == "" | setlocal nu nornu | set nocursorline
-  autocmd FileType nerdtree                       nnoremap <buffer> <F7> :NERDTreeToggle<CR>
   autocmd FileType help                           wincmd L | 80 wincmd | | setlocal winfixwidth
   "----- startup
   autocmd VimEnter * call CheckProject()
@@ -343,8 +341,6 @@ command! -nargs=1 KubeHelp :call KubeHelp(<f-args>)
 " }}}
 
 "--- Plugin configurations ---
-let NERDTreeRespectWildIgnore = 1
-let NERDTreeQuitOnOpen = 1
 let g:UltiSnipsEditSplit = "vertical"
 let g:UltiSnipsExpandTrigger = "<c-j>"
 let g:UltiSnipsListSnippets = "<c-h>"
@@ -357,9 +353,12 @@ let g:delimitMate_expand_cr = 2
 let g:gist_open_browser_after_post = 1
 let g:gutentags_cache_dir = s:dir_misc
 let g:jsdoc_enable_es6 = 1
+let g:netrw_banner = 0
+let g:netrw_browse_split = 4
 let g:netrw_bufsettings = "rnu"
 let g:netrw_home = s:dir_misc
 let g:netrw_liststyle = 3
+let g:netrw_winsize = -40
 let g:polyglot_disabled = ['markdown']
 let g:slime_paste_file = tempname()
 let g:taboo_renamed_tab_format =' %N %l%m '
