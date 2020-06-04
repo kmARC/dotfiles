@@ -10,16 +10,19 @@ set $menu rofi -combi-modi drun\,run\,ssh\,emoji -show combi -modi combi\,ssh\,e
 ### Output configuration
 output * bg /usr/share/backgrounds/gnome/LightWaves.jpg fill
 
-# You can get the names of your outputs by running: swaymsg -t get_outputs
-output DP-4 pos 0 0
-output DP-3 pos 0 0
-output eDP-1 pos 2560 0
+set $output1 'Acer Technologies G277HU T1UEE0048501'
+set $output2 'Dell Inc. DELL U3818DW 97F8P92P0PEL'
 
-workspace 1 output DP-3 DP-4 eDP-1
-workspace 2 output DP-3 DP-4 eDP-1
-workspace 3 output DP-3 DP-4 eDP-1
-workspace 4 output DP-3 DP-4 eDP-1
-workspace 5 output DP-3 DP-4 eDP-1
+# You can get the names of your outputs by running: swaymsg -t get_outputs
+output $output1 pos 0 0
+output $output2 pos 0 0
+output eDP-1 pos 3840 0
+
+workspace 1 output $output1 $output2 eDP-1
+workspace 2 output $output1 $output2 eDP-1
+workspace 3 output $output1 $output2 eDP-1
+workspace 4 output $output1 $output2 eDP-1
+workspace 5 output $output1 $output2 eDP-1
 workspace 6 output eDP-1
 workspace 7 output eDP-1
 workspace 8 output eDP-1
@@ -30,8 +33,8 @@ exec swayidle -w \
       timeout 40 'acpi --ac-adapter | grep -q "off-line" && brightnessctl -s set 5%' \
           resume 'brightnessctl -r' \
       timeout 90 'swaylock -f -c 000000' \
-      timeout 120 'swaymsg "output * dpms off"' \
-           resume 'swaymsg "output * dpms on"' \
+      timeout 90 'swaymsg "output * dpms off"' \
+          resume 'swaymsg "output * dpms on"' \
       before-sleep 'swaylock -f -c 000000'
 
 ### Input configuration
@@ -106,6 +109,7 @@ exec swayidle -w \
     bindsym $mod+7 workspace 7
     bindsym $mod+8 workspace 8
     bindsym $mod+9 workspace 9
+    bindsym $mod+0 workspace ' '
     # Move focused container to workspace
     bindsym $mod+Shift+1 move container to workspace 1
     bindsym $mod+Shift+2 move container to workspace 2
@@ -213,6 +217,8 @@ mode "app" {
   bindsym p exec bwmenu --auto-lock 86400
   # Mnemonic: [v]irtual machine
   bindsym v exec env QT_QPA_PLATFORM=xcb virtualbox
+  # Mnemonic: [w]indows 10
+  bindsym w exec env QT_QPA_PLATFORM=xcb vboxmanage startvm Windows10
   # Mnemonix: tmu[x]
   bindsym x exec $term -e bash -ci 'tmux-session'
 
@@ -266,8 +272,8 @@ bar {
 }
 
 # Autostart apps
-exec dex ~/.config/autostart/*
-exec dex /etc/xdg/autostart/blueman.desktop
+exec dex --autostart
+exec /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 
 # Window rules
 # (Citrix client)
