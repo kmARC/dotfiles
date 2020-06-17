@@ -1,7 +1,7 @@
 call plug#begin('~/.vim/plugged')
 "--- Look&Feel ---
 Plug 'itchyny/lightline.vim'
-Plug 'jan-warchol/selenized', {'rtp': 'editors/vim'}
+Plug 'jan-warchol/selenized'        , {'rtp': 'editors/vim'}
 "--- Tools ---
 Plug 'direnv/direnv.vim'
 Plug 'gcmt/taboo.vim'
@@ -15,7 +15,6 @@ Plug 'michaeljsmith/vim-indent-object'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-abolish'
 "--- Git ---
-Plug 'airblade/vim-gitgutter'
 Plug 'kmarc/vim-fubitive'
 Plug 'mattn/gist-vim'
 Plug 'shumphrey/fugitive-gitlab.vim'
@@ -87,7 +86,6 @@ set smartcase
 set incsearch
 set hlsearch
 set scrolloff=3
-set cursorline
 set list
 let &listchars="trail:\u00b7,tab:\u00bb ,nbsp:\u00b7"
 let &showbreak="\u21b5"
@@ -102,7 +100,7 @@ set undodir=~/.vim/vimundo//
 set viminfo+=n~/.vim/misc/viminfo
 let s:dir_misc = expand('~/.vim/misc')
 set number relativenumber
-set colorcolumn=81
+set fillchars+=vert:\│
 set path+=**
 set laststatus=2
 set wildignore+=*.o,*.so,*.a,*.swp,*.zip,*.pyc,*.class,tags,.git/**,.env/**,__pycache__,build
@@ -119,7 +117,7 @@ set wildcharm=<C-z>
 set grepprg=rg\ --vimgrep\ $*
 set foldlevel=0
 set noshowmode
-set signcolumn=yes
+set signcolumn=number
 set shiftwidth=2
 set softtabstop=2
 set tabstop=2
@@ -149,15 +147,25 @@ endif
 syntax on
 set t_Co=16
 
-" Theme overrides
 augroup theme
   autocmd!
-  autocmd ColorScheme * highlight Normal ctermbg=NONE
-                        \| let g:lightline = { 'colorscheme': g:colors_name . '_' . &g:background }
-                        \| call lightline#enable()
+  autocmd ColorScheme * highlight VertSplit ctermfg=8 ctermbg=NONE guibg=NONE
+                     \| highlight LineNr              ctermbg=NONE guibg=NONE
+                     \| let g:lightline.colorscheme = g:colors_name . '_' . &g:background
+                     \| call lightline#enable()
 augroup END
 
-colors selenized
+set background=light
+let g:lightline = {
+      \ 'active': {
+      \   'left': [ [ 'mode', 'paste' ],
+      \             [ 'gitbranch', 'readonly', 'filename', 'modified' ] ]
+      \ },
+      \ 'component_function': {
+      \   'gitbranch': 'FugitiveHead'
+      \ },
+      \ }
+colorscheme selenized
 
 "--- Mappings ----
 cmap w!!                   w !sudo tee > /dev/null %
@@ -231,13 +239,13 @@ augroup vimrc
   autocmd FileType markdown                       setlocal softtabstop=4 tabstop=4 shiftwidth=4
   "----- formatting
   autocmd FileType terraform                      setlocal commentstring=#%s
-  autocmd FileType plaintex,text,markdown         setlocal tw=100 colorcolumn=101 formatprg=par\ -jw100
+  autocmd FileType plaintex,text,markdown         setlocal textwidth=100 formatprg=par\ -jw100
   "----- folding
   " autocmd FileType make,dockerfile,yaml,dosini,conf
   "                                               \ setlocal foldmethod=expr foldexpr=getline(v:lnum)=~'^\\s*'.&commentstring[0]
   " autocmd BufRead,BufNewFile **/tasks/**.y*ml
   "                                               \ setlocal foldmethod=indent foldlevelstart=1 foldnestmax=1
-  autocmd FileType python                         setlocal foldmethod=indent foldlevelstart=2 foldnestmax=2 colorcolumn=101 textwidth=100
+  autocmd FileType python                         setlocal foldmethod=indent foldlevelstart=2 foldnestmax=2 textwidth=100
   "----- filetypes
   autocmd BufRead,BufNewFile Vagrantfile          setlocal filetype=ruby
   autocmd BufRead,BufNewFile *.tsx                setlocal filetype=typescript.jsx
@@ -252,8 +260,8 @@ augroup vimrc
   autocmd BufWritePost *.yml                      normal! mY
   autocmd BufWritePost *.vim,vimrc                normal! mV
   "----- buffer/window opts
-  autocmd WinEnter *                              if &l:buftype == "" | setlocal nu   rnu | set   cursorline
-  autocmd WinLeave *                              if &l:buftype == "" | setlocal nu nornu | set nocursorline
+  autocmd WinEnter *                              if &l:buftype == "" | setlocal nu   rnu
+  autocmd WinLeave *                              if &l:buftype == "" | setlocal nu nornu
   autocmd FileType help                           wincmd L | 80 wincmd | | setlocal winfixwidth
   "----- startup
   autocmd VimEnter * call CheckProject()
@@ -267,11 +275,9 @@ augroup vimrc
   "----- skeleton
   autocmd BufNewFile *.sh                         0r ~/.vim/skeleton/skeleton.sh
   "----- mail
-  autocmd FileType mail                           setlocal formatoptions+=watqc nojoinspaces nosmartindent | match ErrorMsg '\s\+$'
+  autocmd FileType mail                           setlocal formatoptions+=watqc nojoinspaces | match ErrorMsg '\s\+$'
   "----- test
   autocmd BufWrite *                              if test#exists() | TestFile
-  "----- ALE
-  autocmd BufRead,BufNewFile /tmp/*.yml           ALEDisable
 augroup END
 
 
@@ -354,10 +360,11 @@ let g:gist_open_browser_after_post = 1
 let g:gutentags_cache_dir = s:dir_misc
 let g:jsdoc_enable_es6 = 1
 let g:netrw_banner = 0
-let g:netrw_browse_split = 4
-let g:netrw_bufsettings = "rnu"
+" let g:netrw_browse_split = 4
+" let g:netrw_bufsettings = "rnu"
 let g:netrw_home = s:dir_misc
-let g:netrw_liststyle = 3
+" let g:netrw_liststyle = 3
+let g:netrw_keepdir = 0
 let g:netrw_winsize = -40
 let g:polyglot_disabled = ['markdown']
 let g:slime_paste_file = tempname()
