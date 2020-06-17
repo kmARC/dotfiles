@@ -69,61 +69,58 @@ call plug#end()
 
 filetype plugin indent on
 
-set mouse+=a
-set ttymouse=xterm2
-set tabstop=4
-set shiftwidth=4
-set softtabstop=4
-set smarttab
-set expandtab
+let s:dir_misc = expand('~/.vim/misc')
+
 set autoindent
-set nowrap
-set linebreak
 set backspace=indent,eol,start
-set pastetoggle=<F12>
-set ignorecase
-set smartcase
-set incsearch
-set hlsearch
-set scrolloff=3
-set list
-let &listchars="trail:\u00b7,tab:\u00bb ,nbsp:\u00b7"
-let &showbreak="\u21b5"
-set hidden
-set wildmenu
 set backup
 set backupcopy=yes
-set undofile
-set directory=~/.vim/vimswap//
 set backupdir=~/.vim/vimbackup//
-set undodir=~/.vim/vimundo//
-set viminfo+=n~/.vim/misc/viminfo
-let s:dir_misc = expand('~/.vim/misc')
-set number relativenumber
-set fillchars+=vert:\│
-set path+=**
-set laststatus=2
-set wildignore+=*.o,*.so,*.a,*.swp,*.zip,*.pyc,*.class,tags,.git/**,.env/**,__pycache__,build
-set wildignore+=.direnv,.mypy_cache
+set breakindent
 set completeopt=preview,longest,menuone
+set diffopt+=vertical,algorithm:patience
+set directory=~/.vim/vimswap//
+set expandtab
+set fillchars+=vert:│
+set hidden
+set hlsearch
+set ignorecase
+set incsearch
+set laststatus=2
+set linebreak
+set list
+set listchars=trail:·,nbsp:·,tab:»\ ,
+set mouse+=a
+set noshowmode showcmd
+set nowrap
+set number relativenumber
+set pastetoggle=<F12>
+set scrolloff=3
+set sessionoptions+=tabpages,globals,localoptions
+set shiftwidth=2
+set showbreak=↵
+set signcolumn=number
+set smartcase
+set smarttab
+set softtabstop=2
 set splitbelow
 set splitright
-set diffopt+=vertical,algorithm:patience
-set sessionoptions+=tabpages,globals,localoptions
 set switchbuf+=usetab
-set wildignorecase
-set wildmode=list:full
-set wildcharm=<C-z>
-set grepprg=rg\ --vimgrep\ $*
-set foldlevel=0
-set noshowmode
-set signcolumn=number
-set shiftwidth=2
-set softtabstop=2
 set tabstop=2
 set tagcase=match
-set breakindent
+set ttymouse=xterm2
+set undodir=~/.vim/vimundo//
+set undofile
+set viminfo+=n~/.vim/misc/viminfo
 set virtualedit=block,onemore
+set wildcharm=<C-z>
+set wildignore+=__pycache__,.mypy_cache,*.pyc " Python
+set wildignore+=*.o,*.so,*.a                  " C/C++
+set wildignore+=*.class                       " Java
+set wildignore+=.direnv,build                 " Misc
+set wildignorecase
+set wildmenu
+set wildmode=list:full
 
 "--- Fix wayland copy-paste
 if has_key(environ(), "WAYLAND_DISPLAY")
@@ -151,6 +148,7 @@ augroup theme
   autocmd!
   autocmd ColorScheme * highlight VertSplit ctermfg=8 ctermbg=NONE guibg=NONE
                      \| highlight LineNr              ctermbg=NONE guibg=NONE
+                     \| highlight! link Directory Identifier
                      \| let g:lightline.colorscheme = g:colors_name . '_' . &g:background
                      \| call lightline#enable()
 augroup END
@@ -169,12 +167,16 @@ colorscheme selenized
 
 "--- Mappings ----
 cmap w!!                   w !sudo tee > /dev/null %
+
 nnoremap <C-p>             :Files<CR>
+
 nnoremap <F7>              :Lexplore<CR>
-nnoremap <space>           :ls<CR>:sbuffer 
-nnoremap <leader><space>   :edit **/*.<C-r>=expand('%:e')<return><C-z><C-p><C-u>edit **/*
 nnoremap <F8>              :TagbarToggle<CR>
 nnoremap <F9>              :lclose<CR>:cclose<CR>:pclose<CR>
+
+nnoremap <space>           :ls<CR>:sbuffer 
+nnoremap <leader><space>   :edit **/*.<C-r>=expand('%:e')<return><C-z><C-p><C-u>edit **/*
+
 nnoremap <leader>fp        :call fzf#vim#files(
   \   0, {'options':'--query=' . expand('%:e') . '$\ '}
   \ )<CR> " FZF files with the same extension as current
@@ -209,9 +211,6 @@ nnoremap k                 gk
 nnoremap gj                j
 nnoremap gk                k
 
-nnoremap [h                :GitGutterPrevHunk<CR>
-nnoremap ]h                :GitGutterNextHunk<CR>
-
 nnoremap <leader>aa        :!xdg-open https://docs.ansible.com/ansible/latest/list_of_all_modules.html<CR>
 nnoremap <leader>am        :!xdg-open https://docs.ansible.com/ansible/latest/<C-R><C-W>_module.html\#options<CR>
 nnoremap <leader>as        :!xdg-open https://docs.ansible.com/ansible/latest/reference_appendices/playbooks_keywords.html?highlight=<C-R><C-W><CR>
@@ -236,20 +235,16 @@ augroup vimrc
   "----- mappings
   autocmd FileType markdown                       nnoremap <buffer> <F6> :LivedownToggle<CR>
   autocmd FileType markdown                       nnoremap <buffer> <F8> :Toc<CR><C-w>L<C-w>50<bar>:setlocal winfixwidth<CR>
-  autocmd FileType markdown                       setlocal softtabstop=4 tabstop=4 shiftwidth=4
+  autocmd FileType netrw                          nnoremap <buffer> <c-l> <c-w>l
   "----- formatting
+  autocmd FileType mail                           setlocal formatoptions+=watqc nojoinspaces | match ErrorMsg '\s\+$'
+  autocmd FileType markdown                       setlocal softtabstop=4 tabstop=4 shiftwidth=4
+  autocmd FileType markdown,plaintex,text         setlocal textwidth=100 formatprg=par\ -jw100
   autocmd FileType terraform                      setlocal commentstring=#%s
-  autocmd FileType plaintex,text,markdown         setlocal textwidth=100 formatprg=par\ -jw100
-  "----- folding
-  " autocmd FileType make,dockerfile,yaml,dosini,conf
-  "                                               \ setlocal foldmethod=expr foldexpr=getline(v:lnum)=~'^\\s*'.&commentstring[0]
-  " autocmd BufRead,BufNewFile **/tasks/**.y*ml
-  "                                               \ setlocal foldmethod=indent foldlevelstart=1 foldnestmax=1
-  autocmd FileType python                         setlocal foldmethod=indent foldlevelstart=2 foldnestmax=2 textwidth=100
+  autocmd FileType xml                            setlocal foldmethod=syntax | %foldopen!
   "----- filetypes
   autocmd BufRead,BufNewFile Vagrantfile          setlocal filetype=ruby
   autocmd BufRead,BufNewFile *.tsx                setlocal filetype=typescript.jsx
-  autocmd FileType           xml                  setlocal foldmethod=syntax | %foldopen!
   "----- marks
   autocmd BufWritePost *.css,*.less,*.scss        normal! mC
   autocmd BufWritePost *.html                     normal! mH
@@ -260,8 +255,8 @@ augroup vimrc
   autocmd BufWritePost *.yml                      normal! mY
   autocmd BufWritePost *.vim,vimrc                normal! mV
   "----- buffer/window opts
-  autocmd WinEnter *                              if &l:buftype == "" | setlocal nu   rnu
-  autocmd WinLeave *                              if &l:buftype == "" | setlocal nu nornu
+  autocmd WinEnter *                              if &l:buftype == "" && &l:filetype != "netrw" | setlocal nu   rnu
+  autocmd WinLeave *                              if &l:buftype == "" && &l:filetype != "netrw" | setlocal nu nornu
   autocmd FileType help                           wincmd L | 80 wincmd | | setlocal winfixwidth
   "----- startup
   autocmd VimEnter * call CheckProject()
@@ -274,8 +269,6 @@ augroup vimrc
                          \ --css github-pandoc.css --standalone %
   "----- skeleton
   autocmd BufNewFile *.sh                         0r ~/.vim/skeleton/skeleton.sh
-  "----- mail
-  autocmd FileType mail                           setlocal formatoptions+=watqc nojoinspaces | match ErrorMsg '\s\+$'
   "----- test
   autocmd BufWrite *                              if test#exists() | TestFile
 augroup END
@@ -360,10 +353,9 @@ let g:gist_open_browser_after_post = 1
 let g:gutentags_cache_dir = s:dir_misc
 let g:jsdoc_enable_es6 = 1
 let g:netrw_banner = 0
-" let g:netrw_browse_split = 4
-" let g:netrw_bufsettings = "rnu"
+let g:netrw_browse_split = 4
 let g:netrw_home = s:dir_misc
-" let g:netrw_liststyle = 3
+let g:netrw_liststyle = 3
 let g:netrw_keepdir = 0
 let g:netrw_winsize = -40
 let g:polyglot_disabled = ['markdown']
