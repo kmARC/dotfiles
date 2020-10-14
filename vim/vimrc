@@ -1,3 +1,5 @@
+let g:polyglot_disabled = ['markdown']
+
 call plug#begin('~/.vim/plugged')
 "--- Look&Feel ---
 Plug 'itchyny/lightline.vim'
@@ -364,7 +366,6 @@ let g:netrw_browse_split = 4
 let g:netrw_home = s:dir_misc
 let g:netrw_liststyle = 3
 let g:netrw_winsize = -40
-let g:polyglot_disabled = ['markdown']
 let g:slime_paste_file = tempname()
 let g:taboo_renamed_tab_format =' %N %l%m '
 let g:taboo_tab_format = ' %N %f%m '
