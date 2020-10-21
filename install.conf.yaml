@@ -85,6 +85,5 @@
     ~/.ctags:
 
 - shell:
-    - [git submodule update --init --recursive, Installing/updating submodules]
     - [~/.tmux/plugins/tpm/bin/install_plugins, Installing new TMUX plugins]
     - [~/.tmux/plugins/tpm/bin/update_plugins all, Upgrading TMUX plugins]
