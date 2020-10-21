@@ -25,7 +25,7 @@ bind-key K prev-feed
 articlelist-format "%4i %f (%4L) %?T?|%-17T|  ?%t  %> %D"
 
 color listnormal        default default
-color listnormal_unread default default bold
+color listnormal_unread color15 default bold
 color listfocus         color0   cyan
 color listfocus_unread  color0   cyan    bold
 color info              white   color8

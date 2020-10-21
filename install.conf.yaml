@@ -14,8 +14,12 @@
     # Explicit paths
     ~/.ctags.d/config.ctags:
       path: ctags
+    ~/.config/swappy/config:
+      path: config/swappy/config
     ~/.config/alacritty.yml:
       path: config/alacritty.yml
+    ~/.config/clight.conf:
+      path: config/clight.conf
     ~/.config/fontconfig:
       path: config/fontconfig
     ~/.config/mopidy/mopidy.conf:
@@ -50,6 +54,8 @@
       path: newsboat/config
     ~/.ssh/all_hosts.conf:
       path: ssh/all_hosts.conf
+    ~/.terminfo:
+      path: terminfo
     ~/.tmux/plugins/tpm:
       path: tmux/plugins/tpm
     ~/.todo.actions.d:
@@ -63,11 +69,12 @@
 
     # Top levels
     ~/.bashrc.kmarc:
-    ~/.curlrc:
     ~/.gitconfig:
+    ~/.gitignore_global:
     ~/.liquidpromptrc:
     ~/.mailcap:
     ~/.muttrc:
+    ~/.pam_environment:
     ~/.rtorrent.rc:
     ~/.tmux.conf:
     ~/.todo.cfg:

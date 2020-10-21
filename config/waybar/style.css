@@ -2,9 +2,10 @@
     border: none;
     border-radius: 0;
     /* `otf-font-awesome` is required to be installed for icons */
-    font-family: "Noto Sans", "Font Awesome 5 Free Solid";
-    /* font-size: 13px; */
+    font-family: Roboto, Helvetica, Arial, sans-serif;
+    font-size: 13px;
     min-height: 0;
+    font-weight: bold;
 }
 
 window#waybar {
@@ -42,8 +43,6 @@ window#waybar.chromium {
     background-color: transparent;
     color: #ffffff;
     border-bottom: 3px solid transparent;
-
-    font-weight: bold;
 }
 
 /* https://github.com/Alexays/Waybar/wiki/FAQ#the-workspace-buttons-have-a-strange-hover-effect */
@@ -76,20 +75,22 @@ window#waybar.chromium {
 #network,
 #pulseaudio,
 #custom-media,
+#tray,
 #mode,
 #idle_inhibitor,
-#mpd,
-#window {
-    padding: 0 5px;
-    margin: 0 4px;
+#mpd {
+    padding: 0px 5px;
+    margin: 0px 4px;
     color: #ffffff;
-
-    font-weight: bold;
 }
 
-#tray {
-    padding: 0 10px;
-    margin: 0 4px;
+#clock {
+    /* background-color: #64727D; */
+}
+
+#battery {
+    /* background-color: #ffffff; */
+    /* color: #000000; */
 }
 
 #battery.charging {
@@ -99,8 +100,8 @@ window#waybar.chromium {
 
 @keyframes blink {
     to {
-        background-color: #000000;
-        color: #ffffff;
+        background-color: #ffffff;
+        color: #000000;
     }
 }
 
@@ -118,8 +119,30 @@ label:focus {
     background-color: #000000;
 }
 
+#cpu {
+    /* background-color: #2ecc71; */
+    /* color: #000000; */
+}
+
+#memory {
+    /* background-color: #9b59b6; */
+}
+
+#backlight {
+    /* background-color: #90b1b1; */
+}
+
+#network {
+    /* background-color: #2980b9; */
+}
+
 #network.disconnected {
     background-color: #f53c3c;
+}
+
+#pulseaudio {
+    /* background-color: #f1c40f; */
+    /* color: #000000; */
 }
 
 #pulseaudio.muted {
@@ -128,9 +151,9 @@ label:focus {
 }
 
 #custom-media {
-    background-color: #66cc99;
-    color: #2a5c45;
-    min-width: 100px;
+    /* background-color: #66cc99; */
+    /* color: #2a5c45; */
+    /* min-width: 100px; */
 }
 
 #custom-media.custom-spotify {
@@ -141,8 +164,20 @@ label:focus {
     background-color: #ffa000;
 }
 
+#temperature {
+    /* background-color: #f0932b; */
+}
+
 #temperature.critical {
     background-color: #eb4d4b;
+}
+
+#tray {
+    /* background-color: #2980b9; */
+}
+
+#idle_inhibitor {
+    /* background-color: #2d3436; */
 }
 
 #idle_inhibitor.activated {
@@ -151,8 +186,8 @@ label:focus {
 }
 
 #mpd {
-    background-color: #66cc99;
-    color: #2a5c45;
+    /* background-color: #66cc99; */
+    /* color: #2a5c45; */
 }
 
 #mpd.disconnected {

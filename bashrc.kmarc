@@ -78,6 +78,8 @@ export LESS_TERMCAP_se=$'\e[0;49;39m'
 export LESS_TERMCAP_us=$'\e[1;49;36m'
 export LESS_TERMCAP_ue=$'\e[0;49;39m'
 
+[[ -s "/etc/profile.d/grc.bashrc" ]] && source /etc/profile.d/grc.bashrc
+
 #########################
 #  EXPORTS AND ALIASES  #
 #########################
@@ -86,6 +88,7 @@ export EDITOR=vim
 export RIPGREP_CONFIG_PATH=~/.ripgreprc
 export PATH="/usr/share/git/git-jump/:$PATH"
 export PATH="$HOME/bin:$HOME/.local/bin/:$PATH"
+export GOPATH="$HOME/.go"
 
 alias ls="ls --color --group-directories-first"
 alias diff='diff --color=auto'
@@ -103,7 +106,7 @@ alias git-recursive-pull='for d in $(find . -type d -name .git -printf "%h\n"); 
 #############
 export MOZ_ENABLE_WAYLAND=1
 export MOZ_WEBRENDER=1
-export XDG_CURRENT_DESKTOP=Unity
+export XDG_CURRENT_DESKTOP=sway
 export XDG_SESSION_TYPE=wayland
 # Waiting for the following software to properly support wayland:
 # - zoom
@@ -112,3 +115,7 @@ export XDG_SESSION_TYPE=wayland
 # export QT_QPA_PLATFORM=wayland-egl
 export QT_QPA_PLATFORMTHEME=gnome
 export QT_WAYLAND_DISABLE_WINDOWDECORATION=1
+export _JAVA_AWT_WM_NONREPARENTING=1
+export _JAVA_OPTIONS='-Dswing.defaultlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel -Dawt.useSystemAAFontSettings=lcd'
+
+export TERM=xterm-256color-italics
