@@ -1,22 +1,37 @@
+# Default config for sway
+#
+# Copy this to ~/.config/sway/config and edit it to your liking.
+#
+# Read `man 5 sway` for a complete reference.
+
 ### Variables
+#
+# Logo key. Use Mod1 for Alt.
 set $mod Mod4
+# Home row direction keys, like vim
 set $left h
 set $down j
 set $up k
 set $right l
+# Your preferred terminal emulator
 set $term alacritty
-set $menu rofi -combi-modi drun\,run\,ssh\,emoji -show combi -modi combi\,ssh\,emoji -sidebar-mode -show-icons
+# Your preferred application launcher
+# Note: pass the final command to swaymsg so that the resulting window can be opened
+# on the original workspace that the command was run on.
+set $menu rofi -combi-modi drun\,run\,ssh\,emoji -show combi -modi combi\,run\,ssh\,emoji -sidebar-mode -show-icons -normal-window
 
 ### Output configuration
+#
+# Default wallpaper (more resolutions are available in /usr/share/backgrounds/sway/)
 output * bg /usr/share/backgrounds/gnome/LightWaves.jpg fill
-
-set $output1 'Acer Technologies G277HU T1UEE0048501'
-set $output2 'Dell Inc. DELL U3818DW 97F8P92P0PEL'
-
+#
+# Example configuration:
+#
+#   output HDMI-A-1 resolution 1920x1080 position 1920,0
+#
 # You can get the names of your outputs by running: swaymsg -t get_outputs
-output $output1 pos 0 0
-output $output2 pos 0 0
-output eDP-1 pos 3840 0
+set $output1 'Acer Technologies G277HU T1UEE0048501'
+set $output2 'DP-1'
 
 workspace 1 output $output1 $output2 eDP-1
 workspace 2 output $output1 $output2 eDP-1
@@ -27,17 +42,47 @@ workspace 6 output eDP-1
 workspace 7 output eDP-1
 workspace 8 output eDP-1
 workspace 9 output eDP-1
+workspace 10 output eDP-1
 
 ### Idle configuration
-exec swayidle -w \
-      timeout 40 'acpi --ac-adapter | grep -q "off-line" && brightnessctl -s set 5%' \
-          resume 'brightnessctl -r' \
-      timeout 90 'swaylock -f -c 000000' \
-      timeout 90 'swaymsg "output * dpms off"' \
-          resume 'swaymsg "output * dpms on"' \
-      before-sleep 'swaylock -f -c 000000'
+#
+# Example configuration:
+#
+# exec swayidle -w \
+#          timeout 300 'swaylock -f -c 000000' \
+#          timeout 600 'swaymsg "output * dpms off"' resume 'swaymsg "output * dpms on"' \
+#          before-sleep 'swaylock -f -c 000000'
+#
+# This will lock your screen after 300 seconds of inactivity, then turn off
+# your displays after another 300 seconds, and turn your screens back on when
+# resumed. It will also lock your screen before your computer goes to sleep.
+set $dpms_on    swaymsg "output * dpms on"
+#
+# after 10 sec if locked:  dpms off screen
+# after 40 sec on battery: lower brightness
+# after 90 sec on battery: lock
+# after 5  min on power:   lock
+# before sleep:            lock
+exec_always swayidle -w \
+         timeout 10     '~/bin/idle.sh dpms_off' \
+                 resume '~/bin/idle.sh dpms_on' \
+         timeout 90     '~/bin/idle.sh lock_battery' \
+                 resume '~/bin/idle.sh dpms_on' \
+         timeout 300    '~/bin/idle.sh lock_ac' \
+                 resume '~/bin/idle.sh dpms_on' \
+         before-sleep   '~/bin/idle.sh lock'
 
 ### Input configuration
+#
+# Example configuration:
+#
+#   input "2:14:SynPS/2_Synaptics_TouchPad" {
+#       dwt enabled
+#       tap enabled
+#       natural_scroll enabled
+#       middle_emulation enabled
+#   }
+#
 # You can get the names of your inputs by running: swaymsg -t get_inputs
 # Read `man 5 sway-input` for more information about this section.
 
@@ -49,7 +94,9 @@ exec swayidle -w \
     }
 
     input type:touchpad {
+      dwt enabled
       tap enabled
+      middle_emulation enabled
     }
 
     input type:pointer {
@@ -90,36 +137,49 @@ exec swayidle -w \
     bindsym $mod+$down focus down
     bindsym $mod+$up focus up
     bindsym $mod+$right focus right
+    # # Or use $mod+[up|down|left|right]
+    # bindsym $mod+Left focus left
+    # bindsym $mod+Down focus down
+    # bindsym $mod+Up focus up
+    # bindsym $mod+Right focus right
 
     # Move the focused window with the same, but add Shift
     bindsym $mod+Shift+$left move left
     bindsym $mod+Shift+$down move down
     bindsym $mod+Shift+$up move up
     bindsym $mod+Shift+$right move right
+    # # Ditto, with arrow keys
+    # bindsym $mod+Shift+Left move left
+    # bindsym $mod+Shift+Down move down
+    # bindsym $mod+Shift+Up move up
+    # bindsym $mod+Shift+Right move right
 #
 # Workspaces:
 #
     # Switch to workspace
-    bindsym $mod+1 workspace 1
-    bindsym $mod+2 workspace 2
-    bindsym $mod+3 workspace 3
-    bindsym $mod+4 workspace 4
-    bindsym $mod+5 workspace 5
-    bindsym $mod+6 workspace 6
-    bindsym $mod+7 workspace 7
-    bindsym $mod+8 workspace 8
-    bindsym $mod+9 workspace 9
-    bindsym $mod+0 workspace ' '
+    bindsym $mod+1 workspace number 1
+    bindsym $mod+2 workspace number 2
+    bindsym $mod+3 workspace number 3
+    bindsym $mod+4 workspace number 4
+    bindsym $mod+5 workspace number 5
+    bindsym $mod+6 workspace number 6
+    bindsym $mod+7 workspace number 7
+    bindsym $mod+8 workspace number 8
+    bindsym $mod+9 workspace number 9
+    bindsym $mod+0 workspace number 10
     # Move focused container to workspace
-    bindsym $mod+Shift+1 move container to workspace 1
-    bindsym $mod+Shift+2 move container to workspace 2
-    bindsym $mod+Shift+3 move container to workspace 3
-    bindsym $mod+Shift+4 move container to workspace 4
-    bindsym $mod+Shift+5 move container to workspace 5
-    bindsym $mod+Shift+6 move container to workspace 6
-    bindsym $mod+Shift+7 move container to workspace 7
-    bindsym $mod+Shift+8 move container to workspace 8
-    bindsym $mod+Shift+9 move container to workspace 9
+    bindsym $mod+Shift+1 move container to workspace number 1
+    bindsym $mod+Shift+2 move container to workspace number 2
+    bindsym $mod+Shift+3 move container to workspace number 3
+    bindsym $mod+Shift+4 move container to workspace number 4
+    bindsym $mod+Shift+5 move container to workspace number 5
+    bindsym $mod+Shift+6 move container to workspace number 6
+    bindsym $mod+Shift+7 move container to workspace number 7
+    bindsym $mod+Shift+8 move container to workspace number 8
+    bindsym $mod+Shift+9 move container to workspace number 9
+    bindsym $mod+Shift+0 move container to workspace number 10
+    # Note: workspaces can have any name you want, not just numbers.
+    # We just use 1-10 as the default.
 #
 # Layout stuff:
 #
@@ -186,6 +246,26 @@ mode "resize" {
 bindsym $mod+r mode "resize"
 
 #
+# Status Bar:
+#
+# Read `man 5 sway-bar` for more information about this section.
+bar {
+    position top
+
+    # When the status_command prints a new line to stdout, swaybar updates.
+    # The default just shows the current date and time.
+    status_command while date +'%Y-%m-%d %l:%M:%S %p'; do sleep 1; done
+
+    colors {
+        statusline #ffffff
+        background #323232
+        inactive_workspace #32323200 #32323200 #5c5c5c
+    }
+
+    swaybar_command waybar
+}
+
+#
 # App launcher mode
 #
 # This mode let's you quickly lunch an app, bound to a hotkey or the $menu app 
@@ -212,25 +292,21 @@ mode "app" {
   # Mnemonic: [h]ome
   bindsym h exec $term -e bash -ci 'home'
   # Mnemonic: [o]pen. Opens a quick browser with ripgrep's result
-  bindsym o exec xdg-open "$(rg --files | rofi -dmenu -i)"
+  bindsym o exec xdg-open "$(rg --files | rofi -normal-window -dmenu -i)"
   # Mnemonic: [p]assword
-  bindsym p exec bwmenu --auto-lock 86400
+  bindsym p exec bwmenu --auto-lock 604800 -- -normal-window
   # Mnemonic: [v]irtual machine
   bindsym v exec env QT_QPA_PLATFORM=xcb virtualbox
   # Mnemonic: [w]indows 10
   bindsym w exec env QT_QPA_PLATFORM=xcb vboxmanage startvm Windows10
+  # Mnemonic: [a]rch linux
+  bindsym a exec env QT_QPA_PLATFORM=xcb vboxmanage startvm Arch
   # Mnemonix: tmu[x]
   bindsym x exec $term -e bash -ci 'tmux-session'
 
   bindsym Escape mode "default"
 }
-bindsym $mod+space mode "app"
-bindsym --release $mod+space exec sleep $appmode_timeout && swaymsg mode "default"
-
-client.focused '#4c7899' '#285577' '#ffffff' '#4c7899' '#4c7899'
-
-default_border pixel 3
-gaps inner 10
+bindsym $mod+space exec swaymsg mode "app" && sleep $appmode_timeout && swaymsg mode "default"
 
 # Multimedia keys
 bindsym XF86AudioRaiseVolume  exec pactl         set-sink-volume @DEFAULT_SINK@   +5%
@@ -243,18 +319,21 @@ bindsym XF86AudioPrev         exec playerctl     previous
 bindsym XF86MonBrightnessDown exec brightnessctl set -s          5%-
 bindsym XF86MonBrightnessUp   exec brightnessctl set -s          +5%
 
+bindsym --locked XF86Display exec $dpms_on
+
 # Lock screen
-bindsym ctrl+alt+l exec swaylock -f -c 000000
+bindsym ctrl+alt+l exec ~/bin/idle.sh lock
 
 # VPN
 bindsym $mod+F12 exec ~/bin/vpn-pannet.sh
 
 # Capture screen
-bindsym --release       Print exec export IMG=\"$HOME/Pictures/Screenshot from $(date '+%Y-%m-%d %H-%M-%S').png" \
-                                     && grim                "$IMG" && ksnip "$IMG"
-bindsym --release shift+Print exec export IMG=\"$HOME/Pictures/Screenshot from $(date '+%Y-%m-%d %H-%M-%S').png" \
-                                     && grim -g \"$(slurp)" "$IMG" && ksnip "$IMG"
-bindsym --release  $mod+Print exec $HOME/bin/screenshot.sh
+bindsym --release          print exec /usr/share/sway/scripts/grimshot copy screen
+bindsym --release    shift+print exec /usr/share/sway/scripts/grimshot copy area
+bindsym --release     $mod+print exec /usr/share/sway/scripts/grimshot copy win
+bindsym --release       alt+print exec /usr/share/sway/scripts/grimshot save screen - | swappy -f -
+bindsym --release alt+shift+print exec /usr/share/sway/scripts/grimshot save area   - | swappy -f -
+bindsym --release  alt+$mod+print exec /usr/share/sway/scripts/grimshot save win    - | swappy -f -
 
 # Theming
 exec_always xrdb -load ~/.Xresources
@@ -265,30 +344,39 @@ exec_always ~/bin/import-gsettings.sh \
               font-name:gtk-font-name
 exec "while swaymsg; do xsettingsd; done"
 
-# Top bar
-bar {
-  position top
-  swaybar_command waybar
-}
-
-# Autostart apps
-exec dex --autostart
-exec /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
-
+#
 # Window rules
-# (Citrix client)
-assign [app_id="selfservice"]                 workspace 4
+#
 assign [class="Bitwarden"]                    workspace 4
 assign [class="Slack"]                        workspace 6
 assign [class="Microsoft\ Teams\ -\ Preview"] workspace 6
-assign [class="zoom"]                         workspace 7
+assign [class="zoom"]                         workspace 4
+assign [class="Joplin"]                       workspace 9
+# - (Citrix client)
+assign [app_id="selfservice"]                 workspace 4
 
-for_window [class="zoom" title="zoom"] floating enable
-for_window [class="zoom" title="zoom"] border none
 for_window [title="Firefox - Sharing Indicator"] floating enable
+for_window [class="Keybase"]                     floating disable
+for_window [class="Keybase"]                     border 2
+for_window [class="Rofi"]                        floating enable
+# for_window [class="VirtualBox Machine"]          shortcuts_inhibitor disable
+for_window [class="zoom" title="zoom"]           floating enable
+for_window [class="zoom" title="zoom"]           border none
 
-# Activate correct workspaces
-workspace 6
-workspace 1
+# # Activate correct workspaces
+# workspace 6
+# workspace 1
+
+# Autostart apps
+exec dex --autostart
+
+# SSH crap
+exec 'eval `ssh-agent` && ssh-add'
+
+client.focused '#4c7899' '#285577' '#ffffff' '#4c7899' '#4c7899'
+default_border pixel 3
+gaps inner 10
 
 include /etc/sway/config.d/*
+
+exec /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1

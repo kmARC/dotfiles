@@ -2,7 +2,7 @@
 set -Eeuo pipefail
 
 usage() {
-  echo "Usage: $0 (backup|synconly|list|mount|repair)"
+  echo "Usage: $0 (backup|synconly|list|mount|umount|repair)"
   echo "          [-c config] [-d destination] [-p aws profile] [-b s3-bucket]"
   echo "          -s: sync to s3"
   exit
@@ -61,6 +61,8 @@ backup() {
                   --keep-monthly 12 \
                   --keep-yearly 1 \
                   --save-space \
+                  --stats \
+                  --list \
                   "$DEST"
   borg list       "$DEST"
   echo "======"
@@ -82,14 +84,25 @@ mount_repo() {
   echo "======"
   echo "    Backup repository mounted at '$MOUNT_DIR'"
   echo "    To unmount:"
-  echo "        fusermount -u $MOUNT_DIR"
+  echo "        $0 umount"
+  echo "======"
+}
+
+umount_repo() {
+  echo "======"
+  echo "    Backup repositori(es) unmounted:"
+  for d in /tmp/backup.mount.*; do
+    fusermount -u "$d" &>/dev/null || true
+    echo "    - $d"
+    rm -rf "$d"
+  done
   echo "======"
 }
 
 sync_to_s3() {
-  CONNS=($(nmcli connection show --active | tail +2 | sed 's/.*\([0-9a-f]\{8\}-[0-9a-f]\{4\}-[0-9a-f]\{4\}-[0-9a-f]\{4\}-[0-9a-f]\{12\}\).*/\1/g'))
-  for c in ${CONNS[@]}; do
-    IS_METERED=$(nmcli connection show $c | awk  "/metered/{ print \$2 }")
+  mapfile -t CONNS < <(nmcli connection show --active | tail +2 | awk '{print $2}')
+  for c in "${CONNS[@]}"; do
+    IS_METERED="$(nmcli connection show $c | awk  "/metered/{ print \$2 }")"
     if [ "$IS_METERED" == "yes" ]; then
       echo "Not syncing to S3; Metered connection"
       return 0
@@ -164,6 +177,7 @@ case "$ACTION" in
   'synconly') sync_to_s3 ;;
   'list')     list ;;
   'mount')    mount_repo ;;
+  'umount')   umount_repo ;;
   'repair')   repair ;;
   *)          usage ;;
 esac

@@ -3,12 +3,18 @@
 
 [alias]
   stag = tag -s
+  graph = log --graph --oneline --all
+  mr = !sh -c 'git fetch $1 merge-requests/$2/head:mr-$1-$2 && git checkout mr-$1-$2' -
+  mrg = !sh -c 'git fetch $1 merge-requests/$2/merge:mrg-$1-$2 && git checkout mrg-$1-$2' -
 
 [commit]
   gpgsign = true
 
 [credential]
   helper = /usr/lib/git-core/git-credential-libsecret
+
+[core]
+  excludesfile = ~/.gitignore_global
 
 [diff]
   tool = vimdiff
@@ -30,16 +36,16 @@
   diffopts = --word-diff --patience
 
 [interactive]
-  diffFilter = /usr/share/git/diff-highlight/diff-highlight | less -F -X
+  diffFilter = /usr/share/git/diff-highlight/diff-highlight | less -X
 
 [merge]
   tool = vimdiff
   conflictstyle = diff3
 
 [pager]
-  log = /usr/share/git/diff-highlight/diff-highlight | less -F -X
-  show = /usr/share/git/diff-highlight/diff-highlight | less -F -X
-  diff = /usr/share/git/diff-highlight/diff-highlight | less -F -X
+  log = /usr/share/git/diff-highlight/diff-highlight | less -X
+  show = /usr/share/git/diff-highlight/diff-highlight | less -X
+  diff = /usr/share/git/diff-highlight/diff-highlight | less -X
 
 [pull]
   rebase = true
@@ -65,6 +71,7 @@
   title-blur = black white bold
   title-focus = 12 white
 
-# vim: set ft=gitconfig:
 [http]
 	version = HTTP/1.1
+
+# vim: set ft=gitconfig:
