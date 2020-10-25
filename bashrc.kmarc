@@ -95,6 +95,7 @@ alias diff='diff --color=auto'
 alias grep='grep --color=auto'
 alias mutt='neomutt'
 alias git-recursive-pull='for d in $(find . -type d -name .git -printf "%h\n"); do (echo ***$d*** && cd $d && git pull --all && echo); done'
+alias sudo='sudo '
 
 ##################
 #  LIQUIDPROMPT  #
@@ -119,3 +120,12 @@ export _JAVA_AWT_WM_NONREPARENTING=1
 export _JAVA_OPTIONS='-Dswing.defaultlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel -Dawt.useSystemAAFontSettings=lcd'
 
 export TERM=xterm-256color-italics
+
+##################################################################
+#  AutoStart                                                     #
+#  https://wiki.archlinux.org/index.php/Sway#Autostart_on_login  #
+##################################################################
+if [[ -z $DISPLAY ]] && [[ $(tty) = /dev/tty1 ]]; then
+  XKB_DEFAULT_LAYOUT=us exec sway
+fi
+

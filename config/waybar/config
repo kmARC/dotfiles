@@ -6,7 +6,7 @@
     // "width": 1280, // Waybar width
     // Choose the order of the modules
     "modules-left": ["sway/workspaces", "sway/mode", "sway/window"],
-    "modules-center": ["clock"],
+    "modules-center": ["clock", "sway/language"],
     "modules-right": ["tray", "idle_inhibitor", "pulseaudio", "network", "cpu", "memory", "temperature", "backlight", "battery"],
     // Modules configuration
     "sway/workspaces": {
@@ -27,8 +27,12 @@
     "sway/mode": {
         "format": "<span style=\"italic\">{}</span>"
     },
+    "sway/language": {
+        "format": "{}",
+        "max-length": 50
+    },
     "mpd": {
-        "format": "{stateIcon} {consumeIcon}{randomIcon}{repeatIcon}{singleIcon}{artist} - {album} - {title} ({elapsedTime:%M:%S}/{totalTime:%M:%S}) ",
+        "format": "{stateIcon} {consumeIcon}{randomIcon}{repeatIcon}{singleIcon}{artist} - {album} - {title} ({elapsedTime:%M:%S}/{totalTime:%M:%S}) ⸨{songPosition}|{queueLength}⸩ ",
         "format-disconnected": "Disconnected ",
         "format-stopped": "{consumeIcon}{randomIcon}{repeatIcon}{singleIcon}Stopped ",
         "unknown-tag": "N/A",
@@ -61,8 +65,8 @@
         }
     },
     "tray": {
-        // "icon-size": 16,
-        "spacing": 15
+        // "icon-size": 21,
+        "spacing": 10
     },
     "clock": {
         // "timezone": "America/New_York",

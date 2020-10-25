@@ -19,11 +19,14 @@ set $term alacritty
 # Note: pass the final command to swaymsg so that the resulting window can be opened
 # on the original workspace that the command was run on.
 set $menu rofi -combi-modi drun\,run\,ssh\,emoji -show combi -modi combi\,run\,ssh\,emoji -sidebar-mode -show-icons -normal-window
+set $nag exec swaynagmode --edge bottom
+
+swaynag_command $nag -R
 
 ### Output configuration
 #
 # Default wallpaper (more resolutions are available in /usr/share/backgrounds/sway/)
-output * bg /usr/share/backgrounds/gnome/LightWaves.jpg fill
+output * bg ~/Pictures/Wallpaper.jpg fill
 #
 # Example configuration:
 #
@@ -32,6 +35,7 @@ output * bg /usr/share/backgrounds/gnome/LightWaves.jpg fill
 # You can get the names of your outputs by running: swaymsg -t get_outputs
 set $output1 'Acer Technologies G277HU T1UEE0048501'
 set $output2 'DP-1'
+output HEADLESS-1 resolution 1920x1080
 
 workspace 1 output $output1 $output2 eDP-1
 workspace 2 output $output1 $output2 eDP-1
@@ -128,7 +132,8 @@ exec_always swayidle -w \
     bindsym --release $mod+Shift+c reload
 
     # Exit sway (logs you out of your Wayland session)
-    bindsym $mod+Shift+e exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -b 'Yes, exit sway' 'swaymsg exit'
+    # bindsym $mod+Shift+e exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -b 'Yes, exit sway' 'swaymsg exit'
+    bindsym $mod+Shift+e $nag -t "warning" -m "Exit Sway?" -b "Exit" "swaymsg exit" -b "Reload" "swaymsg reload"
 #
 # Moving around:
 #
@@ -220,6 +225,31 @@ exec_always swayidle -w \
     # Show the next scratchpad window or hide the focused scratchpad window.
     # If there are multiple scratchpad windows, this command cycles through them.
     bindsym $mod+minus scratchpad show
+
+#
+# swaynagmode
+#
+mode "nag" {
+  bindsym {
+    Ctrl+d    mode "default"
+
+    Ctrl+c    $nag --exit
+    q         $nag --exit
+    Escape    $nag --exit
+
+    Return    $nag --confirm
+
+    Tab       $nag --select prev
+    Shift+Tab $nag --select next
+
+    Left      $nag --select next
+    Right     $nag --select prev
+
+    Up        $nag --select next
+    Down      $nag --select prev
+  }
+}
+
 #
 # Resizing containers:
 #
@@ -309,17 +339,19 @@ mode "app" {
 bindsym $mod+space exec swaymsg mode "app" && sleep $appmode_timeout && swaymsg mode "default"
 
 # Multimedia keys
-bindsym XF86AudioRaiseVolume  exec pactl         set-sink-volume @DEFAULT_SINK@   +5%
-bindsym XF86AudioLowerVolume  exec pactl         set-sink-volume @DEFAULT_SINK@   -5%
-bindsym XF86AudioMute         exec pactl         set-sink-mute   @DEFAULT_SINK@   toggle
-bindsym XF86AudioMicMute      exec pactl         set-source-mute @DEFAULT_SOURCE@ toggle
-bindsym XF86AudioPlay         exec playerctl     play-pause
-bindsym XF86AudioNext         exec playerctl     next
-bindsym XF86AudioPrev         exec playerctl     previous
-bindsym XF86MonBrightnessDown exec brightnessctl set -s          5%-
-bindsym XF86MonBrightnessUp   exec brightnessctl set -s          +5%
+bindsym --locked XF86AudioRaiseVolume  exec pactl         set-sink-volume @DEFAULT_SINK@   +5%
+bindsym --locked XF86AudioLowerVolume  exec pactl         set-sink-volume @DEFAULT_SINK@   -5%
+bindsym --locked XF86AudioMute         exec pactl         set-sink-mute   @DEFAULT_SINK@   toggle
+bindsym --locked XF86AudioMicMute      exec pactl         set-source-mute @DEFAULT_SOURCE@ toggle
+bindsym --locked XF86AudioPlay         exec playerctl     play-pause
+bindsym --locked XF86AudioNext         exec playerctl     next
+bindsym --locked XF86AudioPrev         exec playerctl     previous
+bindsym --locked XF86MonBrightnessDown exec brightnessctl set -s          5%-
+bindsym --locked XF86MonBrightnessUp   exec brightnessctl set -s          +5%
 
 bindsym --locked XF86Display exec $dpms_on
+
+bindsym $mod+grave exec makoctl dismiss
 
 # Lock screen
 bindsym ctrl+alt+l exec ~/bin/idle.sh lock
@@ -359,24 +391,18 @@ for_window [title="Firefox - Sharing Indicator"] floating enable
 for_window [class="Keybase"]                     floating disable
 for_window [class="Keybase"]                     border 2
 for_window [class="Rofi"]                        floating enable
-# for_window [class="VirtualBox Machine"]          shortcuts_inhibitor disable
 for_window [class="zoom" title="zoom"]           floating enable
 for_window [class="zoom" title="zoom"]           border none
 
-# # Activate correct workspaces
-# workspace 6
-# workspace 1
+# Activate correct workspaces
+workspace 6
+workspace 1
 
 # Autostart apps
 exec dex --autostart
-
-# SSH crap
-exec 'eval `ssh-agent` && ssh-add'
 
 client.focused '#4c7899' '#285577' '#ffffff' '#4c7899' '#4c7899'
 default_border pixel 3
 gaps inner 10
 
 include /etc/sway/config.d/*
-
-exec /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1

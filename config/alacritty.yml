@@ -160,8 +160,8 @@ font:
 draw_bold_text_with_bright_colors: false
 
 # Colors (Selenized dark)
-colors_selenized_dark: &dark
-  primary:
+colors_selenized_dark:
+  primary: # {{{ 
     background: '0x103c48'
     foreground: '0xadbcbc'
   normal:
@@ -182,10 +182,11 @@ colors_selenized_dark: &dark
     magenta: '0xff84cd'
     cyan:    '0x53d6c7'
     white:   '0xcad8d9'
+# }}}
 
 # Colors (Selenized light)
-colors_selenized_light: &light
-  primary:
+colors_selenized_light:
+  primary:  # {{{
     background: '0xfbf3db'
     foreground: '0x53676d'
   normal:
@@ -206,6 +207,108 @@ colors_selenized_light: &light
     magenta: '0xc44392'
     cyan:    '0x00978a'
     white:   '0x3a4d53'
+    # }}}
+
+# Colors (Selenized white)
+colors_selenized_white: &light
+  primary:  # {{{
+    background: '0xffffff'
+    foreground: '0x474747'
+  normal:
+    black:   '0xebebeb'
+    red:     '0xd6000c'
+    green:   '0x1d9700'
+    yellow:  '0xc49700'
+    blue:    '0x0064e4'
+    magenta: '0xdd0f9d'
+    cyan:    '0x00ad9c'
+    white:   '0x878787'
+  bright:
+    black:   '0xcdcdcd'
+    red:     '0xbf0000'
+    green:   '0x008400'
+    yellow:  '0xaf8500'
+    blue:    '0x0054cf'
+    magenta: '0xc7008b'
+    cyan:    '0x009a8a'
+    white:   '0x282828'
+# }}}
+
+# Colors (Selenized black)
+colors_selenized_black: &dark
+  primary:  # {{{
+    background: '0x181818'
+    foreground: '0xb9b9b9'
+  normal:
+    black:   '0x252525'
+    red:     '0xed4a46'
+    green:   '0x70b433'
+    yellow:  '0xdbb32d'
+    blue:    '0x368aeb'
+    magenta: '0xeb6eb7'
+    cyan:    '0x3fc5b7'
+    white:   '0x777777'
+  bright:
+    black:   '0x3b3b3b'
+    red:     '0xff5e56'
+    green:   '0x83c746'
+    yellow:  '0xefc541'
+    blue:    '0x4f9cfe'
+    magenta: '0xff81ca'
+    cyan:    '0x56d8c9'
+    white:   '0xdedede'
+# }}}
+
+# Colors (Ayu light)
+colors_ayu_light:
+  primary: # {{{
+    background: '0xfafafa'
+    foreground: '0x575f66'
+  normal:
+    black:   '0xf0f0f0'
+    red:     '0xf51818'
+    green:   '0x86b300'
+    yellow:  '0xfa8d3e'
+    blue:    '0x399ee6'
+    magenta: '0xa37acc'
+    cyan:    '0x4cbf99'
+    white:   '0xabb0b6'
+  bright:
+    black:   '0xe7e8e9'
+    red:     '0xf07171'
+    green:   '0x99bf4d'
+    yellow:  '0xff9940'
+    blue:    '0x55b4d4'
+    magenta: '0xd1e4f4'
+    cyan:    '0x709ecc'
+    white:   '0x8a9199'
+# }}}
+
+# Colors (Ayu mirage)
+colors_ayu_mirage:
+  primary:  #  {{{
+    background: '0x1f2430'
+    foreground: '0xcbccc6'
+  normal:
+    black:   '0x101521'
+    red:     '0xff3333'
+    green:   '0xbae67e'
+    yellow:  '0xffa759'
+    blue:    '0x73d0ff'
+    magenta: '0xd4bfff'
+    cyan:    '0x95e6cb'
+    white:   '0x5c6773'
+  bright:
+    black:   '0x323a4c'
+    red:     '0xf28779'
+    green:   '0xa6cc70'
+    yellow:  '0xffcc66'
+    blue:    '0x5ccfe6'
+    magenta: '0x33415e'
+    cyan:    '0x77a8d9'
+    white:   '0x707a8c'
+# }}}
+
 
 # Colors (Solarized Light)
 colors_solarized_light:
@@ -288,7 +391,7 @@ colors_solarized_dark:
     white:   '#fdf6e3' # base3
 
 
-colors: *light
+colors: *dark
 
 # Bell
 #
@@ -335,7 +438,7 @@ bell:
 #
 # Window opacity as a floating point number from `0.0` to `1.0`.
 # The value `0.0` is completely transparent and `1.0` is opaque.
-#background_opacity: 1.0
+background_opacity: 0.95
 
 #selection:
   #semantic_escape_chars: ",│`|:\"' ()[]{}<>\t"
@@ -721,3 +824,5 @@ live_config_reload: true
 
   # Print all received window events.
   #print_events: false
+
+# vim: set foldmethod=marker:

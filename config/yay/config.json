@@ -26,7 +26,7 @@
 	"completionrefreshtime": 7,
 	"sudoloop": true,
 	"timeupdate": false,
-	"devel": false,
+	"devel": true,
 	"cleanAfter": true,
 	"gitclone": true,
 	"provides": true,
