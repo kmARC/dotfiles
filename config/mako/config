@@ -1,1 +1,23 @@
-font=Noto Sans 12
+font=Roboto Condensed
+markup=1
+actions=1
+icons=1
+icon-path=/usr/share/icons/Adwaita/:/usr/share/icons/gnome/:/usr/share/icons/HighContrast/
+default-timeout=10000
+border-size=3
+border-radius=10
+border-color=#000000
+anchor=top-center
+width=500
+
+# DynamicBackground - see redshift hook
+background-color=#00000099
+# DynamicForeground - see redshift hook
+text-color=#ffffff
+
+[actionable]
+background-color=#00660099
+text-color=#ffffff
+
+ignore-timeout=1
+default-timeout=0
