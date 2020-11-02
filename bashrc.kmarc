@@ -89,6 +89,7 @@ export RIPGREP_CONFIG_PATH=~/.ripgreprc
 export PATH="/usr/share/git/git-jump/:$PATH"
 export PATH="$HOME/bin:$HOME/.local/bin/:$PATH"
 export GOPATH="$HOME/.go"
+export GPG_TTY=$(tty)
 
 alias ls="ls --color --group-directories-first"
 alias diff='diff --color=auto'
@@ -96,6 +97,8 @@ alias grep='grep --color=auto'
 alias mutt='neomutt'
 alias git-recursive-pull='for d in $(find . -type d -name .git -printf "%h\n"); do (echo ***$d*** && cd $d && git pull --all && echo); done'
 alias sudo='sudo '
+alias htop='TERM=xterm-256color htop'
+alias ssh='TERM=xterm-256color ssh'
 
 ##################
 #  LIQUIDPROMPT  #
