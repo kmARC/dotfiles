@@ -1,4 +1,5 @@
 configuration {
   theme: "~/.config/rofi/arc-dark.rasi";
   icon-theme: "Adwaita";
+  font: "RobotoCondensed 11";
 }

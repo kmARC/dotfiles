@@ -35,6 +35,9 @@
   spellingdictionary = en_US
   diffopts = --word-diff --patience
 
+[help]
+  autocorrect = 30
+
 [interactive]
   diffFilter = /usr/share/git/diff-highlight/diff-highlight | less -X
 
@@ -52,6 +55,7 @@
 
 [push]
   default = current
+  gpgSign = if-asked
 
 [rebase]
   autostash = true

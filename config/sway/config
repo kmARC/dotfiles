@@ -18,7 +18,7 @@ set $term alacritty
 # Your preferred application launcher
 # Note: pass the final command to swaymsg so that the resulting window can be opened
 # on the original workspace that the command was run on.
-set $menu rofi -combi-modi drun\,run\,ssh\,emoji -show combi -modi combi\,run\,ssh\,emoji -sidebar-mode -show-icons -normal-window
+set $menu rofi -combi-modi drun\,run\,ssh\,emoji\,calc -show combi -modi combi\,run\,ssh\,emoji\,calc -sidebar-mode -show-icons -normal-window
 set $nag exec swaynagmode --edge bottom
 
 swaynag_command $nag -R
@@ -351,7 +351,7 @@ bindsym --locked XF86MonBrightnessUp   exec brightnessctl set -s          +5%
 
 bindsym --locked XF86Display exec $dpms_on
 
-bindsym $mod+grave exec makoctl dismiss
+bindsym --to-code $mod+grave exec makoctl dismiss
 
 # Lock screen
 bindsym ctrl+alt+l exec ~/bin/idle.sh lock
@@ -404,5 +404,7 @@ exec dex --autostart
 client.focused '#4c7899' '#285577' '#ffffff' '#4c7899' '#4c7899'
 default_border pixel 3
 gaps inner 10
+
+font pango:RobotoCondensed Bold 11
 
 include /etc/sway/config.d/*

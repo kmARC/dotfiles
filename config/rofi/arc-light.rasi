@@ -25,7 +25,6 @@
     /* Universal */
     background-color: @invisible;
     border-color: @default-border;
-    font: "Roboto Condensed Medium 11";
     text-color: @default-foreground;
 }
 

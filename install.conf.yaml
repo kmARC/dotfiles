@@ -26,6 +26,10 @@
       path: config/mopidy/mopidy.conf
     ~/.config/mako:
       path: config/mako
+    ~/.config/ncmpcpp/config:
+      path: config/ncmpcpp/config
+    ~/.config/networkmanager-dmenu/config.ini:
+      path: config/networkmanager-dmenu/config.ini
     ~/.config/ranger/rc.conf:
       path: config/ranger/rc.conf
     ~/.config/redshift:

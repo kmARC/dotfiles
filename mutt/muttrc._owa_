@@ -5,7 +5,6 @@ set record     = +Sent
 set mbox       = +Archive
 set postponed  = +Drafts
 set trash      = +Trash
-set signature  = ~/.mutt/sig/sig-$from.txt
 
 # Sending
 set ssl_starttls   = no
