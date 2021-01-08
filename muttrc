@@ -276,7 +276,7 @@ macro index            L "\
 macro index,pager    \cA "<pipe-message>~/bin/mutt-add-todo.py<enter>"      'Add todo'
 
 # Contact groups
-group -group internal `khard email --remove-first-line -p | awk '{printf "-rx %s ", $1} END { print ""} '`
+group -group internal `khard email --remove-first-line -p | awk '/@/{printf "-rx %s ", $1} END { print ""} '`
 
 # Trigger changing folder to default
 set folder = ~/.mutt/$from

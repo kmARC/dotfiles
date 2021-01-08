@@ -43,6 +43,8 @@ function ssh-tmux() { ssh "$1" -t 'tmux attach'; }
 _completion_loader ssh
 complete -F _ssh ssh ssh-tmux
 
+[ -n "$TMUX" ] && export PANE_ID=$(tmux display-message -p '#P')
+
 ############
 #  DIRENV  #
 ############
