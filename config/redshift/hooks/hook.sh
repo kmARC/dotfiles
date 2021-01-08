@@ -8,7 +8,6 @@ case $1 in
           transition|daytime|none)
             gsettings set org.gnome.desktop.interface gtk-theme 'Arc'
             sed --follow-symlinks -i "s/^gtk-theme-name=.*/gtk-theme-name=Arc/g"      $HOME/.config/gtk-3.0/settings.ini
-            sed --follow-symlinks -i "s/^Net\/ThemeName.*/Net\/ThemeName \"Arc\"/g"   $HOME/.xsettingsd ; pkill xsettingsd
             sed --follow-symlinks -i "s/^gtk-theme-name=.*/gtk-theme-name=\"Arc\"/g"  $HOME/.gtkrc-2.0
             sed --follow-symlinks -i "s/^colors:\s\+\*\\(light\|dark\\)/colors: *light/g" $HOME/.config/alacritty.yml
             sed --follow-symlinks -i '/# DynamicBackground/{n;s/.*/background-color=#00000099/}' $HOME/.config/mako/config
@@ -18,7 +17,6 @@ case $1 in
           night)
             gsettings set org.gnome.desktop.interface gtk-theme 'Arc-Dark'
             sed --follow-symlinks -i "s/^gtk-theme-name=.*/gtk-theme-name=Arc-Dark/g"     $HOME/.config/gtk-3.0/settings.ini
-            sed --follow-symlinks -i "s/^Net\/ThemeName.*/Net\/ThemeName \"Arc-Dark\"/g"  $HOME/.xsettingsd ; pkill xsettingsd
             sed --follow-symlinks -i "s/^gtk-theme-name=.*/gtk-theme-name=\"Arc-Dark\"/g" $HOME/.gtkrc-2.0
             sed --follow-symlinks -i "s/^colors:\s\+\*\\(light\|dark\\)/colors: *dark/g"         $HOME/.config/alacritty.yml
             sed --follow-symlinks -i '/# DynamicBackground/{n;s/.*/background-color=#ffffffbb/}' $HOME/.config/mako/config

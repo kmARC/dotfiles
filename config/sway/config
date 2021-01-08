@@ -37,11 +37,11 @@ set $output1 'Acer Technologies G277HU T1UEE0048501'
 set $output2 'DP-1'
 output HEADLESS-1 resolution 1920x1080
 
-workspace 1 output $output1 $output2 eDP-1
-workspace 2 output $output1 $output2 eDP-1
-workspace 3 output $output1 $output2 eDP-1
-workspace 4 output $output1 $output2 eDP-1
-workspace 5 output $output1 $output2 eDP-1
+workspace 1 output $output1 $output2 HDMI-A-1 eDP-1
+workspace 2 output $output1 $output2 HDMI-A-1 eDP-1
+workspace 3 output $output1 $output2 HDMI-A-1 eDP-1
+workspace 4 output $output1 $output2 HDMI-A-1 eDP-1
+workspace 5 output $output1 $output2 HDMI-A-1 eDP-1
 workspace 6 output eDP-1
 workspace 7 output eDP-1
 workspace 8 output eDP-1
@@ -67,7 +67,7 @@ set $dpms_on    swaymsg "output * dpms on"
 # after 90 sec on battery: lock
 # after 5  min on power:   lock
 # before sleep:            lock
-exec_always swayidle -w \
+exec swayidle -w \
          timeout 10     '~/bin/idle.sh dpms_off' \
                  resume '~/bin/idle.sh dpms_on' \
          timeout 90     '~/bin/idle.sh lock_battery' \
@@ -369,12 +369,6 @@ bindsym --release  alt+$mod+print exec /usr/share/sway/scripts/grimshot save win
 
 # Theming
 exec_always xrdb -load ~/.Xresources
-exec_always ~/bin/import-gsettings.sh \
-              gtk-theme:gtk-theme-name \
-              icon-theme:gtk-icon-theme-name \
-              cursor-theme:gtk-cursor-theme-name \
-              font-name:gtk-font-name
-exec "while swaymsg; do xsettingsd; done"
 
 #
 # Window rules
@@ -399,7 +393,7 @@ workspace 6
 workspace 1
 
 # Autostart apps
-exec dex --autostart
+exec dex --autostart --search-paths $HOME/.config/autostart/
 
 client.focused '#4c7899' '#285577' '#ffffff' '#4c7899' '#4c7899'
 default_border pixel 3

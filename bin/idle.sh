@@ -26,7 +26,11 @@ case "$1" in
   dpms_off )
     if pgrep swaylock &>/dev/null; then
       swaymsg 'output * dpms off'
-      brightnessctl -d 'tpacpi::kbd_backlight' -s set 0
+      if [ "$(brightnessctl -d 'tpacpi::kbd_backlight' get)" -ne 0 ]; then
+        brightnessctl -d 'tpacpi::kbd_backlight' -s set 0
+      else
+        brightnessctl -d 'tpacpi::kbd_backlight' set 0
+      fi
     fi
     ;;
   lock_battery )
