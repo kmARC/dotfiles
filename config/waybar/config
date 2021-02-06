@@ -7,8 +7,22 @@
     // Choose the order of the modules
     "modules-left": ["sway/workspaces", "sway/mode", "sway/window"],
     "modules-center": ["clock", "sway/language"],
-    "modules-right": ["tray", "idle_inhibitor", "pulseaudio", "network", "cpu", "memory", "temperature", "backlight", "battery"],
+    "modules-right": ["tray", "idle_inhibitor", "pulseaudio", "bluetooth", "network", "cpu", "memory", "disk", "temperature", "backlight", "battery"],
     // Modules configuration
+    "disk": {
+        "interval": 30,
+        "format": "{percentage_used}% ",
+    },
+    "bluetooth": {
+        "format": "{icon}",
+        "format-alt": "{status} {icon}",
+        "interval": 30,
+        "format-icons": {
+            "enabled": "",
+            "disabled": ""
+        },
+        "tooltip-format": "{}"
+    },
     "sway/workspaces": {
         "disable-scroll": true,
         "all-outputs": false,

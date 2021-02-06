@@ -30,9 +30,13 @@ toggle_power() {
     if power_on; then
         bluetoothctl power off
         rfkill block bluetooth
+        show_menu
     else
-        rfkill unblock bluetooth
+        if rfkill list bluetooth | grep -q 'blocked: yes'; then
+            rfkill unblock bluetooth && sleep 3
+        fi
         bluetoothctl power on
+        show_menu
     fi
 }
 
@@ -52,8 +56,12 @@ toggle_scan() {
     if scan_on; then
         kill $(pgrep -f "bluetoothctl scan on")
         bluetoothctl scan off
+        show_menu
     else
         bluetoothctl scan on &
+        echo "Scanning..."
+        sleep 5
+        show_menu
     fi
 }
 
@@ -72,8 +80,10 @@ pairable_on() {
 toggle_pairable() {
     if pairable_on; then
         bluetoothctl pairable off
+        show_menu
     else
         bluetoothctl pairable on
+        show_menu
     fi
 }
 
@@ -92,8 +102,10 @@ discoverable_on() {
 toggle_discoverable() {
     if discoverable_on; then
         bluetoothctl discoverable off
+        show_menu
     else
         bluetoothctl discoverable on
+        show_menu
     fi
 }
 
@@ -111,8 +123,10 @@ device_connected() {
 toggle_connection() {
     if device_connected $1; then
         bluetoothctl disconnect $1
+        show_menu
     else
         bluetoothctl connect $1
+        show_menu
     fi
 }
 
@@ -132,8 +146,10 @@ device_paired() {
 toggle_paired() {
     if device_paired $1; then
         bluetoothctl remove $1
+        show_menu
     else
         bluetoothctl pair $1
+        show_menu
     fi
 }
 
@@ -153,8 +169,10 @@ device_trusted() {
 toggle_trust() {
     if device_trusted $1; then
         bluetoothctl untrust $1
+        show_menu
     else
         bluetoothctl trust $1
+        show_menu
     fi
 }
 
@@ -244,10 +262,10 @@ show_menu() {
         divider="---------"
 
         # Options passed to rofi
-        options="$devices\n$divider\n$power\n$scan\n$pairable\n$discoverable"
+        options="$devices\n$divider\n$power\n$scan\n$pairable\n$discoverable\nExit"
     else
         power="Power: off"
-        options="$power"
+        options="$power\nExit"
     fi
 
     # Open rofi menu, read chosen option
@@ -279,7 +297,7 @@ show_menu() {
 }
 
 # Rofi command to pipe into, can add any options here
-rofi_command="rofi -dmenu -p"
+rofi_command="rofi -dmenu -no-fixed-num-lines -yoffset -100 -i -p"
 
 case "$1" in
     --status)

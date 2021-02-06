@@ -121,6 +121,7 @@ export XDG_SESSION_TYPE=wayland
 # export QT_QPA_PLATFORM=wayland-egl
 export QT_QPA_PLATFORMTHEME=gnome
 export QT_WAYLAND_DISABLE_WINDOWDECORATION=1
+export TDESKTOP_I_KNOW_ABOUT_GTK_INCOMPATIBILITY=
 export _JAVA_AWT_WM_NONREPARENTING=1
 export _JAVA_OPTIONS='-Dswing.defaultlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel -Dawt.useSystemAAFontSettings=lcd'
 
