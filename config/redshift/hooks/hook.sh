@@ -13,6 +13,7 @@ case $1 in
             sed --follow-symlinks -i '/# DynamicBackground/{n;s/.*/background-color=#00000099/}' $HOME/.config/mako/config
             sed --follow-symlinks -i '/# DynamicForeground/{n;s/.*/text-color=#ffffff/}' $HOME/.config/mako/config
             sed --follow-symlinks -i 's/light.rasi/dark.rasi/'                           $HOME/.config/rofi/config.rasi
+            swaymsg output '*' bg ~/Pictures/Wallpaper.jpg fill
             ;;
           night)
             gsettings set org.gnome.desktop.interface gtk-theme 'Arc-Dark'
@@ -22,6 +23,7 @@ case $1 in
             sed --follow-symlinks -i '/# DynamicBackground/{n;s/.*/background-color=#ffffffbb/}' $HOME/.config/mako/config
             sed --follow-symlinks -i '/# DynamicForeground/{n;s/.*/text-color=#000000/}' $HOME/.config/mako/config
             sed --follow-symlinks -i 's/dark.rasi/light.rasi/'                           $HOME/.config/rofi/config.rasi
+            swaymsg output '*' bg ~/Pictures/Wallpaper-dark.jpg fill
             ;;
         esac
 esac

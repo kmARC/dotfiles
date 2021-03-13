@@ -80,7 +80,7 @@ export LESS_TERMCAP_se=$'\e[0;49;39m'
 export LESS_TERMCAP_us=$'\e[1;49;36m'
 export LESS_TERMCAP_ue=$'\e[0;49;39m'
 
-[[ -s "/etc/profile.d/grc.bashrc" ]] && source /etc/profile.d/grc.bashrc
+[[ -s "/etc/profile.d/grc.sh" ]] && source /etc/profile.d/grc.sh
 
 #########################
 #  EXPORTS AND ALIASES  #
@@ -110,7 +110,6 @@ alias ssh='TERM=xterm-256color ssh'
 #############
 #  Wayland  #
 #############
-export MOZ_ENABLE_WAYLAND=1
 export MOZ_WEBRENDER=1
 export XDG_CURRENT_DESKTOP=sway
 export XDG_SESSION_TYPE=wayland
