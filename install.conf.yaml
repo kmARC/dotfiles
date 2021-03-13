@@ -20,6 +20,8 @@
       path: config/alacritty.yml
     ~/.config/clight.conf:
       path: config/clight.conf
+    ~/.config/chromium-flags.conf:
+      path: config/chromium-flags.conf
     ~/.config/fontconfig:
       path: config/fontconfig
     ~/.config/mopidy/mopidy.conf:

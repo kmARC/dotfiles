@@ -5,16 +5,16 @@
     "height": 30, // Waybar height (to be removed for auto height)
     // "width": 1280, // Waybar width
     // Choose the order of the modules
-    "modules-left": ["sway/workspaces", "sway/mode", "sway/window"],
-    "modules-center": ["clock", "sway/language"],
-    "modules-right": ["tray", "idle_inhibitor", "pulseaudio", "bluetooth", "network", "cpu", "memory", "disk", "temperature", "backlight", "battery"],
+    "modules-left": ["idle_inhibitor", "cpu", "memory", "disk", "temperature", "sway/mode", "sway/window"],
+    "modules-center": ["sway/workspaces"],
+    "modules-right": ["tray", "sway/language", "bluetooth", "pulseaudio#sink", "pulseaudio#source", "network", "backlight", "battery", "clock"],
     // Modules configuration
     "disk": {
         "interval": 30,
         "format": "{percentage_used}% ",
     },
     "bluetooth": {
-        "format": "{icon}",
+        "format": "<b>{icon}</b>",
         "format-alt": "{status} {icon}",
         "interval": 30,
         "format-icons": {
@@ -26,7 +26,7 @@
     "sway/workspaces": {
         "disable-scroll": true,
         "all-outputs": false,
-        "format": "{name}: {icon}",
+        "format": "{name}",
         "format-icons": {
             // "1": "",
             // "2": "",
@@ -105,7 +105,7 @@
     "backlight": {
         // "device": "acpi_video1",
         "format": "{percent}% {icon}",
-        "format-icons": ["", ""],
+        "format-icons": [""],
         "on-click": "dex /usr/share/applications/clightc.desktop"
     },
     "battery": {
@@ -127,20 +127,39 @@
     },
     "network": {
         // "interface": "wlp2*", // (Optional) To force the use of this interface
-        "format-wifi": "{essid} ({signalStrength}%) ",
-        "format-ethernet": "{ifname}: {ipaddr}/{cidr} ",
+        "format-wifi": "{signalStrength}% ",
+        "format-ethernet": "",
         "format-linked": "{ifname} (No IP) ",
         "format-disconnected": "Disconnected ⚠",
-        "format-alt": "{ifname}: {ipaddr}/{cidr}"
+        "format-alt": "{essid}: {ipaddr}/{cidr}"
     },
-    "pulseaudio": {
+    "pulseaudio#sink": {
         // "scroll-step": 1, // %, can be a float
-        "format": "{volume}% {icon} {format_source}",
-        "format-bluetooth": "{volume}% {icon} {format_source}",
-        "format-bluetooth-muted": " {icon} {format_source}",
-        "format-muted": " {format_source}",
+        "format": "{volume}% {icon}",
+        "format-bluetooth": "{volume}% {icon}",
+        "format-bluetooth-muted": " {icon}",
+        "format-muted": "0%  ",
+        "format-source": "",
+        "format-source-muted": "",
+        "format-icons": {
+            "headphone": "",
+            "hands-free": "",
+            "headset": "",
+            "phone": "",
+            "portable": "",
+            "car": "",
+            "default": ["", "", ""]
+        },
+        "on-click": "pavucontrol"
+    },
+    "pulseaudio#source": {
+        // "scroll-step": 1, // %, can be a float
+        "format": "{format_source}",
+        "format-bluetooth": "{format_source}",
+        "format-bluetooth-muted": "{format_source}",
+        "format-muted": "{format_source}",
         "format-source": "{volume}% ",
-        "format-source-muted": "",
+        "format-source-muted": "0% ",
         "format-icons": {
             "headphone": "",
             "hands-free": "",
