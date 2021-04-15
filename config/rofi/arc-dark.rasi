@@ -20,7 +20,7 @@
     light-red: rgba(77, 31, 37, 100%);
 
     hard-green: rgba(39, 161, 69, 100%);
-    light-green: rgba(19, 55, 35, 100%);
+    light-green: rgba(119, 155, 135, 100%);
 
     /* Universal */
     background-color: @invisible;

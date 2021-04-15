@@ -351,7 +351,7 @@ bindsym --locked XF86MonBrightnessUp   exec brightnessctl set -s          +5%
 
 bindsym --locked XF86Display exec $dpms_on
 
-bindsym --to-code $mod+grave exec makoctl dismiss
+bindsym --to-code $mod+grave exec dunstctl action
 
 # Lock screen
 bindsym ctrl+alt+l exec ~/bin/idle.sh lock
@@ -380,6 +380,8 @@ assign [class="zoom"]                         workspace 4
 assign [class="Joplin"]                       workspace 9
 # - (Citrix client)
 assign [app_id="selfservice"]                 workspace 4
+# - (F5 VPN)
+assign [class="F5 VPN"]                       workspace 10
 
 for_window [title="Firefox - Sharing Indicator"] floating enable
 for_window [class="Keybase"]                     floating disable
@@ -387,6 +389,7 @@ for_window [class="Keybase"]                     border 2
 for_window [class="Rofi"]                        floating enable
 for_window [class="zoom" title="zoom"]           floating enable
 for_window [class="zoom" title="zoom"]           border none
+for_window [class="F5 VPN"]                      floating enable
 
 # Activate correct workspaces
 workspace 6

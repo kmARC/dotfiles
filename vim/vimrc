@@ -242,7 +242,7 @@ augroup vimrc
   autocmd FileType javascript*,typescript*        setlocal keywordprg=:DevdocsHelp
   autocmd FileType css,less,scss                  setlocal keywordprg=:DevdocsHelp
   autocmd FileType yaml.ansible                   setlocal keywordprg=:DevdocsHelp
-  autocmd FileType python                         setlocal keywordprg=:DevdocsHelp
+  autocmd FileType python                         setlocal keywordprg=pydoc
   autocmd FileType dockerfile                     setlocal keywordprg=:DockerHelp
   autocmd FileType *gotexttmpl,yaml.kubernetes    setlocal keywordprg=:KubeHelp
   "----- mappings
@@ -364,6 +364,7 @@ let g:UltiSnipsEditSplit = "vertical"
 let g:UltiSnipsExpandTrigger = "<c-j>"
 let g:UltiSnipsListSnippets = "<c-h>"
 let g:UltiSnipsSnippetsDir = "~/.vim/UltiSnips"
+let g:ale_languagetool_options = '--autoDetect -d WHITESPACE_RULE'
 let g:ale_python_pylint_change_directory = 0
 let g:ale_sh_shellcheck_options = '--external-sources'
 let g:ale_lint_delay = 2000
