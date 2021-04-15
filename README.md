@@ -6,8 +6,7 @@
   <a href="images/desktop-empty.png"><img src="images/desktop-empty.png" width="48%"></a>
 </p>
 
-- Wallpaper: https://github.com/elementary/wallpapers/blob/master/Ashim%20DSilva.jpg
-- VIM configuration: https://githu.bom/kmarc/vim
+Wallpaper: https://github.com/elementary/wallpapers/blob/master/backgrounds/Ashim%20DSilva.jpg
 
 ## Installation on Arch Linux
 
