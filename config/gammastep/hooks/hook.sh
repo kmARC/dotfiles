@@ -1,8 +1,8 @@
-#!/bin/sh
-echo `date` "$1 $2 $3" >> /tmp/redshift.txt
+#!/bin/env bash
+echo `date` "$1 $2 $3" >> /tmp/gammastep.txt
 case $1 in
     period-changed)
-        notify-send "Redshift" "Period changed from $2 to $3"
+        notify-send "Gammastep" "Period changed from $2 to $3"
 
         case $3 in
           transition|daytime|none)
@@ -13,7 +13,9 @@ case $1 in
             sed --follow-symlinks -i '/# DynamicBackground/{n;s/.*/background-color=#00000099/}' $HOME/.config/mako/config
             sed --follow-symlinks -i '/# DynamicForeground/{n;s/.*/text-color=#ffffff/}' $HOME/.config/mako/config
             sed --follow-symlinks -i 's/light.rasi/dark.rasi/'                           $HOME/.config/rofi/config.rasi
-            swaymsg output '*' bg ~/Pictures/Wallpaper.jpg fill
+            if [[ ! "$2" =~ (transition|daytime|none) ]]; then
+              swaymsg output '*' bg ~/Pictures/Wallpaper.jpg fill
+            fi
             ;;
           night)
             gsettings set org.gnome.desktop.interface gtk-theme 'Arc-Dark'
@@ -23,7 +25,9 @@ case $1 in
             sed --follow-symlinks -i '/# DynamicBackground/{n;s/.*/background-color=#ffffffbb/}' $HOME/.config/mako/config
             sed --follow-symlinks -i '/# DynamicForeground/{n;s/.*/text-color=#000000/}' $HOME/.config/mako/config
             sed --follow-symlinks -i 's/dark.rasi/light.rasi/'                           $HOME/.config/rofi/config.rasi
-            swaymsg output '*' bg ~/Pictures/Wallpaper-dark.jpg fill
+            if [[ "$2" =~ (none|transition|daytime) ]]; then
+              swaymsg output '*' bg ~/Pictures/Wallpaper-dark.jpg fill
+            fi
             ;;
         esac
 esac
