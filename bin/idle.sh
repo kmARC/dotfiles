@@ -16,48 +16,58 @@ lock () {
   fi
 }
 
+locked() {
+  pgrep swaylock &>/dev/null
+}
+
+keep_clight() {
+  busctl --user --expect-reply=false \
+         set-property  org.clight.clight \
+                      /org/clight/clight/Conf/Backlight \
+                       org.clight.clight.Conf.Backlight \
+           NoAutoCalib "b" "$1"
+}
+
+clight_kept() {
+  busctl --user \
+         get-property  org.clight.clight \
+                      /org/clight/clight/Conf/Backlight \
+                       org.clight.clight.Conf.Backlight \
+           NoAutoCalib \
+  | grep -q true
+}
+
 case "$1" in
+  idle )
+    locked && $0 dpms_off
+    keep_clight false
+    ;;
+  active )
+    locked && $0 dpms_on
+    keep_clight true
+    ;;
   dpms_on )
-    if pgrep swaylock &>/dev/null; then
-      swaymsg 'output * dpms on'
-      brightnessctl -d 'tpacpi::kbd_backlight' -r
-    fi
+    swaymsg 'output * dpms on'
     ;;
   dpms_off )
-    if pgrep swaylock &>/dev/null; then
-      swaymsg 'output * dpms off'
-      if [ "$(brightnessctl -d 'tpacpi::kbd_backlight' get)" -ne 0 ]; then
-        brightnessctl -d 'tpacpi::kbd_backlight' -s set 0
-      else
-        brightnessctl -d 'tpacpi::kbd_backlight' set 0
-      fi
-    fi
+    swaymsg 'output * dpms off'
     ;;
   lock_battery )
     if acpi --ac-adapter | grep -q "off-line"; then
       lock
       sleep "$GRACE"
-      $0 dpms_off
+      locked && $0 dpms_off
     fi
     ;;
   lock_ac )
     if acpi --ac-adapter | grep -q "on-line"; then
       lock
       sleep "$GRACE"
-      $0 dpms_off
+      locked && $0 dpms_off
     fi
     ;;
   lock )
     lock
-    ;;
-  brightness_down )
-    if acpi --ac-adapter | grep -q "off-line"; then
-      brightnessctl set -s 5%
-    else
-      brightnessctl get -s
-    fi
-    ;;
-  brightness_back )
-    brightnessctl -r
+    keep_clight false
     ;;
 esac

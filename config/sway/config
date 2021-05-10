@@ -21,6 +21,11 @@ set $term alacritty
 set $menu rofi -combi-modi drun\,run\,ssh\,emoji\,calc -show combi -modi combi\,run\,ssh\,emoji\,calc -sidebar-mode -show-icons -normal-window
 set $nag exec swaynagmode --edge bottom
 
+set $laptop eDP-1
+bindswitch --reload --locked lid:on output $laptop disable
+bindswitch --reload --locked lid:off output $laptop enable
+exec_always $HOME/bin/clamshell.sh
+
 swaynag_command $nag -R
 
 ### Output configuration
@@ -63,16 +68,19 @@ workspace 10 output eDP-1
 set $dpms_on    swaymsg "output * dpms on"
 #
 # after 10 sec if locked:  dpms off screen
-# after 40 sec on battery: lower brightness
 # after 90 sec on battery: lock
 # after 5  min on power:   lock
 # before sleep:            lock
 exec swayidle -w \
-         timeout 10     '~/bin/idle.sh dpms_off' \
-                 resume '~/bin/idle.sh dpms_on' \
+         timeout 10     '~/bin/idle.sh idle' \
+                 resume '~/bin/idle.sh active' \
          timeout 90     '~/bin/idle.sh lock_battery' \
                  resume '~/bin/idle.sh dpms_on' \
          timeout 300    '~/bin/idle.sh lock_ac' \
+                 resume '~/bin/idle.sh dpms_on' \
+         timeout 600    '~/bin/idle.sh suspend_battery' \
+                 resume '~/bin/idle.sh dpms_on' \
+         timeout 7200   '~/bin/idle.sh suspend_ac' \
                  resume '~/bin/idle.sh dpms_on' \
          before-sleep   '~/bin/idle.sh lock'
 
@@ -275,6 +283,8 @@ mode "resize" {
 }
 bindsym $mod+r mode "resize"
 
+include /etc/sway/config.d/*
+
 #
 # Status Bar:
 #
@@ -396,12 +406,12 @@ workspace 6
 workspace 1
 
 # Autostart apps
-exec dex --autostart --search-paths $HOME/.config/autostart/
+exec sleep 3 && dex --autostart --search-paths $HOME/.config/autostart/ --term alacritty
 
-client.focused '#4c7899' '#285577' '#ffffff' '#4c7899' '#4c7899'
+# Start with daytime (default)
+exec $HOME/.config/gammastep/hooks/hook.sh period-changed night daytime
+
+# Theming
 default_border pixel 3
 gaps inner 10
-
 font pango:RobotoCondensed Bold 11
-
-include /etc/sway/config.d/*

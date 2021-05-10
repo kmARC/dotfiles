@@ -102,6 +102,8 @@ alias sudo='sudo '
 alias htop='TERM=xterm-256color htop'
 alias ssh='TERM=xterm-256color ssh'
 
+cheat() { curl -m10 "http://cheat.sh/$1"; }
+
 ##################
 #  LIQUIDPROMPT  #
 ##################

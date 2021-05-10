@@ -1,5 +1,6 @@
 // vim: set ft=json:
 {
+    //"output": "eDP-1",
     "layer": "top", // Waybar at top layer
     "position": "top", // Waybar position (top|bottom|left|right)
     "height": 30, // Waybar height (to be removed for auto height)
@@ -11,7 +12,7 @@
     // Modules configuration
     "disk": {
         "interval": 30,
-        "format": "{percentage_used}% ",
+        "format": "{percentage_used}% <span></span>",
     },
     "bluetooth": {
         "format": "<b>{icon}</b>",
@@ -39,7 +40,7 @@
         }
     },
     "sway/mode": {
-        "format": "<span style=\"italic\">{}</span>"
+        "format": "{}"
     },
     "sway/language": {
         "format": "{}",
@@ -76,7 +77,8 @@
         "format-icons": {
             "activated": "",
             "deactivated": ""
-        }
+        },
+        "on-update": "/tmp/k.sh"
     },
     "tray": {
         // "icon-size": 21,
