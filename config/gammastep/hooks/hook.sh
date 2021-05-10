@@ -15,6 +15,9 @@ case $1 in
             sed --follow-symlinks -i 's/light.rasi/dark.rasi/'                           $HOME/.config/rofi/config.rasi
             if [[ ! "$2" =~ (transition|daytime|none) ]]; then
               swaymsg output '*' bg ~/Pictures/Wallpaper.jpg fill
+              swaymsg client.focused          '#000000' '#000000' '#ffffff'
+              swaymsg client.focused_inactive '#ffffff' '#ffffff' '#000000'
+              swaymsg client.unfocused        '#ffffff' '#ffffff' '#000000'
             fi
             ;;
           night)
@@ -27,6 +30,9 @@ case $1 in
             sed --follow-symlinks -i 's/dark.rasi/light.rasi/'                           $HOME/.config/rofi/config.rasi
             if [[ "$2" =~ (none|transition|daytime) ]]; then
               swaymsg output '*' bg ~/Pictures/Wallpaper-dark.jpg fill
+              swaymsg client.focused          '#ffffff' '#ffffff' '#000000'
+              swaymsg client.focused_inactive '#000000' '#000000' '#ffffff'
+              swaymsg client.unfocused        '#000000' '#000000' '#ffffff'
             fi
             ;;
         esac
