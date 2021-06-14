@@ -5,7 +5,7 @@ application/ms-tnef;      tnef -t %s;              needsterminal
 #
 ## GUI programs
 application/*;            mutt-open.sh %s
-##image/*;                  mutt-open.sh %s
+image/*;                  mutt-open.sh %s
 text/*;                   mutt-open.sh %s
 video/*;                  mpv '%s'; test=test -n "$DISPLAY"
 #

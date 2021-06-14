@@ -44,8 +44,8 @@ Plug 'freitass/todo.txt-vim'        , {'for': 'todo'}
 Plug 'plasticboy/vim-markdown'      , {'for': 'markdown'}
 Plug 'shime/vim-livedown'           , {'for': 'markdown'}
 "--- HTML ---
-Plug 'mattn/emmet-vim'              , {'for': ['html', '*jsx']}
-Plug 'othree/html5.vim'             , {'for': ['html', '*jsx']}
+Plug 'mattn/emmet-vim'              , {'for': ['html', '*jsx', 'xml']}
+Plug 'othree/html5.vim'             , {'for': ['html', '*jsx', 'xml']}
 "--- CSS ---
 Plug 'groenewege/vim-less'          , {'for': 'css'}
 "--- JavaScript ---
@@ -70,6 +70,7 @@ Plug 'mattn/vim-lsp-settings'
 Plug 'prabirshrestha/asyncomplete.vim'
 Plug 'prabirshrestha/asyncomplete-lsp.vim'
 Plug 'prabirshrestha/asyncomplete-file.vim'
+Plug 'prabirshrestha/asyncomplete-ultisnips.vim'
 let g:asyncomplete_popup_delay = 300
 call plug#end()
 
@@ -252,15 +253,22 @@ augroup vimrc
   "----- formatting
   autocmd FileType mail                           setlocal formatoptions+=watqc nojoinspaces | match ErrorMsg '\s\+$'
   autocmd FileType markdown                       setlocal softtabstop=4 tabstop=4 shiftwidth=4
+  autocmd FileType python                         setlocal softtabstop=4 tabstop=4 shiftwidth=4
   autocmd FileType markdown,plaintex,text         setlocal textwidth=100 formatprg=par\ -jw100
   autocmd FileType terraform                      setlocal commentstring=#%s
   autocmd FileType xml                            setlocal foldmethod=syntax | %foldopen!
   "----- TESTING
-  au User asyncomplete_setup call asyncomplete#register_source(asyncomplete#sources#file#get_source_options({
-    \ 'name': 'file',
-    \ 'allowlist': ['*'],
-    \ 'priority': 10,
-    \ 'completor': function('asyncomplete#sources#file#completor')
+  au User asyncomplete_setup 
+    \  call asyncomplete#register_source(asyncomplete#sources#file#get_source_options({
+      \ 'name': 'file',
+      \ 'allowlist': ['*'],
+      \ 'priority': 10,
+      \ 'completor': function('asyncomplete#sources#file#completor')
+    \ })) |
+    \ call asyncomplete#register_source(asyncomplete#sources#ultisnips#get_source_options({
+      \ 'name': 'ultisnips',
+      \ 'allowlist': ['*'],
+      \ 'completor': function('asyncomplete#sources#ultisnips#completor'),
     \ }))
   "----- filetypes
   autocmd BufRead,BufNewFile Vagrantfile          setlocal filetype=ruby
@@ -369,13 +377,21 @@ let g:ale_python_pylint_change_directory = 0
 let g:ale_sh_shellcheck_options = '--external-sources'
 let g:ale_lint_delay = 2000
 let g:delimitMate_expand_cr = 2
+" ale_fixers {{{
+let g:ale_fixers = {
+\   'python': [
+\       'black',
+\   ],
+\ }
+" }}}
 let g:gist_open_browser_after_post = 1
 let g:gutentags_cache_dir = s:dir_misc
 let g:jsdoc_enable_es6 = 1
-let g:netrw_banner = 0
+let g:netrw_keepdir = 0
+let g:netrw_banner = 1
 let g:netrw_browse_split = 4
 let g:netrw_home = s:dir_misc
-let g:netrw_liststyle = 3
+let g:netrw_liststyle = 0
 let g:netrw_winsize = -40
 let g:slime_paste_file = tempname()
 let g:sh_fold_enabled = 7

@@ -3,6 +3,7 @@
 echo "$(date +%T) $1" >> /tmp/idle.log
 
 GRACE=3
+LAPTOP=eDP-1
 
 lock () {
   if ! pgrep swaylock &>/dev/null; then
@@ -47,10 +48,10 @@ case "$1" in
     keep_clight true
     ;;
   dpms_on )
-    swaymsg 'output * dpms on'
+    swaymsg "output $LAPTOP dpms on"
     ;;
   dpms_off )
-    swaymsg 'output * dpms off'
+    swaymsg "output $LAPTOP dpms off"
     ;;
   lock_battery )
     if acpi --ac-adapter | grep -q "off-line"; then

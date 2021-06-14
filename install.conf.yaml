@@ -28,6 +28,8 @@
       path: config/mopidy/mopidy.conf
     ~/.config/mako:
       path: config/mako
+    ~/.config/mpv:
+      path: config/mpv
     ~/.config/ncmpcpp/config:
       path: config/ncmpcpp/config
     ~/.config/networkmanager-dmenu/config.ini:

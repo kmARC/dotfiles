@@ -9,7 +9,7 @@ border-radius=10
 border-color=#000000
 anchor=top-center
 width=500
-group-by=summary
+group-by=summary,app-name
 
 # DynamicBackground - see redshift hook
 background-color=#00000099
