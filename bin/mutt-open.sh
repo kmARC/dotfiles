@@ -1,16 +1,14 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-echo "$@"
+mkdir -p "$HOME/.cache/mutt"
+echo "mutt-opening $*"
 
-if [ -f "$1" ]; then
-  TMP=$(basename "$1")
-  TMP=~/.cache/mutt.tmp."${TMP##*.}"
-  TMP="${TMP%%__}"
-
-  cp -f "$1" "$TMP"
-  xdg-open "$TMP" 2>/dev/null
-else
-  xdg-open "$1" 2>/dev/null
+URI=$1
+if [ -f "$URI" ]; then
+  URI=$HOME/.cache/mutt/$(basename "$URI")
+  cp -f "$1" "$URI"
 fi
+
+exec xdg-open "$URI" 2>/dev/null &
 

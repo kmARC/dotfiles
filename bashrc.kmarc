@@ -82,6 +82,12 @@ export LESS_TERMCAP_ue=$'\e[0;49;39m'
 
 [[ -s "/etc/profile.d/grc.sh" ]] && source /etc/profile.d/grc.sh
 
+# fix dircolors for Selenized
+# (https://github.com/jan-warchol/selenized/tree/master/other-apps/dircolors)
+export LS_COLORS="$LS_COLORS:ow=1;7;34:st=30;44:su=30;41"
+
+export MC_SKIN=~/.local/opt/selenized/other-apps/mc/selenized.ini
+
 #########################
 #  EXPORTS AND ALIASES  #
 #########################
@@ -126,7 +132,7 @@ export TDESKTOP_I_KNOW_ABOUT_GTK_INCOMPATIBILITY=
 export _JAVA_AWT_WM_NONREPARENTING=1
 export _JAVA_OPTIONS='-Dswing.defaultlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel -Dawt.useSystemAAFontSettings=lcd'
 
-export TERM=xterm-256color-italics
+#export TERM=xterm-256color-italics
 
 ##################################################################
 #  AutoStart                                                     #

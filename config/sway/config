@@ -361,7 +361,8 @@ bindsym --locked XF86MonBrightnessUp   exec brightnessctl set -s          +5%
 
 bindsym --locked XF86Display exec $dpms_on
 
-bindsym --to-code $mod+grave exec dunstctl action
+bindsym --to-code $mod+grave exec makoctl dismiss -g
+bindsym --to-code $mod+shift+grave exec makoctl menu rofi -dmenu
 
 # Lock screen
 bindsym ctrl+alt+l exec ~/bin/idle.sh lock
