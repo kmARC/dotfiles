@@ -6,7 +6,8 @@
   <a href="images/desktop-empty.png"><img src="images/desktop-empty.png" width="48%"></a>
 </p>
 
-Wallpaper: https://github.com/elementary/wallpapers/blob/master/backgrounds/Ashim%20DSilva.jpg
+Daylight Wallpaper: https://old.reddit.com/r/WQHD_Wallpaper/comments/9646jx/lake_zurich_forest_sky_mountains/
+Night wallpaper: https://wallhere.com/de/wallpaper/1195576
 
 ## Installation on Arch Linux
 
@@ -137,7 +138,6 @@ Have a look at the [sway configuration](config/sway/config) and customize the la
 tools
 
 ``` bash
-# Sxhkd shortcuts
 sudo pacman -S \
   alacritty \
   firefox \

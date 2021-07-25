@@ -23,9 +23,9 @@ if has('gui_running')
 
     set ttimeoutlen=150
     "Exit insert mode
-    autocmd InsertLeave * call Fcitx2en()
+    #autocmd InsertLeave * call Fcitx2en()
     "Enter insert mode
-    autocmd InsertEnter * call Fcitx2zh()
+    #autocmd InsertEnter * call Fcitx2zh()
     "##### auto fcitx end ######
 
 endif

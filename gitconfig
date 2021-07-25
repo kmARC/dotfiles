@@ -9,6 +9,7 @@
 
 [commit]
   gpgsign = true
+	verbose = true
 
 [credential]
   helper = /usr/lib/git-core/git-credential-libsecret

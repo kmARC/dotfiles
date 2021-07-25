@@ -81,6 +81,7 @@
     ~/.bashrc.kmarc:
     ~/.gitconfig:
     ~/.gitignore_global:
+    ~/.inputrc:
     ~/.liquidpromptrc:
     ~/.mailcap:
     ~/.muttrc:
