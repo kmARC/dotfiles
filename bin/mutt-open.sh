@@ -10,5 +10,9 @@ if [ -f "$URI" ]; then
   cp -f "$1" "$URI"
 fi
 
-exec xdg-open "$URI" 2>/dev/null &
+if [[ $OSTYPE == 'darwin'* ]]; then
+  exec open "$URI" 2>/dev/null &
+else
+  exec xdg-open "$URI" 2>/dev/null &
+fi
 

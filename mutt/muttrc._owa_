@@ -9,11 +9,10 @@ set trash      = +Trash
 # Sending
 set ssl_starttls   = no
 set ssl_force_tls  = yes
-set smtp_pass      = "`secret-tool lookup owa-pass $from`"
-set smtp_url       = "smtps://$from@cloud-beta.korondi.ch:1025/"
-# set smtp_authenticators = "login"
+set smtp_pass      = "`~/bin/mutt_helpers.sh smtp_pass owa '$from'`"
+set smtp_url       = "smtp://mkorondi@localhost:1025/"
 
 # Addressbook
-set query_command = "~/bin/ldap_owa_query.sh '$from' '$smtp_pass' '%s'"
+set query_command  = "~/bin/mutt_helpers.sh query_command owa '$from' '%s'"
 
 # vim: set ft=neomuttrc:

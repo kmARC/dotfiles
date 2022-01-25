@@ -66,15 +66,15 @@
     border-color: @invisible;
 }
 
-#element.normal.normal {
+#element.normal {
     background-color: @invisible;
 }
 
-#element.normal.urgent {
+#element.urgent {
     background-color: @light-red;
 }
 
-#element.normal.active {
+#element.active {
     background-color: @light-green;
 }
 

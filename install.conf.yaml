@@ -55,8 +55,6 @@
       path: config/youtube-dl/config
     ~/.gnupg/gpg-agent.conf:
       path: gnupg/gpg-agent.conf
-    ~/.local/share/applications/mimeapps.list:
-      path: local/share/applications/mimeapps.list
     ~/.mutt/:
       glob: true
       path: mutt/*

@@ -1,6 +1,8 @@
 fonts/dotbot/**
 **/*.pyc
 !**/.gitkeep
+!tmux/plugins/tpm
+tmux/plugins
 *.retry
 .stignore
 .stversions

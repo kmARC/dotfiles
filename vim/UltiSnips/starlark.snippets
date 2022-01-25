@@ -1,0 +1,53 @@
+snippet load_http "Load http_archive" b
+load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
+
+http_archive(
+	name = "${1:my_archive}",
+	sha256 = "${4:}"
+	urls = ["${2:https://}${3:github.com/}"],
+	$0
+)
+endsnippet
+
+snippet load_git "Load git_repository" b
+load("@bazel_tools//tools/build_defs/repo:git.bzl", "git_repository")
+
+git_$0
+endsnippet
+
+snippet load_ "Load rule" b
+load("${1:@bazel_tools//tools/build_defs/repo}:${2:rules}.bzl", "${3:my_rule}")
+
+$3(
+	name = "${4:$3}",
+	$0
+)
+endsnippet
+
+snippet py_binary "py_binary" b
+py_binary(
+	name = "${1:my_binary}",
+	srcs = ["${2:$1}.py"],
+	${3:deps = [${4}],}
+	$0
+)
+endsnippet
+
+snippet git_ "git_repository" b
+git_repository(
+	name = "${1:my_repository}",
+	commit = "${2:sha}",
+	remote = "${4}",
+	$0
+)
+endsnippet
+
+snippet genrule "genrule" b
+genrule(
+	name = "${1:my_rule}",
+	cmd = "${2}",
+	outs = [${3:""}],
+	executable = ${4:True}
+	$0
+)
+endsnippet

@@ -71,4 +71,14 @@ case "$1" in
     lock
     keep_clight false
     ;;
+  suspend_battery )
+    if acpi --ac-adapter | grep -q "off-line"; then
+      systemctl suspend
+    fi
+    ;;
+  suspend_ac )
+    if acpi --ac-adapter | grep -q "on-line"; then
+      systemctl suspend
+    fi
+    ;;
 esac

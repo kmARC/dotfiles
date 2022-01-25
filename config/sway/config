@@ -313,10 +313,10 @@ bar {
 # - pressing $mod+space twice quickly launches $menu
 # - pressing $mod+space, then one of the app 'shortcuts' launches the app
 # After any actions, the mode resets to default within $appmode_timeout seconds
-set $appmode_timeout 1
+set $appmode_timeout 0.3
 
 mode "app" {
-  bindsym $mod+space exec $menu
+  bindsym           $mod+space exec $menu
   bindsym --release $mod+space mode "default"
 
   # Mnemonic: [b]rowser
@@ -371,12 +371,13 @@ bindsym ctrl+alt+l exec ~/bin/idle.sh lock
 bindsym $mod+F12 exec ~/bin/vpn-pannet.sh
 
 # Capture screen
-bindsym --release          print exec /usr/share/sway/scripts/grimshot copy screen
-bindsym --release    shift+print exec /usr/share/sway/scripts/grimshot copy area
-bindsym --release     $mod+print exec /usr/share/sway/scripts/grimshot copy win
-bindsym --release       alt+print exec /usr/share/sway/scripts/grimshot save screen - | swappy -f -
-bindsym --release alt+shift+print exec /usr/share/sway/scripts/grimshot save area   - | swappy -f -
-bindsym --release  alt+$mod+print exec /usr/share/sway/scripts/grimshot save win    - | swappy -f -
+set $SCREENSHOTS $HOME/Pictures/Screenshots/
+bindsym --release           print exec                                                          /usr/share/sway/scripts/grimshot --notify copy screen
+bindsym --release     shift+print exec                                                          /usr/share/sway/scripts/grimshot --notify copy area
+bindsym --release      $mod+print exec                                                          /usr/share/sway/scripts/grimshot --notify copy window
+bindsym --release       alt+print exec export SHOT=$SCREENSHOTS/$(date +"%Y%m%d-%H%M%S").png && /usr/share/sway/scripts/grimshot --notify save screen $SHOT && ksnip -e $SHOT
+bindsym --release alt+shift+print exec export SHOT=$SCREENSHOTS/$(date +"%Y%m%d-%H%M%S").png && /usr/share/sway/scripts/grimshot --notify save area   $SHOT && ksnip -e $SHOT
+bindsym --release  alt+$mod+print exec export SHOT=$SCREENSHOTS/$(date +"%Y%m%d-%H%M%S").png && /usr/share/sway/scripts/grimshot --notify save window $SHOT && ksnip -e $SHOT
 
 # Theming
 exec_always xrdb -load ~/.Xresources

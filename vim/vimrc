@@ -7,6 +7,7 @@ Plug 'jan-warchol/selenized'        , {'rtp': 'editors/vim'}
 "--- Tools ---
 Plug 'direnv/direnv.vim'
 Plug 'gcmt/taboo.vim'
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 Plug 'tpope/vim-obsession'
 Plug 'tpope/vim-unimpaired'
@@ -16,6 +17,7 @@ Plug 'godlygeek/tabular'            , {'on': 'Tabularize'}
 Plug 'michaeljsmith/vim-indent-object'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-abolish'
+Plug 'mbbill/undotree'
 "--- Git ---
 Plug 'mattn/gist-vim'
 Plug 'shumphrey/fugitive-gitlab.vim'
@@ -35,7 +37,7 @@ Plug 'honza/vim-snippets'
 Plug 'janko/vim-test'
 Plug 'ludovicchabant/vim-gutentags'
 Plug 'majutsushi/tagbar'            , {'on': ['TagbarToggle']}
-Plug 'sheerun/vim-polyglot'
+" Plug 'sheerun/vim-polyglot'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-endwise'
 Plug 'w0rp/ale'
@@ -71,6 +73,15 @@ Plug 'prabirshrestha/asyncomplete.vim'
 Plug 'prabirshrestha/asyncomplete-lsp.vim'
 Plug 'prabirshrestha/asyncomplete-file.vim'
 Plug 'prabirshrestha/asyncomplete-ultisnips.vim'
+Plug 'rhysd/vim-lsp-ale'
+Plug 'tenfyzhong/joplin.vim'       , {'on': ['Joplin', 'JoplinWinOpen']}
+Plug 'tpope/vim-dadbod'
+Plug 'kristijanhusak/vim-dadbod-ui'
+Plug 'cappyzawa/starlark.vim'
+Plug 'google/vim-maktaba'
+Plug 'bazelbuild/vim-bazel'
+
+
 let g:asyncomplete_popup_delay = 300
 call plug#end()
 
@@ -191,17 +202,20 @@ nnoremap <F9>              :lclose<CR>:cclose<CR>:pclose<CR>
 nnoremap <space>           :ls<CR>:sbuffer 
 nnoremap <leader><space>   :edit **/*.<C-r>=expand('%:e')<return><C-z><C-p><C-u>edit **/*
 
+" FZF files with the same extension as current
 nnoremap <leader>fp        :call fzf#vim#files(
   \   0, {'options':'--query=' . expand('%:e') . '$\ '}
-  \ )<CR> " FZF files with the same extension as current
+  \ )<CR>
+" FZF grep only in file content, not in file name
 nnoremap <leader>fg        :call fzf#vim#grep(
   \   'rg --column --line-number --no-heading --color=always --smart-case ""',
   \   1, {'options':'--delimiter : --nth 4..'}
-  \ )<CR> " FZF grep only in file content, not in file name
+  \ )<CR>
+" FZF grep current word only in file content
 nnoremap <leader>fG        :call fzf#vim#grep(
   \   'rg --column --line-number --no-heading --color=always --smart-case ""',
   \   1, {'options':'--delimiter : --nth 4.. --exact --query=<C-r><C-w> +i'}
-  \ )<CR> " FZF grep current word only in file content
+  \ )<CR>
 
 vnoremap <leader>t,        :Tabularize /^[^,]*,/l0l1<CR>
 vnoremap <leader>t:        :Tabularize /^[^:]*:/l0l1<CR>
@@ -271,6 +285,8 @@ augroup vimrc
       \ 'completor': function('asyncomplete#sources#ultisnips#completor'),
     \ }))
   "----- filetypes
+  autocmd BufRead,BufNewFile WORKSPACE,BUILD      setlocal filetype=starlark.bzl
+  autocmd BufRead,BufNewFile BUILD,BUILD.bazel    setlocal filetype=starlark.bzl
   autocmd BufRead,BufNewFile Vagrantfile          setlocal filetype=ruby
   autocmd BufRead,BufNewFile *.tsx                setlocal filetype=typescript.jsx
   "----- marks
@@ -379,9 +395,8 @@ let g:ale_lint_delay = 2000
 let g:delimitMate_expand_cr = 2
 " ale_fixers {{{
 let g:ale_fixers = {
-\   'python': [
-\       'black',
-\   ],
+\   'python': ['black', 'isort'],
+\   'bzl': ['buildifier'],
 \ }
 " }}}
 let g:gist_open_browser_after_post = 1

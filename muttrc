@@ -5,7 +5,7 @@ set header_cache     = ~/.mutt/cache/headers
 set mailcap_path     = ~/.mailcap
 set message_cachedir = ~/.mutt/cache/bodies
 set tmpdir           = ~/.mutt/temp
-set attach_save_dir  = `xdg-user-dir DOWNLOAD`
+set attach_save_dir  = ~/Downloads
 
 # Mailing lists
 subscribe .*@noreply\\.github\\.com
@@ -14,7 +14,7 @@ subscribe .*-announce@.*
 
 # General
 set abort_noattach = ask-yes
-set abort_noattach_regex = '\<(attach(|ed|ments?)|mellék[letvbn]+)\>'
+set abort_noattach_regex = '\<(attach|attach(ed|ments?)|mellék[letvbn]+)\>'
 set allow_ansi
 set arrow_cursor
 set auto_tag
@@ -41,6 +41,7 @@ set reverse_alias
 set save_history = 1000
 set sort = threads
 set sort_aux = reverse-last-date-received
+set sort_browser="unsorted"
 set text_flowed = yes
 set timeout = 60
 set ts_enabled
@@ -59,10 +60,11 @@ source ~/.pdotfiles/muttrc
 folder-hook 'INBOX' '\
   set status_format    = "%f · Messages: %?M?(filter: %V) %M of ?%m · New: %n · Flag: %F · Tag: %t · Del: %d %*· $from · (%P) "; \
   set ts_status_format = "NeoMutt with %?m?%m messages&no messages?%?n? [%n NEW]? - $from"; \
-  setenv from $from; \
   set signature  = ~/.mutt/sig/sig-$from.txt; \
-  unmailboxes *'
-folder-hook 'INBOX' "mailboxes '=INBOX' \`find ~/.mutt/\$from/ -type d -name cur ! -wholename *INBOX* -printf '\"%h\" '\`"
+  \
+  setenv from $from; \
+  unmailboxes *; \
+  mailboxes `mutt_helpers.sh mailboxes $from`'
 
 # Folder
 set folder_format = '%2C %t %N %f'
@@ -126,7 +128,9 @@ color index_flags     brightdefault default '~v~(~N)'
 color index_author    brightcolor01 default '~D'
 color index_subject   brightcolor01 default '~D'
 color index_flags     brightcolor01 default '~D'
-color index_flags     brightcolor04 default '%f internal' # internal group
+color index_author          color04 default '%f internal'
+color index_author    brightcolor04 default '~N %f internal'
+color index_subject   brightcolor01 default '~D'
 color index_flags     brightcolor05 default '~g' # signed
 color index_flags     brightcolor05 default '~G' # encrypted
 color index_flags     brightcolor00 color05 '~F' # flagged

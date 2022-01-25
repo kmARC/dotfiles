@@ -100,9 +100,10 @@ umount_repo() {
 }
 
 sync_to_s3() {
-  mapfile -t CONNS < <(nmcli connection show --active | tail +2 | awk '{print $2}')
+  mapfile -t CONNS -r < <(nmcli -g uuid connection show --active)
   for c in "${CONNS[@]}"; do
-    IS_METERED="$(nmcli connection show $c | awk  "/metered/{ print \$2 }")"
+    echo "$c"
+    IS_METERED="$(nmcli connection show "$c" | awk  "/metered/{ print \$2 }")"
     if [ "$IS_METERED" == "yes" ]; then
       echo "Not syncing to S3; Metered connection"
       return 0

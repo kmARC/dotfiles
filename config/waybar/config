@@ -1,8 +1,7 @@
-// vim: set ft=json:
 {
-    //"output": "eDP-1",
     "layer": "top", // Waybar at top layer
     "position": "top", // Waybar position (top|bottom|left|right)
+    //"output": "eDP-1",
     "height": 30, // Waybar height (to be removed for auto height)
     // "width": 1280, // Waybar width
     // Choose the order of the modules
@@ -10,20 +9,6 @@
     "modules-center": ["sway/workspaces"],
     "modules-right": ["tray", "sway/language", "bluetooth", "pulseaudio#sink", "pulseaudio#source", "network", "backlight", "battery", "clock"],
     // Modules configuration
-    "disk": {
-        "interval": 30,
-        "format": "{percentage_used}% <span></span>",
-    },
-    "bluetooth": {
-        "format": "<b>{icon}</b>",
-        "format-alt": "{status} {icon}",
-        "interval": 30,
-        "format-icons": {
-            "enabled": "",
-            "disabled": ""
-        },
-        "tooltip-format": "{}"
-    },
     "sway/workspaces": {
         "disable-scroll": true,
         "all-outputs": false,
@@ -41,10 +26,6 @@
     },
     "sway/mode": {
         "format": "{}"
-    },
-    "sway/language": {
-        "format": "{}",
-        "max-length": 50
     },
     "mpd": {
         "format": "{stateIcon} {consumeIcon}{randomIcon}{repeatIcon}{singleIcon}{artist} - {album} - {title} ({elapsedTime:%M:%S}/{totalTime:%M:%S}) ⸨{songPosition}|{queueLength}⸩ ",
@@ -77,8 +58,7 @@
         "format-icons": {
             "activated": "",
             "deactivated": ""
-        },
-        "on-update": "/tmp/k.sh"
+        }
     },
     "tray": {
         // "icon-size": 21,
@@ -184,5 +164,24 @@
         "escape": true,
         "exec": "$HOME/.config/waybar/mediaplayer.py 2> /dev/null" // Script in resources folder
         // "exec": "$HOME/.config/waybar/mediaplayer.py --player spotify 2> /dev/null" // Filter player based on name
-    }
+    },
+    "disk": {
+        "interval": 30,
+        "format": "{percentage_used}% <span></span>",
+    },
+    "bluetooth": {
+        "format": "<b>{icon}</b>",
+        "format-alt": "{status} {icon}",
+        "interval": 30,
+        "format-icons": {
+            "enabled": "",
+            "disabled": ""
+        },
+        "tooltip-format": "{}"
+    },
+    "sway/language": {
+        "format": "{}",
+        "max-length": 50
+    },
 }
+// vim: set ft=json:

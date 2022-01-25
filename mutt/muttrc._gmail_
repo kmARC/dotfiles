@@ -9,13 +9,11 @@ set trash      = +[Gmail].Trash
 # Sending
 set ssl_starttls   = yes
 set ssl_force_tls  = no
-set smtp_pass      = "`secret-tool lookup gmail-pass $from`"
+set smtp_pass      = "`~/bin/mutt_helpers.sh smtp_pass gmail '$from'`"
 set smtp_url       = smtp://$from@smtp.gmail.com:587/
-unset smtp_authenticators
 
 # Addressbook
-set query_command = "khard email -a '$from' -p '%s'"
-
+set query_command  = "`~/bin/mutt_helpers.sh query_command gmail '$from' '%s'`"
 
 folder-hook 'INBOX' 'unmailboxes =[Gmail].All\ Mail =[Gmail].Spam'
 # vim: set ft=neomuttrc:

@@ -22,8 +22,12 @@ else
   bind -m vi-command '"\eo": "ddi`__fzf_open__`\C-x\C-e\C-x\C-r\C-m"'
 fi
 
-source /usr/share/fzf/key-bindings.bash
-source /usr/share/fzf/completion.bash
+if [[ $OSTYPE == 'darwin'* ]]; then
+  source "$HOME/.fzf.bash"
+else
+  source /usr/share/fzf/key-bindings.bash
+  source /usr/share/fzf/completion.bash
+fi
 export FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS --border"
 
 ###################
@@ -40,7 +44,9 @@ export NVM_DIR="$HOME/.nvm"
 ##########
 alias tmux-session="tmux attach -t Session || tmux new -s Session"
 function ssh-tmux() { ssh "$1" -t 'tmux attach'; }
-_completion_loader ssh
+if [[ $OSTYPE != 'darwin'* ]]; then
+  _completion_loader ssh
+fi
 complete -F _ssh ssh ssh-tmux
 
 [ -n "$TMUX" ] && export PANE_ID=$(tmux display-message -p '#P')
@@ -53,20 +59,22 @@ eval "$(direnv hook bash)"
 ################
 #  Journaling  #
 ################
-NOTES_DIR=$(xdg-user-dir DOCUMENTS)/Notes
+NOTES_DIR="$HOME/Documents/Notes"
 alias notes='(cd $NOTES_DIR && vim index.md)'
 alias   did='(cd $NOTES_DIR && vim did.txt +"normal ggO" +"r!date +\%Y-\%m-\%d\ \%a")'
 
 function minutes() {
   if [ -n "$1" ]; then local topic="-$1"; else local topic=""; fi
-  (cd "$NOTES_DIR/meetings" && exec vim "minutes-$(date --iso-8601)$topic.md" -s <(echo 'THIS IS BROKEN NOW') )
+  (cd "$NOTES_DIR/meetings" && exec vim "minutes-$(date --iso-8601)$topic.md" -s <(echo 'iTHIS IS BROKEN NOW') )
 }
 
 alias t="todo.sh"
-_completion_loader todo.sh
+if [[ $OSTYPE != 'darwin'* ]]; then
+  _completion_loader todo.sh
+fi
 complete -F _todo todo.sh t
 
-alias home="(cd \$(xdg-user-dir DOCUMENTS)/Home/ && vim index.md)"
+alias home="(cd \$HOME/Documents/Home/ && vim index.md)"
 #############
 #  THEMING  #
 #############
@@ -108,12 +116,34 @@ alias sudo='sudo '
 alias htop='TERM=xterm-256color htop'
 alias ssh='TERM=xterm-256color ssh'
 
+if command -v kubectl >/dev/null; then
+  source <(kubectl completion bash)
+  alias k=kubectl
+  complete -o default -F __start_kubectl k
+fi
+
+if command -v kubecolor >/dev/null; then
+  alias k=kubecolor
+  complete -o default -F __start_kubectl kubecolor
+fi
+
+if command -v helm >/dev/null; then
+  source <(helm completion bash)
+fi
+
 cheat() { curl -m10 "http://cheat.sh/$1"; }
 
 ##################
 #  LIQUIDPROMPT  #
 ##################
-[[ -z "$MC_SID" && $- = *i* ]] && source /usr/bin/liquidprompt
+# Enable liquidprompt only in interactive and non-mc shells
+if [[ -z "$MC_SID" && $- = *i* ]]; then
+  if [[ $OSTYPE == 'darwin'* ]]; then
+    source /opt/homebrew/share/liquidprompt
+  else
+    source /usr/bin/liquidprompt
+  fi
+fi
 
 #############
 #  Wayland  #
@@ -133,6 +163,14 @@ export _JAVA_AWT_WM_NONREPARENTING=1
 export _JAVA_OPTIONS='-Dswing.defaultlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel -Dawt.useSystemAAFontSettings=lcd'
 
 #export TERM=xterm-256color-italics
+
+###########
+#  MacOS  #
+###########
+if [[ $OSTYPE == 'darwin'* ]]; then
+  export XDG_CONFIG_HOME=~/.config/
+fi
+
 
 ##################################################################
 #  AutoStart                                                     #

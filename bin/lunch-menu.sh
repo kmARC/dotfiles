@@ -8,9 +8,9 @@ domain="https://www.migros.ch"
 url="$domain/de/genossenschaften/migros-zuerich/standorte/gastronomie/migros-restaurants.html"
 
 # Calculate week number
-week=$(( $(date +%W) + 1))
+week=$(( $(date +%W) ))
 # Determine pdf link
-pdf=$(curl $url | grep "<a.*$week.*pdf" | awk -F'"' '{ print $2; exit}')
+pdf=$(curl -L $url | grep "<a.*W%20$week.*pdf" | awk -F'"' '{ print $2; exit}')
 
 TMPFILE="$(mktemp -t --suffix=.pdf lunch_menu_sh.XXXXXX)"
 trap "rm -f '$TMPFILE'" 0               # EXIT
