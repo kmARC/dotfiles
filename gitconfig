@@ -1,5 +1,7 @@
 [include]
-  path = ~/.pdotfiles/gitconfig
+  path = ~/.gitconfig.local
+  path = ~/.gitconfig.linux
+  path = ~/.gitconfig.darwin
 
 [alias]
   stag = tag -s
@@ -11,8 +13,8 @@
   gpgsign = true
 	verbose = true
 
-[credential]
-  helper = /usr/lib/git-core/git-credential-libsecret
+; [credential]
+;   helper = /usr/lib/git-core/git-credential-libsecret
 
 [core]
   excludesfile = ~/.gitignore_global
@@ -46,10 +48,10 @@
   tool = vimdiff
   conflictstyle = diff3
 
-[pager]
-  log = /usr/share/git/diff-highlight/diff-highlight | less -X
-  show = /usr/share/git/diff-highlight/diff-highlight | less -X
-  diff = /usr/share/git/diff-highlight/diff-highlight | less -X
+; [pager]
+;   log = /usr/share/git/diff-highlight/diff-highlight | less -X
+;   show = /usr/share/git/diff-highlight/diff-highlight | less -X
+;   diff = /usr/share/git/diff-highlight/diff-highlight | less -X
 
 [pull]
   rebase = true

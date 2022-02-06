@@ -13,7 +13,7 @@ set smtp_pass      = "`~/bin/mutt_helpers.sh smtp_pass gmail '$from'`"
 set smtp_url       = smtp://$from@smtp.gmail.com:587/
 
 # Addressbook
-set query_command  = "`~/bin/mutt_helpers.sh query_command gmail '$from' '%s'`"
+set query_command  = "~/bin/mutt_helpers.sh query_command gmail '$from' '%s'"
 
 folder-hook 'INBOX' 'unmailboxes =[Gmail].All\ Mail =[Gmail].Spam'
 # vim: set ft=neomuttrc:

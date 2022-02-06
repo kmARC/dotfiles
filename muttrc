@@ -56,14 +56,15 @@ unset wait_key
 timeout-hook 'exec sync-mailbox'
 
 # Folder hooks for multiple accounts
-source ~/.pdotfiles/muttrc
+source ~/.muttrc.local
 folder-hook 'INBOX' '\
   set status_format    = "%f · Messages: %?M?(filter: %V) %M of ?%m · New: %n · Flag: %F · Tag: %t · Del: %d %*· $from · (%P) "; \
   set ts_status_format = "NeoMutt with %?m?%m messages&no messages?%?n? [%n NEW]? - $from"; \
   set signature  = ~/.mutt/sig/sig-$from.txt; \
   \
   setenv from $from; \
-  unmailboxes *; \
+  unalternates "*"; \
+  unmailboxes "*"; \
   mailboxes `mutt_helpers.sh mailboxes $from`'
 
 # Folder
@@ -280,7 +281,7 @@ macro index            L "\
 macro index,pager    \cA "<pipe-message>~/bin/mutt-add-todo.py<enter>"      'Add todo'
 
 # Contact groups
-group -group internal `khard email --remove-first-line -p | awk '/@/{printf "-rx %s ", $1} END { print ""} '`
+# group -group internal `khard email --remove-first-line -p | awk '/@/{printf "-rx %s ", $1} END { print ""} '`
 
 # Trigger changing folder to default
 set folder = ~/.mutt/$from

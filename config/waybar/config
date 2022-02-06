@@ -1,34 +1,43 @@
 {
-    "layer": "top", // Waybar at top layer
-    "position": "top", // Waybar position (top|bottom|left|right)
-    //"output": "eDP-1",
+    // "layer": "top", // Waybar at top layer
+    // "position": "bottom", // Waybar position (top|bottom|left|right)
     "height": 30, // Waybar height (to be removed for auto height)
     // "width": 1280, // Waybar width
+    "spacing": 0, // Gaps between modules (4px)
     // Choose the order of the modules
     "modules-left": ["idle_inhibitor", "cpu", "memory", "disk", "temperature", "sway/mode", "sway/window"],
     "modules-center": ["sway/workspaces"],
-    "modules-right": ["tray", "sway/language", "bluetooth", "pulseaudio#sink", "pulseaudio#source", "network", "backlight", "battery", "clock"],
+    "modules-right": ["tray", "sway/language", "bluetooth", "pulseaudio", "network", "backlight", "battery", "clock"],
     // Modules configuration
     "sway/workspaces": {
         "disable-scroll": true,
         "all-outputs": false,
         "format": "{name}",
+    //     "format-icons": {
+    //         "1": "",
+    //         "2": "",
+    //         "3": "",
+    //         "4": "",
+    //         "5": "",
+    //         "urgent": "",
+    //         "focused": "",
+    //         "default": ""
+    //     }
+    },
+    "keyboard-state": {
+        "numlock": true,
+        "capslock": true,
+        "format": "{name} {icon}",
         "format-icons": {
-            // "1": "",
-            // "2": "",
-            // "3": "",
-            // "4": "",
-            // "5": "",
-            "urgent": "",
-            "focused": "",
-            "default": ""
+            "locked": "",
+            "unlocked": ""
         }
     },
     "sway/mode": {
         "format": "{}"
     },
     "mpd": {
-        "format": "{stateIcon} {consumeIcon}{randomIcon}{repeatIcon}{singleIcon}{artist} - {album} - {title} ({elapsedTime:%M:%S}/{totalTime:%M:%S}) ⸨{songPosition}|{queueLength}⸩ ",
+        "format": "{stateIcon} {consumeIcon}{randomIcon}{repeatIcon}{singleIcon}{artist} - {album} - {title} ({elapsedTime:%M:%S}/{totalTime:%M:%S}) ⸨{songPosition}|{queueLength}⸩ {volume}% ",
         "format-disconnected": "Disconnected ",
         "format-stopped": "{consumeIcon}{randomIcon}{repeatIcon}{singleIcon}Stopped ",
         "unknown-tag": "N/A",
@@ -86,9 +95,9 @@
     },
     "backlight": {
         // "device": "acpi_video1",
+        "on-click": "dex /usr/share/applications/clightc.desktop",
         "format": "{percent}% {icon}",
-        "format-icons": [""],
-        "on-click": "dex /usr/share/applications/clightc.desktop"
+        "format-icons": [""]
     },
     "battery": {
         "states": {
@@ -111,37 +120,19 @@
         // "interface": "wlp2*", // (Optional) To force the use of this interface
         "format-wifi": "{signalStrength}% ",
         "format-ethernet": "",
+        "tooltip-format": "{ifname} via {gwaddr} ",
         "format-linked": "{ifname} (No IP) ",
         "format-disconnected": "Disconnected ⚠",
         "format-alt": "{essid}: {ipaddr}/{cidr}"
     },
-    "pulseaudio#sink": {
+    "pulseaudio": {
         // "scroll-step": 1, // %, can be a float
-        "format": "{volume}% {icon}",
-        "format-bluetooth": "{volume}% {icon}",
-        "format-bluetooth-muted": " {icon}",
-        "format-muted": "0%  ",
-        "format-source": "",
-        "format-source-muted": "",
-        "format-icons": {
-            "headphone": "",
-            "hands-free": "",
-            "headset": "",
-            "phone": "",
-            "portable": "",
-            "car": "",
-            "default": ["", "", ""]
-        },
-        "on-click": "pavucontrol"
-    },
-    "pulseaudio#source": {
-        // "scroll-step": 1, // %, can be a float
-        "format": "{format_source}",
-        "format-bluetooth": "{format_source}",
-        "format-bluetooth-muted": "{format_source}",
-        "format-muted": "{format_source}",
+        "format": "{volume}% {icon} {format_source}",
+        "format-bluetooth": "{volume}% {icon} {format_source}",
+        "format-bluetooth-muted": " {icon} {format_source}",
+        "format-muted": " {format_source}",
         "format-source": "{volume}% ",
-        "format-source-muted": "0% ",
+        "format-source-muted": "",
         "format-icons": {
             "headphone": "",
             "hands-free": "",
@@ -182,6 +173,6 @@
     "sway/language": {
         "format": "{}",
         "max-length": 50
-    },
+    }
 }
 // vim: set ft=json:

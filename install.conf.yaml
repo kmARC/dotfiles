@@ -49,6 +49,9 @@
       path: config/urlscan/config.json
     ~/.config/waybar:
       path: config/waybar
+    ~/.config/weechat/:
+      glob: true
+      path: config/weechat/*
     ~/.config/yay/config.json:
       path: config/yay/config.json
     ~/.config/youtube-dl/config:
@@ -78,6 +81,10 @@
     # Top levels
     ~/.bashrc.kmarc:
     ~/.gitconfig:
+    ~/.gitconfig.darwin:
+      if: '[ `uname` = Darwin ]'
+    ~/.gitconfig.linux:
+      if: '[ `uname` = Linux ]'
     ~/.gitignore_global:
     ~/.inputrc:
     ~/.liquidpromptrc:
@@ -93,5 +100,15 @@
     ~/.ctags:
 
 - shell:
-    - [~/.tmux/plugins/tpm/bin/install_plugins, Installing new TMUX plugins]
-    - [~/.tmux/plugins/tpm/bin/update_plugins all, Upgrading TMUX plugins]
+    - - ~/.tmux/plugins/tpm/bin/install_plugins
+      - Installing new TMUX plugins
+    - - ~/.tmux/plugins/tpm/bin/update_plugins all
+      - Upgrading TMUX plugins
+    - - >-2
+        git config filter.cleanWeechat.clean
+        "awk '/^\[(layout|notify)\]\$/{ STRIP=1; print; next } \
+              /^\[/{ STRIP=0; print; next } \
+              /(slack_api_token|bitlbee.autojoin)/{ next } \
+              "'!'"STRIP{ print \$0 }' \
+            | sed 's/\(_password\s\+=\s\+\)\".*/\1<REDACTED>/g'"
+      - Adding git cleanup filter

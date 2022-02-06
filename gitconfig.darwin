@@ -1,0 +1,6 @@
+[pager]
+  log = /opt/homebrew/Cellar/git/2.35.0/share/git-core/contrib/diff-highlight/diff-highlight | less -X
+  show = /opt/homebrew/Cellar/git/2.35.0/share/git-core/contrib/diff-highlight/diff-highlight | less -X
+  diff = /opt/homebrew/Cellar/git/2.35.0/share/git-core/contrib/diff-highlight/diff-highlight | less -X
+
+# vim: set ft=gitconfig:
