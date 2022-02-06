@@ -180,3 +180,15 @@ if [[ -z $DISPLAY ]] && [[ $(tty) = /dev/tty1 ]]; then
   XKB_DEFAULT_LAYOUT=us exec sway
 fi
 
+
+###############
+#  dark mode  #
+###############
+if [[ $OSTYPE == 'darwin'* ]]; then
+  if [[ "$(defaults read -g AppleInterfaceStyle 2>/dev/null)" == "Dark" ]]; then
+    sed --follow-symlinks -i "s/\\(&colorscheme.*\\)light\\(.*\\)/\1dark\2/g" "$HOME/.config/alacritty.yml"
+  else
+    sed --follow-symlinks -i "s/\\(&colorscheme.*\\)dark\\(.*\\)/\1light\2/g" "$HOME/.config/alacritty.yml"
+  fi
+fi
+

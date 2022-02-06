@@ -9,7 +9,7 @@
 # All imports must either be absolute paths starting with `/`, or paths relative
 # to the user's home directory starting with `~/`.
 import:
-  - &colorscheme ~/.local/opt/selenized/terminals/alacritty/selenized-white.yml
+  - &colorscheme ~/.dotfiles/config/alacritty.light.yml
 
 # Any items in the `env` entry below will be added as
 # environment variables. Some entries may override variables
@@ -23,7 +23,7 @@ import:
   # available, otherwise `xterm-256color` is used.
   #TERM: alacritty
 
-#window:
+window:
   # Window dimensions (changes require restart)
   #
   # Number of lines/columns (not pixels) in the terminal. The number of columns
@@ -61,7 +61,13 @@ import:
   # Values for `decorations` (macOS only):
   #     - transparent: Title bar, transparent background and title bar buttons
   #     - buttonless: Title bar, transparent background and no title bar buttons
-  #decorations: full
+  decorations: buttonless
+
+  # Background opacity
+  #
+  # Window opacity as a floating point number from `0.0` to `1.0`.
+  # The value `0.0` is completely transparent and `1.0` is opaque.
+  #opacity: 1.0
 
   # Background opacity
   #
@@ -110,17 +116,17 @@ import:
 # Font configuration
 font:
   # Normal (roman) font face
-  normal:
+  # normal:
     # Font family
     #
     # Default:
     #   - (macOS) Menlo
     #   - (Linux/BSD) monospace
     #   - (Windows) Consolas
-    family: Fira Code
+    # family: Monaco
 
     # The `style` can be specified to pick a specific face.
-    style: Medium
+    # style: Medium
 
   # Bold font face
   #bold:
@@ -156,14 +162,14 @@ font:
     #style: Bold Italic
 
   # Point size
-  size: 9.0
+  size: 12.0
 
   # Offset is the extra space around each character. `offset.y` can be thought
   # of as modifying the line spacing, and `offset.x` as modifying the letter
   # spacing.
   offset:
   #  x: 0
-    y: 4
+    y: 8
 
   # Glyph offset determines the locations of the glyphs within their cells with
   # the default being at the bottom. Increasing `x` moves the glyph to the
@@ -180,7 +186,6 @@ font:
 
 # If `true`, bold text is drawn using the bright color variants.
 #draw_bold_text_with_bright_colors: false
-
 # Colors (Tomorrow Night)
 #colors:
   # Default colors
@@ -738,7 +743,7 @@ live_config_reload: true
 #
 # If the same trigger is assigned to multiple actions, all of them are executed
 # in the order they were defined in.
-#key_bindings:
+key_bindings:
   #- { key: Paste,                                       action: Paste          }
   #- { key: Copy,                                        action: Copy           }
   #- { key: L,         mods: Control,                    action: ClearLogNotice }
@@ -846,6 +851,7 @@ live_config_reload: true
   #- { key: W,              mods: Command,                    action: Quit                  }
   #- { key: N,              mods: Command,                    action: SpawnNewInstance      }
   #- { key: F,              mods: Command|Control,            action: ToggleFullscreen      }
+  - { key: F,              mods: Command|Control,            action: ToggleSimpleFullscreen}
   #- { key: F,              mods: Command, mode: ~Search,     action: SearchForward         }
   #- { key: B,              mods: Command, mode: ~Search,     action: SearchBackward        }
 

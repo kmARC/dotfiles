@@ -80,10 +80,21 @@ Plug 'kristijanhusak/vim-dadbod-ui'
 Plug 'cappyzawa/starlark.vim'
 Plug 'google/vim-maktaba'
 Plug 'bazelbuild/vim-bazel'
-
-
+Plug 'cocopon/iceberg.vim'
+Plug 'sonph/onehalf', { 'rtp': 'vim' }
+Plug 'prabirshrestha/asyncomplete-emoji.vim'
 let g:asyncomplete_popup_delay = 300
 call plug#end()
+
+function! s:on_lsp_buffer_enabled() abort
+    setlocal omnifunc=lsp#complete
+endfunction
+
+augroup lsp_install
+    au!
+    " call s:on_lsp_buffer_enabled only for languages that has the server registered.
+    autocmd User lsp_buffer_enabled call s:on_lsp_buffer_enabled()
+  augroup END
 
 filetype plugin indent on
 
@@ -161,24 +172,17 @@ endif
 
 "--- Look & Feel ----
 syntax on
-set t_Co=16
+
+" Fix Alacritty Italics
+set t_ZH=[3m
+set t_ZR=[23m
 
 augroup theme
   autocmd!
-  autocmd ColorScheme * highlight VertSplit ctermfg=8 ctermbg=NONE guibg=NONE
-                     \| highlight LineNr              ctermbg=NONE guibg=NONE ctermfg=8
-                     \| highlight CursorLine          ctermbg=NONE guibg=NONE
-                     \| highlight CursorLineNr        ctermbg=NONE
-                     \| highlight Folded              ctermbg=NONE            ctermfg=8 cterm=bold
-                     \| highlight TabLineSel          cterm=NONE ctermbg=NONE ctermfg=15
-                     \| highlight TabLine             cterm=NONE ctermbg=0 ctermfg=7
-                     \| highlight TabLineFill         cterm=NONE ctermbg=0 ctermfg=7
-                     \| highlight! link Directory Identifier
-                     \| let g:lightline.colorscheme = g:colors_name . '_' . &g:background
+  autocmd ColorScheme * let g:lightline.colorscheme = 'iceberg'
                      \| call lightline#enable()
 augroup END
 
-set background=light
 let g:lightline = {
       \ 'active': {
       \   'left': [ [ 'mode', 'paste' ],
@@ -188,7 +192,11 @@ let g:lightline = {
       \   'gitbranch': 'FugitiveHead'
       \ },
       \ }
-colorscheme selenized
+let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+set termguicolors
+set background=light
+colorscheme iceberg
 
 "--- Mappings ----
 cmap w!!                   w !sudo tee > /dev/null %
