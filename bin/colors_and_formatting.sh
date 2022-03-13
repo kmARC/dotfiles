@@ -1,22 +1,66 @@
-#!/bin/bash
- 
-# This program is free software. It comes without any warranty, to
-# the extent permitted by applicable law. You can redistribute it
-# and/or modify it under the terms of the Do What The Fuck You Want
-# To Public License, Version 2, as published by Sam Hocevar. See
-# http://sam.zoy.org/wtfpl/COPYING for more details.
- 
-#Background
-for clbg in {40..47} {100..107} 49 ; do
-	#Foreground
-	for clfg in {30..37} {90..97} 39 ; do
-		#Formatting
-		for attr in 0 1 2 3 4 5 7 9 ; do
-			#Print the result
-			echo -en "\e[${attr};${clbg};${clfg}m ^[${attr};${clbg};${clfg}m \e[0m"
-		done
-		echo #Newline
-	done
-done
- 
-exit 0
+#!/usr/bin/env bash
+theme=$(dirname $0)/scripts/${1:-base16-default-dark.sh}
+if [ -f $theme ]; then
+  # get the color declarations in said theme, assumes there is a block of text that starts with color00= and ends with new line
+  source $theme
+  eval $(awk '/^color00=/,/^$/ {print}' $theme | sed 's/#.*//')
+else
+  printf "No theme file %s found\n" $theme
+fi;
+ansi_mappings=(
+  Black
+  Red
+  Green
+  Yellow
+  Blue
+  Magenta
+  Cyan
+  White
+  Bright_Black
+  Bright_Red
+  Bright_Green
+  Bright_Yellow
+  Bright_Blue
+  Bright_Magenta
+  Bright_Cyan
+  Bright_White
+)
+colors=(
+  base00
+  base08
+  base0B
+  base0A
+  base0D
+  base0E
+  base0C
+  base05
+  base03
+  base08
+  base0B
+  base0A
+  base0D
+  base0E
+  base0C
+  base07
+  base09
+  base0F
+  base01
+  base02
+  base04
+  base06
+)
+for padded_value in `seq -w 0 21`; do
+  color_variable="color${padded_value}"
+  eval current_color=\$${color_variable}
+  current_color=$(echo ${current_color//\//} | tr '[:lower:]' '[:upper:]') # get rid of slashes, and uppercase
+  non_padded_value=$((10#$padded_value))
+  base16_color_name=${colors[$non_padded_value]}
+  current_color_label=${current_color:-unknown}
+  ansi_label=${ansi_mappings[$non_padded_value]} 
+  block=$(printf "\x1b[48;5;${non_padded_value}m___________________________")
+  foreground=$(printf "\x1b[38;5;${non_padded_value}m$color_variable")
+  printf "%s %s %s %-30s %s\x1b[0m\n" $foreground $base16_color_name $current_color_label ${ansi_label:-""} $block
+done;
+if [ $# -eq 1 ]; then
+    printf "To restore current theme, source ~/.base16_theme or reopen your terminal\n"
+fi

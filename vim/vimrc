@@ -1,9 +1,11 @@
-let g:polyglot_disabled = ['markdown']
-
+" {{{ --- Plugins --- 
 call plug#begin('~/.vim/plugged')
 "--- Look&Feel ---
 Plug 'itchyny/lightline.vim'
+Plug 'cocopon/iceberg.vim'
 Plug 'jan-warchol/selenized'        , {'rtp': 'editors/vim'}
+Plug 'sonph/onehalf'                , {'rtp': 'vim'}
+Plug 'NLKNguyen/papercolor-theme'
 "--- Tools ---
 Plug 'direnv/direnv.vim'
 Plug 'gcmt/taboo.vim'
@@ -11,6 +13,7 @@ Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 Plug 'tpope/vim-obsession'
 Plug 'tpope/vim-unimpaired'
+Plug 'preservim/nerdtree'
 "--- Editing ---
 Plug 'Raimondi/delimitMate'
 Plug 'godlygeek/tabular'            , {'on': 'Tabularize'}
@@ -23,6 +26,7 @@ Plug 'mattn/gist-vim'
 Plug 'shumphrey/fugitive-gitlab.vim'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-rhubarb'
+Plug 'vim-scripts/gitignore'
 "--- TMUX ---
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'jpalardy/vim-slime'
@@ -32,19 +36,34 @@ Plug 'AndrewRadev/splitjoin.vim'
 Plug 'SirVer/ultisnips'
 Plug 'andymass/vim-matchup'
 Plug 'benmills/vimux'
+Plug 'dense-analysis/ale'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'honza/vim-snippets'
 Plug 'janko/vim-test'
 Plug 'ludovicchabant/vim-gutentags'
-Plug 'majutsushi/tagbar'            , {'on': ['TagbarToggle']}
-" Plug 'sheerun/vim-polyglot'
+Plug 'majutsushi/tagbar'
+Plug 'mattn/vim-lsp-settings'
+Plug 'mkalinski/vim-lightline_tagbar'
+Plug 'prabirshrestha/asyncomplete-file.vim'
+Plug 'prabirshrestha/asyncomplete-lsp.vim'
+Plug 'prabirshrestha/asyncomplete-ultisnips.vim'
+Plug 'prabirshrestha/asyncomplete.vim'
+Plug 'prabirshrestha/vim-lsp'
+Plug 'rhysd/vim-lsp-ale'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-endwise'
-Plug 'w0rp/ale'
+"--- Java ---
+Plug 'mikelue/vim-maven-plugin'
+Plug 'udalov/javap-vim'
+Plug 'uiiaoo/java-syntax.vim'
+"--- CPP ---
+Plug 'bfrg/vim-cpp-modern'
+Plug 'alepez/vim-gtest'
 "--- Markdown, Wiki, Todo ---
 Plug 'freitass/todo.txt-vim'        , {'for': 'todo'}
 Plug 'plasticboy/vim-markdown'      , {'for': 'markdown'}
 Plug 'shime/vim-livedown'           , {'for': 'markdown'}
+Plug 'tenfyzhong/joplin.vim'        , {'on': ['Joplin', 'JoplinWinOpen']}
 "--- HTML ---
 Plug 'mattn/emmet-vim'              , {'for': ['html', '*jsx', 'xml']}
 Plug 'othree/html5.vim'             , {'for': ['html', '*jsx', 'xml']}
@@ -59,48 +78,54 @@ Plug 'pangloss/vim-javascript'      , {'for': 'javascript*'}
 Plug 'mxw/vim-jsx'                  , {'for': '*jsx'}
 "--- TypeScript ---
 Plug 'leafgarland/typescript-vim'   , {'for': 'typescript*'}
+"--- DB
+Plug 'kristijanhusak/vim-dadbod-ui'
+Plug 'tpope/vim-dadbod'
 "--- DevOps ---
 Plug 'andrewstuart/vim-kubernetes'
 Plug 'hashivim/vim-terraform'       , {'for': 'terraform'}
-" Plug 'pearofducks/ansible-vim'
+Plug 'pearofducks/ansible-vim'
+Plug 'bazelbuild/vim-bazel'
+Plug 'cappyzawa/starlark.vim'       , {'for': 'starlark*'}
 "--- Dependencies ---
 Plug 'mattn/webapi-vim'             " for: gist-vim
-Plug 'tpope/vim-repeat'
-"--- TESTING
-Plug 'prabirshrestha/vim-lsp'
-Plug 'mattn/vim-lsp-settings'
-Plug 'prabirshrestha/asyncomplete.vim'
-Plug 'prabirshrestha/asyncomplete-lsp.vim'
-Plug 'prabirshrestha/asyncomplete-file.vim'
-Plug 'prabirshrestha/asyncomplete-ultisnips.vim'
-Plug 'rhysd/vim-lsp-ale'
-Plug 'tenfyzhong/joplin.vim'       , {'on': ['Joplin', 'JoplinWinOpen']}
-Plug 'tpope/vim-dadbod'
-Plug 'kristijanhusak/vim-dadbod-ui'
-Plug 'cappyzawa/starlark.vim'
-Plug 'google/vim-maktaba'
-Plug 'bazelbuild/vim-bazel'
-Plug 'cocopon/iceberg.vim'
-Plug 'sonph/onehalf', { 'rtp': 'vim' }
-Plug 'prabirshrestha/asyncomplete-emoji.vim'
-let g:asyncomplete_popup_delay = 300
-call plug#end()
+Plug 'tpope/vim-repeat'             " for: surround.vim, unimpaired.vim
+Plug 'google/vim-maktaba'           " for: vim-bazel
+Plug 'tpope/vim-dispatch'           " for: gtest
+Plug 'junegunn/vim-plug'
+"--- Local plugins, if any
+silent! source ~/.vimrc.plugs
+Plug 'thinca/vim-themis'
+Plug 'git@github.com:kmARC/fugitive-gerrit.vim.git'
+Plug 'Xuyuanp/nerdtree-git-plugin'
+" Plug 'puremourning/vimspector'
+Plug 'kmARC/fugitive-gerrit.vim'
 
-function! s:on_lsp_buffer_enabled() abort
-    setlocal omnifunc=lsp#complete
+packadd termdebug
+call plug#end() " }}}
+
+"--- Vim-Plug --- {{{
+function! s:plug_gx()
+  let line = getline('.')
+  let name = matchstr(line, "^Plug '[^']\\+/\\zs[^']\\+\\ze'")
+  let uri  = get(get(g:plugs, name, {}), 'uri', '')
+  if uri !~# 'github.com' 
+    return
+  endif
+  let repo = matchstr(uri, '[^:/]*/'.name)
+  let url  = 'https://github.com/'.repo
+  call netrw#BrowseX(url, 0)
 endfunction
 
-augroup lsp_install
-    au!
-    " call s:on_lsp_buffer_enabled only for languages that has the server registered.
-    autocmd User lsp_buffer_enabled call s:on_lsp_buffer_enabled()
-  augroup END
+augroup PlugGx
+  autocmd!
+  autocmd FileType vim nnoremap <buffer> <silent> gx :call <sid>plug_gx()<cr>
+augroup END
+" }}}
 
-filetype plugin indent on
-
-let s:dir_misc = expand('~/.vim/misc')
-
+" --- Default config --- {{{
 set autoindent
+set autoread
 set backspace=indent,eol,start
 set backup
 set backupcopy=yes
@@ -110,18 +135,23 @@ set cursorline
 set diffopt+=vertical,algorithm:patience
 set directory=~/.vim/vimswap//
 set expandtab
+set encoding=utf-8
 set fillchars+=vert:│
+set formatoptions+=j
 set hidden
+set history=10000
 set hlsearch
 set ignorecase
 set incsearch
 set laststatus=2
+set lazyredraw
 set linebreak
 set list
 set listchars=trail:·,nbsp:·,tab:»\ ,
 set mouse+=a
 set noshowmode showcmd
 set nowrap
+set nrformats-=octal
 set number relativenumber
 set pastetoggle=<F12>
 set scrolloff=3
@@ -137,7 +167,6 @@ set splitright
 set switchbuf+=usetab
 set tabstop=2
 set tagcase=match
-set ttymouse=xterm2
 set undodir=~/.vim/vimundo//
 set undofile
 set viminfo+=n~/.vim/misc/viminfo
@@ -146,64 +175,102 @@ set wildcharm=<C-z>
 set wildignore+=__pycache__,.mypy_cache,*.pyc " Python
 set wildignore+=*.o,*.so,*.a                  " C/C++
 set wildignore+=*.class                       " Java
+set wildignore+=*/bazel-*/*                   " Bazel
 set wildignore+=.direnv,build                 " Misc
 set wildignorecase
 set wildmenu
 set wildmode=list:full
+scriptencoding utf-8
+" }}}
 
-"--- Fix wayland copy-paste
-if has_key(environ(), "WAYLAND_DISPLAY")
+"--- Integrations --- {{{
+" Fix wayland copy-paste
+if has_key(environ(), 'WAYLAND_DISPLAY')
   xnoremap "+y y:call system("wl-copy",           @")<cr>
   xnoremap "*y y:call system("wl-copy --primary", @")<cr>
   nnoremap "+p :let @+=substitute(system("wl-paste --no-newline"),           '<C-v><C-m>', '', 'g')<cr>"+p
   nnoremap "*p :let @*=substitute(system("wl-paste --no-newline --primary"), '<C-v><C-m>', '', 'g')<cr>"*p
 end
 
-"--- TMUX integration
-if has_key(environ(), "TMUX")
+" TMUX integration
+if has_key(environ(), 'TMUX')
   " Set tmux-compatible title
   set t_ts=]2;
   set t_fs=\\
 
-  let g:slime_target = "tmux"
+  let g:slime_target = 'tmux'
 else
-  let g:slime_target = "vimterminal"
+  let g:slime_target = 'vimterminal'
 endif
-
-"--- Look & Feel ----
-syntax on
 
 " Fix Alacritty Italics
 set t_ZH=[3m
 set t_ZR=[23m
+" }}}
 
+"--- Look & Feel ---- {{{
 augroup theme
   autocmd!
-  autocmd ColorScheme * let g:lightline.colorscheme = 'iceberg'
+  autocmd ColorScheme * let g:lightline.colorscheme = g:colors_name
                      \| call lightline#enable()
+                     \| hi link javaFunction Text
+                     \| hi link javaString   Special
 augroup END
 
 let g:lightline = {
-      \ 'active': {
-      \   'left': [ [ 'mode', 'paste' ],
-      \             [ 'gitbranch', 'readonly', 'filename', 'modified' ] ]
-      \ },
-      \ 'component_function': {
-      \   'gitbranch': 'FugitiveHead'
-      \ },
+      \   'active': {
+      \     'left': [ [ 'mode', 'paste' ],
+      \               [ 'gitbranch', 'readonly', 'filename', 'modified' ],
+      \               [ 'tagbar'] ],
+      \     'right': [ ['lineinfo'],
+      \                ['percent'],
+      \                ['fileformat', 'fileencoding', 'filetype'] ],
+      \   },
+      \   'component_function': {
+      \     'gitbranch': 'FugitiveHead',
+      \     'tagbar': 'lightline_tagbar#component',
+      \   },
       \ }
-let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
-let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
 set termguicolors
-set background=light
-colorscheme iceberg
+silent colorscheme iceberg
 
-"--- Mappings ----
+
+" :help tmux-integration
+if !has('gui_running')
+  " Better mouse support, see  :help 'ttymouse'
+  set ttymouse=sgr
+
+  " Enable true colors, see  :help xterm-true-color
+  let &termguicolors = v:true
+  let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+  let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+
+  " Enable bracketed paste mode, see  :help xterm-bracketed-paste
+  let &t_BE = "\<Esc>[?2004h"
+  let &t_BD = "\<Esc>[?2004l"
+  let &t_PS = "\<Esc>[200~"
+  let &t_PE = "\<Esc>[201~"
+
+  " Enable focus event tracking, see  :help xterm-focus-event
+  let &t_fe = "\<Esc>[?1004h"
+  let &t_fd = "\<Esc>[?1004l"
+  execute "set <FocusGained>=\<Esc>[I"
+  execute "set <FocusLost>=\<Esc>[O"
+
+  " Enable modified arrow keys, see  :help arrow_modifiers
+  execute "silent! set <xUp>=\<Esc>[@;*A"
+  execute "silent! set <xDown>=\<Esc>[@;*B"
+  execute "silent! set <xRight>=\<Esc>[@;*C"
+  execute "silent! set <xLeft>=\<Esc>[@;*D"
+endif
+" }}}
+
+"--- Mappings ---- {{{
 cmap w!!                   w !sudo tee > /dev/null %
 
 nnoremap <C-p>             :Files<CR>
 
-nnoremap <F7>              :Lexplore<CR>
+nnoremap <F7>              :NERDTreeFind %<CR>
 nnoremap <F8>              :TagbarToggle<CR>
 nnoremap <F9>              :lclose<CR>:cclose<CR>:pclose<CR>
 
@@ -231,6 +298,8 @@ vnoremap <leader>t=        :Tabularize /^[^=]*\zs/l1c1l1<CR>
 vnoremap <leader>t<Space>  :Tabularize /\S\+/l1l0<CR>
 vnoremap <leader>t<bar>    :Tabularize /<bar>\+/l1c1<CR>
 
+nnoremap <leader>K         :DevdocsHelp <C-r><C-w><CR>
+
 nnoremap <leader>1         1gt
 nnoremap <leader>2         2gt
 nnoremap <leader>3         3gt
@@ -247,120 +316,159 @@ nnoremap k                 gk
 nnoremap gj                j
 nnoremap gk                k
 
-nnoremap <leader>aa        :!xdg-open https://docs.ansible.com/ansible/latest/list_of_all_modules.html<CR>
-nnoremap <leader>am        :!xdg-open https://docs.ansible.com/ansible/latest/<C-R><C-W>_module.html\#options<CR>
-nnoremap <leader>as        :!xdg-open https://docs.ansible.com/ansible/latest/reference_appendices/playbooks_keywords.html?highlight=<C-R><C-W><CR>
+" nnoremap <leader>aa        :!xdg-open https://docs.ansible.com/ansible/latest/list_of_all_modules.html<CR>
+" nnoremap <leader>am        :!xdg-open https://docs.ansible.com/ansible/latest/<C-R><C-W>_module.html\#options<CR>
+" nnoremap <leader>as        :!xdg-open https://docs.ansible.com/ansible/latest/reference_appendices/playbooks_keywords.html?highlight=<C-R><C-W><CR>
 
 nnoremap <silent> t<C-n>   :TestNearest<CR>
 nnoremap <silent> t<C-f>   :TestFile<CR>
 nnoremap <silent> t<C-s>   :TestSuite<CR>
 nnoremap <silent> t<C-l>   :TestLast<CR>
 nnoremap <silent> t<C-g>   :TestVisit<CR>
+" }}}
 
-"--- Autocommands ---
+"--- Autocommands --- {{{
+augroup filetypes
+  autocmd!
+
+  autocmd FileType vim
+    \   setlocal keywordprg=:help
+    \ | autocmd BufWritePost <buffer> normal! mV
+
+  autocmd FileType javascript*,typescript*
+    \   setlocal keywordprg=:DevdocsHelp
+    \ | setlocal include=from
+    \ | setlocal define=export.\\{-\\}\\(interface\\\|function\\\|const\\\|type\\\|class\\\|var\\)
+    \ | autocmd BufWritePost <buffer> normal! mJ
+
+  autocmd FileType css,less,scss
+    \   setlocal keywordprg=:DevdocsHelp
+    \ | autocmd BufWritePost <buffer> normal! mC
+
+  autocmd FileType python 
+    \   setlocal keywordprg=pydoc
+    \ | setlocal softtabstop=4 tabstop=4 shiftwidth=4
+    \ | autocmd BufWritePost <buffer> normal! mP
+
+  autocmd FileType java
+    \   setlocal softtabstop=4 tabstop=4 shiftwidth=4
+    \ | setlocal foldmethod=syntax foldlevel=1
+    \ | nnoremap gP :exec "vsplit " . findfile('pom.xml', ".;")<CR><ESC>
+    \ | nnoremap gC :exec "vsplit " . findfile(expand("%:r")->split("/")[-1] . ".class", "**")<CR><ESC>
+    \ | if maven#isBufferUnderMavenProject(bufnr("%"))
+    \ |   let b:mvn_exec_cmd =  "Mvn! compile exec:java -Dexec.mainClass=" . maven#getJavaPackageOfBuffer('%') . '.' . expand('%:t:r')
+    \ |   command! MvnExec exec b:mvn_exec_cmd
+    \ | endif
+    \ | call s:SetupMavenMap()
+    \ | autocmd BufWritePost <buffer> normal! mJ<ESC>
+
+  autocmd FileType cpp
+    \   nnoremap <silent> t<C-n>   :GTestRunUnderCursor<CR>
+    \ | nnoremap <silent> t<C-f>   :GTestRun<CR>
+
+  autocmd FileType dockerfile
+    \   setlocal keywordprg=:DockerHelp
+    \ | autocmd BufWritePost <buffer> normal! mD
+
+  autocmd FileType markdown
+    \   nnoremap <buffer> <F6> :LivedownToggle<CR>
+    \ | nnoremap <buffer> <F8> :Toc<CR><C-w>L<C-w>50<bar>:setlocal winfixwidth<CR>
+    \ | setlocal softtabstop=4 tabstop=4 shiftwidth=4
+    \ | setlocal textwidth=100 formatprg=par\ -jw100
+    \ | autocmd BufWritePost <buffer> normal! mM
+
+  autocmd FileType plaintex,text
+    \   setlocal textwidth=100 formatprg=par\ -jw100
+    \ | autocmd BufWritePost <buffer> normal! mT
+
+  autocmd FileType mail 
+    \   setlocal formatoptions+=watqc
+    \ | setlocal nojoinspaces
+    \ | match ErrorMsg '\s\+$'
+
+  autocmd FileType html 
+    \   autocmd BufWritePost <buffer> normal! mH
+
+  autocmd FileType yaml.ansible
+    \   setlocal keywordprg=:DevdocsHelp
+    \ | autocmd BufWritePost <buffer> normal! mA
+
+  autocmd FileType *gotexttmpl,yaml.kubernetes
+    \   setlocal keywordprg=:KubeHelp
+    \ | autocmd BufWritePost <buffer> normal! mK
+
+  autocmd FileType terraform 
+    \   setlocal commentstring=#%s
+    \ | autocmd BufWritePost <buffer> normal! mT
+
+  autocmd FileType xml 
+    \   setlocal foldmethod=syntax
+    \ | silent! %foldopen!
+    \ | autocmd BufWritePost <buffer> normal! mX
+
+  autocmd FileType netrw
+    \   nnoremap <buffer> <c-l> <c-w>l
+
+  autocmd FileType help
+    \   wincmd L | 80 wincmd | | setlocal winfixwidth
+augroup END
+
 augroup vimrc
   autocmd!
-  "----- keywordprg
-  autocmd FileType vim                            setlocal keywordprg=:help
-  autocmd FileType javascript*,typescript*        setlocal keywordprg=:DevdocsHelp
-  autocmd FileType css,less,scss                  setlocal keywordprg=:DevdocsHelp
-  autocmd FileType yaml.ansible                   setlocal keywordprg=:DevdocsHelp
-  autocmd FileType python                         setlocal keywordprg=pydoc
-  autocmd FileType dockerfile                     setlocal keywordprg=:DockerHelp
-  autocmd FileType *gotexttmpl,yaml.kubernetes    setlocal keywordprg=:KubeHelp
-  "----- mappings
-  autocmd FileType markdown                       nnoremap <buffer> <F6> :LivedownToggle<CR>
-  autocmd FileType markdown                       nnoremap <buffer> <F8> :Toc<CR><C-w>L<C-w>50<bar>:setlocal winfixwidth<CR>
-  autocmd FileType netrw                          nnoremap <buffer> <c-l> <c-w>l
-  "----- formatting
-  autocmd FileType mail                           setlocal formatoptions+=watqc nojoinspaces | match ErrorMsg '\s\+$'
-  autocmd FileType markdown                       setlocal softtabstop=4 tabstop=4 shiftwidth=4
-  autocmd FileType python                         setlocal softtabstop=4 tabstop=4 shiftwidth=4
-  autocmd FileType markdown,plaintex,text         setlocal textwidth=100 formatprg=par\ -jw100
-  autocmd FileType terraform                      setlocal commentstring=#%s
-  autocmd FileType xml                            setlocal foldmethod=syntax | %foldopen!
-  "----- TESTING
-  au User asyncomplete_setup 
-    \  call asyncomplete#register_source(asyncomplete#sources#file#get_source_options({
-      \ 'name': 'file',
-      \ 'allowlist': ['*'],
-      \ 'priority': 10,
-      \ 'completor': function('asyncomplete#sources#file#completor')
-    \ })) |
-    \ call asyncomplete#register_source(asyncomplete#sources#ultisnips#get_source_options({
-      \ 'name': 'ultisnips',
-      \ 'allowlist': ['*'],
-      \ 'completor': function('asyncomplete#sources#ultisnips#completor'),
-    \ }))
-  "----- filetypes
-  autocmd BufRead,BufNewFile WORKSPACE,BUILD      setlocal filetype=starlark.bzl
-  autocmd BufRead,BufNewFile BUILD,BUILD.bazel    setlocal filetype=starlark.bzl
-  autocmd BufRead,BufNewFile Vagrantfile          setlocal filetype=ruby
-  autocmd BufRead,BufNewFile *.tsx                setlocal filetype=typescript.jsx
-  "----- marks
-  autocmd BufWritePost *.css,*.less,*.scss        normal! mC
-  autocmd BufWritePost *.html                     normal! mH
-  autocmd BufWritePost *.js,*.jsx,*.ts,*.tsx      normal! mJ
-  autocmd BufWritePost *.md                       normal! mM
-  autocmd BufWritePost *.py                       normal! mP
-  autocmd BufWritePost *.sh                       normal! mS
-  autocmd BufWritePost *.yml                      normal! mY
-  autocmd BufWritePost *.vim,vimrc                normal! mV
-  "----- buffer/window opts
-  autocmd WinEnter *                              if &l:buftype == "" && &l:filetype != "netrw" | setlocal nu   rnu
-  autocmd WinLeave *                              if &l:buftype == "" && &l:filetype != "netrw" | setlocal nu nornu
-  autocmd FileType help                           wincmd L | 80 wincmd | | setlocal winfixwidth
-  "----- startup
+  
   autocmd VimEnter * call CheckProject()
-  "----- include/define
-  autocmd FileType javascript*,typescript*        setlocal include=from
-                                              \ | setlocal define=export.\\{-\\}\\(interface\\\|function\\\|const\\\|type\\\|class\\\|var\\)
-  "----- misc
+
+  autocmd BufNewFile *
+    \   let s:skel = expand('~/.vim/skeleton/skeleton.') . expand('%:e')
+    \ | if filereadable(s:skel) | exec '0r ' . s:skel
+
+  autocmd WinEnter * if &l:buftype == "" && &l:filetype != "netrw" | setlocal nu   rnu
+  autocmd WinLeave * if &l:buftype == "" && &l:filetype != "netrw" | setlocal nu nornu
+
   autocmd BufWritePost ~/Documents/Home/index.md
           \ silent !pandoc --output ~/Documents/Home/index.html
                          \ --css github-pandoc.css --standalone %
-  "----- skeleton
-  autocmd BufNewFile *.sh                         0r ~/.vim/skeleton/skeleton.sh
-  "----- test
-  autocmd BufWrite *                              if test#exists() | TestFile
-augroup END
 
+  autocmd User TermdebugStartPost 
+    \ call TermDebugSendCommand('vim-dashboard-profile')
+
+  " autocmd BufWritePost * if test#exists() | TestFile
+augroup END
+" }}}
 
 "--- Functions --- {{{
-let s:sess = fnamemodify($MYVIMRC, ":h") . '/sessions/' . substitute($PWD, '\/', '%', 'g')
+let s:sess = fnamemodify($MYVIMRC, ':h') . '/sessions/' . substitute($PWD, '\/', '%', 'g')
 
 function! Project()
   if filereadable(s:sess)
-    exec "source" . fnameescape(s:sess)
+    exec 'source' . fnameescape(s:sess)
   else
-    exec "Obsession " . fnameescape(s:sess)
+    exec 'Obsession ' . fnameescape(s:sess)
   endif
 endfunction
 command! Project call Project()
 
 function! ProjectDelete()
-  exec "Obsession!"
+  exec 'Obsession!'
   call delete(s:sess)
 endfunction
 command! ProjectDelete call ProjectDelete()
 
 function! CheckProject()
-  if argc() == 0 && &g:errorfile == 'errors.err' && filereadable(s:sess)
+  if argc() == 0 && &g:errorfile ==# 'errors.err' && filereadable(s:sess)
       call Project()
     endif
 endfunction
 
 function! DockerHelp(keyword)
-  exec "silent !xdg-open https://docs.docker.com/engine/reference/builder/\\#"
-        \ . tolower(a:keyword)
-  exec 'redraw!'
+  let url = 'https://docs.docker.com/engine/reference/builder/#' . tolower(a:keyword)
+  call netrw#BrowseX(url, 0)
 endfunction
 command! -nargs=1 DockerHelp :call DockerHelp(<f-args>)
 
 function! DevdocsHelp(keyword)
-  exec "silent !xdg-open https://devdocs.io/\\#q="
-        \ . tolower(&l:filetype) . "+" . tolower(a:keyword)
-  exec 'redraw!'
+  let url = 'https://devdocs.io/#q=' . tolower(&l:filetype) . '+' . tolower(a:keyword)
+  call netrw#BrowseX(url, 0)
 endfunction
 command! -nargs=1 DevdocsHelp :call DevdocsHelp(<f-args>)
 
@@ -373,7 +481,7 @@ function! KubeHelp(keyword)
   " hash-based html ids to navigate to exact keywords
   let l:kindLine = getline(search('^kind', 'bn'))
   let l:versionLine = getline(search('^apiVersion', 'bn'))
-  if l:kindLine == '' ||  l:versionLine == ''
+  if l:kindLine ==# '' ||  l:versionLine ==# ''
     echom 'Cannot find docs (no kind / apiVersion)'
     return
   endif
@@ -389,27 +497,182 @@ function! KubeHelp(keyword)
   exec 'redraw!'
 endfunction
 command! -nargs=1 KubeHelp :call KubeHelp(<f-args>)
+
+function! s:SetupMavenMap()
+  doautocmd MavenAutoDetect BufNewFile,BufReadPost
+
+  if !maven#isBufferUnderMavenProject(bufnr('%'))
+    return
+  endif
+
+  " " Execute testing
+  " if !hasmapto("<Plug>MavenRunUnittest", "in")
+  "   imap <buffer> <silent> <F5> <Plug>MavenRunUnittest
+  "   nmap <buffer> <silent> <F5> <Plug>MavenRunUnittest
+  " endif
+  " " //~)
+
+  " " Execute all of testing
+  " if !hasmapto("<Plug>MavenRunUnittestAll", "in")
+  "   imap <buffer> <silent> <C-F5> <Plug>MavenRunUnittestAll
+  "   nmap <buffer> <silent> <C-F5> <Plug>MavenRunUnittestAll
+  " endif
+  " " //~)
+
+  " Switch of unit test
+  if !hasmapto('<Plug>MavenSwitchUnittestFile', 'in')
+    imap <buffer> <silent> <F6> <Plug>MavenSwitchUnittestFile
+    nmap <buffer> <silent> <F6> <Plug>MavenSwitchUnittestFile
+  endif
+  " //~)
+
+  " Open for testing result of testing
+  if !hasmapto('<Plug>MavenOpenTestResult', 'in')
+    imap <buffer> <silent> <C-F6> <Plug>MavenOpenTestResult
+    nmap <buffer> <silent> <C-F6> <Plug>MavenOpenTestResult
+  endif
+  " //~)
+endfunction
+
+function! ChangeBackground()
+  if system('defaults read -g AppleInterfaceStyle') =~? '^Dark'
+    set background=dark
+  else
+    set background=light
+  endif
+endfunction
+
+autocmd SigUSR1 * call ChangeBackground()
+
+call ChangeBackground()
 " }}}
 
-"--- Plugin configurations ---
-let g:UltiSnipsEditSplit = "vertical"
-let g:UltiSnipsExpandTrigger = "<c-j>"
-let g:UltiSnipsListSnippets = "<c-h>"
-let g:UltiSnipsSnippetsDir = "~/.vim/UltiSnips"
-let g:ale_languagetool_options = '--autoDetect -d WHITESPACE_RULE'
-let g:ale_python_pylint_change_directory = 0
-let g:ale_sh_shellcheck_options = '--external-sources'
-let g:ale_lint_delay = 2000
-let g:delimitMate_expand_cr = 2
+"--- Plugin configurations --- {{{
+function! s:on_lsp_buffer_enabled() abort
+    setlocal omnifunc=lsp#complete
+    setlocal signcolumn=yes
+    if exists('+tagfunc') | setlocal tagfunc=lsp#tagfunc | endif
+    nmap <buffer> <leader>ld <plug>(lsp-definition)
+    nmap <buffer> <leader>ls <plug>(lsp-document-symbol-search)
+    nmap <buffer> <leader>lS <plug>(lsp-workspace-symbol-search)
+    nmap <buffer> <leader>lr <plug>(lsp-references)
+    nmap <buffer> <leader>li <plug>(lsp-implementation)
+    nmap <buffer> <leader>lt <plug>(lsp-type-definition)
+    nmap <buffer> <leader>lR <plug>(lsp-rename)
+    nmap <buffer> <leader>lK <plug>(lsp-hover)
+    nmap <buffer> [g <plug>(lsp-previous-diagnostic)
+    nmap <buffer> ]g <plug>(lsp-next-diagnostic)
+    nmap <buffer> <leader>lA :LspCodeAction<CR>
+    xmap <buffer> <leader>lA :LspCodeAction<CR>
+    nmap <buffer> <leader>lo :LspCodeAction source.organizeImports<CR>
+    nmap <buffer> <leader>lp :LspPeekDefinition<CR>
+    " nnoremap <buffer> <expr><c-f> lsp#scroll(+4)
+    " nnoremap <buffer> <expr><c-d> lsp#scroll(-4)
+
+    " let g:lsp_format_sync_timeout = 1000
+    " autocmd! BufWritePre *.rs,*.go call execute('LspDocumentFormatSync')
+    "
+    nmap <buffer> <F4> :LspNextDiagnostic<CR>:LspCodeAction<CR>
+
+    " setlocal foldmethod=expr
+    "   \ foldexpr=lsp#ui#vim#folding#foldexpr()
+    "   \ foldtext=lsp#ui#vim#folding#foldtext()
+    
+    " refer to doc to add more commands
+endfunction
+
+augroup lsp_install
+    au!
+    " call s:on_lsp_buffer_enabled only for languages that has the server registered.
+    autocmd User lsp_buffer_enabled call s:on_lsp_buffer_enabled()
+augroup END
+
+augroup asyncomplete_setup
+    au!
+    au User asyncomplete_setup call asyncomplete#register_source(asyncomplete#sources#file#get_source_options({
+      \ 'name': 'file',
+      \ 'allowlist': ['*'],
+      \ 'priority': 10,
+      \ 'completor': function('asyncomplete#sources#file#completor')
+      \ }))
+    au User asyncomplete_setup call asyncomplete#register_source(asyncomplete#sources#ultisnips#get_source_options({
+      \ 'name': 'ultisnips',
+      \ 'allowlist': ['*'],
+      \ 'completor': function('asyncomplete#sources#ultisnips#completor'),
+      \ }))
+augroup END
+
+let s:dir_misc = expand('~/.vim/misc')
+let g:UltiSnipsEditSplit = 'vertical'
+let g:UltiSnipsExpandTrigger = '<c-j>'
+let g:UltiSnipsListSnippets = '<c-h>'
+let g:UltiSnipsSnippetsDir = '~/.vim/UltiSnips'
 " ale_fixers {{{
 let g:ale_fixers = {
 \   'python': ['black', 'isort'],
 \   'bzl': ['buildifier'],
+\   'xml': ['xmllint'],
+\   'java': ['uncrustify'],
+\   'cpp': ['clangtidy', 'clang-format'],
 \ }
 " }}}
+let g:ale_languagetool_options = '--autoDetect -d WHITESPACE_RULE'
+let g:ale_lint_delay = 2000
+let g:ale_python_pylint_change_directory = 0
+let g:ale_sh_shellcheck_options = '--external-sources'
+let g:ale_disable_lsp=1
+let g:ale_cpp_cc_options=environ()->get('CXXFLAGS', '')
+let g:ale_cpp_clangcheck_options=
+      \ environ()
+      \ ->get('CXXFLAGS', '')
+      \ ->split(' ')
+      \ ->map({-> "--extra-arg=" . v:val})
+      \ ->join(' ')
+let g:ale_cpp_clangtidy_checks=[
+      \ 'bugprone-*',
+      \ 'clang-analyzer-*',
+      \ 'cppcoreguidelines-*',
+      \ '-cppcoreguidelines-pro-type-reinterpret-cast',
+      \ 'misc-*',
+      \ 'modernize-*',
+      \ '-modernize-use-trailing-return-type',
+      \ 'performance-*',
+      \ 'readability-*',
+      \ '-readability-redundant-member-init',
+      \ '-*-magic-numbers',
+      \ ]
+let g:ale_cpp_clangtidy_options=environ()->get('CXXFLAGS', '')
+let g:ale_c_uncrustify_options='-c ' . findfile('.uncrustify.cfg', ';')
+let g:cpp_attributes_highlight = 1
+let g:cpp_member_highlight = 1
+" let g:cpp_simple_highlight = 1
+let g:delimitMate_expand_cr = 2
+let g:direnv_auto = 0
+let g:fzf_buffers_jump = 1
 let g:gist_open_browser_after_post = 1
+let g:gtest#highlight_failing_tests = 1
 let g:gutentags_cache_dir = s:dir_misc
 let g:jsdoc_enable_es6 = 1
+let g:lightline_tagbar#flags = 'f'
+let g:lsp_experimental_workspace_folders = 1
+let g:lsp_semantic_enabled = 1
+let g:lsp_settings = {
+      \  'eclipse-jdt-ls': {
+      \    'semantic_highlight': {
+      \      'entity.name.type.class.java': 'Identifier',
+      \      'entity.name.function.java': {
+      \          'meta.function-call.java': 'Label',
+      \          'meta.method.identifier.java': 'Identifier'
+      \      },
+      \    },
+      \    'initialization_options': {
+      \         'bundles': [
+      \            expand('~') . '/.m2/repository/com/microsoft/java/com.microsoft.java.debug.plugin/0.35.0/com.microsoft.java.debug.plugin-0.35.0.jar'
+      \         ]
+      \    }
+      \  },
+      \}
+let g:maven_keymaps = 1
 let g:netrw_keepdir = 0
 let g:netrw_banner = 1
 let g:netrw_browse_split = 4
@@ -422,7 +685,7 @@ let g:taboo_renamed_tab_format =' %N %l%m '
 let g:taboo_tab_format = ' %N %f%m '
 let g:tagbar_autoclose = 1
 let g:tagbar_autofocus = 1
-" {{{
+" tagbar_type_typescript {{{
 let g:tagbar_type_typescript = {
   \   'ctagstype': 'typescript',
   \   'kinds': [
@@ -460,13 +723,36 @@ let g:tagbar_type_typescript = {
 let g:tagbar_type_jsx = g:tagbar_type_typescript
 let g:vim_markdown_folding_disabled = 1
 let g:vim_markdown_frontmatter = 1
-let g:xml_syntax_folding=1
+let g:xml_syntax_folding = 1
 let test#strategy = 'vimux'
+" }}}
+
+" --- Debugging --- {{{
+" - lsp -
+" let g:lsp_log_verbose = 1
+" let g:lsp_log_file = expand('/tmp/vim-lsp.log')
+"
+" - asyncomplete -
+" let g:asyncomplete_log_file = expand('/tmp/asyncomplete.log')
+" }}}
+
+" {{{ --- Extra config --- 
+silent! source ~/.vimrc.local
+
+let g:vimspector_enable_mappings = 'HUMAN'
 
 set modeline
 set exrc
 set secure
 
-silent! source ~/.pdotfiles/vim/vimrc
+
+function! JavaDebug()
+  function! s:myCb(r)
+    echom "callback called"
+    echom a:r.response.result
+    call vimspector#LaunchWithSettings( { 'DAPPort': a:r.response.result, 'uncaught': 'N', 'caught': 'N' } )
+  endfunction
+  call lsp#send_request('eclipse-jdt-ls', {'method': 'workspace/executeCommand', 'params': {'command': 'vscode.java.startDebugSession'}, 'on_notification': function('s:myCb') })
+endfunction
 
 " vim: fdm=marker fdl=0 fen

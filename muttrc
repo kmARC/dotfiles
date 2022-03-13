@@ -147,6 +147,7 @@ color index_flags     brightcolor00 color04 '~T' # tagged
 color attach_headers brightcolor00 color02    '\[-- The following data is.*signed.*'
 color attach_headers brightcolor00 color02    '\[-- End of signed data.*'
 color attach_headers brightcolor00 color05    '\[-- Attachment.*'
+color attach_headers color08       default    '\[-- Autoview.*'
 color attach_headers color02       default    '\[-- (BEGIN|END) PGP SIGNED MESSAGE.*'
 color attach_headers color01       default    '\[-- (BEGIN|END) PGP MESSAGE.*'
 color attach_headers color05       default    '\[-- (BEGIN|END) PGP PUBLIC KEY.*'

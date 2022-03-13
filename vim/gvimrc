@@ -1,6 +1,6 @@
 if has('gui_running')
     if has('gui_macvim')
-      set guifont=Menlo:h12
+      set guifont=FiraCodeRoman-Medium:h12
     else
       set guifont=Fira\ Code\ Medium\ 9
     endif

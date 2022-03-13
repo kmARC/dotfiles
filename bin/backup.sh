@@ -70,7 +70,7 @@ backup() {
   echo "======"
 
   # Sync to s3 if needed
-  [ "$SYNC" = true ] && sync_to_s3
+  [ "$SYNC" = true ] && sync_to_cloud
 }
 
 list() {
@@ -92,28 +92,38 @@ umount_repo() {
   echo "======"
   echo "    Backup repositori(es) unmounted:"
   for d in /tmp/backup.mount.*; do
-    fusermount -u "$d" &>/dev/null || true
+    if type -t fusermount >/dev/null; then
+      fusermount -u "$d" &>/dev/null || true
+    else
+      umount "$d"
+    fi
     echo "    - $d"
     rm -rf "$d"
   done
   echo "======"
 }
 
-sync_to_s3() {
-  mapfile -t CONNS -r < <(nmcli -g uuid connection show --active)
-  for c in "${CONNS[@]}"; do
-    echo "$c"
-    IS_METERED="$(nmcli connection show "$c" | awk  "/metered/{ print \$2 }")"
-    if [ "$IS_METERED" == "yes" ]; then
-      echo "Not syncing to S3; Metered connection"
-      return 0
-    fi
-  done
+sync_to_cloud() {
+  if type -t nmcli >/dev/null; then
+    mapfile -t CONNS -r < <(nmcli -g uuid connection show --active)
+    for c in "${CONNS[@]}"; do
+      echo "$c"
+        IS_METERED="$(nmcli connection show "$c" | awk  "/metered/{ print \$2 }")"
+        if [ "$IS_METERED" == "yes" ]; then
+          echo "Not syncing to S3; Metered connection"
+          return 0
+        fi
+    done
+  fi
 
   echo "======"
-  echo "    Syncing to s3://$S3_BUCKET"
+  echo "    Syncing to $AWS_PROFILE : '$S3_BUCKET'"
   echo "======"
-  aws --profile "$AWS_PROFILE" s3 sync "$DEST" "s3://$S3_BUCKET"
+  if type -t rclone >/dev/null && rclone listremotes | grep -q "$AWS_PROFILE"; then
+    rclone sync -P "$DEST" "$AWS_PROFILE:$S3_BUCKET"
+  elif type -t aws; then
+    aws --profile "$AWS_PROFILE" s3 sync "$DEST" "s3://$S3_BUCKET"
+  fi
 }
 
 repair() {
@@ -143,7 +153,7 @@ ACTION=${1:-}
 [ -n "$ACTION" ] && shift
 
 # Parse configuration
-while getopts 'c:d:b:p:s' c; do
+while getopts 'c:d:b:p:sB' c; do
   case $c in
     c) CONFFILE=$OPTARG ;;
     s) SYNC=true ;;
@@ -175,7 +185,7 @@ check
 # Invoke action
 case "$ACTION" in
   'backup')   backup ;;
-  'synconly') sync_to_s3 ;;
+  'synconly') sync_to_cloud ;;
   'list')     list ;;
   'mount')    mount_repo ;;
   'umount')   umount_repo ;;

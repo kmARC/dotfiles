@@ -1,0 +1,17 @@
+---
+repos:
+  - repo: https://github.com/Yelp/detect-secrets
+    rev: v1.2.0
+    hooks:
+      - id: detect-secrets
+        exclude: config/weechat/relay.conf
+  - repo: local
+    hooks:
+      - id: fail-on-username
+        name: Detect username / profile hardcoded
+        language: system
+        entry: bash -c 'if grep -qE "($HOME|$USER|${PROFILE:-fakeprofile})" $1; then exit 1; fi' --
+        exclude: |
+          (?x)^(
+            mutt/muttrc._owa_
+          )$

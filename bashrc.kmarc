@@ -29,6 +29,7 @@ else
   source /usr/share/fzf/completion.bash
 fi
 export FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS --border"
+export FZF_DEFAULT_COMMAND='rg --files --hidden --follow --glob "!{.git,.svn,node_modules}"'
 
 ###################
 #  NODE.JS - NVM  #
@@ -131,6 +132,22 @@ if command -v helm >/dev/null; then
   source <(helm completion bash)
 fi
 
+if command -v mvn >/dev/null; then
+  mvnrun() {
+    echo mvn "$@"
+    mvn "$@"
+    echo mvn "$@"
+  }
+  alias mci='mvnrun clean install'
+  alias mcin='mvnrun clean install -DskipTest'
+  alias mjacoco='mvnrun jacoco:report'
+  alias mjavadoc='mvnrun javadoc:aggregate'
+  alias me='mvnrun exec:java'
+  alias mcie='mvnrun clean install exec:java'
+  alias med='MAVEN_OPTS=-agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=5005 mvn exec:java'
+  complete -o default -o nospace -F _mvn mci mcis mjacoco mjavadoc me mcie
+fi
+
 cheat() { curl -m10 "http://cheat.sh/$1"; }
 
 ##################
@@ -180,6 +197,9 @@ if [[ -z $DISPLAY ]] && [[ $(tty) = /dev/tty1 ]]; then
   XKB_DEFAULT_LAYOUT=us exec sway
 fi
 
+if [ -f "$HOME"/.bashrc.local ]; then
+  source "$HOME"/.bashrc.local
+fi
 
 ###############
 #  dark mode  #

@@ -1,0 +1,13 @@
+snippet soutv "Print variable" b
+System.out.println("$1 = ", ${1:myVar});
+endsnippet
+
+snippet package "package declaration" b
+package ${1:`!v fnamemodify(expand('%:h'), '.')->substitute('/', '.', 'g')->substitute('.*\(\(src\|main\)\.java\)\.', '', 'g')`};
+$0
+endsnippet
+
+snippet L "LOGGER" b
+private static final Logger LOGGER = LoggerFactory.getLogger(${1:`!v expand('%:t:r')`}.class);
+$0
+endsnippet

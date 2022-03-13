@@ -1,1 +1,16 @@
+# direnv
 .envrc
+
+# clangd
+compile_flags.txt
+
+# eclipse-jdt-ls
+.project
+.settings
+.classpath
+.factorypath
+
+# ctags
+tags
+
+# vim :set ft=gitignore:
