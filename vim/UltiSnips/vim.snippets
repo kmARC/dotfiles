@@ -1,0 +1,7 @@
+snippet debugcall "Debug function call" b
+echom '$1(' . ${2/,/ . ', ' ./g} . '): ' . ${1:MyFunction}(${2:params})
+endsnippet
+
+snippet debugvar "Debug variable(s)" b
+echom printf("${1/([^,]+)/$1: \%s/g}", $1)
+endsnippet

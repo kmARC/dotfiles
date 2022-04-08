@@ -26,7 +26,7 @@ Plug 'mattn/gist-vim'
 Plug 'shumphrey/fugitive-gitlab.vim'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-rhubarb'
-Plug 'vim-scripts/gitignore'
+" Plug 'vim-scripts/gitignore'
 "--- TMUX ---
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'jpalardy/vim-slime'
@@ -95,13 +95,8 @@ Plug 'tpope/vim-dispatch'           " for: gtest
 Plug 'junegunn/vim-plug'
 "--- Local plugins, if any
 silent! source ~/.vimrc.plugs
-Plug 'thinca/vim-themis'
-Plug 'git@github.com:kmARC/fugitive-gerrit.vim.git'
-Plug 'Xuyuanp/nerdtree-git-plugin'
-" Plug 'puremourning/vimspector'
-Plug 'kmARC/fugitive-gerrit.vim'
-
 packadd termdebug
+Plug 'git@github.com:kmARC/fugitive-gerrit.vim.git'
 call plug#end() " }}}
 
 "--- Vim-Plug --- {{{
@@ -118,7 +113,7 @@ function! s:plug_gx()
 endfunction
 
 augroup PlugGx
-  autocmd!
+  au!
   autocmd FileType vim nnoremap <buffer> <silent> gx :call <sid>plug_gx()<cr>
 augroup END
 " }}}
@@ -366,6 +361,10 @@ augroup filetypes
     \   nnoremap <silent> t<C-n>   :GTestRunUnderCursor<CR>
     \ | nnoremap <silent> t<C-f>   :GTestRun<CR>
 
+  autocmd FileType cpp
+    \   nnoremap <silent> t<C-n>   :GTestRunUnderCursor<CR>
+    \ | nnoremap <silent> t<C-f>   :GTestRun<CR>
+
   autocmd FileType dockerfile
     \   setlocal keywordprg=:DockerHelp
     \ | autocmd BufWritePost <buffer> normal! mD
@@ -410,7 +409,15 @@ augroup filetypes
     \   nnoremap <buffer> <c-l> <c-w>l
 
   autocmd FileType help
-    \   wincmd L | 80 wincmd | | setlocal winfixwidth
+    \   wincmd L | 80 wincmd |
+    \ | setlocal winfixwidth
+
+  autocmd FileType starlark,bzl 
+    \   call BazelInfo()
+    \ | setlocal includeexpr=s:BazelIncludeExpr(v:fname)
+    \            isfname+=:,@-@
+    \ | let &l:include='load("\zs[^"]\+\ze"'
+    \ | let &l:define='\(^\s*\(def\|class\)\|\s*\ze[^ ]\+\s*=\s*\(repository_\)\?rule(\)'
 augroup END
 
 augroup vimrc
@@ -545,6 +552,39 @@ endfunction
 autocmd SigUSR1 * call ChangeBackground()
 
 call ChangeBackground()
+
+function! s:BazelIncludeExpr(fname)
+  let [_, _, pkg, _, path, name] = matchlist(a:fname, '\(@\([^/]\+\)\)\?\(//\([^:]*\)\)\?:\?\(.*\)')[0:5]
+  "                                          example: ...@......pkg.......//.....path....:...name..
+  let possible_paths = [
+          \ name,
+          \ path . '/' . name,
+          \ path . '/BUILD.bazel',
+          \ path . '/BUILD',
+          \ g:bazel_info['execution_root'] . '/external/' . pkg . '/' . path . '/' . name,
+          \ g:bazel_info['execution_root'] . '/external/' . pkg . '/' . path . '/BUILD.bazel',
+          \ g:bazel_info['execution_root'] . '/external/' . pkg . '/' . path . '/BUILD',
+          \ g:bazel_info['output_base'] . '/external/' . pkg . '/' . path . '/' . name,
+          \ g:bazel_info['output_base'] . '/external/' . pkg . '/' . path . '/BUILD.bazel',
+          \ g:bazel_info['output_base'] . '/external/' . pkg . '/' . path . '/BUILD',
+          \ ]
+  return possible_paths->filter({_, ppath -> len(findfile(ppath))})->get(0, name)
+endfunction
+
+function! BazelInfo()
+  if g:->get('bazel_info', {}) != {}
+    return
+  endif
+  let g:bazel_info = {}
+  function! s:handler(channel, msg)
+    let [k, v] = a:msg->split(':\s\+')
+    let g:bazel_info[k] = v
+  endfunction
+  call job_start('bazel info', {
+        \ "mode": "nl",
+        \ "out_cb": "s:handler",
+        \ })
+endfunction
 " }}}
 
 "--- Plugin configurations --- {{{
@@ -610,25 +650,31 @@ let g:UltiSnipsSnippetsDir = '~/.vim/UltiSnips'
 " ale_fixers {{{
 let g:ale_fixers = {
 \   'python': ['black', 'isort'],
-\   'bzl': ['buildifier'],
 \   'xml': ['xmllint'],
 \   'java': ['uncrustify'],
 \   'cpp': ['clangtidy', 'clang-format'],
+\   'starlark': ['buildifier'],
+\   'bzl': ['buildifier'],
+\ }
+" }}}
+" ale_linters {{{
+let g:ale_linters = {
+\   'starlark': ['buildifier'],
 \ }
 " }}}
 let g:ale_languagetool_options = '--autoDetect -d WHITESPACE_RULE'
 let g:ale_lint_delay = 2000
 let g:ale_python_pylint_change_directory = 0
 let g:ale_sh_shellcheck_options = '--external-sources'
-let g:ale_disable_lsp=1
-let g:ale_cpp_cc_options=environ()->get('CXXFLAGS', '')
-let g:ale_cpp_clangcheck_options=
+let g:ale_disable_lsp = 1
+let g:ale_cpp_cc_options = environ()->get('CXXFLAGS', '')
+let g:ale_cpp_clangcheck_options =
       \ environ()
       \ ->get('CXXFLAGS', '')
       \ ->split(' ')
       \ ->map({-> "--extra-arg=" . v:val})
       \ ->join(' ')
-let g:ale_cpp_clangtidy_checks=[
+let g:ale_cpp_clangtidy_checks = [
       \ 'bugprone-*',
       \ 'clang-analyzer-*',
       \ 'cppcoreguidelines-*',
@@ -641,14 +687,29 @@ let g:ale_cpp_clangtidy_checks=[
       \ '-readability-redundant-member-init',
       \ '-*-magic-numbers',
       \ ]
-let g:ale_cpp_clangtidy_options=environ()->get('CXXFLAGS', '')
-let g:ale_c_uncrustify_options='-c ' . findfile('.uncrustify.cfg', ';')
+let g:ale_cpp_clangtidy_options = environ()->get('CXXFLAGS', '')
+let g:ale_c_uncrustify_options = '-c ' . findfile('.uncrustify.cfg', ';')
 let g:cpp_attributes_highlight = 1
 let g:cpp_member_highlight = 1
-" let g:cpp_simple_highlight = 1
+let g:cpp_simple_highlight = 1
 let g:delimitMate_expand_cr = 2
 let g:direnv_auto = 0
 let g:fzf_buffers_jump = 1
+let g:fzf_colors =
+    \ { 'fg':      ['fg', 'Comment'],
+      \ 'bg':      ['bg', 'Normal'],
+      \ 'hl':      ['fg', 'Error'],
+      \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
+      \ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
+      \ 'hl+':     ['fg', 'Statement'],
+      \ 'info':    ['fg', 'PreProc'],
+      \ 'border':  ['fg', 'Comment'],
+      \ 'prompt':  ['fg', 'Conditional'],
+      \ 'pointer': ['fg', 'Exception'],
+      \ 'marker':  ['fg', 'Keyword'],
+      \ 'spinner': ['fg', 'Label'],
+      \ 'preview-fg': ['fg', 'Normal'],
+      \ 'header':  ['fg', 'Comment'] }
 let g:gist_open_browser_after_post = 1
 let g:gtest#highlight_failing_tests = 1
 let g:gutentags_cache_dir = s:dir_misc
@@ -666,13 +727,14 @@ let g:lsp_settings = {
       \      },
       \    },
       \    'initialization_options': {
-      \         'bundles': [
-      \            expand('~') . '/.m2/repository/com/microsoft/java/com.microsoft.java.debug.plugin/0.35.0/com.microsoft.java.debug.plugin-0.35.0.jar'
-      \         ]
+      \        'bundles': [
+      \            environ()->get('HOME').'/.m2/repository/com/microsoft/java/com.microsoft.java.debug.plugin/0.35.0/com.microsoft.java.debug.plugin-0.35.0.jar'
+      \        ]
       \    }
       \  },
       \}
 let g:maven_keymaps = 1
+let g:maven_auto_set_path = 0
 let g:netrw_keepdir = 0
 let g:netrw_banner = 1
 let g:netrw_browse_split = 4
@@ -721,6 +783,19 @@ let g:tagbar_type_typescript = {
   \ }
 " }}}
 let g:tagbar_type_jsx = g:tagbar_type_typescript
+let g:tagbar_type_bzl = {
+  \   'kinds': [
+  \     'f:functions:1',
+  \     'v:variables',
+  \   ],
+  \ }
+let g:tagbar_type_starlark = {
+  \   'kinds': [
+  \     'f:functions:1',
+  \     'v:variables',
+  \     'l:labels',
+  \   ],
+  \ }
 let g:vim_markdown_folding_disabled = 1
 let g:vim_markdown_frontmatter = 1
 let g:xml_syntax_folding = 1

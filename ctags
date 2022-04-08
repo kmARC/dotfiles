@@ -1,6 +1,6 @@
 # Yaml
---langmap=yaml:.yml.yaml
---regex-yaml=/^\s*([A-Za-z0-9_-]+):/\1/k,key,keys/
+# --langmap=yaml:.yml.yaml
+# --regex-yaml=/^\s*([A-Za-z0-9_-]+):/\1/k,key,keys/
 
 #a
 
@@ -11,4 +11,12 @@
 
 --extras=+r
 --fields=+arzKZRSE
---fields-Python=+{decorators}
+# --fields-Python=+{decorators}
+
+# Bazel
+--langdef=Bazel{base=Python}{dedicated}
+--map-Bazel=+.bzl
+--map-Bazel=+.bazel
+--kinddef-Bazel=l,label,labels
+--regex-Bazel=/(^|\s)name\s+=\s+"([A-Za-z0-9_-]+)"/\2/l,label,labels/
+
