@@ -1,7 +1,7 @@
 [include]
   path = ~/.gitconfig.local
-  path = ~/.gitconfig.linux
-  path = ~/.gitconfig.darwin
+  path = ./config.linux
+  path = ./config.darwin
 
 [alias]
   stag = tag -s

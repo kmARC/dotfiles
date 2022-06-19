@@ -2,18 +2,24 @@
 
 echo "$(date +%T) $1" >> /tmp/idle.log
 
-GRACE=3
+GRACE=5
 LAPTOP=eDP-1
 
 lock () {
+  local immediately=$1
+  local params=()
+  if [ -z "$immediately" ]; then
+    params+=(--fade-in $GRACE.0 --grace "$GRACE")
+  fi
   if ! pgrep swaylock &>/dev/null; then
     swaylock --daemonize \
              --screenshots \
+             --indicator \
              --clock \
-             --fade-in 1.0 \
+             --color 000000aa \
              --effect-blur 15x3 \
              --effect-vignette 0.1:0.9 \
-             --grace "$GRACE"
+             "${params[@]}"
   fi
 }
 
@@ -68,7 +74,7 @@ case "$1" in
     fi
     ;;
   lock )
-    lock
+    lock "${2:-}"
     keep_clight false
     ;;
   suspend_battery )

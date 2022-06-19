@@ -4,8 +4,8 @@ set -Eeuo pipefail
 trap "echo Error in: \${FUNCNAME:-top level}, line \${LINENO}" ERR
 
 # Constants
-domain="https://www.migros.ch"
-url="$domain/de/genossenschaften/migros-zuerich/standorte/gastronomie/migros-restaurants.html"
+domain="https://gastro.migros.ch"
+url="$domain/de/genossenschaften/zuerich/migros-restaurants.html"
 
 # Calculate week number
 week=$(( $(date +%W) ))
@@ -22,7 +22,7 @@ echo $domain$pdf on $TMPFILE
 
 # Download and open
 curl -o "$TMPFILE" "$domain$pdf"
-xdg-open "$TMPFILE"
+open "$TMPFILE"
 
 # Ensure xdg-open sucessfully opened the file
 sleep 2

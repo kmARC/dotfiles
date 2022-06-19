@@ -37,6 +37,19 @@ check() {
 }
 
 backup() {
+  if acpi -b | grep -q 'Discharging'; then
+      >&2 echo "Running on battery. Checking last backup..."
+
+      local last
+      last=$(borg list --last 1 --format '{time}' "$DEST")
+      if [ "$(date --date="$last" +'%s')" -gt "$(date --date='a week ago' +'%s')" ]; then
+        >&2 echo "    Recent backup found (on $last), exiting"
+        exit 1
+      else
+        >&2 echo "    Last backup found (on $last) is too old, force creating new backup"
+      fi
+  fi
+
   # Create excludes file, add larger than 1G files
   printf '%s\n' "${EXCLUDES[@]}" > "$EXCLUDES_FILE"
   (find "$HOME" -type f -size +1G 2>/dev/null || true) >> "$EXCLUDES_FILE"

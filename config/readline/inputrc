@@ -1,0 +1,9 @@
+$include /etc/inputrc
+set colored-stats On
+set visible-stats On
+set mark-symlinked-directories On
+
+# # Tab: menu-complete
+# # "\e[Z": menu-complete-backward
+# set show-all-if-unmodified on
+# set show-all-if-ambiguous on

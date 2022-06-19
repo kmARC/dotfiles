@@ -24,12 +24,12 @@
             <double>96</double>
         </edit>
     </match>
-    <match target="font">
-        <test name="weight" compare="more">
-            <const>medium</const>
+    <match>
+        <test name="prgname">
+            <string>rofi</string>
         </test>
-        <edit name="autohint" mode="assign">
-            <bool>true</bool>
+        <edit name="family" mode="prepend" binding="weak">
+            <string>Noto Color Emoji</string>
         </edit>
     </match>
 </fontconfig>

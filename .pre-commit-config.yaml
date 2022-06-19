@@ -4,7 +4,11 @@ repos:
     rev: v1.2.0
     hooks:
       - id: detect-secrets
-        exclude: config/weechat/relay.conf
+        exclude: |
+          (?x)^(
+            config/weechat/relay.conf|
+            config/weechat/sec.conf
+          )$
   - repo: local
     hooks:
       - id: fail-on-username

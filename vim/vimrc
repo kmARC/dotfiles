@@ -22,7 +22,7 @@ Plug 'tpope/vim-surround'
 Plug 'tpope/vim-abolish'
 Plug 'mbbill/undotree'
 "--- Git ---
-Plug 'mattn/gist-vim'
+Plug 'mattn/gist-vim'                , {'on': 'Gist'}
 Plug 'shumphrey/fugitive-gitlab.vim'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-rhubarb'
@@ -133,6 +133,7 @@ set expandtab
 set encoding=utf-8
 set fillchars+=vert:│
 set formatoptions+=j
+set grepprg=rg\ --vimgrep
 set hidden
 set history=10000
 set hlsearch
@@ -711,6 +712,7 @@ let g:fzf_colors =
       \ 'preview-fg': ['fg', 'Normal'],
       \ 'header':  ['fg', 'Comment'] }
 let g:gist_open_browser_after_post = 1
+let g:gist_token_file = s:dir_misc . '/.gist-vim'
 let g:gtest#highlight_failing_tests = 1
 let g:gutentags_cache_dir = s:dir_misc
 let g:jsdoc_enable_es6 = 1

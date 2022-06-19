@@ -161,7 +161,7 @@
         "format": "{percentage_used}% <span></span>",
     },
     "bluetooth": {
-        "format": "<b>{icon}</b>",
+        "format": " {status}",
         "format-alt": "{status} {icon}",
         "interval": 30,
         "format-icons": {

@@ -5,104 +5,121 @@
       create: true
       relink: true
 
-- clean: ['~']
+- clean: [$HOME]
 
 - create:
-    - ~/.ssh/controlmasters
+    - $HOME/.ssh/controlmasters
+    - $XDG_DATA_HOME/tig
+    - $XDG_CACHE_HOME/bash
+    - $XDG_CACHE_HOME/less
 
 - link:
     # Explicit paths
-    ~/.ctags.d/config.ctags:
-      path: ctags
-    ~/.config/swappy/config:
+    $XDG_CONFIG_HOME/swappy/config:
       path: config/swappy/config
-    ~/.config/alacritty.yml:
+    $XDG_CONFIG_HOME/alacritty.yml:
       path: config/alacritty.yml
-    ~/.config/clight.conf:
+    $XDG_CONFIG_HOME/bpython/config:
+      path: config/bpython/config
+    $XDG_CONFIG_HOME/clight.conf:
       path: config/clight.conf
-    ~/.config/chromium-flags.conf:
+    $XDG_CONFIG_HOME/chromium-flags.conf:
       path: config/chromium-flags.conf
-    ~/.config/fontconfig:
+    $XDG_CONFIG_HOME/environment.d/:
+      path: config/environment.d/*
+      glob: true
+    $XDG_CONFIG_HOME/fontconfig:
       path: config/fontconfig
-    ~/.config/mopidy/mopidy.conf:
+    $XDG_CONFIG_HOME/git/config:
+      path: config/git/config
+    $XDG_CONFIG_HOME/git/config.darwin:
+      path: config/git/config.darwin
+      if: '[ `uname` = Darwin ]'
+    $XDG_CONFIG_HOME/git/config.linux:
+      path: config/git/config.linux
+      if: '[ `uname` = Linux ]'
+    $XDG_CONFIG_HOME/mopidy/mopidy.conf:
       path: config/mopidy/mopidy.conf
-    ~/.config/mako:
+    $XDG_CONFIG_HOME/mako:
       path: config/mako
-    ~/.config/mpv:
+    $XDG_CONFIG_HOME/mpv:
       path: config/mpv
-    ~/.config/ncmpcpp/config:
+    $XDG_CONFIG_HOME/ncmpcpp/config:
       path: config/ncmpcpp/config
-    ~/.config/networkmanager-dmenu/config.ini:
+    $XDG_CONFIG_HOME/networkmanager-dmenu/config.ini:
       path: config/networkmanager-dmenu/config.ini
-    ~/.config/ranger/rc.conf:
+    $XDG_CONFIG_HOME/npm/npmrc:
+      path: config/npm/npmrc
+    $XDG_CONFIG_HOME/ranger/rc.conf:
       path: config/ranger/rc.conf
-    ~/.config/gammastep:
+    $XDG_CONFIG_HOME/readline/inputrc:
+      path: config/readline/inputrc
+    $XDG_CONFIG_HOME/gammastep:
       path: config/gammastep
-    ~/.config/rofi:
+    $XDG_CONFIG_HOME/rofi:
       path: config/rofi
-    ~/.config/sway/config:
+    $XDG_CONFIG_HOME/sway/config:
       path: config/sway/config
-    ~/.config/systemd/user:
+    $XDG_CONFIG_HOME/systemd/user:
       glob: true
       path: config/systemd/user/*
-    ~/.config/urlscan/config.json:
+    $XDG_CONFIG_HOME/urlscan/config.json:
       path: config/urlscan/config.json
-    ~/.config/waybar:
+    $XDG_CONFIG_HOME/waybar:
       path: config/waybar
-    ~/.config/weechat/:
+    $XDG_CONFIG_HOME/weechat/:
       glob: true
       path: config/weechat/*
-    ~/.config/yay/config.json:
+    $XDG_CONFIG_HOME/wgetrc:
+      path: config/wgetrc
+    $XDG_CONFIG_HOME/yay/config.json:
       path: config/yay/config.json
-    ~/.config/youtube-dl/config:
+    $XDG_CONFIG_HOME/youtube-dl/config:
       path: config/youtube-dl/config
-    ~/.gnupg/gpg-agent.conf:
-      path: gnupg/gpg-agent.conf
-    ~/.mutt/:
+    $XDG_CONFIG_HOME/X11/xresources:
+      path: config/X11/xresources
+    $XDG_DATA_HOME/gnupg/gpg-agent.conf:
+      path: local/share/gnupg/gpg-agent.conf
+    $XDG_CONFIG_HOME/newsboat/config:
+      path: config/newsboat/config
+    $XDG_CONFIG_HOME/rtorrent/rtorrent.rc:
+      path: config/rtorrent/rtorrent.rc
+    $XDG_DATA_HOME/terminfo:
+      path: local/share/terminfo
+    $XDG_CONFIG_HOME/tmux/tmux.conf:
+      path: config/tmux/tmux.conf
+    $XDG_CONFIG_HOME/tmux/plugins/tpm:
+      path: tmux/plugins/tpm  # submodule
+    $HOME/.ctags.d/config.ctags:
+      path: ctags
+    $HOME/.mutt/:
       glob: true
       path: mutt/*
-    ~/.newsboat/config:
-      path: newsboat/config
-    ~/.ssh/all_hosts.conf:
+    $HOME/.ssh/all_hosts.conf:
       path: ssh/all_hosts.conf
-    ~/.terminfo:
-      path: terminfo
-    ~/.tmux/plugins/tpm:
-      path: tmux/plugins/tpm
-    ~/.todo.actions.d:
+    $HOME/.todo.actions.d:
       path: todo.actions.d
-    ~/bin:
+    $HOME/bin:
       path: bin
 
     # vim
-    ~/.vim:
+    $HOME/.vim:
       path: vim
 
     # Top levels
-    ~/.bashrc.kmarc:
-    ~/.gitconfig:
-    ~/.gitconfig.darwin:
-      if: '[ `uname` = Darwin ]'
-    ~/.gitconfig.linux:
-      if: '[ `uname` = Linux ]'
-    ~/.gitignore_global:
-    ~/.inputrc:
-    ~/.liquidpromptrc:
-    ~/.mailcap:
-    ~/.muttrc:
-    ~/.pam_environment:
-    ~/.rtorrent.rc:
-    ~/.tmux.conf:
-    ~/.todo.cfg:
-    ~/.toprc:
-    ~/.Xdefaults: Xresources
-    ~/.Xresources:
-    ~/.ctags:
+    $HOME/.bashrc.kmarc:
+    $HOME/.gitignore_global:
+    $HOME/.liquidpromptrc:
+    $HOME/.mailcap:
+    $HOME/.muttrc:
+    $HOME/.todo.cfg:
+    $HOME/.toprc:
+    $HOME/.ctags:
 
 - shell:
-    - - ~/.tmux/plugins/tpm/bin/install_plugins
+    - - $XDG_CONFIG_HOME/tmux/plugins/tpm/bin/install_plugins
       - Installing new TMUX plugins
-    - - ~/.tmux/plugins/tpm/bin/update_plugins all
+    - - $XDG_CONFIG_HOME/tmux/plugins/tpm/bin/update_plugins all
       - Upgrading TMUX plugins
     - - >-2
         git config filter.cleanWeechat.clean

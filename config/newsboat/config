@@ -28,7 +28,7 @@ color listnormal        default default
 color listnormal_unread default default bold
 color listfocus         color0   cyan
 color listfocus_unread  color0   cyan    bold
-color info              white   color8
+color info              white   color0
 color article           default default
 
 highlight article     "https?://[^ ]+"           blue

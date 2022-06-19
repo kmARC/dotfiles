@@ -22,9 +22,10 @@ set $menu rofi -combi-modi drun\,run\,ssh\,emoji\,calc -show combi -modi combi\,
 set $nag exec swaynagmode --edge bottom
 
 set $laptop eDP-1
-bindswitch --reload --locked lid:on output $laptop disable
-bindswitch --reload --locked lid:off output $laptop enable
-exec_always $HOME/bin/clamshell.sh
+# bindswitch --reload --locked lid:on output $laptop disable
+# bindswitch --reload --locked lid:off output $laptop enable
+# exec_always $HOME/bin/clamshell.sh
+exec_always "systemctl --user import-environment"
 
 swaynag_command $nag -R
 
@@ -40,7 +41,7 @@ output * bg ~/Pictures/Wallpaper.jpg fill
 # You can get the names of your outputs by running: swaymsg -t get_outputs
 set $output1 'Acer Technologies G277HU T1UEE0048501'
 set $output2 'DP-1'
-output HEADLESS-1 resolution 1920x1080
+# output HEADLESS-1 resolution 1920x1080
 
 workspace 1 output $output1 $output2 HDMI-A-1 eDP-1
 workspace 2 output $output1 $output2 HDMI-A-1 eDP-1
@@ -82,7 +83,8 @@ exec swayidle -w \
                  resume '~/bin/idle.sh dpms_on' \
          timeout 7200   '~/bin/idle.sh suspend_ac' \
                  resume '~/bin/idle.sh dpms_on' \
-         before-sleep   '~/bin/idle.sh lock'
+         lock           '~/bin/idle.sh lock immediately' \
+         before-sleep   'loginctl lock-session $XDG_SESSION_ID'
 
 ### Input configuration
 #
@@ -106,12 +108,15 @@ exec swayidle -w \
     }
 
     input type:touchpad {
+      accel_profile adaptive
+      scroll_factor 0.5
       dwt enabled
       tap enabled
       middle_emulation enabled
     }
 
     input type:pointer {
+      scroll_factor 0.5
       left_handed enabled
     }
 
@@ -365,7 +370,7 @@ bindsym --to-code $mod+grave exec makoctl dismiss -g
 bindsym --to-code $mod+shift+grave exec makoctl menu rofi -dmenu
 
 # Lock screen
-bindsym ctrl+alt+l exec ~/bin/idle.sh lock
+bindsym ctrl+alt+l exec ~/bin/idle.sh lock immediately
 
 # VPN
 bindsym $mod+F12 exec ~/bin/vpn-pannet.sh
@@ -380,7 +385,7 @@ bindsym --release alt+shift+print exec export SHOT=$SCREENSHOTS/$(date +"%Y%m%d-
 bindsym --release  alt+$mod+print exec export SHOT=$SCREENSHOTS/$(date +"%Y%m%d-%H%M%S").png && /usr/share/sway/scripts/grimshot --notify save window $SHOT && ksnip -e $SHOT
 
 # Theming
-exec_always xrdb -load ~/.Xresources
+exec_always xrdb -load $XDG_CONFIG_HOME/.config/X11/xresources
 
 #
 # Window rules
@@ -403,6 +408,9 @@ for_window [class="zoom" title="zoom"]           floating enable
 for_window [class="zoom" title="zoom"]           border none
 for_window [class="F5 VPN"]                      floating enable
 
+# Inhibit on firefox fullscreen
+for_window [app_id="firefox"] inhibit_idle fullscreen
+
 # Activate correct workspaces
 workspace 6
 workspace 1
@@ -417,3 +425,5 @@ exec $HOME/.config/gammastep/hooks/hook.sh period-changed night daytime
 default_border pixel 3
 gaps inner 10
 font pango:RobotoCondensed Bold 11
+
+

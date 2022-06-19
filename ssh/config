@@ -2,5 +2,19 @@
 
 Include ~/.ssh/all_hosts.conf
 
-Host example.com
-  User test
+# Host jumphost
+#     Hostname <IP ADDRESS>
+#     User <USERNAME>
+#
+#     # SOCKS Proxy
+#     DynamicForward [bind_address:]port
+#     DynamicForward 8800
+#
+#     # Forward
+#     LocalForward [bind_address:]port host:port
+#     LocalForward 8801 127.0.0.1:80
+
+# Host host-behind-jumphost
+#     ProxyCommand ssh -q -W %h:%p jumphost
+
+# vim: set ft=sshconfig:

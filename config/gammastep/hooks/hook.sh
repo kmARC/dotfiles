@@ -9,7 +9,7 @@ case $1 in
             gsettings set org.gnome.desktop.interface gtk-theme 'Arc'
             sed --follow-symlinks -i "s/^gtk-theme-name=.*/gtk-theme-name=Arc/g"         $HOME/.config/gtk-3.0/settings.ini
             sed --follow-symlinks -i "s/^gtk-theme-name=.*/gtk-theme-name=\"Arc\"/g"     $HOME/.gtkrc-2.0
-            sed --follow-symlinks -i "s/\\(&colorscheme.*\\)black\\(.*\\)/\1white\2/g"   $HOME/.config/alacritty.yml
+            sed --follow-symlinks -i "s/\\(&colorscheme.*\\)dark\\(.*\\)/\1light\2/g"   $HOME/.config/alacritty.yml
             sed --follow-symlinks -i '/# DynamicBackground/{n;s/.*/background-color=#00000099/}' $HOME/.config/mako/config
             sed --follow-symlinks -i '/# DynamicForeground/{n;s/.*/text-color=#ffffff/}' $HOME/.config/mako/config
             sed --follow-symlinks -i 's/light.rasi/dark.rasi/'                           $HOME/.config/rofi/config.rasi
@@ -50,7 +50,7 @@ case $1 in
             gsettings set org.gnome.desktop.interface gtk-theme 'Arc-Dark'
             sed --follow-symlinks -i "s/^gtk-theme-name=.*/gtk-theme-name=Arc-Dark/g"     $HOME/.config/gtk-3.0/settings.ini
             sed --follow-symlinks -i "s/^gtk-theme-name=.*/gtk-theme-name=\"Arc-Dark\"/g" $HOME/.gtkrc-2.0
-            sed --follow-symlinks -i "s/\\(&colorscheme.*\\)white\\(.*\\)/\1black\2/g"    $HOME/.config/alacritty.yml
+            sed --follow-symlinks -i "s/\\(&colorscheme.*\\)light\\(.*\\)/\1dark\2/g"    $HOME/.config/alacritty.yml
             sed --follow-symlinks -i '/# DynamicBackground/{n;s/.*/background-color=#ffffffbb/}' $HOME/.config/mako/config
             sed --follow-symlinks -i '/# DynamicForeground/{n;s/.*/text-color=#000000/}' $HOME/.config/mako/config
             sed --follow-symlinks -i 's/dark.rasi/light.rasi/'                           $HOME/.config/rofi/config.rasi
