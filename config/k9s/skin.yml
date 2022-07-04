@@ -1,0 +1,111 @@
+# K9S Iceberg Light
+foreground: &foreground default
+background: &background default
+
+black: &black '#dcdfe7'
+red: &red '#cc517a'
+green: &green '#668e3d'
+yellow: &yellow '#c57339'
+blue: &blue '#2d539e'
+magenta: &magenta '#7759b4'
+cyan: &cyan '#3f83a6'
+white: &white '#33374c'
+
+brightblack: &brightblack '#8389a3'
+brightred: &brightred '#cc3768'
+brightgreen: &brightgreen '#598030'
+brightyellow: &brightyellow '#b6662d'
+brightblue: &brightblue '#22478e'
+brightmagenta: &brightmagenta '#6845ad'
+brightcyan: &brightcyan '#327698'
+brightwhite: &brightwhite '#262a3f'
+
+current_line: &current_line '#2d539e'
+
+k9s:
+  body:
+    fgColor: *foreground
+    bgColor: *background
+    logoColor: *blue
+  prompt:
+    fgColor: *foreground
+    bgColor: *background
+    suggestColor: *white
+  info:
+    fgColor: *green
+    sectionColor: *foreground
+  help:
+    fgColor: *white
+    bgColor: *background
+    keyColor: *magenta
+    numKeyColor: *blue
+    sectionColor: *green
+  dialog:
+    fgColor: *foreground
+    bgColor: *background
+    buttonFgColor: *foreground
+    buttonBgColor: *magenta
+    buttonFocusFgColor: *white
+    buttonFocusBgColor: *cyan
+    labelFgColor: *yellow
+    fieldFgColor: *foreground
+  frame:
+    border:
+      fgColor: *yellow
+      focusColor: *current_line
+    menu:
+      fgColor: *brightblack
+      keyColor: *magenta
+      numKeyColor: *magenta
+    crumbs:
+      fgColor: *black
+      bgColor: *brightblack
+      activeColor: *blue
+    status:
+      newColor: *blue
+      modifyColor: *magenta
+      addColor: *green
+      errorColor: *red
+      highlightColor: *yellow
+      killColor: *red
+      completedColor: *brightblack
+    title:
+      fgColor: *foreground
+      bgColor: *background
+      highlightColor: *green
+      counterColor: *yellow
+      filterColor: *magenta
+  views:
+    charts:
+      bgColor: *black
+      defaultDialColors:
+        - *blue
+        - *red
+      defaultChartColors:
+        - *blue
+        - *red
+    table:
+      fgColor: *foreground
+      bgColor: *background
+      cursorFgColor: *black
+      cursorBgColor: *current_line
+      header:
+        fgColor: *foreground
+        bgColor: *background
+        sorterColor: *cyan
+    xray:
+      fgColor: *foreground
+      bgColor: *background
+      cursorColor: *brightblack
+      graphicColor: *black
+      showIcons: false
+    yaml:
+      keyColor: *magenta
+      colonColor: *blue
+      valueColor: *foreground
+    logs:
+      fgColor: *foreground
+      bgColor: *background
+      indicator:
+        fgColor: *foreground
+        bgColor: *background

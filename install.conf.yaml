@@ -40,8 +40,12 @@
     $XDG_CONFIG_HOME/git/config.linux:
       path: config/git/config.linux
       if: '[ `uname` = Linux ]'
+    $XDG_CONFIG_HOME/k9s/skin.yml:
+      path: config/k9s/skin.yml
     $XDG_CONFIG_HOME/mopidy/mopidy.conf:
       path: config/mopidy/mopidy.conf
+    $XDG_CONFIG_HOME/matterhorn/theme.ini:
+      path: config/matterhorn/theme.ini
     $XDG_CONFIG_HOME/mako:
       path: config/mako
     $XDG_CONFIG_HOME/mpv:
