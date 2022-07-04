@@ -1,13 +1,11 @@
-[include]
-  path = ~/.gitconfig.local
-  path = ./config.linux
-  path = ./config.darwin
-
 [alias]
   stag = tag -s
   graph = log --graph --oneline --all
   mr = !sh -c 'git fetch $1 merge-requests/$2/head:mr-$1-$2 && git checkout mr-$1-$2' -
   mrg = !sh -c 'git fetch $1 merge-requests/$2/merge:mrg-$1-$2 && git checkout mrg-$1-$2' -
+
+[apply]
+  ignorewhitespace = change
 
 [commit]
   gpgsign = true
@@ -22,6 +20,7 @@
 
 [difftool]
   prompt = false
+  trustexitcode = true
 
 [fetch]
   recurseSubmodules = on-demand
@@ -41,6 +40,11 @@
 [merge]
   tool = vimdiff
   conflictstyle = diff3
+
+[mergetool "vimdiff"]
+  keepbackup = false
+  trustexitcode = true
+
 
 [pull]
   rebase = true
@@ -69,5 +73,10 @@
 
 [http]
 	version = HTTP/1.1
+
+[include]
+  path = ./config.linux
+  path = ./config.darwin
+  path = ~/.gitconfig.local
 
 # vim: set ft=gitconfig:

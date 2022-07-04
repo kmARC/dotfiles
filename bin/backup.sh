@@ -2,9 +2,10 @@
 set -Eeuo pipefail
 
 usage() {
-  echo "Usage: $0 (backup|synconly|list|mount|umount|repair)"
+  echo "Usage: $0 (backup|synconly|list|mount|umount|repair|compact)"
   echo "          [-c config] [-d destination] [-p aws profile] [-b s3-bucket]"
   echo "          -s: sync to s3"
+  echo "          -f: force backup even on battery"
   exit
 }
 
@@ -43,8 +44,13 @@ backup() {
       local last
       last=$(borg list --last 1 --format '{time}' "$DEST")
       if [ "$(date --date="$last" +'%s')" -gt "$(date --date='a week ago' +'%s')" ]; then
-        >&2 echo "    Recent backup found (on $last), exiting"
-        exit 1
+        >&2 echo -n "    Recent backup found (on $last)"
+        if [ "${FORCE}" == false ]; then
+          >&2 echo ", exiting"
+          exit 1
+        else
+          >&2 echo ", force creating new backup"
+        fi
       else
         >&2 echo "    Last backup found (on $last) is too old, force creating new backup"
       fi
@@ -65,6 +71,8 @@ backup() {
                   --stats \
                   --compression auto,lzma \
                   --exclude-from "$EXCLUDES_FILE" \
+                  --list \
+                  --filter=AME \
                   "$DEST"::'{now}' \
                   "$HOME"
   sync
@@ -76,6 +84,8 @@ backup() {
                   --save-space \
                   --stats \
                   --list \
+                  --progress \
+                  --verbose \
                   "$DEST"
   borg list       "$DEST"
   echo "======"
@@ -83,12 +93,20 @@ backup() {
   echo "======"
 
   # Sync to s3 if needed
-  [ "$SYNC" = true ] && sync_to_cloud
+  if [ "$SYNC" = true ]; then
+    sync_to_cloud
+  fi
 }
 
 list() {
   borg list "$DEST"
   borg info "$DEST"
+}
+
+compact() {
+  borg compact --progress \
+               --cleanup-commits \
+               "$DEST"
 }
 
 mount_repo() {
@@ -120,12 +138,11 @@ sync_to_cloud() {
   if type -t nmcli >/dev/null; then
     mapfile -t CONNS -r < <(nmcli -g uuid connection show --active)
     for c in "${CONNS[@]}"; do
-      echo "$c"
-        IS_METERED="$(nmcli connection show "$c" | awk  "/metered/{ print \$2 }")"
-        if [ "$IS_METERED" == "yes" ]; then
-          echo "Not syncing to S3; Metered connection"
-          return 0
-        fi
+      IS_METERED="$(nmcli connection show "$c" | awk  "/metered/{ print \$2 }")"
+      if [ "$IS_METERED" == "yes" ]; then
+        echo "Not syncing to S3; Metered connection"
+        return 0
+      fi
     done
   fi
 
@@ -134,7 +151,7 @@ sync_to_cloud() {
   echo "======"
   if type -t rclone >/dev/null && rclone listremotes | grep -q "$AWS_PROFILE"; then
     rclone sync -P "$DEST" "$AWS_PROFILE:$S3_BUCKET"
-  elif type -t aws; then
+  elif type -t aws >/dev/null; then
     aws --profile "$AWS_PROFILE" s3 sync "$DEST" "s3://$S3_BUCKET"
   fi
 }
@@ -166,10 +183,11 @@ ACTION=${1:-}
 [ -n "$ACTION" ] && shift
 
 # Parse configuration
-while getopts 'c:d:b:p:sB' c; do
+while getopts 'c:d:b:p:fs' c; do
   case $c in
     c) CONFFILE=$OPTARG ;;
     s) SYNC=true ;;
+    f) FORCE=true ;;
     d) _DEST=$OPTARG ;;
     b) _S3_BUCKET=$OPTARG ;;
     p) _AWS_PROFILE=$OPTARG ;;
@@ -188,6 +206,7 @@ S3_BUCKET=${S3_BUCKET:-$_S3_BUCKET}
 EXCLUDES=${EXCLUDES:-}
 # Opts
 SYNC=${SYNC:-false}
+FORCE=${FORCE:-false}
 # Defaults
 EXCLUDES_FILE=$(mktemp /tmp/backup.excludes.XXXXX.txt)
 LOCK_FILE="/tmp/backup.lock"
@@ -203,5 +222,6 @@ case "$ACTION" in
   'mount')    mount_repo ;;
   'umount')   umount_repo ;;
   'repair')   repair ;;
+  'compact')  compact ;;
   *)          usage ;;
 esac

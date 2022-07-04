@@ -17,4 +17,4 @@ text/calendar;            mutt-ics;                                 copiousoutpu
 application/pdf;          pdftotext -fixed 8 -l 2 %s - 2>/dev/null; copiousoutput
 application/x-pdf;        pdftotext -fixed 8 -l 2 %s - 2>/dev/null; copiousoutput
 application/ms-tnef;      tnef -t %s;                               copiousoutput
-text/html;                w3m -dump -cols ${COLUMNS:-100} -ppc 10 -graph -s -I %{charset} -T text/html; copiousoutput
+text/html;                w3m -dump -ppc 8 -graph -s -I %{charset} -T text/html; copiousoutput

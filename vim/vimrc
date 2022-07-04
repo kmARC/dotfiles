@@ -93,6 +93,7 @@ Plug 'tpope/vim-repeat'             " for: surround.vim, unimpaired.vim
 Plug 'google/vim-maktaba'           " for: vim-bazel
 Plug 'tpope/vim-dispatch'           " for: gtest
 Plug 'junegunn/vim-plug'
+Plug 'ojroques/vim-oscyank'
 "--- Local plugins, if any
 silent! source ~/.vimrc.plugs
 packadd termdebug
@@ -131,6 +132,7 @@ set diffopt+=vertical,algorithm:patience
 set directory=~/.vim/vimswap//
 set expandtab
 set encoding=utf-8
+set grepprg=rg\ --vimgrep
 set fillchars+=vert:│
 set formatoptions+=j
 set grepprg=rg\ --vimgrep
@@ -207,10 +209,10 @@ set t_ZR=[23m
 "--- Look & Feel ---- {{{
 augroup theme
   autocmd!
-  autocmd ColorScheme * let g:lightline.colorscheme = g:colors_name
-                     \| call lightline#enable()
+  autocmd ColorScheme * call lightline#enable()
                      \| hi link javaFunction Text
                      \| hi link javaString   Special
+                     \| let lightline['colorscheme'] = 'iceberg'
 augroup END
 
 let g:lightline = {
@@ -441,6 +443,8 @@ augroup vimrc
     \ call TermDebugSendCommand('vim-dashboard-profile')
 
   " autocmd BufWritePost * if test#exists() | TestFile
+
+  autocmd TextYankPost * if v:event.operator is 'y' && environ()->has_key("SSH_CLIENT") | execute 'OSCYankReg ""' | endif
 augroup END
 " }}}
 
@@ -562,12 +566,12 @@ function! s:BazelIncludeExpr(fname)
           \ path . '/' . name,
           \ path . '/BUILD.bazel',
           \ path . '/BUILD',
-          \ g:bazel_info['execution_root'] . '/external/' . pkg . '/' . path . '/' . name,
-          \ g:bazel_info['execution_root'] . '/external/' . pkg . '/' . path . '/BUILD.bazel',
-          \ g:bazel_info['execution_root'] . '/external/' . pkg . '/' . path . '/BUILD',
-          \ g:bazel_info['output_base'] . '/external/' . pkg . '/' . path . '/' . name,
-          \ g:bazel_info['output_base'] . '/external/' . pkg . '/' . path . '/BUILD.bazel',
-          \ g:bazel_info['output_base'] . '/external/' . pkg . '/' . path . '/BUILD',
+          \ g:bazel_info->get('execution_root', 'bazel-bin') . '/external/' . pkg . '/' . path . '/' . name,
+          \ g:bazel_info->get('execution_root', 'bazel-bin') . '/external/' . pkg . '/' . path . '/BUILD.bazel',
+          \ g:bazel_info->get('execution_root', 'bazel-bin') . '/external/' . pkg . '/' . path . '/BUILD',
+          \ g:bazel_info->get('output_base', 'bazel-bin') . '/external/' . pkg . '/' . path . '/' . name,
+          \ g:bazel_info->get('output_base', 'bazel-bin') . '/external/' . pkg . '/' . path . '/BUILD.bazel',
+          \ g:bazel_info->get('output_base', 'bazel-bin') . '/external/' . pkg . '/' . path . '/BUILD',
           \ ]
   return possible_paths->filter({_, ppath -> len(findfile(ppath))})->get(0, name)
 endfunction

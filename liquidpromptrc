@@ -44,7 +44,7 @@ LP_PATH_LENGTH=35
 # The number of directories (including '/') to keep at the beginning of a
 # shortened path.
 # Recommended value is 2
-LP_PATH_KEEP=2
+LP_PATH_KEEP=1
 
 # Determine if the hostname should always be displayed, even if not connecting
 # through network.
@@ -191,7 +191,7 @@ LP_TIME_ANALOG=0
 
 # Use the prompt as the title of the terminal window
 # Recommended value is 0
-LP_ENABLE_TITLE=0
+LP_ENABLE_TITLE=1
 
 # Enable Title for screen, byobu, and tmux
 LP_ENABLE_SCREEN_TITLE=1
@@ -212,5 +212,12 @@ LP_DISABLED_VCS_PATHS=(~/src/integration)
 # like to make only minor deviations.
 #LOCAL_RCFILE=$HOME/.liquidpromptrc.local
 #[ -f "$LOCAL_RCFILE" ] && source "$LOCAL_RCFILE"
+
+LP_ENABLE_CONTAINER=1
+LP_ENABLE_SHLVL=0
+LP_ENABLE_TITLE_COMMAND=1
+LP_PATH_METHOD=truncate_chars_to_unique_dir
+LP_COLOR_PATH_VCS_ROOT=$BOLD_PURPLE
+
 
 # vim: set et sts=4 sw=4 tw=120 ft=sh:

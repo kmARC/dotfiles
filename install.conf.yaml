@@ -19,6 +19,8 @@
       path: config/swappy/config
     $XDG_CONFIG_HOME/alacritty.yml:
       path: config/alacritty.yml
+    $XDG_CONFIG_HOME/alacritty.vars.yml:
+      path: config/alacritty.$PLATFORM.yml
     $XDG_CONFIG_HOME/bpython/config:
       path: config/bpython/config
     $XDG_CONFIG_HOME/clight.conf:
@@ -79,9 +81,11 @@
     $XDG_CONFIG_HOME/X11/xresources:
       path: config/X11/xresources
     $XDG_DATA_HOME/gnupg/gpg-agent.conf:
-      path: local/share/gnupg/gpg-agent.conf
+      path: local/share/gnupg/gpg-agent.$PLATFORM.conf
     $XDG_CONFIG_HOME/newsboat/config:
       path: config/newsboat/config
+    $HOME/.rtorrent.rc:
+      path: config/rtorrent/rtorrent.rc
     $XDG_CONFIG_HOME/rtorrent/rtorrent.rc:
       path: config/rtorrent/rtorrent.rc
     $XDG_DATA_HOME/terminfo:

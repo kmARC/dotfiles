@@ -2,6 +2,8 @@
 
 set -e
 
+source config/environment.d/*
+
 CONFIG="install.conf.yaml"
 DOTBOT_DIR="dotbot"
 

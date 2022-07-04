@@ -46,7 +46,7 @@ set sort_browser="unsorted"
 set text_flowed = yes
 set timeout = 60
 set ts_enabled
-set wrap = 100
+#set wrap = 100
 unset collapse_unread
 unset copy
 unset mark_old
@@ -187,7 +187,7 @@ color body blue    default "([a-z][a-z0-9+-]*://(((([a-z0-9_.!~*'();:&=+$,-]|%[0
 color body color01 default "\\[[0-9]+\\]"
 color body color15 default "[┌┬┐├┼┤└┴┘│─]"
 color body color08 default "[━]"
-color body brightcolor00 color06 "\\[(cid|image):[^]]+\\]"
+color body brightcolor00 color06 "\\[(cid|image):?[^]]*\\]"
 
 # PGP
 color body    brightcolor00 color01 '(\*BAD\* signature)'
@@ -229,6 +229,17 @@ color body    brightcolor00 color01 '(Static-Analysis|Workflow|Code-Review|Verif
 color body    brightcolor00 color02 '(Static-Analysis|Workflow|Code-Review|Verified|Review-Priority)\+[12]'
 color body    color08 default 'Gerrit-.*'
 color body    color05 default 'I[a-f0-9]{40}' # Change-Id
+color body    brightcolor00 color04 '^.* has posted comments on this change.'
+color body    brightcolor00 color02 '^.* has submitted this change.'
+color body    brightcolor00 color05 'new patch set \(#[0-9]+\)'
+color body    brightcolor07 color00 '^File .*:$'
+color body    brightcolor07 color00 '^Patchset:$'
+color body    color08 default '^Patch Set [0-9]+:'
+color body    color08 default '^\([0-9]+ comments\)$'
+color body    color08 default '^PS[0-9]+, Line [0-9]+:.*$'
+
+# GitLab
+color body    brightcolor00 color02 '^Merge request ![0-9]+ was approved by.*$'
 
 # Header-like in body
 color body    color08       default '^(To|Date|Sent|Cc|Location|When|Where): .*$'
