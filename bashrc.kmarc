@@ -109,11 +109,16 @@ alias ls="ls --color --group-directories-first"
 alias diff='diff --color=auto'
 alias grep='grep --color=auto'
 alias mutt='neomutt'
-alias git-recursive-pull='for d in $(find . -type d -name .git -printf "%h\n"); do (echo ***$d*** && cd $d && git pull --all && echo); done'
 alias sudo='sudo '
 alias htop='TERM=xterm-256color htop'
 alias ssh='TERM=xterm-256color ssh'
 alias monerod="monerod --data-dir ${XDG_DATA_HOME}/bitmonero"
+
+git-recursive-pull() {
+    find . -type d -path '*/.git' -prune -printf "%h\n" \
+      | xargs -n1 -P4 bash -c \
+          'cd $1; if ! git pull --all &>/dev/null; then echo "ERROR:   $1"; else echo "SUCCESS: $1"; fi' --
+}
 
 if command -v kubectl >/dev/null; then
   source <(kubectl completion bash)

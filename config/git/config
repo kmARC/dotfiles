@@ -26,6 +26,7 @@
   recurseSubmodules = on-demand
   prune = true
   pruneTags = true
+  writeCommitGraph = true
 
 [gui]
   fontui = -family \"Noto Sans\" -size 9 -weight normal -slant roman -underline 0 -overstrike 0
@@ -44,7 +45,6 @@
 [mergetool "vimdiff"]
   keepbackup = false
   trustexitcode = true
-
 
 [pull]
   rebase = true

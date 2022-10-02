@@ -56,6 +56,7 @@ Plug 'tpope/vim-endwise'
 Plug 'mikelue/vim-maven-plugin'
 Plug 'udalov/javap-vim'
 Plug 'uiiaoo/java-syntax.vim'
+Plug 'udalov/kotlin-vim'
 "--- CPP ---
 Plug 'bfrg/vim-cpp-modern'
 Plug 'alepez/vim-gtest'
@@ -381,11 +382,13 @@ augroup filetypes
 
   autocmd FileType plaintex,text
     \   setlocal textwidth=100 formatprg=par\ -jw100
+    \ | setlocal spell
     \ | autocmd BufWritePost <buffer> normal! mT
 
   autocmd FileType mail 
     \   setlocal formatoptions+=watqc
     \ | setlocal nojoinspaces
+    \ | setlocal spell
     \ | match ErrorMsg '\s\+$'
 
   autocmd FileType html 
@@ -665,9 +668,11 @@ let g:ale_fixers = {
 " ale_linters {{{
 let g:ale_linters = {
 \   'starlark': ['buildifier'],
+\   'text': ['languagetool'],
+\   'mail': ['languagetool'],
 \ }
 " }}}
-let g:ale_languagetool_options = '--autoDetect -d WHITESPACE_RULE'
+let g:ale_languagetool_options = '--language en-US'
 let g:ale_lint_delay = 2000
 let g:ale_python_pylint_change_directory = 0
 let g:ale_sh_shellcheck_options = '--external-sources'
@@ -724,6 +729,16 @@ let g:lightline_tagbar#flags = 'f'
 let g:lsp_experimental_workspace_folders = 1
 let g:lsp_semantic_enabled = 1
 let g:lsp_settings = {
+      \  'pylsp-all': {
+      \     'workspace_config': {
+      \       'pylsp': {
+      \         'plugins': {
+      \           'pycodestyle': { 'enabled': v:false },
+      \           'pyflakes': { 'enabled': v:false }
+      \          }
+      \       }
+      \     }
+      \   },
       \  'eclipse-jdt-ls': {
       \    'semantic_highlight': {
       \      'entity.name.type.class.java': 'Identifier',
