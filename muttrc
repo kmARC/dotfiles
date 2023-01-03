@@ -240,6 +240,8 @@ color body    color08 default '^PS[0-9]+, Line [0-9]+:.*$'
 
 # GitLab
 color body    brightcolor00 color02 '^Merge request ![0-9]+ was approved by.*$'
+color body    brightcolor00 color02 '^Merge request ![0-9]+ was merged$'
+color body    color02 default '^\* [0-9a-z]{8} - '
 
 # Header-like in body
 color body    color08       default '^(To|Date|Sent|Cc|Location|When|Where): .*$'

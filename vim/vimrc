@@ -99,6 +99,7 @@ Plug 'ojroques/vim-oscyank'
 silent! source ~/.vimrc.plugs
 packadd termdebug
 Plug 'git@github.com:kmARC/fugitive-gerrit.vim.git'
+Plug 'git@github.com:kmARC/asyncomplete-bazel'
 call plug#end() " }}}
 
 "--- Vim-Plug --- {{{
@@ -360,10 +361,6 @@ augroup filetypes
     \ | endif
     \ | call s:SetupMavenMap()
     \ | autocmd BufWritePost <buffer> normal! mJ<ESC>
-
-  autocmd FileType cpp
-    \   nnoremap <silent> t<C-n>   :GTestRunUnderCursor<CR>
-    \ | nnoremap <silent> t<C-f>   :GTestRun<CR>
 
   autocmd FileType cpp
     \   nnoremap <silent> t<C-n>   :GTestRunUnderCursor<CR>
@@ -793,6 +790,13 @@ let g:lsp_settings = {
       \        ]
       \    }
       \  },
+      \  'bash-language-server': {
+      \     'workspace_config': {
+      \       'bashIde': {
+      \         'explainshellEndpoint': 'http://localhost:5000'
+      \       }
+      \     }
+      \   },
       \}
 let g:maven_keymaps = 1
 let g:maven_auto_set_path = 0
@@ -889,6 +893,18 @@ function! JavaDebug()
     call vimspector#LaunchWithSettings( { 'DAPPort': a:r.response.result, 'uncaught': 'N', 'caught': 'N' } )
   endfunction
   call lsp#send_request('eclipse-jdt-ls', {'method': 'workspace/executeCommand', 'params': {'command': 'vscode.java.startDebugSession'}, 'on_notification': function('s:myCb') })
+endfunction
+
+let g:gutentags_init_user_func='GutentagsInit'
+let g:gutentags_define_advanced_commands=1
+
+function! GutentagsInit(filename)
+  let l:extra_args = {
+        \   "bzl": ["--languages=Bazel"]
+        \ }
+  let b:gutentags_ctags_tagfile='tags-' . &filetype
+  let g:gutentags_ctags_extra_args=get(l:extra_args, &filetype, [])
+  return 1
 endfunction
 
 " vim: fdm=marker fdl=0 fen
