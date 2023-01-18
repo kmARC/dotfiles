@@ -561,7 +561,9 @@ autocmd SigUSR1 * call ChangeBackground()
 
 call ChangeBackground()
 
-function! s:BazelIncludeExpr(fname)
+let s:bazel_base_cmd = 'bazel --output_base=' . expand('~/.vim/misc') . '/bazel-out --max_idle_secs=300 '
+
+function! s:BazelIncludeExpr(fname, recursive = v:false)
   let [_, _, pkg, _, path, name] = matchlist(a:fname, '\(@\([^/]\+\)\)\?\(//\([^:]*\)\)\?:\?\(.*\)')[0:5]
   "                                          example: ...@......pkg.......//.....path....:...name..
   let possible_paths = [
@@ -576,7 +578,29 @@ function! s:BazelIncludeExpr(fname)
           \ g:bazel_info->get('output_base', 'bazel-bin') . '/external/' . pkg . '/' . path . '/BUILD.bazel',
           \ g:bazel_info->get('output_base', 'bazel-bin') . '/external/' . pkg . '/' . path . '/BUILD',
           \ ]
-  return possible_paths->filter({_, ppath -> len(findfile(ppath))})->get(0, name)
+
+  " Try to find file in possible paths
+  for ppath in possible_paths
+    if len(findfile(ppath))
+      return ppath
+    endif
+  endfor
+
+  " Try to fetch external package and recursively try to resolve after fetched
+  if len(pkg) && !a:recursive
+    echom "Fetching " . a:fname . "..."
+    call system(s:bazel_base_cmd . " fetch " . a:fname)
+    return s:BazelIncludeExpr(a:fname, v:true)
+  endif
+
+  " Try to resolve full path from current package's parent directories
+  " Better would be searching from WORKSPACE root
+  let foundfile = findfile(filter([path, name], {_, v -> len(v) > 0})->join('/'), '.;')
+  if len(foundfile)
+    return fnamemodify(foundfile, ':p')
+  endif
+
+  return name
 endfunction
 
 function! BazelInfo()
@@ -587,10 +611,26 @@ function! BazelInfo()
   function! s:handler(channel, msg)
     let [k, v] = a:msg->split(':\s\+')
     let g:bazel_info[k] = v
+    echom "Bazel ready"
   endfunction
-  call job_start('bazel info', {
+  call job_start(s:bazel_base_cmd . ' info ', {
         \ "mode": "nl",
         \ "out_cb": "s:handler",
+        \ })
+endfunction
+
+function! BazelLabels()
+  if g:->get('bazel_labels', []) != []
+    return
+  endif
+  let g:bazel_labels = []
+  function! s:handler2(channel, msg)
+    echom a:msg
+    let g:bazel_labels += [a:msg]
+  endfunction
+  call job_start('bazel query --output=label --relative_locations "kind(\"source file\", deps(//...))"', {
+        \ "mode": "nl",
+        \ "out_cb": "s:handler2",
         \ })
 endfunction
 " }}}
