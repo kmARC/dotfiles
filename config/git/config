@@ -36,7 +36,7 @@
   diffopts = --word-diff --patience
 
 [help]
-  autocorrect = 30
+  autocorrect = 10
 
 [merge]
   tool = vimdiff
@@ -78,5 +78,9 @@
   path = ./config.linux
   path = ./config.darwin
   path = ~/.gitconfig.local
+
+[svn]
+  logWindowSize = 500000
+
 
 # vim: set ft=gitconfig:

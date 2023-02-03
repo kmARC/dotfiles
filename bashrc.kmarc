@@ -6,6 +6,8 @@
 ###########################
 source "$HOME"/.config/environment.d/*.conf
 
+export HISTSIZE=65536
+
 #########
 #  FZF  #
 #########
@@ -27,11 +29,11 @@ else
   bind -m vi-command '"\eo": "ddi`__fzf_open__`\C-x\C-e\C-x\C-r\C-m"'
 fi
 
-if [[ $OSTYPE == 'darwin'* ]]; then
+if [ -f "$HOME/.fzf.bash" ]; then
   source "$HOME/.fzf.bash"
 else
-  source /usr/share/fzf/key-bindings.bash
-  source /usr/share/fzf/completion.bash
+  source /usr/local/share/fzf/shell/key-bindings.bash
+  source /usr/local/share/fzf/shell/completion.bash
 fi
 
 ###################
@@ -161,7 +163,7 @@ if [[ -z "$MC_SID" && $- = *i* ]]; then
   if [[ $OSTYPE == 'darwin'* ]]; then
     source /opt/homebrew/share/liquidprompt
   else
-    source /usr/bin/liquidprompt
+    source `which liquidprompt`
   fi
 fi
 

@@ -53,7 +53,7 @@ Plug 'rhysd/vim-lsp-ale'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-endwise'
 "--- Java ---
-Plug 'mikelue/vim-maven-plugin'
+" Plug 'mikelue/vim-maven-plugin'
 Plug 'udalov/javap-vim'
 Plug 'uiiaoo/java-syntax.vim'
 Plug 'udalov/kotlin-vim'
@@ -100,6 +100,7 @@ silent! source ~/.vimrc.plugs
 packadd termdebug
 Plug 'git@github.com:kmARC/fugitive-gerrit.vim.git'
 Plug 'git@github.com:kmARC/asyncomplete-bazel'
+Plug 'git@github.com:kmARC/vim-basler'
 call plug#end() " }}}
 
 "--- Vim-Plug --- {{{
@@ -175,8 +176,8 @@ set wildcharm=<C-z>
 set wildignore+=__pycache__,.mypy_cache,*.pyc " Python
 set wildignore+=*.o,*.so,*.a                  " C/C++
 set wildignore+=*.class                       " Java
-set wildignore+=*/bazel-*/*                   " Bazel
 set wildignore+=.direnv,build                 " Misc
+set wildignore+=*/bazel-*/*                   " Bazel
 set wildignorecase
 set wildmenu
 set wildmode=list:full
@@ -287,11 +288,7 @@ nnoremap <leader>fg        :call fzf#vim#grep(
   \   1, {'options':'--delimiter : --nth 4..'}
   \ )<CR>
 " FZF grep current word only in file content
-nnoremap <leader>fG        :call fzf#vim#grep(
-  \   'rg --column --line-number --no-heading --color=always --smart-case ""',
-  \   1, {'options':'--delimiter : --nth 4.. --exact --query=<C-r><C-w> +i'}
-  \ )<CR>
-
+nnoremap <leader>fG        :Rg <C-r><C-w><CR>
 vnoremap <leader>t,        :Tabularize /^[^,]*,/l0l1<CR>
 vnoremap <leader>t:        :Tabularize /^[^:]*:/l0l1<CR>
 vnoremap <leader>t=        :Tabularize /^[^=]*\zs/l1c1l1<CR>
@@ -414,13 +411,6 @@ augroup filetypes
   autocmd FileType help
     \   wincmd L | 80 wincmd |
     \ | setlocal winfixwidth
-
-  autocmd FileType starlark,bzl 
-    \   call BazelInfo()
-    \ | setlocal includeexpr=s:BazelIncludeExpr(v:fname)
-    \            isfname+=:,@-@
-    \ | let &l:include='load("\zs[^"]\+\ze"'
-    \ | let &l:define='\(^\s*\(def\|class\)\|\s*\ze[^ ]\+\s*=\s*\(repository_\)\?rule(\)'
 augroup END
 
 augroup vimrc
@@ -557,79 +547,6 @@ endfunction
 autocmd SigUSR1 * call ChangeBackground()
 
 call ChangeBackground()
-
-let s:bazel_base_cmd = 'bazel --output_base=' . expand('~/.vim/misc') . '/bazel-out --max_idle_secs=300 '
-
-function! s:BazelIncludeExpr(fname, recursive = v:false)
-  let [_, _, pkg, _, path, name] = matchlist(a:fname, '\(@\([^/]\+\)\)\?\(//\([^:]*\)\)\?:\?\(.*\)')[0:5]
-  "                                          example: ...@......pkg.......//.....path....:...name..
-  let possible_paths = [
-          \ name,
-          \ path . '/' . name,
-          \ path . '/BUILD.bazel',
-          \ path . '/BUILD',
-          \ g:bazel_info->get('execution_root', 'bazel-bin') . '/external/' . pkg . '/' . path . '/' . name,
-          \ g:bazel_info->get('execution_root', 'bazel-bin') . '/external/' . pkg . '/' . path . '/BUILD.bazel',
-          \ g:bazel_info->get('execution_root', 'bazel-bin') . '/external/' . pkg . '/' . path . '/BUILD',
-          \ g:bazel_info->get('output_base', 'bazel-bin') . '/external/' . pkg . '/' . path . '/' . name,
-          \ g:bazel_info->get('output_base', 'bazel-bin') . '/external/' . pkg . '/' . path . '/BUILD.bazel',
-          \ g:bazel_info->get('output_base', 'bazel-bin') . '/external/' . pkg . '/' . path . '/BUILD',
-          \ ]
-
-  " Try to find file in possible paths
-  for ppath in possible_paths
-    if len(findfile(ppath))
-      return ppath
-    endif
-  endfor
-
-  " Try to fetch external package and recursively try to resolve after fetched
-  if len(pkg) && !a:recursive
-    echom "Fetching " . a:fname . "..."
-    call system(s:bazel_base_cmd . " fetch " . a:fname)
-    return s:BazelIncludeExpr(a:fname, v:true)
-  endif
-
-  " Try to resolve full path from current package's parent directories
-  " Better would be searching from WORKSPACE root
-  let foundfile = findfile(filter([path, name], {_, v -> len(v) > 0})->join('/'), '.;')
-  if len(foundfile)
-    return fnamemodify(foundfile, ':p')
-  endif
-
-  return name
-endfunction
-
-function! BazelInfo()
-  if g:->get('bazel_info', {}) != {}
-    return
-  endif
-  let g:bazel_info = {}
-  function! s:handler(channel, msg)
-    let [k, v] = a:msg->split(':\s\+')
-    let g:bazel_info[k] = v
-    echom "Bazel ready"
-  endfunction
-  call job_start(s:bazel_base_cmd . ' info ', {
-        \ "mode": "nl",
-        \ "out_cb": "s:handler",
-        \ })
-endfunction
-
-function! BazelLabels()
-  if g:->get('bazel_labels', []) != []
-    return
-  endif
-  let g:bazel_labels = []
-  function! s:handler2(channel, msg)
-    echom a:msg
-    let g:bazel_labels += [a:msg]
-  endfunction
-  call job_start('bazel query --output=label --relative_locations "kind(\"source file\", deps(//...))"', {
-        \ "mode": "nl",
-        \ "out_cb": "s:handler2",
-        \ })
-endfunction
 " }}}
 
 "--- Plugin configurations --- {{{
@@ -695,6 +612,7 @@ let g:UltiSnipsSnippetsDir = '~/.vim/UltiSnips'
 " ale_fixers {{{
 let g:ale_fixers = {
 \   'python': ['black', 'isort'],
+\   'json': ['jq'],
 \   'xml': ['xmllint'],
 \   'java': ['uncrustify'],
 \   'cpp': ['clangtidy', 'clang-format'],
@@ -704,16 +622,23 @@ let g:ale_fixers = {
 " }}}
 " ale_linters {{{
 let g:ale_linters = {
+\   'json': 'all',
+\   'mail': ['languagetool'],
 \   'starlark': ['buildifier'],
 \   'text': ['languagetool'],
-\   'mail': ['languagetool'],
 \ }
 " }}}
 let g:ale_languagetool_options = '--language en-US'
 let g:ale_lint_delay = 2000
-let g:ale_python_pylint_change_directory = 0
+" let g:ale_python_pylint_change_directory = 0
 let g:ale_sh_shellcheck_options = '--external-sources'
 let g:ale_disable_lsp = 1
+" let g:ale_virtualtext_cursor = 'current'
+hi ALEVirtualTextError        ctermbg=0 ctermfg=1 guifg=NONE cterm=italic
+hi ALEVirtualTextWarning      ctermbg=0 ctermfg=3 guifg=NONE cterm=italic
+hi ALEVirtualTextInfo         ctermbg=0 ctermfg=6 guifg=NONE cterm=italic
+hi link ALEVirtualTextStyleError   ALEVirtualTextWarning
+hi link ALEVirtualTextStyleWarning ALEVirtualTextInfo
 let g:ale_cpp_cc_options = environ()->get('CXXFLAGS', '')
 let g:ale_cpp_clangcheck_options =
       \ environ()
@@ -735,7 +660,7 @@ let g:ale_cpp_clangtidy_checks = [
       \ '-*-magic-numbers',
       \ ]
 let g:ale_cpp_clangtidy_options = environ()->get('CXXFLAGS', '')
-let g:ale_c_uncrustify_options = '-c ' . findfile('.uncrustify.cfg', ';')
+let g:ale_c_uncrustify_options = '-c ' . findfile('uncrustify.cfg', ';')
 let g:cpp_attributes_highlight = 1
 let g:cpp_member_highlight = 1
 let g:cpp_simple_highlight = 1
@@ -895,16 +820,20 @@ function! JavaDebug()
   call lsp#send_request('eclipse-jdt-ls', {'method': 'workspace/executeCommand', 'params': {'command': 'vscode.java.startDebugSession'}, 'on_notification': function('s:myCb') })
 endfunction
 
-let g:gutentags_init_user_func='GutentagsInit'
+" let g:gutentags_init_user_func='GutentagsInit'
 let g:gutentags_define_advanced_commands=1
 
-function! GutentagsInit(filename)
-  let l:extra_args = {
-        \   "bzl": ["--languages=Bazel"]
-        \ }
-  let b:gutentags_ctags_tagfile='tags-' . &filetype
-  let g:gutentags_ctags_extra_args=get(l:extra_args, &filetype, [])
-  return 1
-endfunction
+" function! GutentagsInit(filename)
+"   let l:extra_args = {
+"         \   "bzl": ["--languages=Bazel"]
+"         \ }
+"   if has_key(l:extra_args, &filetype)
+"     let b:gutentags_ctags_tagfile='tags-' . &filetype
+"     let g:gutentags_ctags_extra_args=l:extra_args[&filetype]
+"   else
+"     let g:gutentags_ctags_extra_args=''
+"   endif
+"   return 1
+" endfunction
 
 " vim: fdm=marker fdl=0 fen

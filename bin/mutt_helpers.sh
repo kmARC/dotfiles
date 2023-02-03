@@ -60,5 +60,20 @@ function my_username() {
   fi
 }
 
+function query_id() {
+  local kind="$1"
+  local from="$2"
+  local query="$3"
+  local pass
+  local username
+  pass=$(smtp_pass "$kind" "$from")
+  username=$(my_username "$kind" "$from")
+  echo ""
+  ldapsearch -H ldap://dctrading01.trading.imc.intra:3268 \
+             -b 'DC=trading,DC=imc,DC=intra' \
+             -E pr=1000/noprompt \
+             "(|(sn=$query*)(mail=$query*)(givenName=$query*))" 
+}
+
 $1 "${@:2}"
 

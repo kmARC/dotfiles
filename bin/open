@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+if [[ $OSTYPE = 'darwin'* ]]; then
+  /usr/bin/open "$@"
+else
+  xdg-open "$@"
+fi
