@@ -90,4 +90,5 @@ case $1 in
         esac
 esac
 makoctl reload
+killall -10 vim
 

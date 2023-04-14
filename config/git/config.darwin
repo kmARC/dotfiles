@@ -1,9 +1,4 @@
-[interactive]
-  diffFilter = `brew --prefix git`/share/git-core/contrib/diff-highlight/diff-highlight | less -X
-
-[pager]
-  log = `brew --prefix git`/share/git-core/contrib/diff-highlight/diff-highlight | less -X
-  show = `brew --prefix git`/share/git-core/contrib/diff-highlight/diff-highlight | less -X
-  diff = `brew --prefix git`/share/git-core/contrib/diff-highlight/diff-highlight | less -X
+[credential]
+  helper = osxkeychain
 
 # vim: set ft=gitconfig:

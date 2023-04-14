@@ -31,6 +31,9 @@ fi
 
 if [ -f "$HOME/.fzf.bash" ]; then
   source "$HOME/.fzf.bash"
+elif [ -f /usr/share/fzf/completion.bash ]; then
+  source /usr/share/fzf/key-bindings.bash
+  source /usr/share/fzf/completion.bash
 else
   source /usr/local/share/fzf/shell/key-bindings.bash
   source /usr/local/share/fzf/shell/completion.bash

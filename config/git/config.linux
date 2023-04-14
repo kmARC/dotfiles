@@ -1,9 +1,4 @@
 [credential]
-  helper = /usr/lib/git-core/git-credential-libsecret
-
-[pager]
-  log = /usr/share/git/diff-highlight/diff-highlight | less -X
-  show = /usr/share/git/diff-highlight/diff-highlight | less -X
-  diff = /usr/share/git/diff-highlight/diff-highlight | less -X
+  helper = git-credential-libsecret
 
 # vim: set ft=gitconfig:

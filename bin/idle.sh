@@ -9,7 +9,7 @@ lock () {
   local immediately=$1
   local params=()
   if [ -z "$immediately" ]; then
-    params+=(--fade-in $GRACE.0 --grace "$GRACE")
+    params+=(--fade-in "$GRACE.0" --grace "$GRACE")
   fi
   if ! pgrep swaylock &>/dev/null; then
     swaylock --daemonize \

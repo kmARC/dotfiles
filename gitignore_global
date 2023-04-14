@@ -2,6 +2,7 @@
 .envrc
 .direnv
 .kubeconfig.yaml
+.venv
 
 # clangd
 compile_flags.txt
@@ -14,5 +15,13 @@ compile_flags.txt
 
 # ctags
 tags
+
+# java
+*.class
+META-INF
+
+# python
+*.egg-info
+__pycache__
 
 # vim :set ft=gitignore:

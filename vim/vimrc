@@ -39,7 +39,7 @@ Plug 'benmills/vimux'
 Plug 'dense-analysis/ale'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'honza/vim-snippets'
-Plug 'janko/vim-test'
+Plug 'vim-test/vim-test'
 Plug 'ludovicchabant/vim-gutentags'
 Plug 'majutsushi/tagbar'
 Plug 'mattn/vim-lsp-settings'
@@ -52,8 +52,9 @@ Plug 'prabirshrestha/vim-lsp'
 Plug 'rhysd/vim-lsp-ale'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-endwise'
+Plug 'micchy326/lightline-lsp-progress'
 "--- Java ---
-" Plug 'mikelue/vim-maven-plugin'
+Plug 'mikelue/vim-maven-plugin'     , {'for': 'java'}
 Plug 'udalov/javap-vim'
 Plug 'uiiaoo/java-syntax.vim'
 Plug 'udalov/kotlin-vim'
@@ -95,6 +96,7 @@ Plug 'google/vim-maktaba'           " for: vim-bazel
 Plug 'tpope/vim-dispatch'           " for: gtest
 Plug 'junegunn/vim-plug'
 Plug 'ojroques/vim-oscyank'
+Plug 'micchy326/lightline-lsp-progress'
 "--- Local plugins, if any
 silent! source ~/.vimrc.plugs
 packadd termdebug
@@ -212,7 +214,8 @@ set t_ZR=[23m
 "--- Look & Feel ---- {{{
 augroup theme
   autocmd!
-  autocmd ColorScheme * call lightline#enable()
+  autocmd ColorScheme * runtime! plugged/iceberg.vim/autoload/lightline/colorscheme/iceberg.vim
+                     \| call lightline#enable()
                      \| hi link javaFunction Text
                      \| hi link javaString   Special
                      \| let lightline['colorscheme'] = 'iceberg'
@@ -221,15 +224,17 @@ augroup END
 let g:lightline = {
       \   'active': {
       \     'left': [ [ 'mode', 'paste' ],
-      \               [ 'gitbranch', 'readonly', 'filename', 'modified' ],
+      \               [ 'gitbranch', 'readonly', 'relativepath', 'modified' ],
       \               [ 'tagbar'] ],
       \     'right': [ ['lineinfo'],
       \                ['percent'],
-      \                ['fileformat', 'fileencoding', 'filetype'] ],
+      \                ['filetype', 'fileencoding', 'fileformat', 'lsp_status'] ],
       \   },
+      \   'component': { 'filetype' : '%<%{&ft!=#""?&ft:"no ft"}'},
       \   'component_function': {
       \     'gitbranch': 'FugitiveHead',
       \     'tagbar': 'lightline_tagbar#component',
+      \     'lsp_status': 'lightline_lsp_progress#progress',
       \   },
       \ }
 set termguicolors
@@ -537,11 +542,17 @@ function! s:SetupMavenMap()
 endfunction
 
 function! ChangeBackground()
-  if system('defaults read -g AppleInterfaceStyle') =~? '^Dark'
+  if has('macunix') && system('defaults read -g AppleInterfaceStyle') =~? '^Dark'
+\ || has('linux')   && system('gsettings get org.gnome.desktop.interface gtk-theme') =~? 'Dark'
     set background=dark
+    exec 'colorscheme ' . g:colors_name
   else
     set background=light
+    exec 'colorscheme ' . g:colors_name
   endif
+  runtime! plugged/iceberg.vim/autoload/lightline/colorscheme/iceberg.vim
+  call lightline#enable()
+  redraw!
 endfunction
 
 autocmd SigUSR1 * call ChangeBackground()
@@ -555,6 +566,7 @@ function! s:on_lsp_buffer_enabled() abort
     setlocal signcolumn=yes
     if exists('+tagfunc') | setlocal tagfunc=lsp#tagfunc | endif
     nmap <buffer> <leader>ld <plug>(lsp-definition)
+    nmap <buffer> <leader>lD <plug>(lsp-declaration)
     nmap <buffer> <leader>ls <plug>(lsp-document-symbol-search)
     nmap <buffer> <leader>lS <plug>(lsp-workspace-symbol-search)
     nmap <buffer> <leader>lr <plug>(lsp-references)
@@ -565,7 +577,6 @@ function! s:on_lsp_buffer_enabled() abort
     nmap <buffer> [g <plug>(lsp-previous-diagnostic)
     nmap <buffer> ]g <plug>(lsp-next-diagnostic)
     nmap <buffer> <leader>lA :LspCodeAction<CR>
-    xmap <buffer> <leader>lA :LspCodeAction<CR>
     nmap <buffer> <leader>lo :LspCodeAction source.organizeImports<CR>
     nmap <buffer> <leader>lp :LspPeekDefinition<CR>
     " nnoremap <buffer> <expr><c-f> lsp#scroll(+4)
@@ -585,8 +596,10 @@ endfunction
 
 augroup lsp_install
     au!
+
     " call s:on_lsp_buffer_enabled only for languages that has the server registered.
     autocmd User lsp_buffer_enabled call s:on_lsp_buffer_enabled()
+
 augroup END
 
 augroup asyncomplete_setup
@@ -604,62 +617,52 @@ augroup asyncomplete_setup
       \ }))
 augroup END
 
+augroup test
+  autocmd!
+  autocmd BufWrite */test/*.vim if test#exists() |
+    \   TestNearest |
+    \ endif
+augroup END
+
 let s:dir_misc = expand('~/.vim/misc')
 let g:UltiSnipsEditSplit = 'vertical'
 let g:UltiSnipsExpandTrigger = '<c-j>'
 let g:UltiSnipsListSnippets = '<c-h>'
 let g:UltiSnipsSnippetsDir = '~/.vim/UltiSnips'
-" ale_fixers {{{
-let g:ale_fixers = {
-\   'python': ['black', 'isort'],
-\   'json': ['jq'],
-\   'xml': ['xmllint'],
-\   'java': ['uncrustify'],
-\   'cpp': ['clangtidy', 'clang-format'],
-\   'starlark': ['buildifier'],
-\   'bzl': ['buildifier'],
-\ }
+let g:ale_fix_on_save = 1
+let g:ale_fixers = {} " {{{
+let g:ale_fixers['bzl'] = ['buildifier']
+let g:ale_fixers['cpp'] = ['clangtidy', 'clang-format']
+let g:ale_fixers['java'] = ['uncrustify']
+let g:ale_fixers['json'] = ['jq']
+let g:ale_fixers['python'] = ['black', 'isort']
+let g:ale_fixers['rust'] = ['rustfmt']
+let g:ale_fixers['starlark'] = ['buildifier']
+let g:ale_fixers['xml'] = ['xmllint']
 " }}}
-" ale_linters {{{
-let g:ale_linters = {
-\   'json': 'all',
-\   'mail': ['languagetool'],
-\   'starlark': ['buildifier'],
-\   'text': ['languagetool'],
-\ }
+let g:ale_linters = {} " {{{
+let g:ale_linters['json'] = 'all'
+let g:ale_linters['mail'] = ['languagetool']
+let g:ale_linters['starlark'] = ['buildifier']
+let g:ale_linters['text'] = ['languagetool']
+let g:ale_linters['cpp'] = ['cc']
 " }}}
+let g:ale_linters_ignore = ['clangtidy', 'cc']
 let g:ale_languagetool_options = '--language en-US'
-let g:ale_lint_delay = 2000
-" let g:ale_python_pylint_change_directory = 0
 let g:ale_sh_shellcheck_options = '--external-sources'
-let g:ale_disable_lsp = 1
+" let g:ale_python_pylint_change_directory = 0
+" let g:ale_lint_delay = 2000
+" let g:ale_disable_lsp = 1
+" let g:ale_virtualtext_delay = 2000
 " let g:ale_virtualtext_cursor = 'current'
 hi ALEVirtualTextError        ctermbg=0 ctermfg=1 guifg=NONE cterm=italic
 hi ALEVirtualTextWarning      ctermbg=0 ctermfg=3 guifg=NONE cterm=italic
 hi ALEVirtualTextInfo         ctermbg=0 ctermfg=6 guifg=NONE cterm=italic
 hi link ALEVirtualTextStyleError   ALEVirtualTextWarning
 hi link ALEVirtualTextStyleWarning ALEVirtualTextInfo
+let g:ale_awk_gawk_options = '--lint=no-ext'
+let g:ale_c_parse_compile_commands = 0
 let g:ale_cpp_cc_options = environ()->get('CXXFLAGS', '')
-let g:ale_cpp_clangcheck_options =
-      \ environ()
-      \ ->get('CXXFLAGS', '')
-      \ ->split(' ')
-      \ ->map({-> "--extra-arg=" . v:val})
-      \ ->join(' ')
-let g:ale_cpp_clangtidy_checks = [
-      \ 'bugprone-*',
-      \ 'clang-analyzer-*',
-      \ 'cppcoreguidelines-*',
-      \ '-cppcoreguidelines-pro-type-reinterpret-cast',
-      \ 'misc-*',
-      \ 'modernize-*',
-      \ '-modernize-use-trailing-return-type',
-      \ 'performance-*',
-      \ 'readability-*',
-      \ '-readability-redundant-member-init',
-      \ '-*-magic-numbers',
-      \ ]
-let g:ale_cpp_clangtidy_options = environ()->get('CXXFLAGS', '')
 let g:ale_c_uncrustify_options = '-c ' . findfile('uncrustify.cfg', ';')
 let g:cpp_attributes_highlight = 1
 let g:cpp_member_highlight = 1
@@ -686,10 +689,13 @@ let g:gist_open_browser_after_post = 1
 let g:gist_token_file = s:dir_misc . '/.gist-vim'
 let g:gtest#highlight_failing_tests = 1
 let g:gutentags_cache_dir = s:dir_misc
+let g:gutentags_generate_on_new = 0
 let g:jsdoc_enable_es6 = 1
 let g:lightline_tagbar#flags = 'f'
+let g:lsp_code_action_ui = 'float'
 let g:lsp_experimental_workspace_folders = 1
 let g:lsp_semantic_enabled = 1
+let g:lsp_work_done_progress_enabled = 1
 let g:lsp_settings = {
       \  'pylsp-all': {
       \     'workspace_config': {
@@ -701,20 +707,6 @@ let g:lsp_settings = {
       \       }
       \     }
       \   },
-      \  'eclipse-jdt-ls': {
-      \    'semantic_highlight': {
-      \      'entity.name.type.class.java': 'Identifier',
-      \      'entity.name.function.java': {
-      \          'meta.function-call.java': 'Label',
-      \          'meta.method.identifier.java': 'Identifier'
-      \      },
-      \    },
-      \    'initialization_options': {
-      \        'bundles': [
-      \            environ()->get('HOME').'/.m2/repository/com/microsoft/java/com.microsoft.java.debug.plugin/0.35.0/com.microsoft.java.debug.plugin-0.35.0.jar'
-      \        ]
-      \    }
-      \  },
       \  'bash-language-server': {
       \     'workspace_config': {
       \       'bashIde': {
@@ -737,54 +729,18 @@ let g:taboo_renamed_tab_format =' %N %l%m '
 let g:taboo_tab_format = ' %N %f%m '
 let g:tagbar_autoclose = 1
 let g:tagbar_autofocus = 1
-" tagbar_type_typescript {{{
-let g:tagbar_type_typescript = {
-  \   'ctagstype': 'typescript',
-  \   'kinds': [
-  \     'I:imports:1',
-  \     'n:modules',
-  \     'i:interfaces:1',
-  \     'e:enums',
-  \     'c:classes',
-  \     'f:functions:1',
-  \     'm:members',
-  \     'S:state',
-  \     'R:reducer',
-  \     'v:variables',
-  \     'C:components',
-  \     'H:other hooks',
-  \   ],
-  \   'sro': '.',
-  \   'kind2scope': {
-  \     'i': 'interface',
-  \     'c': 'class',
-  \     'C': 'component',
-  \     'f': 'function',
-  \   },
-  \   'scope2kind': {
-  \     'interface': 'i',
-  \     'class':    'c',
-  \     'component': 'C',
-  \     'variable': 'v',
-  \     'function': 'f',
-  \     'state': 'S',
-  \   },
-  \   'deffile': '~/.ctags.d/typescript.ctags'
-  \ }
-" }}}
-let g:tagbar_type_jsx = g:tagbar_type_typescript
 let g:tagbar_type_bzl = {
+  \   'ctagstype': 'Bazel',
   \   'kinds': [
-  \     'f:functions:1',
-  \     'v:variables',
+  \     'b:binaries',
+  \     'l:libraries',
+  \     't:tests',
+  \     'o:other:1',
+  \     'a:aliases',
   \   ],
   \ }
 let g:tagbar_type_starlark = {
-  \   'kinds': [
-  \     'f:functions:1',
-  \     'v:variables',
-  \     'l:labels',
-  \   ],
+  \   'kinds': g:tagbar_type_bzl['kinds'],
   \ }
 let g:vim_markdown_folding_disabled = 1
 let g:vim_markdown_frontmatter = 1
@@ -794,8 +750,8 @@ let test#strategy = 'vimux'
 
 " --- Debugging --- {{{
 " - lsp -
-" let g:lsp_log_verbose = 1
-" let g:lsp_log_file = expand('/tmp/vim-lsp.log')
+let g:lsp_log_verbose = 1
+let g:lsp_log_file = expand('/tmp/vim-lsp.log')
 "
 " - asyncomplete -
 " let g:asyncomplete_log_file = expand('/tmp/asyncomplete.log')

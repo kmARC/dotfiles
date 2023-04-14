@@ -2,5 +2,29 @@
 #  Bazel  #
 ###########
 # Map .bzl files to the Python parser
---langmap=Python:.bzl
+--map-Python=+.bzl
+
+--langdef=Bazel
+--map-Bazel=+.bazel
+--map-Bazel=+(WORKSPACE)
+--map-Bazel=+(BUILD)
+--kinddef-Bazel=a,alias,"Bazel alias"
+--kinddef-Bazel=b,binary,"Bazel binary target label"
+--kinddef-Bazel=l,library,"Bazel library target label"
+--kinddef-Bazel=t,test,"Bazel test target label"
+--kinddef-Bazel=o,other,"Bazel other target label"
+--_fielddef-Bazel=signature,signatures
+--fields-Bazel=+{signature}
+--mline-regex-Bazel=/(\w+_binary(?>_\w+)?)\s*\(\s*name\s*=\s*("([^"]+)",|([^,]+),)/\3\4/b/{mgroup=0}{_field=signature: : \1}p"
+--mline-regex-Bazel=/(\w+_library(?>_\w+)?)\s*\(\s*name\s*=\s*("([^"]+)",|([^,]+),)/\3\4/l/{mgroup=0}{_field=signature: : \1}p"
+--mline-regex-Bazel=/(\w+_test(?>_\w+)?)\s*\(\s*name\s*=\s*("([^"]+)",|([^,]+),)/\3\4/t/{mgroup=0}{_field=signature: : \1}p"
+--mline-regex-Bazel=/alias\s*\((\s*name\s*=\s*("([^"]+)",|([^,]+),)|\s*actual\s*=\s*"([^"]+)",)*/\3\4/a/{mgroup=0}{_field=signature: => \5}p"
+--mline-regex-Bazel=/^((?!\w*_library|\w*_test|\w*_binary)\w+)\s*\(\s*name\s*=\s*"([^"]+)"/\2/o/{mgroup=0}{_field=signature: : \1}p"
+--languages=+Bazel
+
+#########
+#  C++  #
+#########
+--exclude=compile_commands.json
+
 

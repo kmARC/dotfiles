@@ -38,6 +38,9 @@
 [help]
   autocorrect = 10
 
+[interactive]
+  diffFilter = diff-highlight | less -X
+
 [merge]
   tool = vimdiff
   conflictstyle = diff3
@@ -45,6 +48,11 @@
 [mergetool "vimdiff"]
   keepbackup = false
   trustexitcode = true
+
+[pager]
+  log = diff-highlight | less -X
+  show = diff-highlight | less -X
+  diff = diff-highlight | less -X
 
 [pull]
   rebase = true
