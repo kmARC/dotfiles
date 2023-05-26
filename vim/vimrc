@@ -97,6 +97,7 @@ Plug 'tpope/vim-dispatch'           " for: gtest
 Plug 'junegunn/vim-plug'
 Plug 'ojroques/vim-oscyank'
 Plug 'micchy326/lightline-lsp-progress'
+Plug 'jamessan/vim-gnupg'
 "--- Local plugins, if any
 silent! source ~/.vimrc.plugs
 packadd termdebug
@@ -212,15 +213,6 @@ set t_ZR=[23m
 " }}}
 
 "--- Look & Feel ---- {{{
-augroup theme
-  autocmd!
-  autocmd ColorScheme * runtime! plugged/iceberg.vim/autoload/lightline/colorscheme/iceberg.vim
-                     \| call lightline#enable()
-                     \| hi link javaFunction Text
-                     \| hi link javaString   Special
-                     \| let lightline['colorscheme'] = 'iceberg'
-augroup END
-
 let g:lightline = {
       \   'active': {
       \     'left': [ [ 'mode', 'paste' ],
@@ -237,6 +229,13 @@ let g:lightline = {
       \     'lsp_status': 'lightline_lsp_progress#progress',
       \   },
       \ }
+augroup theme
+  autocmd!
+  autocmd ColorScheme * silent! call ChangeColorScheme()
+                     \| hi link javaFunction Text
+                     \| hi link javaString   Special
+augroup END
+
 set termguicolors
 silent colorscheme iceberg
 
@@ -541,23 +540,21 @@ function! s:SetupMavenMap()
   " //~)
 endfunction
 
-function! ChangeBackground()
+function! ChangeColorScheme()
   if has('macunix') && system('defaults read -g AppleInterfaceStyle') =~? '^Dark'
 \ || has('linux')   && system('gsettings get org.gnome.desktop.interface gtk-theme') =~? 'Dark'
     set background=dark
-    exec 'colorscheme ' . g:colors_name
   else
     set background=light
-    exec 'colorscheme ' . g:colors_name
   endif
-  runtime! plugged/iceberg.vim/autoload/lightline/colorscheme/iceberg.vim
+  let g:lightline={'colorscheme': g:colors_name}
+  exec 'runtime! plugged/iceberg.vim/autoload/lightline/colorscheme/' . g:colors_name . '.vim'
   call lightline#enable()
-  redraw!
 endfunction
 
-autocmd SigUSR1 * call ChangeBackground()
+autocmd SigUSR1 * call ChangeColorScheme()
 
-call ChangeBackground()
+call ChangeColorScheme()
 " }}}
 
 "--- Plugin configurations --- {{{
@@ -590,7 +587,7 @@ function! s:on_lsp_buffer_enabled() abort
     " setlocal foldmethod=expr
     "   \ foldexpr=lsp#ui#vim#folding#foldexpr()
     "   \ foldtext=lsp#ui#vim#folding#foldtext()
-    
+   
     " refer to doc to add more commands
 endfunction
 
