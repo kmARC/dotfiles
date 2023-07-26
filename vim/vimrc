@@ -38,6 +38,7 @@ Plug 'andymass/vim-matchup'
 Plug 'benmills/vimux'
 Plug 'dense-analysis/ale'
 Plug 'editorconfig/editorconfig-vim'
+Plug 'github/copilot.vim'
 Plug 'honza/vim-snippets'
 Plug 'vim-test/vim-test'
 Plug 'ludovicchabant/vim-gutentags'
@@ -66,6 +67,7 @@ Plug 'freitass/todo.txt-vim'        , {'for': 'todo'}
 Plug 'plasticboy/vim-markdown'      , {'for': 'markdown'}
 Plug 'shime/vim-livedown'           , {'for': 'markdown'}
 Plug 'tenfyzhong/joplin.vim'        , {'on': ['Joplin', 'JoplinWinOpen']}
+Plug 'jamessan/vim-gnupg'
 "--- HTML ---
 Plug 'mattn/emmet-vim'              , {'for': ['html', '*jsx', 'xml']}
 Plug 'othree/html5.vim'             , {'for': ['html', '*jsx', 'xml']}
@@ -273,9 +275,9 @@ endif
 "--- Mappings ---- {{{
 cmap w!!                   w !sudo tee > /dev/null %
 
-nnoremap <C-p>             :Files<CR>
+nnoremap <expr> <C-p>      g:FugitiveIsGitDir() ? ':GFiles<CR>' : ':Files<CR>'
 
-nnoremap <F7>              :NERDTreeFind %<CR>
+nnoremap <expr> <F7>       expand('%')=='' ? ':NERDTree<CR>' : ':NERDTreeFind %<CR>'
 nnoremap <F8>              :TagbarToggle<CR>
 nnoremap <F9>              :lclose<CR>:cclose<CR>:pclose<CR>
 
@@ -422,12 +424,24 @@ augroup vimrc
   
   autocmd VimEnter * call CheckProject()
 
+  autocmd VimEnter *
+    \   if ! &l:diff 
+    \ |   if expand('%') != ''
+    \ |     :NERDTreeFind %
+    \ |   else
+    \ |     :NERDTree
+    \ |   endif
+    \ |   execute "normal \<c-w>p"
+    \ | endif
+
   autocmd BufNewFile *
     \   let s:skel = expand('~/.vim/skeleton/skeleton.') . expand('%:e')
     \ | if filereadable(s:skel) | exec '0r ' . s:skel
 
   autocmd WinEnter * if &l:buftype == "" && &l:filetype != "netrw" | setlocal nu   rnu
   autocmd WinLeave * if &l:buftype == "" && &l:filetype != "netrw" | setlocal nu nornu
+
+  autocmd BufEnter NERD_tree_* nnoremap <buffer> <F7> <nop>
 
   autocmd BufWritePost ~/Documents/Home/index.md
           \ silent !pandoc --output ~/Documents/Home/index.html
@@ -587,16 +601,14 @@ function! s:on_lsp_buffer_enabled() abort
     " setlocal foldmethod=expr
     "   \ foldexpr=lsp#ui#vim#folding#foldexpr()
     "   \ foldtext=lsp#ui#vim#folding#foldtext()
-   
+    
     " refer to doc to add more commands
 endfunction
 
 augroup lsp_install
     au!
-
     " call s:on_lsp_buffer_enabled only for languages that has the server registered.
     autocmd User lsp_buffer_enabled call s:on_lsp_buffer_enabled()
-
 augroup END
 
 augroup asyncomplete_setup

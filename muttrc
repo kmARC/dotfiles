@@ -64,6 +64,7 @@ folder-hook 'INBOX' '\
   set signature  = ~/.mutt/sig/sig-$from.txt; \
   \
   setenv from $from; \
+  setenv NOTMUCH_CONFIG ~/.mutt/$from-notmuch-config; \
   unalternates "*"; \
   unmailboxes "*"; \
   mailboxes `mutt_helpers.sh mailboxes $from`'
@@ -241,6 +242,7 @@ color body    color08 default '^PS[0-9]+, Line [0-9]+:.*$'
 # GitLab
 color body    brightcolor00 color02 '^Merge request ![0-9]+ was approved by.*$'
 color body    brightcolor00 color02 '^Merge request ![0-9]+ was merged$'
+color body    brightcolor00 color04 '^.* commented:$'
 color body    color02 default '^\* [0-9a-z]{8} - '
 
 # Header-like in body
