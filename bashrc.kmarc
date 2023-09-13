@@ -1,12 +1,15 @@
 #!/usr/bin/env bash
 # shellcheck disable=SC2016,SC1090
 
+unset PROMPT_COMMAND
+
 ###########################
 #  Environment variables  #
 ###########################
 source "$HOME"/.config/environment.d/*.conf
 
 export HISTSIZE=65536
+export HISTCONTROL=ignorespace
 
 #########
 #  FZF  #
@@ -164,7 +167,7 @@ cheat() { curl -m10 "http://cheat.sh/$1"; }
 # Enable liquidprompt only in interactive and non-mc shells
 if [[ -z "$MC_SID" && $- = *i* ]]; then
   if [[ $OSTYPE == 'darwin'* ]]; then
-    source /opt/homebrew/share/liquidprompt
+    source "$HOMEBREW_PREFIX"/share/liquidprompt
   else
     source `which liquidprompt`
   fi
@@ -195,4 +198,3 @@ if [[ $OSTYPE == 'darwin'* ]]; then
     sed --follow-symlinks -i "s/\\(&colorscheme.*\\)dark\\(.*\\)/\1light\2/g" "$HOME/.config/alacritty.yml"
   fi
 fi
-

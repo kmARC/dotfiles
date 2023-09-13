@@ -38,7 +38,6 @@ Plug 'andymass/vim-matchup'
 Plug 'benmills/vimux'
 Plug 'dense-analysis/ale'
 Plug 'editorconfig/editorconfig-vim'
-Plug 'github/copilot.vim'
 Plug 'honza/vim-snippets'
 Plug 'vim-test/vim-test'
 Plug 'ludovicchabant/vim-gutentags'
@@ -277,7 +276,7 @@ cmap w!!                   w !sudo tee > /dev/null %
 
 nnoremap <expr> <C-p>      g:FugitiveIsGitDir() ? ':GFiles<CR>' : ':Files<CR>'
 
-nnoremap <expr> <F7>       expand('%')=='' ? ':NERDTree<CR>' : ':NERDTreeFind %<CR>'
+nnoremap <expr> <F7>       expand('%')=='' ? ':NERDTree<CR>' : ':NERDTreeFind<CR>'
 nnoremap <F8>              :TagbarToggle<CR>
 nnoremap <F9>              :lclose<CR>:cclose<CR>:pclose<CR>
 
@@ -424,24 +423,20 @@ augroup vimrc
   
   autocmd VimEnter * call CheckProject()
 
-  autocmd VimEnter *
-    \   if ! &l:diff 
-    \ |   if expand('%') != ''
-    \ |     :NERDTreeFind %
-    \ |   else
-    \ |     :NERDTree
-    \ |   endif
-    \ |   execute "normal \<c-w>p"
-    \ | endif
+  " autocmd VimEnter *
+  "   \   if ! &l:diff && expand('%') == ''
+  "   \ |   :NERDTree
+  "   \ |   execute "normal \<c-w>p"
+  "   \ | endif
 
   autocmd BufNewFile *
     \   let s:skel = expand('~/.vim/skeleton/skeleton.') . expand('%:e')
-    \ | if filereadable(s:skel) | exec '0r ' . s:skel
+    \ | if filereadable(s:skel) && ! &l:readonly | exec '0r ' . s:skel
 
   autocmd WinEnter * if &l:buftype == "" && &l:filetype != "netrw" | setlocal nu   rnu
   autocmd WinLeave * if &l:buftype == "" && &l:filetype != "netrw" | setlocal nu nornu
 
-  autocmd BufEnter NERD_tree_* nnoremap <buffer> <F7> <nop>
+  autocmd BufEnter NERD_tree_* nnoremap <buffer> <F7> :q<CR>
 
   autocmd BufWritePost ~/Documents/Home/index.md
           \ silent !pandoc --output ~/Documents/Home/index.html
@@ -452,7 +447,7 @@ augroup vimrc
 
   " autocmd BufWritePost * if test#exists() | TestFile
 
-  autocmd TextYankPost * if v:event.operator is 'y' && environ()->has_key("SSH_CLIENT") | execute 'OSCYankReg ""' | endif
+  autocmd TextYankPost * if v:event.operator is 'y' && environ()->has_key("SSH_CLIENT") | execute 'OSCYankRegister ""' | endif
 augroup END
 " }}}
 
@@ -561,7 +556,7 @@ function! ChangeColorScheme()
   else
     set background=light
   endif
-  let g:lightline={'colorscheme': g:colors_name}
+  let g:lightline['colorscheme']=g:colors_name
   exec 'runtime! plugged/iceberg.vim/autoload/lightline/colorscheme/' . g:colors_name . '.vim'
   call lightline#enable()
 endfunction

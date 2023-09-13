@@ -96,6 +96,8 @@
       path: local/share/terminfo
     $XDG_CONFIG_HOME/tmux/tmux.conf:
       path: config/tmux/tmux.conf
+    $XDG_CONFIG_HOME/tmux/fix-ssh.sh:
+      path: config/tmux/fix-ssh.sh
     $XDG_CONFIG_HOME/tmux/plugins/tpm:
       path: tmux/plugins/tpm  # submodule
     $HOME/.ctags.d/config.ctags:
