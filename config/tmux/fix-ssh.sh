@@ -26,7 +26,7 @@ declare -A SSH_VARS=(
   [SSH_AUTH_SOCK]="$SSH_AUTH_SOCK"
   [SSH_CLIENT]="$SSH_CLIENT"
   [SSH_CONNECTION]="$SSH_CONNECTION"
-  [SSH_TTY]="$SSH_TTY"
+  [SSH_TTY]="${SSH_TTY:-}"
 )
 
 # Check if environment variables are up-to-date

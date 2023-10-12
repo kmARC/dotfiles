@@ -24,4 +24,7 @@ META-INF
 *.egg-info
 __pycache__
 
+# vim
+/.vim-lsp-settings/
+
 # vim :set ft=gitignore:

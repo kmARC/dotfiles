@@ -225,7 +225,7 @@ let g:lightline = {
       \   },
       \   'component': { 'filetype' : '%<%{&ft!=#""?&ft:"no ft"}'},
       \   'component_function': {
-      \     'gitbranch': 'FugitiveHead',
+      \     'gitbranch': 'FugitiveStatusline',
       \     'tagbar': 'lightline_tagbar#component',
       \     'lsp_status': 'lightline_lsp_progress#progress',
       \   },
@@ -696,6 +696,7 @@ let g:gutentags_cache_dir = s:dir_misc
 let g:gutentags_generate_on_new = 0
 let g:jsdoc_enable_es6 = 1
 let g:lightline_tagbar#flags = 'f'
+let g:lsp_inlay_hints_enabled = 1
 let g:lsp_code_action_ui = 'float'
 let g:lsp_experimental_workspace_folders = 1
 let g:lsp_semantic_enabled = 1
