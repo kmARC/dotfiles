@@ -405,6 +405,14 @@ augroup filetypes
     \   setlocal commentstring=#%s
     \ | autocmd BufWritePost <buffer> normal! mT
 
+  autocmd FileType todo
+    \   set nospell
+    \ | hi TodoProject cterm=bold ctermfg=5
+    \ | hi TodoContext cterm=bold ctermfg=2
+    \ | hi TodoPriorityA ctermfg=1
+    \ | hi TodoPriorityB ctermfg=3
+    \ | hi TodoPriorityC ctermfg=6
+
   autocmd FileType xml 
     \   setlocal foldmethod=syntax
     \ | silent! %foldopen!

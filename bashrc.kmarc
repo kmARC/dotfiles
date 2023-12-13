@@ -56,10 +56,12 @@ export NVM_DIR="${NVM_DIR:-$XDG_DATA_HOME/nvm}"
 ##########
 alias tmux-session="tmux attach -t Session || tmux new -s Session"
 function ssh-tmux() { ssh "$1" -t 'tmux attach'; }
-if [[ $OSTYPE != 'darwin'* ]]; then
+if [[ $OSTYPE == 'darwin'* ]]; then
+  source /opt/homebrew/etc/profile.d/bash_completion.sh
+else
   _completion_loader ssh
+  complete -F _ssh ssh ssh-tmux
 fi
-complete -F _ssh ssh ssh-tmux
 
 [ -n "$TMUX" ] && export PANE_ID=$(tmux display-message -p '#P')
 
@@ -130,13 +132,14 @@ git-recursive-pull() {
 
 if command -v kubectl >/dev/null; then
   source <(kubectl completion bash)
-  alias k=kubectl
-  complete -o default -F __start_kubectl k
-fi
+  complete -o default -F __start_kubectl kubectl
 
-if command -v kubecolor >/dev/null; then
-  alias k=kubecolor
-  complete -o default -F __start_kubectl kubecolor
+  alias k=kubectl
+  if command -v kubecolor >/dev/null; then
+    alias k=kubecolor
+    complete -o default -F __start_kubectl kubecolor
+  fi
+  complete -o default -F __start_kubectl k
 fi
 
 if command -v helm >/dev/null; then
@@ -187,6 +190,21 @@ fi
 if [ -f "$HOME"/.bashrc.local ]; then
   source "$HOME"/.bashrc.local
 fi
+
+#######################
+#  Homebrew prefixes  #
+#######################
+if [[ $OSTYPE == 'darwin'* ]]; then
+  for tool in \
+    coreutils \
+    findutils \
+    gnu-sed \
+    grep \
+  ; do
+    export PATH="/opt/homebrew/opt/$tool/libexec/gnubin:$PATH"
+  done
+fi
+
 
 ###############
 #  dark mode  #

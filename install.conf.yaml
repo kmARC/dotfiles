@@ -107,7 +107,7 @@
       path: mutt/*
     $HOME/.ssh/all_hosts.conf:
       path: ssh/all_hosts.conf
-    $HOME/.todo.actions.d:
+    $XDG_DATA_HOME/todo.actions.d:
       path: todo.actions.d
     $HOME/bin:
       path: bin

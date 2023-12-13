@@ -197,10 +197,15 @@ color body    brightcolor00 color02 '(Good signature)'
 color body    brightcolor00 color03 '(Problem signature)'
 
 # Atlassian
-color body    brightcolor00 color04 '( OPEN )'
-color body    brightcolor00 color02 '( APPROVED | MERGED | RESOLVED )'
-color body    brightcolor00 color01 '( UNAPPROVED | DECLINED )'
-color body    brightcolor00 color03 '( NEEDS WORK )'
+color body    brightcolor00 color08 '(OPEN|BACKLOG|CLOSED)'
+color body    brightcolor00 color08 '(Open|Backlog|Closed)'
+color body    brightcolor00 color04 '(APPROVED|IN PROGRESS|IN REVIEW|WAITING)'
+color body    brightcolor00 color04 '(Approved|In Progress|In Review|Waiting)'
+color body    brightcolor00 color02 '(DONE|RESOLVED|FIXED)'
+color body    brightcolor00 color02 '(Done|Resolved|Fixed)'
+color body    brightcolor00 color01 '(UNAPPROVED|DECLINED|UNRESOLVED)'
+color body    brightcolor00 color01 '(Unapproved|Declined|Unresolved)'
+color body    brightcolor00 color03 '(NEEDS WORK)'
 color body    color04 default '[A-Z]+-[1-9][0-9]*' # issue number
 
 # GitHub
