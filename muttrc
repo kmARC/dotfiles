@@ -39,6 +39,9 @@ set pager_index_lines = 10
 set pager_stop
 set rfc2047_parameters
 set reverse_alias
+set read_inc = 500
+set write_inc = 100
+set time_inc = 250
 set save_history = 9999
 set sort = threads
 set sort_aux = reverse-last-date-received
@@ -120,14 +123,14 @@ color index_collapsed brightcolor03 default
 color index           color08       default '~R'
 color index_author    color07       default '~R'
 color index_subject   color07       default '~R'
-color index           brightdefault default '~N'
-color index_author    brightdefault default '~N'
-color index_subject   brightdefault default '~N'
-color index_flags     brightdefault default '~N'
-color index           brightdefault default '~v~(~N)' # Collapsed threads with new messages
-color index_author    brightdefault default '~v~(~N)'
-color index_subject   brightdefault default '~v~(~N)'
-color index_flags     brightdefault default '~v~(~N)'
+color index           brightcolor07 default '~N'
+color index_author    brightcolor07 default '~N'
+color index_subject   brightcolor07 default '~N'
+color index_flags     brightcolor07 default '~N'
+color index           brightcolor07 default '~v~(~N)' # Collapsed threads with new messages
+color index_author    brightcolor07 default '~v~(~N)'
+color index_subject   brightcolor07 default '~v~(~N)'
+color index_flags     brightcolor07 default '~v~(~N)'
 color index_author    brightcolor01 default '~D'
 color index_subject   brightcolor01 default '~D'
 color index_flags     brightcolor01 default '~D'
@@ -163,7 +166,7 @@ color attach_headers color05       default    '\[-- (BEGIN|END) PGP PUBLIC KEY.*
 # Header
 set header_color_partial
 color hdrdefault color08       default
-color header     brightdefault default '^(Subject|Betreff).*'
+color header     brightcolor07 default '^(Subject|Betreff).*'
 color header     brightcolor02 default '^(From).*'
 color header     brightcolor00 color09 '^(X-PhishMeTracking:)'
 
@@ -221,7 +224,7 @@ color body    color00 color02 '^Merged #[0-9]+'
 color body    color06 default '\s@[a-zA-Z0-9]+'        # mentions
 color body    color02 default '[a-zA-Z/_]+#[0-9]+'
 color body    color05 default '[a-f0-9]{40}'
-color body    brightdefault default '[A-Za-z0-9/_-]+#[0-9]+' # issue number
+color body    brightcolor07 default '[A-Za-z0-9/_-]+#[0-9]+' # issue number
 
 # Gerrit
 color body    color01 default '^D ([^ ]|\\ )+$'
@@ -253,12 +256,12 @@ color body    color02 default '^\* [0-9a-z]{8} - '
 # Header-like in body
 color body    color08       default '^(To|Date|Sent|Cc|Location|When|Where): .*$'
 color body    color08       default '^(An|Datum|Wann|Ort|Gesendet): .*$'
-color body    brightdefault default '^(Subject|Betreff): .*'
+color body    brightcolor07 default '^(Subject|Betreff): .*'
 color body    brightcolor02 default '^(From|Organizer): .*$'
 color body    brightcolor02 default '^(Von): .*$'
 
 # vcal
-color body    brightdefault default '^Subject:.*'
+color body    brightcolor07 default '^Subject:.*'
 color body    brightcolor02 default '^Organizer:.*'
 color body    brightcolor05 default '^Start:.*'
 color body    brightcolor05 default '^End:.*'

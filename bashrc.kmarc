@@ -6,6 +6,10 @@ unset PROMPT_COMMAND
 ###########################
 #  Environment variables  #
 ###########################
+if [[ $OSTYPE == 'darwin'* ]]; then
+  HOMEBREW_PREFIX="${HOMEBREW_PREFIX:-$(brew --prefix)}"
+fi
+
 source "$HOME"/.config/environment.d/*.conf
 
 export HISTSIZE=65536
@@ -57,7 +61,7 @@ export NVM_DIR="${NVM_DIR:-$XDG_DATA_HOME/nvm}"
 alias tmux-session="tmux attach -t Session || tmux new -s Session"
 function ssh-tmux() { ssh "$1" -t 'tmux attach'; }
 if [[ $OSTYPE == 'darwin'* ]]; then
-  source /opt/homebrew/etc/profile.d/bash_completion.sh
+  source "$HOMEBREW_PREFIX"/etc/profile.d/bash_completion.sh
 else
   _completion_loader ssh
   complete -F _ssh ssh ssh-tmux
@@ -135,12 +139,16 @@ if command -v kubectl >/dev/null; then
   complete -o default -F __start_kubectl kubectl
 
   alias k=kubectl
+
   if command -v kubecolor >/dev/null; then
+    function kubecolor() { if [ -n "${KUBECTL_NAMESPACE:-}" ]; then command kubecolor -n ${KUBECTL_NAMESPACE:-default} "$@"; else command kubecolor "$@"; fi }
+    export -f kubecolor
     alias k=kubecolor
     complete -o default -F __start_kubectl kubecolor
   fi
   complete -o default -F __start_kubectl k
 fi
+
 
 if command -v helm >/dev/null; then
   source <(helm completion bash)
@@ -201,7 +209,7 @@ if [[ $OSTYPE == 'darwin'* ]]; then
     gnu-sed \
     grep \
   ; do
-    export PATH="/opt/homebrew/opt/$tool/libexec/gnubin:$PATH"
+    export PATH="$HOMEBREW_PREFIX/opt/$tool/libexec/gnubin:$PATH"
   done
 fi
 
