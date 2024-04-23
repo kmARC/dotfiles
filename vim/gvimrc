@@ -2,35 +2,9 @@ if has('gui_running')
     if has('gui_macvim')
       set guifont=FiraCodeRoman-Medium:h12
     else
-      set guifont=Fira\ Code\ Medium\ 9
+      set guifont=Fira\ Code\ Medium\ 10
     endif
 
     set guioptions=agit
-    set linespace=4
-
-    "##### auto fcitx  ###########
-    let g:input_toggle = 1
-    function! Fcitx2en()
-       let s:input_status = system("fcitx-remote")
-       if s:input_status == 2
-          let g:input_toggle = 1
-          let l:a = system("fcitx-remote -c")
-       endif
-    endfunction
-
-    function! Fcitx2zh()
-       let s:input_status = system("fcitx-remote")
-       if s:input_status != 2 && g:input_toggle == 1
-          let l:a = system("fcitx-remote -o")
-          let g:input_toggle = 0
-       endif
-    endfunction
-
-    set ttimeoutlen=150
-    "Exit insert mode
-    #autocmd InsertLeave * call Fcitx2en()
-    "Enter insert mode
-    #autocmd InsertEnter * call Fcitx2zh()
-    "##### auto fcitx end ######
-
+    set linespace=1
 endif

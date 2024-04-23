@@ -17,10 +17,10 @@
     # Explicit paths
     $XDG_CONFIG_HOME/swappy/config:
       path: config/swappy/config
-    $XDG_CONFIG_HOME/alacritty.yml:
-      path: config/alacritty.yml
-    $XDG_CONFIG_HOME/alacritty.vars.yml:
-      path: config/alacritty.$PLATFORM.yml
+    $XDG_CONFIG_HOME/alacritty.toml:
+      path: config/alacritty.toml
+    $XDG_CONFIG_HOME/alacritty.vars.toml:
+      path: config/alacritty.$PLATFORM.toml
     $XDG_CONFIG_HOME/bpython/config:
       path: config/bpython/config
     $XDG_CONFIG_HOME/clight.conf:

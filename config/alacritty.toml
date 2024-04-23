@@ -1,0 +1,31 @@
+import = ["~/.config/alacritty.light.toml", "~/.config/alacritty.vars.toml"]
+live_config_reload = true
+
+[bell]
+animation = "EaseOutExpo"
+color = "#ffffff"
+duration = 100
+
+[env]
+# TERM = "xterm-256color"
+
+[font.bold_italic]
+family = "Menlo"
+style = "Bold Italic"
+
+[font.normal]
+family = "Fira Code"
+style = "Medium"
+
+[font.offset]
+y = -1
+
+[[keyboard.bindings]]
+action = "CreateNewWindow"
+key = "N"
+mods = "Command"
+
+[window]
+dynamic_title = true
+dynamic_padding = true
+resize_increments = true
