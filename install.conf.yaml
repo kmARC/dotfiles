@@ -21,6 +21,10 @@
       path: config/alacritty.toml
     $XDG_CONFIG_HOME/alacritty.vars.toml:
       path: config/alacritty.$PLATFORM.toml
+    $XDG_CONFIG_HOME/alacritty.dark.toml:
+      path: config/alacritty.dark.toml
+    $XDG_CONFIG_HOME/alacritty.light.toml:
+      path: config/alacritty.light.toml
     $XDG_CONFIG_HOME/bpython/config:
       path: config/bpython/config
     $XDG_CONFIG_HOME/clight.conf:
@@ -117,7 +121,7 @@
       path: vim
 
     # Top levels
-    $HOME/.bashrc.kmarc:
+    $HOME/.bashrc.$USER:
     $HOME/.gitignore_global:
     $HOME/.liquidpromptrc:
     $HOME/.mailcap:

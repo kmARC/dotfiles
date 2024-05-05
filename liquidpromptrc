@@ -1,223 +1,1130 @@
-
-####################################
-# LIQUID PROMPT CONFIGURATION FILE #
-####################################
-
-# This example config file does not contain all possible config options, nor
-# does it have detailed option descriptions. See the documentation for that:
+# This file shows the default presets configuration for Liquid Prompt.
+#
+# You may edit it and load it from your shell configuration file
+# to have your own permanent configuration.
+#
+# For instance:
+# source ~/whatever/my_liquidprompt.conf
+# source ~/liquidprompt/liquidprompt
+#
+# Entries are commented out and show the default values.
+# There is no need to uncomment them if you do not change
+# their value from the default.
+#
+# Note that the file is automatically extracted from the documentation,
+# but does not show all the help for each entry.
+# You should refer to the full documentation to get more details,
+# in the 'Config Options' section:
 # https://liquidprompt.readthedocs.io/en/stable/config.html
+# You can also load multiple presets files in sequence.
+# See the 'contrib/presets/' directories for examples.
 
-# If you want to use different themes and features,
-# you can load the corresponding files here:
-#source ~/.config/liquidprompt/nojhan.theme
-#LP_PS1_FILE=~/.config/liquidprompt/nojhan.ps1
 
-#############
-# BEHAVIOUR #
-#############
+# String added directly before `LP_MARK_DEFAULT`, after all other
+# parts of the prompt. Can be used to tag the prompt in a way that is less
+# intrusive than `LP_PS1_PREFIX`, or add a newline before the prompt
+# mark.
+# Type: string
+# More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_MARK_PREFIX
+#LP_MARK_PREFIX=" "
 
-# Display the battery level in more urgent color when the level is below this threshold.
-# Recommended value is 75
-LP_BATTERY_THRESHOLD=20
+# The number of characters to save at the start and possibly the end of a
+# directory name when shortening the path. See `LP_PATH_METHOD` for
+# details of the specific methods.
+# Type: int
+# More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_PATH_CHARACTER_KEEP
+#LP_PATH_CHARACTER_KEEP=3
 
-# Display the load average over the past minute when above this threshold.
-# This value is scaled per CPU, so on a quad-core machine, the load average
-# would need to be 2.40 or greater to be displayed.
-# Recommended value is 0.60
-LP_LOAD_THRESHOLD=0.60
+# The number of directories (counting '/') to display at the beginning of a
+# shortened path.
+# Type: int
+# More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_PATH_KEEP
+#LP_PATH_KEEP=2
 
-# Display the temperature when the temperate is above this threshold (in
-# degrees Celsius).
-# Recommended value is 60
-LP_TEMP_THRESHOLD=60
+# The maximum percentage of the terminal width used to display the path before
+# removing the center portion of the path and replacing with
+# `LP_MARK_SHORTEN_PATH`.
+# Type: int
+# More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_PATH_LENGTH
+#LP_PATH_LENGTH=35
+
+# Sets the method used for shortening the path display when it exceeds the
+# maximum length set by `LP_PATH_LENGTH`.
+# Type: string
+# More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_PATH_METHOD
+#LP_PATH_METHOD="truncate_chars_from_path_left"
+
+# Display the root directory of the current VCS repository with special
+# formatting, set by `LP_COLOR_PATH_VCS_ROOT`. If
+# `LP_ENABLE_SHORTEN_PATH` is enabled, also prevent the path shortening
+# from shortening or hiding the VCS root directory.
+# Type: bool
+# More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_PATH_VCS_ROOT
+#LP_PATH_VCS_ROOT=1
+
+# A string displayed at the very end of the prompt, after even the prompt mark.
+# `LP_MARK_PREFIX` is an alternative that goes before the prompt mark.
+# Type: string
+# More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_PS1_POSTFIX
+#LP_PS1_POSTFIX=""
+
+# A string displayed at the start of the prompt. Can also be set with
+# :func:`prompt_tag`.
+# Type: string
+# More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_PS1_PREFIX
+#LP_PS1_PREFIX=""
+
+# The formatting string passed to :manpage:`date(1)` using formatting from
+# :manpage:`strftime(3)` used to display the current date and/or time.
+# Type: string
+# More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_TIME_FORMAT
+#LP_TIME_FORMAT="%H:%M:%S"
+
+# Display the actual values of load, batteries, and wifi signal strength along
+# with their corresponding marks. Disable to only print the colored marks.
+# Type: bool
+# More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_ALWAYS_DISPLAY_VALUES
+#LP_ALWAYS_DISPLAY_VALUES=1
+
+# Delimiter to shorten the Kubernetes context by removing a prefix.
+# Type: string
+# More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_DELIMITER_KUBECONTEXT_PREFIX
+#LP_DELIMITER_KUBECONTEXT_PREFIX=""
+
+# Delimiter to shorten the Kubernetes context by removing a suffix.
+# Type: string
+# More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_DELIMITER_KUBECONTEXT_SUFFIX
+#LP_DELIMITER_KUBECONTEXT_SUFFIX=""
+
+# An array of absolute directory paths where VCS features will be disabled.
+# Generally this would be used for repositories that are large and slow, where
+# generating VCS information for the prompt would impact prompt responsiveness.
+# Type: array<string>
+# More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_DISABLED_VCS_PATHS
+#LP_DISABLED_VCS_PATHS=()
+
+# When displaying a value, show it as a percentage if possible.
+# Type: bool
+# More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_DISPLAY_VALUES_AS_PERCENTS
+#LP_DISPLAY_VALUES_AS_PERCENTS=0
+
+# Display the current value of :envvar:`AWS_PROFILE`,
+# :envvar:`AWS_DEFAULT_PROFILE`, or :envvar:`AWS_VAULT`. AWS_PROFILE and
+# AWS_DEFAULT_PROFILE are used to switch between configuration profiles by
+# the `AWS CLI`_. AWS_VAULT is used by `aws-vault`_ to specify the AWS
+# profile in use.
+# Type: bool
+# More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_ENABLE_AWS_PROFILE
+#LP_ENABLE_AWS_PROFILE=1
+
+# Display the status of the battery, if there is one, using color and marks.
+# Add battery percentage colored with `LP_COLORMAP` if
+# `LP_ALWAYS_DISPLAY_VALUES` is enabled.
+# Type: bool
+# More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_ENABLE_BATT
+#LP_ENABLE_BATT=1
+
+# Display VCS information inside
+# `Bazaar <https://wikipedia.org/wiki/GNU_Bazaar>`_ repositories.
+# Type: bool
+# More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_ENABLE_BZR
+#LP_ENABLE_BZR=1
+
+# Display whether a *chroot* environment is active.
+# Type: bool
+# More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_ENABLE_CHROOT
+#LP_ENABLE_CHROOT=1
+
+# Displays the current configuration of CMake,
+# if the directory contains a `CMakecache.txt`.
+# Displays the compiler, the generator and the build type,
+# separated by `LP_MARK_CMAKE`.
+# Type: bool
+# More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_ENABLE_CMAKE
+#LP_ENABLE_CMAKE=0
+
+# Use terminal formatting when displaying the prompt.
+# Type: bool
+# More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_ENABLE_COLOR
+#LP_ENABLE_COLOR=1
+
+# Indicate if the shell is running in a container environment (e.g. Docker,
+# Podman, LXC, Singularity, systemd-:spelling:word:`nspawn`).
+# Type: bool
+# More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_ENABLE_CONTAINER
+#LP_ENABLE_CONTAINER=0
+
+# Display the number of detached multiplexer sessions.
+# Type: bool
+# More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_ENABLE_DETACHED_SESSIONS
+#LP_ENABLE_DETACHED_SESSIONS=1
+
+# Display the size of the directory stack if it is greater than `1`.
+# Type: bool
+# More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_ENABLE_DIRSTACK
+#LP_ENABLE_DIRSTACK=0
+
+# Detect if the connection has X11 support.
+# Type: bool
+# More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_ENABLE_DISPLAY
+#LP_ENABLE_DISPLAY=1
+
+# Display `LP_MARK_DISK` if the free space on the hard drive hosting the
+# current directory goes below a threshold.
+# Type: bool
+# More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_ENABLE_DISK
+#LP_ENABLE_DISK=1
+
+# Display the last command error code if it is not `0`.
+# Type: bool
+# More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_ENABLE_ERROR
+#LP_ENABLE_ERROR=1
+
+# Display a guess on the last error meaning.
+# Type: bool
+# More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_ENABLE_ERROR_MEANING
+#LP_ENABLE_ERROR_MEANING=0
+
+# Extends the set of interpreted error codes to a larger set of (POSIX) codes.
+# Type: bool
+# More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_ENABLE_ERROR_MEANING_EXTENDED
+#LP_ENABLE_ERROR_MEANING_EXTENDED=0
+
+# Display a user-defined set of environment variables.
+# May show if the variables are unset, set, or their actual content.
+# Type: bool
+# More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_ENABLE_ENV_VARS
+#LP_ENABLE_ENV_VARS=1
+
+# Display VCS information inside `Fossil <https://www.fossil-scm.org/>`_
+# repositories.
+# Type: bool
+# More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_ENABLE_FOSSIL
+#LP_ENABLE_FOSSIL=1
+
+# Display VCS information inside `Git <https://git-scm.com/>`_ repositories.
+# Type: bool
+# More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_ENABLE_GIT
+#LP_ENABLE_GIT=1
+
+# Display VCS information inside `Mercurial <https://www.mercurial-scm.org/>`_
+# repositories.
+# Type: bool
+# More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_ENABLE_HG
+#LP_ENABLE_HG=1
+
+# Adds clickable links to some elements of the prompt:
+# Type: bool
+# More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_ENABLE_HYPERLINKS
+#LP_ENABLE_HYPERLINKS=0
+
+# Display the number of running and sleeping shell jobs.
+# Type: bool
+# More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_ENABLE_JOBS
+#LP_ENABLE_JOBS=1
+
+# Display the current `Kubernetes <https://kubernetes.io/>`_ `context`_.
+# Type: bool
+# More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_ENABLE_KUBECONTEXT
+#LP_ENABLE_KUBECONTEXT=0
+
+# Display the current `Kubernetes <https://kubernetes.io/>`_ default
+# `namespace`_ in the current context.
+# Type: bool
+# More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_ENABLE_KUBE_NAMESPACE
+#LP_ENABLE_KUBE_NAMESPACE=0
+
+# Display the load average over the past 1 minutes when above the threshold.
+# Type: bool
+# More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_ENABLE_LOAD
+#LP_ENABLE_LOAD=1
+
+# Display the currently loaded `Modules <https://modules.readthedocs.io/>`_.
+# Type: bool
+# More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_ENABLE_MODULES
+#LP_ENABLE_MODULES=1
+
+# Display the currently loaded modules' versions, after their names
+# (separated by a slash, as in the `module list` command).
+# Type: bool
+# More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_ENABLE_MODULES_VERSIONS
+#LP_ENABLE_MODULES_VERSIONS=1
+
+# If enabled, each item in the modules section will be randomly colored,
+# according to its hash, instead of using `LP_COLOR_MODULES`.
+# Type: bool
+# More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_ENABLE_MODULES_HASHCOLOR
+#LP_ENABLE_MODULES_HASHCOLOR=0
+
+# Allows getting the name of the current multiplexer
+# (*screen* or *tmux*), if any.
+# Type: bool
+# More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_ENABLE_MULTIPLEXER
+#LP_ENABLE_MULTIPLEXER=1
+
+# Display the currently activated nodeenv_ or NVM_ virtual environment.
+# Type: bool
+# More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_ENABLE_NODE_VENV
+#LP_ENABLE_NODE_VENV=0
+
+# Display information about the current Operating System.
+# Type: bool
+# More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_ENABLE_OS
+#LP_ENABLE_OS=0
+
+# Display the processor architecture of the current OS.
+# Type: bool
+# More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_ENABLE_OS_ARCH
+#LP_ENABLE_OS_ARCH=0
+
+# Display the current Linux distribution.
+# Type: bool
+# More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_ENABLE_OS_DISTRIB
+#LP_ENABLE_OS_DISTRIB=0
+
+# Display the family of the current OS (UNIX, BSD, GNU, or Windows).
+# Type: bool
+# More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_ENABLE_OS_FAMILY
+#LP_ENABLE_OS_FAMILY=0
+
+# Display the name of the kernel type for the current OS.
+# Type: bool
+# More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_ENABLE_OS_KERNEL
+#LP_ENABLE_OS_KERNEL=1
+
+# Display the version "codename" of the current Linux distribution.
+# Type: bool
+# More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_ENABLE_OS_VERSION
+#LP_ENABLE_OS_VERSION=1
+
+# Display the current working directory.
+# Type: bool
+# More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_ENABLE_PATH
+#LP_ENABLE_PATH=1
+
+# Display a colored `LP_MARK_PERM` in the prompt to show when the user
+# does not have write permission to the current directory.
+# Type: bool
+# More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_ENABLE_PERM
+#LP_ENABLE_PERM=1
+
+# Display a `LP_MARK_PROXY` mark when an HTTP proxy is detected.
+# Type: bool
+# More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_ENABLE_PROXY
+#LP_ENABLE_PROXY=1
+
+# Display a `LP_MARK_RAM` mark when the available amount of
+# Random Access Memory goes below a threshold.
+# Type: bool
+# More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_ENABLE_RAM
+#LP_ENABLE_RAM=1
+
+# Display the currently activated RVM_ or RBENV_ virtual environment.
+# Type: bool
+# More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_ENABLE_RUBY_VENV
+#LP_ENABLE_RUBY_VENV=1
+
+# Display runtime of the previous command if over `LP_RUNTIME_THRESHOLD`.
+# Type: bool
+# More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_ENABLE_RUNTIME
+#LP_ENABLE_RUNTIME=1
+
+# Ring the terminal bell if the previous command ran longer than
+# `LP_RUNTIME_BELL_THRESHOLD`.
+# Type: bool
+# More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_ENABLE_RUNTIME_BELL
+#LP_ENABLE_RUNTIME_BELL=0
+
+# Display the currently activated `Red Hat Software Collection`_.
+# Type: bool
+# More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_ENABLE_SCLS
+#LP_ENABLE_SCLS=1
+
+# Set the terminal title while in a terminal multiplexer.
+# Type: bool
+# More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_ENABLE_SCREEN_TITLE
+#LP_ENABLE_SCREEN_TITLE=0
+
+# Show the value of `$SHLVL`, which is the number of nested shells. For
+# example, if one runs `bash` inside their shell, it will open a new shell
+# inside their current shell, and this will display "2".
+# Type: bool
+# More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_ENABLE_SHLVL
+#LP_ENABLE_SHLVL=1
 
 # Use the shorten path feature if the path is too long to fit in the prompt
 # line.
-# Recommended value is 1
-LP_ENABLE_SHORTEN_PATH=1
+# Type: bool
+# More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_ENABLE_SHORTEN_PATH
+#LP_ENABLE_SHORTEN_PATH=1
 
-# The maximum percentage of the screen width used to display the path before
-# removing the center portion of the path and replacing with '...'.
-# Recommended value is 35
-LP_PATH_LENGTH=35
+# Replace `LP_COLOR_SSH` with a color based on the hash of the hostname.
+# This can give each host a "color feel" to help distinguish them.
+# Type: bool
+# More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_ENABLE_SSH_COLORS
+#LP_ENABLE_SSH_COLORS=0
 
-# The number of directories (including '/') to keep at the beginning of a
-# shortened path.
-# Recommended value is 2
-LP_PATH_KEEP=1
+# Check if the user has valid `sudo` credentials, and display an indicating
+# mark or color.
+# Type: bool
+# More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_ENABLE_SUDO
+#LP_ENABLE_SUDO=0
 
-# Determine if the hostname should always be displayed, even if not connecting
-# through network.
-# Defaults to 0 (do not display hostname when locally connected)
-# set to 1 if you want to always see the hostname
-# set to -1 if you want to never see the hostname
-LP_HOSTNAME_ALWAYS=0
+# Display VCS information inside `Subversion <https://subversion.apache.org/>`_
+# repositories.
+# Type: bool
+# More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_ENABLE_SVN
+#LP_ENABLE_SVN=1
 
-# When to display the user name:
-# 1: always display the user name
-# 0: hide the logged user (always display different users)
-# -1: never display the user name
-# Default value is 1
-LP_USER_ALWAYS=1
+# Display the highest system temperature if above the threshold.
+# Type: bool
+# More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_ENABLE_TEMP
+#LP_ENABLE_TEMP=1
 
-# Display the actual values of load/batteries along with their
-# corresponding marks. Set to 0 to only print the colored marks.
-# Defaults to 1 (display percentages)
-LP_PERCENTS_ALWAYS=1
+# Display the currently activated `Terraform`_ workspace.
+# Type: bool
+# More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_ENABLE_TERRAFORM
+#LP_ENABLE_TERRAFORM=0
 
-# Use the permissions feature and display a red ':' before the prompt to show
-# when you don't have write permission to the current directory.
-# Recommended value is 1
-LP_ENABLE_PERM=1
+# Displays the time at which the prompt was shown. The format can be configured
+# with `LP_TIME_FORMAT`.
+# Type: bool
+# More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_ENABLE_TIME
+#LP_ENABLE_TIME=0
 
-# Enable the proxy detection feature.
-# Recommended value is 1
-LP_ENABLE_PROXY=1
+# Set the terminal title to part or all of the prompt string, depending on the
+# theme.
+# Type: bool
+# More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_ENABLE_TITLE
+#LP_ENABLE_TITLE=0
 
-# Enable the jobs feature.
-# Recommended value is 1
-LP_ENABLE_JOBS=1
+# Postpend the currently running command to the terminal title while the
+# command is running.
+# Type: bool
+# More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_ENABLE_TITLE_COMMAND
+#LP_ENABLE_TITLE_COMMAND=1
 
-# Enable the detached sessions feature.
-# Default value is 1
-LP_ENABLE_DETACHED_SESSIONS=1
+# Sets the title of the Tmux pane instead of the window.
+# Type: bool
+# More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_ENABLE_TMUX_TITLE_PANES
+#LP_ENABLE_TMUX_TITLE_PANES=1
 
-# Enable the load feature.
-# Recommended value is 1
-LP_ENABLE_LOAD=1
+# Enable the display of the remote repository in the VCS state section.
+# Type: bool
+# More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_ENABLE_VCS_REMOTE
+#LP_ENABLE_VCS_REMOTE=0
 
-# Enable the battery feature.
-# Recommended value is 1
-LP_ENABLE_BATT=1
+# Enable VCS features when running as root. This is disabled by default for
+# security.
+# Type: bool
+# More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_ENABLE_VCS_ROOT
+#LP_ENABLE_VCS_ROOT=0
 
-# Enable the 'sudo credentials' feature.
-# Be warned that this may pollute the syslog if you don't have sudo
-# credentials, and the sysadmin might hate you.
-LP_ENABLE_SUDO=0
+# Display the currently activated Python_ or Conda_ virtual environment.
+# Type: bool
+# More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_ENABLE_VIRTUALENV
+#LP_ENABLE_VIRTUALENV=1
 
-# Enable the directory stack support.
-LP_ENABLE_DIRSTACK=0
+# Display an indicator if any wireless signal strength percentage is below
+# `LP_WIFI_STRENGTH_THRESHOLD`. Also show the strength percentage if
+# `LP_ALWAYS_DISPLAY_VALUES` is enabled.
+# Type: bool
+# More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_ENABLE_WIFI_STRENGTH
+#LP_ENABLE_WIFI_STRENGTH=0
 
-# Enable the VCS features with the root account.
-# Recommended value is 0
-LP_ENABLE_VCS_ROOT=0
+# The set of environment variables that the user wants to watch.
+# Type: array<string>
+# More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_ENV_VARS
+#LP_ENV_VARS=()
 
-# Enable the Git special features.
-# Recommended value is 1
-LP_ENABLE_GIT=1
+# The command to use for Mercurial commands. Can be used to replace `hg`
+# with `rhg` or `chg`.
+# Type: string
+# More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_HG_COMMAND
+#LP_HG_COMMAND="hg"
 
-# Enable the Subversion special features.
-# Recommended value is 1
-LP_ENABLE_SVN=1
+# Determine when the hostname should be displayed.
+# Type: int
+# More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_HOSTNAME_ALWAYS
+#LP_HOSTNAME_ALWAYS=0
 
-# Enable the Mercurial special features.
-# Recommended value is 1
-LP_ENABLE_HG=1
+# Determine the method for displaying the hostname.
+# Type: string
+# More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_HOSTNAME_METHOD
+#LP_HOSTNAME_METHOD="short"
 
-# Enable the Fossil special features.
-# Recommended value is 1
-LP_ENABLE_FOSSIL=1
+# An array of single letter switches to customize the `RVM prompt`_ output.
+# Type: array<string>
+# More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_RUBY_RVM_PROMPT_OPTIONS
+#LP_RUBY_RVM_PROMPT_OPTIONS=(i v g s)
 
-# Enable the Bazaar special features.
-# Recommended value is 1
-LP_ENABLE_BZR=1
+# Paths to files in the sysfs interface that should be ignored when reading
+# temperature sensors. A path can include globs.
+# Type: array<string>
+# More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_TEMP_SYSFS_IGNORE_FILES
+#LP_TEMP_SYSFS_IGNORE_FILES=()
 
-# Show time of when the current prompt was displayed.
-LP_ENABLE_TIME=0
+# Shows the time using an analog clock instead of numeric values. The analog
+# clock is "accurate" to the nearest half hour. You must have a Unicode capable
+# terminal and a font with the "CLOCK" characters (U+1F550 - U+1F567).
+# Type: bool
+# More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_TIME_ANALOG
+#LP_TIME_ANALOG=0
 
-# Show runtime of the previous command if over LP_RUNTIME_THRESHOLD
-# Recommended value is 0
-LP_ENABLE_RUNTIME=1
+# Determine when the username should be displayed.
+# Type: int
+# More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_USER_ALWAYS
+#LP_USER_ALWAYS=1
 
-# Minimal runtime (in seconds) before the runtime will be displayed
-# Recommended value is 2
-LP_RUNTIME_THRESHOLD=2
+# The percentage threshold that the battery level needs to fall below before
+# it will be displayed in `LP_COLOR_CHARGING_UNDER` or
+# `LP_COLOR_DISCHARGING_UNDER` color. Otherwise, it will be displayed in
+# `LP_COLOR_CHARGING_ABOVE` or `LP_COLOR_DISCHARGING_ABOVE` color.
+# Type: int
+# More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_BATTERY_THRESHOLD
+#LP_BATTERY_THRESHOLD=75
 
-# Ring the terminal bell if the runtime of the previous command exceeded
-# LP_RUNTIME_BELL_THRESHOLD
-# Recommended value is 0
-LP_ENABLE_RUNTIME_BELL=0
+# Control the numbers of decimals when displaying the absolute available space
+# of the current hard drive. If set to 0, don't display decimals. If set to 1
+# or 2, display decimals.
+# Type: int
+# More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_DISK_PRECISION
+#LP_DISK_PRECISION=2
 
-# Minimal runtime (in seconds) before the terminal bell will be rung.
-# Recommended value is 10
-LP_RUNTIME_BELL_THRESHOLD=10
+# Display something if the available space on the hard drive hosting the
+# current directory goes below this absolute threshold *in kilobytes*.
+# Type: int
+# More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_DISK_THRESHOLD
+#LP_DISK_THRESHOLD=100000
 
-# Display the virtualenv that is currently activated, if any
-# Recommended value is 1
-LP_ENABLE_VIRTUALENV=1
-LP_ENABLE_NVM=1
+# Display something if the available space on the hard drive hosting the
+# current directory goes below this percentage.
+# Type: int
+# More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_DISK_THRESHOLD_PERC
+#LP_DISK_THRESHOLD_PERC=10
 
-# Display the ruby virtual env that is currently activated, if any
-# Recommended value is 1
-LP_ENABLE_RUBY_VENV=1
+# The value for load average per CPU to display with the max color scaling.
+# Values above this number will still be displayed, but the colors will not
+# increase in intensity.
+# Type: float
+# More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_LOAD_CAP
+#LP_LOAD_CAP=2.0
 
-# If using RVM, personalize the rvm-prompt.
-# see http://rvm.io/workflow/prompt for details.
-# Warning, this variable must be a shell array.
-LP_RUBY_RVM_PROMPT_OPTIONS=(i v g s)
+# Display the load average per CPU when above this threshold. For historical
+# reasons, this number must have a decimal point ('.'), or it will be treated
+# as a percentage.
+# Type: float
+# More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_LOAD_THRESHOLD
+#LP_LOAD_THRESHOLD=0.60
 
-# Display the terraform workspace that is currently activated, if any
-# Recommended value is 0
-LP_ENABLE_TERRAFORM=0
+# Control the numbers of decimals when displaying the absolute available space
+# of the current system RAM. If set to 0, don't display decimals. If set to 1
+# or 2, display decimals.
+# Type: int
+# More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_RAM_PRECISION
+#LP_RAM_PRECISION=2
 
-# Display the enabled software collections, if any
-# Recommended value is 1
-LP_ENABLE_SCLS=1
+# Display something if the available RAM space goes below this absolute
+# threshold *in kilobytes*.
+# Type: int
+# More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_RAM_THRESHOLD
+#LP_RAM_THRESHOLD=100000
 
-# Show current Kubernetes kubectl context
-LP_ENABLE_KUBECONTEXT=0
+# Display something if the available RAM space goes below this percentage.
+# Type: int
+# More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_RAM_THRESHOLD_PERC
+#LP_RAM_THRESHOLD_PERC=10
 
-# Delimiter to shorten kubectl context by removing a suffix.
-# E.g. when your context names are dev-cluster and test-cluster, set to "-"
-# in order to output "dev" and "test" in prompt.
-LP_DELIMITER_KUBECONTEXT_SUFFIX=
+# Time in seconds that a command must run longer than for its runtime to be
+# displayed.
+# Type: int
+# More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_RUNTIME_THRESHOLD
+#LP_RUNTIME_THRESHOLD=2
 
-# Delimiter to shorten kubectl context by removing a prefix.
-# E.g. when your context names are like
-# arn:aws:eks:$REGION:$ACCOUNT_ID:cluster/$CLUSTER_NAME, set to "/"
-# in order to output "$CLUSTER_NAME" in prompt.
-LP_DELIMITER_KUBECONTEXT_PREFIX=
+# Time in seconds that a command must run longer than for the terminal bell to
+# be rung.
+# Type: int
+# More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_RUNTIME_BELL_THRESHOLD
+#LP_RUNTIME_BELL_THRESHOLD=10
 
-# Display the current active AWS_PROFILE, if any
-# Recommended value is 1
-LP_ENABLE_AWS_PROFILE=1
+# Display the highest system temperature when the temperature is above this
+# threshold (in degrees Celsius).
+# Type: int
+# More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_TEMP_THRESHOLD
+#LP_TEMP_THRESHOLD=60
 
-# Show highest system temperature
-LP_ENABLE_TEMP=1
+# Display the lowest wireless signal strength when the strength percentage is
+# below this threshold.
+# Type: int
+# More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_WIFI_STRENGTH_THRESHOLD
+#LP_WIFI_STRENGTH_THRESHOLD=40
 
-# When showing the time, use an analog clock instead of numeric values.
-# Recommended value is 0
-LP_TIME_ANALOG=0
+# Mark used for battery display when charging.
+# Type: string
+# More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_MARK_ADAPTER
+#LP_MARK_ADAPTER="⏚"
 
-# Use the prompt as the title of the terminal window
-# Recommended value is 0
-LP_ENABLE_TITLE=1
+# Mark used for battery display when on battery power.
+# Type: string
+# More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_MARK_BATTERY
+#LP_MARK_BATTERY="⌁"
 
-# Enable Title for screen, byobu, and tmux
-LP_ENABLE_SCREEN_TITLE=1
+# Mark used for closing core prompt brackets. Used by the default theme for
+# enclosing user, host, and current working directory sections.
+# Type: string
+# More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_MARK_BRACKET_CLOSE
+#LP_MARK_BRACKET_CLOSE="]"
 
-# Use different colors for the different hosts you SSH to
-LP_ENABLE_SSH_COLORS=1
+# Mark used for opening core prompt brackets. Used by the default theme for
+# enclosing user, host, and current working directory sections.
+# Type: string
+# More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_MARK_BRACKET_OPEN
+#LP_MARK_BRACKET_OPEN="["
 
-# Show the error code of the last command if it was not 0
-LP_ENABLE_ERROR=1
+# Mark used instead of `LP_MARK_DEFAULT` to indicate that the current
+# directory is inside of a Bazaar repository.
+# Type: string
+# More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_MARK_BZR
+#LP_MARK_BZR="⚯"
 
-# Specify an array of absolute paths in which all vcs will be disabled.
-# Ex: ("/root" "/home/me/large-remove-svn-repo")
-LP_DISABLED_VCS_PATHS=(~/src/integration)
+# Separator used for fields of `LP_ENABLE_CMAKE`.
+# Type: string
+# More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_MARK_CMAKE
+#LP_MARK_CMAKE=":"
 
-# Use a local liquidpromptrc if it exists.
-# Can be helpful if you sync your primary config across machines, or if
-# there's a system-wide config at /etc/liquidpromptrc from which you'd
-# like to make only minor deviations.
-#LOCAL_RCFILE=$HOME/.liquidpromptrc.local
-#[ -f "$LOCAL_RCFILE" ] && source "$LOCAL_RCFILE"
+# Mark used to indicate that the prompt is ready for user input, unless some
+# other context overrides it, like a VCS repository.
+# Type: string
+# More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_MARK_DEFAULT
+#LP_MARK_DEFAULT="$" (Bash) or "%" (Zsh)
 
-LP_ENABLE_CONTAINER=1
-LP_ENABLE_SHLVL=0
-LP_ENABLE_TITLE_COMMAND=1
-LP_PATH_METHOD=truncate_chars_to_unique_dir
-LP_COLOR_PATH_VCS_ROOT=$BOLD_PURPLE
+# Closing of the "development tools" section.
+# Type: string
+# More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_MARK_DEV_CLOSE
+#LP_MARK_DEV_CLOSE=">"
 
+# Separator between elements of the "development tools" section.
+# Type: string
+# More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_MARK_DEV_MID
+#LP_MARK_DEV_MID="|"
 
-# vim: set et sts=4 sw=4 tw=120 ft=sh:
+# Opening of the "development tools" section.
+# Type: string
+# More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_MARK_DEV_OPEN
+#LP_MARK_DEV_OPEN="<"
+
+# Mark used to indicate the size of the directory stack.
+# Type: string
+# More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_MARK_DIRSTACK
+#LP_MARK_DIRSTACK="⚞"
+
+# Mark used instead of `LP_MARK_DEFAULT` to indicate that the current
+# directory is disabled for VCS display through `LP_DISABLED_VCS_PATHS`.
+# Type: string
+# More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_MARK_DISABLED
+#LP_MARK_DISABLED="⌀"
+
+# Mark used to indicate that the available disk space is too low.
+# See `LP_ENABLE_DISK`.
+# Type: string
+# More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_MARK_DISK
+#LP_MARK_DISK="🖴 "
+
+# Mark used to start the user-defined environment variables watch list.
+# Type: string
+# More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_MARK_ENV_VARS_OPEN
+#LP_MARK_ENV_VARS_OPEN="("
+
+# Mark used to separate items of the user-defined
+# environment variables watch list.
+# Type: string
+# More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_MARK_ENV_VARS_SEP
+#LP_MARK_ENV_VARS_SEP=" "
+
+# Mark used to end the user-defined environment variables watch list.
+# Type: string
+# More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_MARK_ENV_VARS_CLOSE
+#LP_MARK_ENV_VARS_CLOSE=")"
+
+# Mark used instead of `LP_MARK_DEFAULT` to indicate that the current
+# directory is inside of a Fossil repository.
+# Type: string
+# More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_MARK_FOSSIL
+#LP_MARK_FOSSIL="⌘"
+
+# Mark used instead of `LP_MARK_DEFAULT` to indicate that the current
+# directory is inside of a Git repository.
+# Type: string
+# More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_MARK_GIT
+#LP_MARK_GIT="±"
+
+# Mark used instead of `LP_MARK_DEFAULT` to indicate that the current
+# directory is inside of a Mercurial repository.
+# Type: string
+# More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_MARK_HG
+#LP_MARK_HG="☿"
+
+# Mark used to separate elements of `LP_JOBS`.
+# Type: string
+# More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_MARK_JOBS_SEPARATOR
+#LP_MARK_JOBS_SEPARATOR="/"
+
+# Mark used to prefix the current Kubernetes context.
+# Type: string
+# More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_MARK_KUBECONTEXT
+#LP_MARK_KUBECONTEXT="⎈"
+
+# Mark used before displaying load average.
+# Type: string
+# More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_MARK_LOAD
+#LP_MARK_LOAD="⌂"
+
+# Mark used before displaying loaded modules.
+# Type: string
+# More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_MARK_MODULES_OPEN
+#LP_MARK_MODULES_OPEN=""
+
+# Mark used after displaying loaded modules.
+# Type: string
+# More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_MARK_MODULES_CLOSE
+#LP_MARK_MODULES_CLOSE=""
+
+# Mark used between loaded modules.
+# Type: string
+# More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_MARK_MODULES_SEP
+#LP_MARK_MODULES_SEP=":"
+
+# Mark used for closing core prompt brackets. Used by the default theme when
+# inside of a multiplexer.
+# Type: string
+# More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_MARK_MULTIPLEXER_CLOSE
+#LP_MARK_MULTIPLEXER_CLOSE=$LP_MARK_BRACKET_CLOSE
+
+# Mark used for opening core prompt brackets. Used by the default theme when
+# inside of a multiplexer.
+# Type: string
+# More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_MARK_MULTIPLEXER_OPEN
+#LP_MARK_MULTIPLEXER_OPEN=$LP_MARK_BRACKET_OPEN
+
+# A list of pair of strings to be replaced by another string
+# when displaying information about the OS.
+# Type: array<string>
+# More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_MARK_OS
+#LP_MARK_OS=()
+
+# The character used to separate items of the OS section.
+# Type: string
+# More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_MARK_OS_SEP
+#LP_MARK_OS_SEP="/"
+
+# Mark used by default separate hostname and current working directory, and is
+# colored to indicate user permissions on the current directory.
+# Type: string
+# More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_MARK_PERM
+#LP_MARK_PERM=":"
+
+# Mark used to indicate a proxy is active.
+# Type: string
+# More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_MARK_PROXY
+#LP_MARK_PROXY="↥"
+
+# Mark used before displaying available Random Access Memory.
+# See `LP_ENABLE_RAM`.
+# Type: string
+# More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_MARK_RAM
+#LP_MARK_RAM=M
+
+# Mark used to indicate the shell is inside another shell.
+# Type: string
+# More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_MARK_SHLVL
+#LP_MARK_SHLVL="└"
+
+# Mark used to indicate a portion of the path was hidden to save space. Not all
+# shortening methods use this mark, some only use
+# `LP_COLOR_PATH_SHORTENED`.
+# Type: string
+# More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_MARK_SHORTEN_PATH
+#LP_MARK_SHORTEN_PATH=" … "
+
+# Mark used to indicate at least one stash or shelve exists in the current
+# repository.
+# Type: string
+# More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_MARK_STASH
+#LP_MARK_STASH="+"
+
+# Mark used instead of `LP_MARK_DEFAULT` to indicate that the current
+# directory is inside of a Subversion repository.
+# Type: string
+# More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_MARK_SVN
+#LP_MARK_SVN="‡"
+
+# Mark used before displaying temperature.
+# Type: string
+# More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_MARK_TEMP
+#LP_MARK_TEMP="θ"
+
+# Mark used to indicate untracked or extra files exist in the current
+# repository.
+# Type: string
+# More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_MARK_UNTRACKED
+#LP_MARK_UNTRACKED="*"
+
+# Mark used to indicate the VCS remote repository name and status.
+# Type: string
+# More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_MARK_VCS_REMOTE
+#LP_MARK_VCS_REMOTE="⭚"
+
+# Mark used instead of `LP_MARK_DEFAULT` to indicate that the current
+# directory is inside of a `VCSH <https://github.com/RichiH/vcsh>`_ repository.
+# Type: string
+# More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_MARK_VCSH
+#LP_MARK_VCSH="|"
+
+# Mark used before displaying wireless signal strength.
+# Type: string
+# More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_MARK_WIFI
+#LP_MARK_WIFI="📶"
+
+# Color used to display the current active AWS Profile.
+# Type: string
+# More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_COLOR_AWS_PROFILE
+#LP_COLOR_AWS_PROFILE=$YELLOW
+
+# Color used to indicate that the current repository is not clean, or in other
+# words, has changes that have not been committed.
+# Type: string
+# More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_COLOR_CHANGES
+#LP_COLOR_CHANGES=$RED
+
+# Color used to indicate that the battery is charging and above the
+# `LP_BATTERY_THRESHOLD`.
+# Type: string
+# More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_COLOR_CHARGING_ABOVE
+#LP_COLOR_CHARGING_ABOVE=$GREEN
+
+# Color used to indicate that the battery is charging and under the
+# `LP_BATTERY_THRESHOLD`.
+# Type: string
+# More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_COLOR_CHARGING_UNDER
+#LP_COLOR_CHARGING_UNDER=$YELLOW
+
+# Color used to display the build type in the CMake segment.
+# Type: string
+# More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_COLOR_CMAKE_BUILD
+#LP_COLOR_CMAKE_BUILD=$MAGENTA
+
+# Color used to display the C compiler in the CMake segment.
+# Type: string
+# More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_COLOR_CMAKE_C
+#LP_COLOR_CMAKE_C=$MAGENTA
+
+# Color used to display the C++ compiler in the CMake segment.
+# Type: string
+# More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_COLOR_CMAKE_CXX
+#LP_COLOR_CMAKE_CXX=$MAGENTA
+
+# Color for the *Debug* build type of the CMake section.
+# Type: string
+# More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_COLOR_CMAKE_DEBUG
+#LP_COLOR_CMAKE_DEBUG=$MAGENTA
+
+# Color for the *RelWithDebInfo* build type of the CMake section.
+# Type: string
+# More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_COLOR_CMAKE_RWDI
+#LP_COLOR_CMAKE_RWDI=$BLUE
+
+# Color for the *Release* build type of the CMake section.
+# Type: string
+# More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_COLOR_CMAKE_RELEASE
+#LP_COLOR_CMAKE_RELEASE=$CYAN
+
+# Color used to indicate that the current repository has a remote tracking
+# branch that has commits that the local branch does not.
+# Type: string
+# More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_COLOR_COMMITS_BEHIND
+#LP_COLOR_COMMITS_BEHIND=$BOLD_RED
+
+# Color used to indicate that the current repository has commits on the local
+# branch that the remote tracking branch does not.
+# Type: string
+# More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_COLOR_COMMITS
+#LP_COLOR_COMMITS=$YELLOW
+
+# Color used to indicate that the current shell is running in a container.
+# Type: string
+# More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_COLOR_CONTAINER
+#LP_COLOR_CONTAINER=$BOLD_BLUE
+
+# Color used to indicate that the current repository has lines that have been
+# changed since the last commit.
+# Type: string
+# More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_COLOR_DIFF
+#LP_COLOR_DIFF=$PURPLE
+
+# Color used to indicate the size of the directory stack.
+# Type: string
+# More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_COLOR_DIRSTACK
+#LP_COLOR_DIRSTACK=$BOLD_YELLOW
+
+# Color used to indicate that the battery is discharging and above the
+# `LP_BATTERY_THRESHOLD`.
+# Type: string
+# More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_COLOR_DISCHARGING_ABOVE
+#LP_COLOR_DISCHARGING_ABOVE=$YELLOW
+
+# Color used to indicate that the battery is discharging and above the
+# `LP_BATTERY_THRESHOLD`.
+# Type: string
+# More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_COLOR_DISCHARGING_UNDER
+#LP_COLOR_DISCHARGING_UNDER=$RED
+
+# Color used for displaying information about the hard drive hosting the
+# current directory.
+# Type: string
+# More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_COLOR_DISK
+#LP_COLOR_DISK=$BOLD_RED
+
+# Color used for displaying the unit of the available space on the hard drive
+# hosting the current directory.
+# Type: string
+# More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_COLOR_DISK_UNITS
+#LP_COLOR_DISK_UNITS=$RED
+
+# Color used to indicate the last command exited with a non-zero return code.
+# Type: string
+# More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_COLOR_ERR
+#LP_COLOR_ERR=$PURPLE
+
+# Color of the environment variables that are set,
+# in the user-defined watch list.
+# Type: string
+# More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_COLOR_ENV_VARS_SET
+#LP_COLOR_ENV_VARS_SET=$BOLD_BLUE
+
+# Color of the environment variables that are unset,
+# in the user-defined watch list.
+# Type: string
+# More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_COLOR_ENV_VARS_UNSET
+#LP_COLOR_ENV_VARS_UNSET=$BLUE
+
+# Color used for the hostname when connected locally.
+# Type: string
+# More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_COLOR_HOST
+#LP_COLOR_HOST=""
+
+# Color used for `LP_MARK_MULTIPLEXER_OPEN` and
+# `LP_MARK_MULTIPLEXER_CLOSE` if the terminal is in a multiplexer.
+# Type: string
+# More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_COLOR_IN_MULTIPLEXER
+#LP_COLOR_IN_MULTIPLEXER=$BOLD_BLUE
+
+# Color used for detached multiplexer sessions.
+# Type: string
+# More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_COLOR_JOB_D
+#LP_COLOR_JOB_D=$YELLOW
+
+# Color used for running shell jobs.
+# Type: string
+# More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_COLOR_JOB_R
+#LP_COLOR_JOB_R=$BOLD_YELLOW
+
+# Color used for sleeping shell jobs.
+# Type: string
+# More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_COLOR_JOB_Z
+#LP_COLOR_JOB_Z=$BOLD_YELLOW
+
+# Color used for the current Kubernetes context.
+# Type: string
+# More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_COLOR_KUBECONTEXT
+#LP_COLOR_KUBECONTEXT=$CYAN
+
+# Color used for `LP_MARK_DEFAULT`.
+# Type: string
+# More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_COLOR_MARK
+#LP_COLOR_MARK=$BOLD
+
+# Color used for `LP_MARK_DEFAULT` when the current user is root, shown
+# instead of `LP_COLOR_MARK`.
+# Type: string
+# More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_COLOR_MARK_ROOT
+#LP_COLOR_MARK_ROOT=$BOLD_RED
+
+# Color used for `LP_MARK_DEFAULT` when `sudo` is active, shown instead
+# of `LP_COLOR_MARK`.
+# Type: string
+# More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_COLOR_MARK_SUDO
+#LP_COLOR_MARK_SUDO=$LP_COLOR_MARK_ROOT
+
+# Color used for displaying currently loaded modules
+# (if `LP_ENABLE_MODULES_HASHCOLOR` is disabled).
+# Type: string
+# More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_COLOR_MODULES
+#LP_COLOR_MODULES=$BLUE
+
+# Color used for displaying a Node.js virtual environment.
+# Type: string
+# More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_COLOR_NODE_VENV
+#LP_COLOR_NODE_VENV=$LP_COLOR_VIRTUALENV
+
+# Color used for `LP_MARK_PERM` when the user does not have write
+# permissions to the current working directory.
+# Type: string
+# More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_COLOR_NOWRITE
+#LP_COLOR_NOWRITE=$RED
+
+# Color used for OS' architecture (e.g. "x86_64", "i686"…).
+# Type: string
+# More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_COLOR_OS_ARCH
+#LP_COLOR_OS_ARCH=$MAGENTA
+
+# Color used for OS' distribution (e.g. "Ubuntu", "Debian"…).
+# Type: string
+# More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_COLOR_OS_DISTRIB
+#LP_COLOR_OS_DISTRIB=$MAGENTA
+
+# Color used for OS' family (e.g. "BSD", "GNU"…).
+# Type: string
+# More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_COLOR_OS_FAMILY
+#LP_COLOR_OS_FAMILY=$MAGENTA
+
+# Color used for OS' kernel (e.g. "Linux", "MinGW"…).
+# Type: string
+# More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_COLOR_OS_KERNEL
+#LP_COLOR_OS_KERNEL=$MAGENTA
+
+# Color used for OS' version codename (e.g. "focal", "buster"…).
+# Type: string
+# More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_COLOR_OS_VERSION
+#LP_COLOR_OS_VERSION=$MAGENTA
+
+# Color used for the current working directory.
+# Type: string
+# More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_COLOR_PATH
+#LP_COLOR_PATH=""
+
+# Color used for the last path segment, which corresponds to the current
+# directory basename.
+# Type: string
+# More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_COLOR_PATH_LAST_DIR
+#LP_COLOR_PATH_LAST_DIR=$BOLD
+
+# Color used in place of `LP_COLOR_PATH` when the current user is root.
+# Type: string
+# More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_COLOR_PATH_ROOT
+#LP_COLOR_PATH_ROOT=$BOLD_YELLOW
+
+# Color used for the separator ('/') between path segments. If set to the empty
+# string, the separator will take the format of the path segment before it.
+# Type: string
+# More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_COLOR_PATH_SEPARATOR
+#LP_COLOR_PATH_SEPARATOR=lp_terminal_format 8 -1 0 0 -1  # Grey
+
+# Color used for path segments that have been shortened.
+# Type: string
+# More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_COLOR_PATH_SHORTENED
+#LP_COLOR_PATH_SHORTENED=lp_terminal_format 8 -1 0 0 -1  # Grey
+
+# Color used for the path segment corresponding to the current VCS repository
+# root directory.
+# Type: string
+# More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_COLOR_PATH_VCS_ROOT
+#LP_COLOR_PATH_VCS_ROOT=$BOLD
+
+# Color used for `LP_MARK_PROXY`.
+# Type: string
+# More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_COLOR_PROXY
+#LP_COLOR_PROXY=$BOLD_BLUE
+
+# Color used for displaying information about the available RAM.
+# Type: string
+# More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_COLOR_RAM
+#LP_COLOR_RAM=$BOLD_RED
+
+# Color used for displaying the unit of the available RAM.
+# Type: string
+# More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_COLOR_RAM_UNITS
+#LP_COLOR_RAM_UNITS=$RED
+
+# Color used for displaying a Ruby virtual environment.
+# Type: string
+# More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_COLOR_RUBY_VENV
+#LP_COLOR_RUBY_VENV=$LP_COLOR_VIRTUALENV
+
+# Color used for displaying the last command runtime.
+# Type: string
+# More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_COLOR_RUNTIME
+#LP_COLOR_RUNTIME=$YELLOW
+
+# Color used for displaying the nested shell level.
+# Type: string
+# More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_COLOR_SHLVL
+#LP_COLOR_SHLVL=$BOLD_GREEN
+
+# Color used for displaying the hostname when connected with SSH.
+# Type: string
+# More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_COLOR_SSH
+#LP_COLOR_SSH=$BLUE
+
+# Color used for displaying the hostname when running under `su` or `sudo`.
+# Type: string
+# More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_COLOR_SU
+#LP_COLOR_SU=$BOLD_YELLOW
+
+# Color used for displaying the hostname when connected with Telnet.
+# Type: string
+# More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_COLOR_TELNET
+#LP_COLOR_TELNET=$WARN_RED
+
+# Color used for displaying a Terraform workspace.
+# Type: string
+# More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_COLOR_TERRAFORM
+#LP_COLOR_TERRAFORM=$PINK
+
+# Color used for displaying the current time.
+# Type: string
+# More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_COLOR_TIME
+#LP_COLOR_TIME=$BLUE
+
+# Color used to indicate that the current repository is up-to-date and no
+# commits differ from the remote tracking branch.
+# Type: string
+# More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_COLOR_UP
+#LP_COLOR_UP=$GREEN
+
+# Color used for displaying the username when running as a different user than
+# the login user.
+# Type: string
+# More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_COLOR_USER_ALT
+#LP_COLOR_USER_ALT=$BOLD
+
+# Color used for displaying the username when running as the login user.
+# Type: string
+# More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_COLOR_USER_LOGGED
+#LP_COLOR_USER_LOGGED=""
+
+# Color used for displaying the username when running as root.
+# Type: string
+# More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_COLOR_USER_ROOT
+#LP_COLOR_USER_ROOT=$BOLD_YELLOW
+
+# Color used for displaying a Python virtual environment or Red Hat Software
+# Collection.
+# Type: string
+# More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_COLOR_VIRTUALENV
+#LP_COLOR_VIRTUALENV=$CYAN
+
+# Color used for `LP_MARK_PERM` when the user has write permissions to
+# the current working directory.
+# Type: string
+# More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_COLOR_WRITE
+#LP_COLOR_WRITE=$GREEN
+
+# Color used for indicating that a display is not connected.
+# Type: string
+# More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_COLOR_X11_OFF
+#LP_COLOR_X11_OFF=$YELLOW
+
+# Color used for indicating that a display is connected.
+# Type: string
+# More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_COLOR_X11_ON
+#LP_COLOR_X11_ON=$GREEN
