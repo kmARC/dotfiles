@@ -135,18 +135,16 @@ git-recursive-pull() {
 }
 
 if command -v kubectl >/dev/null; then
-  source <(kubectl completion bash)
-  complete -o default -F __start_kubectl kubectl
-
   alias k=kubectl
 
-  if command -v kubecolor >/dev/null; then
-    function kubecolor() { if [ -n "${KUBECTL_NAMESPACE:-}" ]; then command kubecolor -n ${KUBECTL_NAMESPACE:-default} "$@"; else command kubecolor "$@"; fi }
-    export -f kubecolor
-    alias k=kubecolor
-    complete -o default -F __start_kubectl kubecolor
+  if [[ $OSTYPE != 'darwin'* ]]; then
+    _completion_loader kubectl
   fi
   complete -o default -F __start_kubectl k
+
+  if command -v kubecolor >/dev/null; then
+    alias k=kubecolor
+  fi
 fi
 
 
@@ -192,7 +190,8 @@ fi
 if [[ -z $DISPLAY ]] && [[ $(tty) = /dev/tty1 ]]; then
   eval $(gnome-keyring-daemon --start)
   export SSH_AUTH_SOCK
-  XKB_DEFAULT_LAYOUT=us exec sway
+  # XKB_DEFAULT_LAYOUT=us exec sway
+  exec startplasma-wayland
 fi
 
 if [ -f "$HOME"/.bashrc.local ]; then
@@ -219,8 +218,8 @@ fi
 ###############
 if [[ $OSTYPE == 'darwin'* ]]; then
   if [[ "$(defaults read -g AppleInterfaceStyle 2>/dev/null)" == "Dark" ]]; then
-    sed --follow-symlinks -i "s/\\(&colorscheme.*\\)light\\(.*\\)/\1dark\2/g" "$HOME/.config/alacritty.yml"
+    sed --follow-symlinks -i 's/\(alacritty\.\)light\(\.toml\)/\1dark\2/g' "$HOME/.config/alacritty.toml"
   else
-    sed --follow-symlinks -i "s/\\(&colorscheme.*\\)dark\\(.*\\)/\1light\2/g" "$HOME/.config/alacritty.yml"
+    sed --follow-symlinks -i 's/\(alacritty\.\)dark\(\.toml\)/\1light\2/g' "$HOME/.config/alacritty.toml"
   fi
 fi

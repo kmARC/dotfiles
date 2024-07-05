@@ -13,6 +13,7 @@ Plug 'tpope/vim-obsession'
 Plug 'tpope/vim-unimpaired'
 Plug 'preservim/nerdtree'
 Plug 'will133/vim-dirdiff'
+Plug 'Exafunction/codeium.vim'
 "--- Editing ---
 Plug 'Raimondi/delimitMate'
 Plug 'godlygeek/tabular'            , {'on': 'Tabularize'}
@@ -102,7 +103,7 @@ Plug 'jamessan/vim-gnupg'
 if filereadable('~/.vimrc.plugs')
   source ~/.vimrc.plugs
 endif
-packadd termdebug
+" packadd termdebug
 Plug 'kmARC/fugitive-gerrit.vim'
 Plug 'kmARC/asyncomplete-bazel'
 Plug 'kmARC/vim-basler'
@@ -721,8 +722,9 @@ augroup autocommands
     \ | hi VertSplit                       guibg=NONE
     \ | hi LineNr                          guibg=NONE
     \ | hi SignColumn                      guibg=NONE
-    \ | hi link javaFunction Text
-    \ | hi link javaString   Special
+    \ | hi link javaFunction      Text
+    \ | hi link javaString        Special
+    \ | hi link lspInlayHintsType Comment
     \ | hi ALEVirtualTextError             ctermfg=1 gui=italic cterm=italic
     \ | hi ALEVirtualTextWarning           ctermfg=3 gui=italic cterm=italic
     \ | hi ALEVirtualTextInfo              ctermfg=6 gui=italic cterm=italic

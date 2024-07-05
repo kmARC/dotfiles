@@ -1,10 +1,10 @@
 if has('gui_running')
     if has('gui_macvim')
-      set guifont=FiraCodeRoman-Medium:h12
+      set guifont=FiraCode-Medium:h12
+      set linespace=-2
     else
       set guifont=Fira\ Code\ Medium\ 10
     endif
 
     set guioptions=agit
-    set linespace=1
 endif

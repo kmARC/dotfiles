@@ -29,3 +29,4 @@ mods = "Command"
 dynamic_title = true
 dynamic_padding = true
 resize_increments = true
+option_as_alt = "OnlyLeft"
