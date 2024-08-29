@@ -10,6 +10,7 @@ set trash      = +Trash
 set ssl_starttls   = no
 set ssl_force_tls  = no
 set smtp_pass      = "`~/bin/mutt_helpers.sh smtp_pass owa '$from'`"
+set smtp_user      = "`~/bin/mutt_helpers.sh smtp_user owa '$from'`"
 # set smtp_url       = "<see muttrc.local>"
 
 # Addressbook

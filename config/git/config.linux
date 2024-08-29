@@ -1,4 +1,4 @@
 [credential]
-  helper = git-credential-libsecret
+  helper = /usr/libexec/git-core/git-credential-libsecret
 
 # vim: set ft=gitconfig:

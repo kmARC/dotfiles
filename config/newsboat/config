@@ -4,7 +4,7 @@ always-display-description yes
 auto-reload                yes
 bookmark-autopilot         yes
 bookmark-cmd               "printf '%s\t%s\t%s\t%s\n' >> $HOME/Documents/Notes/bookmarks.txt"
-browser                    "xdg-open %u"
+browser                    "open %u"
 download-full-page         yes
 feed-sort-order            lastupdated
 notify-always              yes
@@ -44,7 +44,7 @@ highlight feedlist    "[N ]*\\([0-9/]+\\) "      white
 highlight articlelist "^[0-9 ]{4} "              green
 highlight articlelist "\\(([0-9 ]{2}[0-9]\.?|[0-9]\\.[0-9]K|[ 0-9]{2}\\.[0-9])\\) " white
 
-macro o set browser "mpv %u"        ; open-in-browser ; set browser "xdg-open %u"
-macro d set browser "youtube-dl %u" ; open-in-browser ; set browser "xdg-open %u"
+macro o set browser "mpv %u"        ; open-in-browser ; set browser "open %u"
+macro d set browser "youtube-dl %u" ; open-in-browser ; set browser "open %u"
 
 # vim: set ft=conf:

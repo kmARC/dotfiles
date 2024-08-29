@@ -46,6 +46,10 @@ else
   source /usr/local/share/fzf/shell/completion.bash
 fi
 
+if [ -f "$HOME/.local/opt/fzf-git/fzf-git.sh" ]; then
+  source "$HOME/.local/opt/fzf-git/fzf-git.sh"
+fi
+
 ###################
 #  NODE.JS - NVM  #
 ###################
@@ -124,8 +128,6 @@ alias diff='diff --color=auto'
 alias grep='grep --color=auto'
 alias mutt='neomutt'
 alias sudo='sudo '
-alias htop='TERM=xterm-256color htop'
-alias ssh='TERM=xterm-256color ssh'
 alias monerod="monerod --data-dir ${XDG_DATA_HOME}/bitmonero"
 
 git-recursive-pull() {
@@ -211,6 +213,28 @@ if [[ $OSTYPE == 'darwin'* ]]; then
     export PATH="$HOMEBREW_PREFIX/opt/$tool/libexec/gnubin:$PATH"
   done
 fi
+
+
+function git-worktree() {
+  if [ ${#*} -lt 2 ]; then
+    2>&1 echo "Usage: git-worktree JIRA-NNN short-name"
+    return 1
+  fi
+  local ticket orig_branch new_branch
+  ticket="$1"
+  new_branch=$2
+  orig_branch="$(git rev-parse --abbrev-ref HEAD)"
+  new_dir=../"$(basename "$PWD")"-"$new_branch"
+  git fetch origin "$orig_branch"
+  git worktree add "$new_dir" -B "$USER/$ticket-$new_branch"
+  if [ -f .envrc ]; then
+    cp .envrc "$new_dir/.envrc"
+    direnv allow "$new_dir"
+  fi
+  if [ -f user.bazelrc ]; then
+    cp user.bazelrc "$new_dir/user.bazelrc"
+  fi
+}
 
 
 ###############

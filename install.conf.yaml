@@ -98,6 +98,8 @@
       path: config/rtorrent/rtorrent.rc
     $XDG_DATA_HOME/terminfo:
       path: local/share/terminfo
+    $HOME/.local/opt/fzf-git:
+      path: local/opt/fzf-git
     $XDG_CONFIG_HOME/tmux/tmux.conf:
       path: config/tmux/tmux.conf
     $XDG_CONFIG_HOME/tmux/fix-ssh.sh:

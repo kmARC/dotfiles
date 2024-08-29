@@ -25,6 +25,12 @@ function smtp_pass() {
   _query_keychain "$kind"-pass "$from"
 }
 
+function smtp_user() {
+  local kind="$1"
+  local from="$2"
+  _query_keychain "$kind"-username "$from" | sed 's#\\\\#\\#g'
+}
+
 function query_command() {
   local kind="$1"
   local from="$2"

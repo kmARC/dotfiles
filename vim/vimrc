@@ -13,7 +13,9 @@ Plug 'tpope/vim-obsession'
 Plug 'tpope/vim-unimpaired'
 Plug 'preservim/nerdtree'
 Plug 'will133/vim-dirdiff'
-Plug 'Exafunction/codeium.vim'
+Plug 'Exafunction/codeium.vim', { 'tag': '1.8.49' }
+Plug 'madox2/vim-ai'
+Plug 'dense-analysis/neural'
 "--- Editing ---
 Plug 'Raimondi/delimitMate'
 Plug 'godlygeek/tabular'            , {'on': 'Tabularize'}
@@ -57,7 +59,7 @@ Plug 'micchy326/lightline-lsp-progress'
 Plug 'mikelue/vim-maven-plugin'     , {'for': 'java'}
 Plug 'udalov/javap-vim'
 Plug 'uiiaoo/java-syntax.vim'
-Plug 'udalov/kotlin-vim'
+" Plug 'udalov/kotlin-vim'
 "--- CPP ---
 Plug 'bfrg/vim-cpp-modern'
 Plug 'alepez/vim-gtest'
@@ -100,7 +102,7 @@ Plug 'ojroques/vim-oscyank'
 Plug 'micchy326/lightline-lsp-progress'
 Plug 'jamessan/vim-gnupg'
 "--- Local plugins, if any
-if filereadable('~/.vimrc.plugs')
+if filereadable(expand('~/.vimrc.plugs'))
   source ~/.vimrc.plugs
 endif
 " packadd termdebug
@@ -338,7 +340,10 @@ let g:UltiSnipsEditSplit = 'vertical'
 let g:UltiSnipsExpandTrigger = '<c-j>'
 let g:UltiSnipsListSnippets = '<c-h>'
 let g:UltiSnipsSnippetsDir = '~/.vim/UltiSnips'
+let g:ale_detail_to_floating_preview=0
 let g:ale_fix_on_save = 1
+let g:ale_linters_ignore = ['clangtidy', 'cc']
+" -- ALE language-dependent
 let g:ale_fixers = {} " {{{
 let g:ale_fixers['bzl'] = ['buildifier']
 let g:ale_fixers['cpp'] = ['clangtidy', 'clang-format']
@@ -356,18 +361,12 @@ let g:ale_linters['starlark'] = ['buildifier']
 let g:ale_linters['text'] = ['languagetool']
 let g:ale_linters['cpp'] = ['cc']
 " }}}
-let g:ale_linters_ignore = ['clangtidy', 'cc']
-let g:ale_languagetool_options = '--language en-US'
-let g:ale_sh_shellcheck_options = '--external-sources'
-" let g:ale_python_pylint_change_directory = 0
-" let g:ale_lint_delay = 2000
-" let g:ale_disable_lsp = 1
-" let g:ale_virtualtext_delay = 2000
-" let g:ale_virtualtext_cursor = 'current'
 let g:ale_awk_gawk_options = '--lint=no-ext'
 let g:ale_c_parse_compile_commands = 0
-let g:ale_cpp_cc_options = environ()->get('CXXFLAGS', '')
 let g:ale_c_uncrustify_options = '-c ' . findfile('uncrustify.cfg', ';')
+let g:ale_cpp_cc_options = environ()->get('CXXFLAGS', '')
+let g:ale_languagetool_options = '--language en-US'
+let g:ale_sh_shellcheck_options = '--external-sources'
 let g:cpp_attributes_highlight = 1
 let g:cpp_member_highlight = 1
 let g:cpp_simple_highlight = 1
@@ -405,6 +404,9 @@ let g:lsp_semantic_enabled = 1
 let g:lsp_preview_fixup_conceal = 1
 " capabilities required for document_symbol_detail
 let g:lsp_settings = {
+      \ 'kotlin-language-server': {
+      \    'root_uri_patterns': ['pom.xml'],
+      \ },
       \ 'capabilities': {
       \     'textDocument': {
       \         'documentSymbol': {
@@ -429,6 +431,9 @@ let g:lsp_settings = {
       \      }
       \    }
       \ },
+      \ 'starpls': {
+      \     'args': ['server', '--experimental_infer_ctx_attributes']
+      \ },
       \}
 let g:lsp_work_done_progress_enabled = 1
 let g:lsp_use_native_client = 1
@@ -440,6 +445,7 @@ let g:netrw_browse_split = 4
 let g:netrw_home = s:dir_misc
 let g:netrw_liststyle = 0
 let g:netrw_winsize = -40
+let g:neural = {'source': { 'openai': {'api_key': readfile(expand('~/.config/openai.token'))[0],},},}
 let g:slime_paste_file = tempname()
 let g:sh_fold_enabled = 7
 let g:taboo_renamed_tab_format =' %N %l%m '
@@ -520,6 +526,8 @@ vnoremap <leader>t<bar>    :Tabularize /<bar>\+/l1c1<CR>
 
 nnoremap <leader>K         :DevdocsHelp <C-r><C-w><CR>
 
+nnoremap <leader>d         :echom strftime("%c", <C-r><C-w>)<CR>
+
 nnoremap <leader>1         1gt
 nnoremap <leader>2         2gt
 nnoremap <leader>3         3gt
@@ -546,6 +554,9 @@ nnoremap gk                k
 augroup filetypes
   autocmd!
 
+  autocmd FileType aichat
+    \   setlocal wrap
+
   autocmd FileType cpp
     \   nnoremap <silent> t<C-n> :GTestRunUnderCursor<CR>
     \ | nnoremap <silent> t<C-f> :GTestRun<CR>
@@ -558,7 +569,7 @@ augroup filetypes
     \   setlocal keywordprg=:DockerHelp
     \ | autocmd BufWritePost <buffer> normal! mD
 
-  autocmd FileType git
+  autocmd FileType git,gitcommit
     \   setlocal foldmethod=syntax
 
   autocmd FileType help
@@ -673,7 +684,11 @@ augroup autocommands
     \ |   nnoremap <buffer> t<C-g> :TestVisit<CR>
     \ | endif
 
-  autocmd BufEnter NERD_tree_* nnoremap <buffer> <F7> :q<CR>
+  autocmd BufReadPost *.bazelrc
+    \   setlocal filetype=conf
+
+  autocmd BufEnter NERD_tree_* 
+    \   nnoremap <buffer> <F7> :q<CR>
 
   autocmd BufWritePost ~/Documents/Home/index.md
     \   silent !pandoc --output ~/Documents/Home/index.html
@@ -742,6 +757,7 @@ augroup autocommands
 
   autocmd BufReadPost *.bzl 
     \   setlocal keywordprg=:DevdocsHelp
+
 augroup END
 " }}}
 
@@ -849,9 +865,26 @@ if $LOG == 'verbose'
   let g:lsp_log_verbose = 1
   let g:lsp_log_file = expand('/tmp/vim-lsp-$USER.log')
 
-
+  " - codeium -
+  let g:codeium_log_file='/tmp/vim-codeium.log'
+  let g:codeium_log_level='TRACE'
 endif
 " }}}
+
+" custom command suggesting git commit message, takes no arguments
+function! GitCommitMessageFn()
+  let l:diff = system('git --no-pager diff -U100 --staged')
+  let l:prompt = 
+        \ "Generate a short commit message from the diff below." .
+        \ "Focus on why the change was made, not what the changes are." .
+        \ "Start the message with 'This patch'" .
+        \ "\n" . l:diff
+  let l:range = 0
+  let l:config = g:vim_ai_chat
+  let l:config.options.initial_prompt =  ">>> system\nyou are a code assistant"
+  call vim_ai#AIRun(l:config, l:prompt)
+endfunction
+command! GitCommitMessage call GitCommitMessageFn()
 
 " {{{ --- Startup ---
 if ! v:vim_did_enter

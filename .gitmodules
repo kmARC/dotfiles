@@ -7,4 +7,10 @@
 	url = https://github.com/tmux-plugins/tpm
 [submodule "todo.actions.d/graph"]
 	path = todo.actions.d/graph
-	url = https://github.com/Bassmann/todo.txt-graph.git
+	url = https://github.com/timpulver/todo.txt-graph.git
+[submodule "todo.actions.d/due"]
+	path = todo.actions.d/due
+	url = https://github.com/rebeccamorgan/due.git
+[submodule "local/opt/fzf-git"]
+	path = local/opt/fzf-git
+	url = https://github.com/junegunn/fzf-git.sh.git

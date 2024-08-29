@@ -36,6 +36,9 @@ if grep -iqE "$(echo "${SSH_VARS[@]}" | md5sum)" /tmp/tmux-ssh-settings.md5; the
 fi
 echo "${SSH_VARS[@]}" | md5sum > /tmp/tmux-ssh-settings.md5
 
+monitor_bell="$(tmux show-option -gv monitor-bell)"
+tmux set-option -g monitor-bell off
+
 # Check every pane for the running command and try to update the environment variables
 for pane in $(tmux list-panes -a -F '#{pane_id}'); do
   variables=$(for var in "${!SSH_VARS[@]}"; do
@@ -43,23 +46,26 @@ for pane in $(tmux list-panes -a -F '#{pane_id}'); do
               done)
   bash_cmd="export $variables"
 
-  if ! is_bash; then 
-    log "not bash: $(pane_cmd)"
+  log "$(tmux display -t "$pane" -p "#{window_index}.#{pane_index}") command: $(pane_cmd)"
 
+  if is_bash; then 
+    nop
+  else
     if is_vim; then
       commands=$(for var in "${!SSH_VARS[@]}"; do
                    printf "let \$%s=\"%s\" | " "$var" "${SSH_VARS[$var]}"
                  done)
-      tmux send-keys -t "$pane" Escape ":${commands%|*} | call histdel(':', '.*SSH_.*')" Enter
-      sleep 0.5
+      tmux send-keys -t "$pane" Escape Escape ":${commands%|*} | call histdel(':', '.*SSH_.*')" Enter
+      # sleep 0.5
     fi
 
     # If not in a shell, then background the app (C-z) and bring to the foreground after
-    tmux send-keys -t "$pane" C-z C-c
+    tmux send-keys -t "$pane" C-z
+    sleep 0.1
+    tmux send-keys -t "$pane" C-c
     bash_cmd+="; fg"
-    sleep 1.0
   fi
 
   tmux send-keys -t "$pane" C-u "  $bash_cmd" Enter
 done
-
+tmux set-option -g monitor-bell "$monitor_bell"

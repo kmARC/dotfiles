@@ -65,8 +65,8 @@
   autostash = true
 
 [tag]
-  forceSignAnnotated = true
-  gpgSign = true
+  ; forceSignAnnotated = true
+  ; gpgSign = true
 
 [tig]
   ignore-space = yes
