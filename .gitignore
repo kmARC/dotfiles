@@ -6,3 +6,4 @@ tmux/plugins
 *.retry
 .stignore
 .stversions
+vim/.NERDTreeBookmarks

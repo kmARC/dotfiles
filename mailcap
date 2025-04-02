@@ -1,19 +1,16 @@
-# brew install antiword khal khard mpv tnef w3m
-# pip install mutt-ics
-#
 # Terminal programs
-application/ics;          khal import -a $from %s; needsterminal
-text/calendar;            khal import -a $from %s; needsterminal
+application/ics;          khal import -a $from -r %s; needsterminal
+text/calendar;            khal import -a $from -r %s; needsterminal
 application/ms-tnef;      tnef -t %s;              needsterminal
 
 # GUI programs
-application/*;            mutt-open.sh %s
-image/*;                  mutt-open.sh %s
-text/*;                   mutt-open.sh %s
+application/*;            open %s
+image/*;                  open %s
+text/*;                   open %s
 video/*;                  mpv '%s'; test=test -n "$DISPLAY"
 
 # Autoview
-application/octet-stream; mutt.octet.filter %s;                     copiousoutput
+application/octet-stream; LESSQUIET=1 lesspipe.sh %s;               copiousoutput
 application/msword;       antiword -w 96 %s 2>/dev/null;            copiousoutput
 application/ics;          mutt-ics;                                 copiousoutput
 text/calendar;            mutt-ics;                                 copiousoutput
