@@ -69,7 +69,7 @@ yay -S fzf \
        nvm \
        tmux \
        direnv \
-       todotxt xdg-user-dirs \
+       xdg-user-dirs \
        ripgrep \
        liquidprompt
 

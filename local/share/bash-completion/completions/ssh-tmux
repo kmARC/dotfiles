@@ -1,0 +1,1 @@
+__load_completion ssh && complete -o default -F _comp_cmd_ssh ssh-tmux

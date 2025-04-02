@@ -10,40 +10,46 @@
 - create:
     - $HOME/.ssh/controlmasters
     - $XDG_DATA_HOME/tig
-    - $XDG_CACHE_HOME/bash
+    - $XDG_DATA_HOME/bash-completion/completions
+    - $XDG_STATE_HOME/bash
     - $XDG_CACHE_HOME/less
+    - $HOME/.vim/state
+    - $HOME/.cache/vim/backup
+    - $HOME/.cache/vim/swap
+    - $HOME/.cache/vim/undo
 
 - link:
     # Explicit paths
     $XDG_CONFIG_HOME/swappy/config:
       path: config/swappy/config
-    $XDG_CONFIG_HOME/alacritty.toml:
-      path: config/alacritty.toml
-    $XDG_CONFIG_HOME/alacritty.vars.toml:
-      path: config/alacritty.$PLATFORM.toml
-    $XDG_CONFIG_HOME/alacritty.dark.toml:
-      path: config/alacritty.dark.toml
-    $XDG_CONFIG_HOME/alacritty.light.toml:
-      path: config/alacritty.light.toml
+    $XDG_CONFIG_HOME/alacritty/alacritty.toml:
+      path: config/alacritty/alacritty.toml
+    $XDG_CONFIG_HOME/alacritty/alacritty.vars.toml:
+      path: config/alacritty/alacritty.$PLATFORM.toml
+    $XDG_CONFIG_HOME/alacritty/alacritty.dark.toml:
+      path: config/alacritty/alacritty.dark.toml
+    $XDG_CONFIG_HOME/alacritty/alacritty.light.toml:
+      path: config/alacritty/alacritty.light.toml
     $XDG_CONFIG_HOME/bpython/config:
       path: config/bpython/config
     $XDG_CONFIG_HOME/clight.conf:
       path: config/clight.conf
     $XDG_CONFIG_HOME/chromium-flags.conf:
       path: config/chromium-flags.conf
-    $XDG_CONFIG_HOME/environment.d/:
-      path: config/environment.d/*
-      glob: true
+    $XDG_CONFIG_HOME/environment.d/30-$PLATFORM.conf:
+      path: config/environment.d/30-$PLATFORM.conf
+    $XDG_CONFIG_HOME/environment.d/10-main.conf:
+      path: config/environment.d/10-main.conf
     $XDG_CONFIG_HOME/fontconfig:
       path: config/fontconfig
     $XDG_CONFIG_HOME/git/config:
       path: config/git/config
-    $XDG_CONFIG_HOME/git/config.darwin:
-      path: config/git/config.darwin
-      if: '[ `uname` = Darwin ]'
-    $XDG_CONFIG_HOME/git/config.linux:
-      path: config/git/config.linux
-      if: '[ `uname` = Linux ]'
+    $XDG_CONFIG_HOME/git/ignore:
+      path: config/git/ignore
+    $XDG_CONFIG_HOME/git/config.$PLATFORM:
+      path: config/git/config.$PLATFORM
+    $XDG_CONFIG_HOME/htop/htoprc:
+      path: config/htop/htoprc
     $XDG_CONFIG_HOME/k9s/skin.yml:
       path: config/k9s/skin.yml
     $XDG_CONFIG_HOME/mopidy/mopidy.conf:
@@ -73,6 +79,8 @@
     $XDG_CONFIG_HOME/systemd/user:
       glob: true
       path: config/systemd/user/*
+    $XDG_CONFIG_HOME/user-tmpfiles.d:
+      path: config/user-tmpfiles.d
     $XDG_CONFIG_HOME/urlscan/config.json:
       path: config/urlscan/config.json
     $XDG_CONFIG_HOME/waybar:
@@ -88,18 +96,17 @@
       path: config/youtube-dl/config
     $XDG_CONFIG_HOME/X11/xresources:
       path: config/X11/xresources
+    $XDG_DATA_HOME/bash-completion/completions:
+      path: local/share/bash-completion/completions/*
+      glob: true
     $XDG_DATA_HOME/gnupg/gpg-agent.conf:
       path: local/share/gnupg/gpg-agent.$PLATFORM.conf
     $XDG_CONFIG_HOME/newsboat/config:
       path: config/newsboat/config
-    $HOME/.rtorrent.rc:
-      path: config/rtorrent/rtorrent.rc
     $XDG_CONFIG_HOME/rtorrent/rtorrent.rc:
       path: config/rtorrent/rtorrent.rc
     $XDG_DATA_HOME/terminfo:
       path: local/share/terminfo
-    $HOME/.local/opt/fzf-git:
-      path: local/opt/fzf-git
     $XDG_CONFIG_HOME/tmux/tmux.conf:
       path: config/tmux/tmux.conf
     $XDG_CONFIG_HOME/tmux/fix-ssh.sh:
@@ -111,12 +118,14 @@
     $HOME/.mutt/:
       glob: true
       path: mutt/*
-    $HOME/.ssh/all_hosts.conf:
-      path: ssh/all_hosts.conf
-    $XDG_DATA_HOME/todo.actions.d:
-      path: todo.actions.d
+    $HOME/.ssh/config:
+      mode: 0700
+      path: ssh/config
     $HOME/bin:
       path: bin
+
+    $HOME/.local/opt/fzf-git:
+      path: local/opt/fzf-git
 
     # vim
     $HOME/.vim:
@@ -124,11 +133,9 @@
 
     # Top levels
     $HOME/.bashrc.$USER:
-    $HOME/.gitignore_global:
     $HOME/.liquidpromptrc:
     $HOME/.mailcap:
     $HOME/.muttrc:
-    $HOME/.todo.cfg:
     $HOME/.toprc:
     $HOME/.ctags:
 

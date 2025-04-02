@@ -3,7 +3,7 @@ if has('gui_running')
       set guifont=FiraCode-Medium:h12
       set linespace=-2
     else
-      set guifont=Fira\ Code\ Medium\ 10
+      set guifont=Fira\ Code\ Medium\ 9
     endif
 
     set guioptions=agit

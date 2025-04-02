@@ -1,0 +1,33 @@
+# direnv
+.envrc
+.direnv
+.kubeconfig.yaml
+.venv
+
+# clangd
+compile_flags.txt
+
+# eclipse-jdt-ls
+.project
+.settings
+.classpath
+.factorypath
+
+# ctags
+tags
+
+# java
+*.class
+META-INF
+
+# python
+*.egg-info
+__pycache__
+
+# vim
+/.vim-lsp-settings/
+
+# Aider
+.aider*
+
+# vim :set ft=gitignore:

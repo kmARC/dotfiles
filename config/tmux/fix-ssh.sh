@@ -49,7 +49,7 @@ for pane in $(tmux list-panes -a -F '#{pane_id}'); do
   log "$(tmux display -t "$pane" -p "#{window_index}.#{pane_index}") command: $(pane_cmd)"
 
   if is_bash; then 
-    nop
+    true
   else
     if is_vim; then
       commands=$(for var in "${!SSH_VARS[@]}"; do
