@@ -64,10 +64,10 @@ source ~/.muttrc.local
 folder-hook 'INBOX' '\
   set status_format    = "%f · Messages: %?M?(filter: %V) %M of ?%m · New: %n · Flag: %F · Tag: %t · Del: %d %*· $from · (%P) "; \
   set ts_status_format = "NeoMutt with %?m?%m messages&no messages?%?n? [%n NEW]? - $from"; \
-  set signature  = ~/.mutt/sig/sig-$from.txt; \
+  set signature        = $HOME/.mutt/sig/sig-$from.txt; \
+  set nm_config_file   = $HOME/.mutt/$from-notmuch-config; \
   \
   setenv from $from; \
-  setenv NOTMUCH_CONFIG ~/.mutt/$from-notmuch-config; \
   unalternates "*"; \
   unmailboxes "*"; \
   mailboxes `mutt_helpers.sh mailboxes $from`'
@@ -285,10 +285,12 @@ hdr_order   subject from to cc date
 # Shortcuts
 bind  editor       <Tab> complete-query
 bind  editor     <space> noop
+bind  index,pager      L vfolder-from-query-readonly
+
 macro index       <Esc>a "c<enter>"                                         'Jump to next unread mailbox (as in weechat)'
 macro index,pager    \cb "<pipe-message>urlscan -c -d            <enter>"   'Call urlview on message'
 macro attach,compose \cb "<pipe-entry>urlscan -c -d              <enter>"   'Call urlview on message'
-macro index,pager    \eo "<pipe-message>~/bin/viewhtmlmail       <enter>"   'View HTML in browser'
+macro index,pager    \eo "<pipe-message>viewhtmlmail             <enter>"   'View HTML in browser'
 macro index,pager      A "<pipe-message>khard add-email -a \$from<enter>"   'Add sender to addressbook'
 
 macro compose        \eh "\
@@ -296,28 +298,21 @@ macro compose        \eh "\
 <edit-type>text/html; charset=utf-8           <enter>"                    'Convert Markdown to HTML'
 
 macro compose        \em "\
-<filter-entry>pandoc -s -f html -t markdown_mmd <enter>y\
-<edit-type>text/plain; charset=us-ascii   <enter>"                        'Convert HTML to Markdown'
+<filter-entry>pandoc -s -f html -t markdown_mmd<enter>\
+y\
+<edit-type>text/plain; charset=us-ascii<enter>\
+" 'Convert HTML to Markdown'
 
 macro index,pager    \cr "\
-<enter-command>echo   'Checking mail...'                     <enter>\
-<enter-command>set    my_record_old = \$record               <enter>\
-<enter-command>set    record        = ^                      <enter>\
-<enter-command>set    my_current    = \$record               <enter>\
-<enter-command>set    record        = \$my_record_old        <enter>\
-<enter-command>setenv current         \$my_current           <enter>\
+<enter-command>echo   'Checking mail...'                      <enter>\
+<enter-command>set    my_record_old = \$record                <enter>\
+<enter-command>set    record        = ^                       <enter>\
+<enter-command>set    my_current    = \$record                <enter>\
+<enter-command>set    record        = \$my_record_old         <enter>\
+<enter-command>setenv current         \$my_current            <enter>\
 <shell-escape>offlineimap -a \$from -f $(basename $current) -q<enter>\
-<enter-command>unset  my_record_old my_current               <enter>"       'Check new email in currenct folder'
-
-macro index            L "\
-<shell-escape>read -p 'Search messages: ' x;\ echo \$x >~/.cache/mutt_terms     <enter>\
-<enter-command>set               my_query = \`cat ~/.cache/mutt_terms\`         <enter>\
-<enter-command>virtual-mailboxes \"\$my_query\" \"notmuch://?query=\$my_query\" <enter>\
-<enter-command>push              \"<change-vfolder>\$my_query\"          <enter><enter>\
-<enter-command>unset             my_query                                       <enter>"\
-                                                                            'Query notmuch'
-
-macro index,pager    \cA "<pipe-message>~/bin/mutt-add-todo.py<enter>"      'Add todo'
+<enter-command>unset  my_record_old my_current                <enter>\
+" 'Check new email in currenct folder'
 
 # Contact groups
 # group -group internal `khard email --remove-first-line -p | awk '/@/{printf "-rx %s ", $1} END { print ""} '`

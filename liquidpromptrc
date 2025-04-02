@@ -101,7 +101,8 @@
 # generating VCS information for the prompt would impact prompt responsiveness.
 # Type: array<string>
 # More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_DISABLED_VCS_PATHS
-#LP_DISABLED_VCS_PATHS=()
+LP_DISABLED_VCS_PATHS=($(for i in /workspaces/*; do echo $i | grep  -v "$HOSTNAME"; done))
+
 
 # When displaying a value, show it as a percentage if possible.
 # Type: bool

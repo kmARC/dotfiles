@@ -52,7 +52,7 @@ function query_command() {
       | awk -F': ' \
             '/^uid/{uid=$2; getline; mail=$2; getline; title=$2; printf("%s\t%s\t%s\n",tolower(mail),uid,title)}'
   else
-    khard email -a "$from" -p "$query"
+    khard email -a "$from" -p "$query" || true
   fi
 }
 
