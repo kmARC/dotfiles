@@ -18,7 +18,7 @@
 ## MPD clients (eg. ncmpc) also use that location.
 ##
 #
-#lyrics_directory = ~/.lyrics
+lyrics_directory = ~/Documents/Lyrics
 #
 ##### connection settings #####
 #

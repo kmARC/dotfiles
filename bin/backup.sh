@@ -2,8 +2,8 @@
 set -Eeuo pipefail
 
 usage() {
-  echo "Usage: $0 (backup|synconly|list|mount|umount|repair|compact)"
-  echo "          [-c config] [-d destination] [-p aws profile] [-b s3-bucket]"
+  echo "Usage: $0 (backup|synconly|list|mount|umount|prune|repair|compact)"
+  echo "          [-c config] [-d destination] [-p rclone remote] [-b s3-bucket]"
   echo "          -s: sync to s3"
   echo "          -f: force backup even on battery"
   exit
@@ -38,7 +38,7 @@ check() {
 }
 
 backup() {
-  if acpi -b | grep -q 'Discharging'; then
+  if ! acpi -a | grep -q 'on-line'; then
       >&2 echo "Running on battery. Checking last backup..."
 
       local last
@@ -66,7 +66,7 @@ backup() {
   echo "    Backup script starting @ $(date) - $HOME => $DEST"
   echo "======"
   borg break-lock "$DEST"
-  borg create     --verbose \
+  if borg create  --verbose \
                   --progress \
                   --stats \
                   --compression auto,lzma \
@@ -74,19 +74,13 @@ backup() {
                   --list \
                   --filter=AME \
                   "$DEST"::'{now}' \
-                  "$HOME"
+                  "$HOME";
+  then
+    echo "Backup successful"
+  else
+    echo "Error occured during backup; error code: $?"
+  fi
   sync
-  borg prune      --keep-within 1d \
-                  --keep-daily 7 \
-                  --keep-weekly 4 \
-                  --keep-monthly 12 \
-                  --keep-yearly 1 \
-                  --save-space \
-                  --stats \
-                  --list \
-                  --progress \
-                  --verbose \
-                  "$DEST"
   borg list       "$DEST"
   echo "======"
   echo "    Backup finished at $(date)."
@@ -97,6 +91,21 @@ backup() {
     sync_to_cloud
   fi
 }
+
+prune() {
+  borg prune --keep-within 1d \
+             --keep-daily 7 \
+             --keep-weekly 4 \
+             --keep-monthly 12 \
+             --keep-yearly 1 \
+             --save-space \
+             --stats \
+             --list \
+             --progress \
+             --verbose \
+             "$DEST"
+}
+
 
 list() {
   borg list "$DEST"
@@ -147,12 +156,12 @@ sync_to_cloud() {
   fi
 
   echo "======"
-  echo "    Syncing to $AWS_PROFILE : '$S3_BUCKET'"
+  echo "    Syncing to $RCLONE_REMOTE : '$S3_BUCKET'"
   echo "======"
-  if type -t rclone >/dev/null && rclone listremotes | grep -q "$AWS_PROFILE"; then
-    rclone sync -P "$DEST" "$AWS_PROFILE:$S3_BUCKET"
+  if type -t rclone >/dev/null && rclone listremotes | grep -q "$RCLONE_REMOTE"; then
+    rclone sync -P "$DEST" "$RCLONE_REMOTE:$S3_BUCKET"
   elif type -t aws >/dev/null; then
-    aws --profile "$AWS_PROFILE" s3 sync "$DEST" "s3://$S3_BUCKET"
+    aws --profile "$RCLONE_REMOTE" s3 sync "$DEST" "s3://$S3_BUCKET"
   fi
 }
 
@@ -190,7 +199,7 @@ while getopts 'c:d:b:p:fs' c; do
     f) FORCE=true ;;
     d) _DEST=$OPTARG ;;
     b) _S3_BUCKET=$OPTARG ;;
-    p) _AWS_PROFILE=$OPTARG ;;
+    p) _RCLONE_REMOTE=$OPTARG ;;
     *) ;;
   esac
 done
@@ -201,7 +210,7 @@ CONFFILE=${CONFFILE:-$HOME/.config/backuprc}
 source "$CONFFILE" || (>&2 echo "File '$CONFFILE' cannot be opened" && exit 1)
 # Override configuration
 DEST=${DEST:-$_DEST}
-AWS_PROFILE=${AWS_PROFILE:-$_AWS_PROFILE}
+RCLONE_REMOTE=${RCLONE_REMOTE:-$_RCLONE_REMOTE}
 S3_BUCKET=${S3_BUCKET:-$_S3_BUCKET}
 EXCLUDES=${EXCLUDES:-}
 # Opts
@@ -221,6 +230,7 @@ case "$ACTION" in
   'list')     list ;;
   'mount')    mount_repo ;;
   'umount')   umount_repo ;;
+  'prune')    prune ;;
   'repair')   repair ;;
   'compact')  compact ;;
   *)          usage ;;

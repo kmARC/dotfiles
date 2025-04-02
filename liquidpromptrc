@@ -103,6 +103,7 @@
 # More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_DISABLED_VCS_PATHS
 #LP_DISABLED_VCS_PATHS=()
 
+
 # When displaying a value, show it as a percentage if possible.
 # Type: bool
 # More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_DISPLAY_VALUES_AS_PERCENTS
@@ -343,7 +344,7 @@
 # Set the terminal title while in a terminal multiplexer.
 # Type: bool
 # More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_ENABLE_SCREEN_TITLE
-#LP_ENABLE_SCREEN_TITLE=0
+LP_ENABLE_SCREEN_TITLE=1
 
 # Show the value of `$SHLVL`, which is the number of nested shells. For
 # example, if one runs `bash` inside their shell, it will open a new shell
@@ -396,7 +397,7 @@
 # theme.
 # Type: bool
 # More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_ENABLE_TITLE
-#LP_ENABLE_TITLE=0
+LP_ENABLE_TITLE=1
 
 # Postpend the currently running command to the terminal title while the
 # command is running.
@@ -407,7 +408,7 @@
 # Sets the title of the Tmux pane instead of the window.
 # Type: bool
 # More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_ENABLE_TMUX_TITLE_PANES
-#LP_ENABLE_TMUX_TITLE_PANES=1
+LP_ENABLE_TMUX_TITLE_PANES=1
 
 # Enable the display of the remote repository in the VCS state section.
 # Type: bool
@@ -1128,3 +1129,5 @@
 # Type: string
 # More information: https://liquidprompt.readthedocs.io/en/stable/config.html#LP_COLOR_X11_ON
 #LP_COLOR_X11_ON=$GREEN
+
+source "$HOME"/.liquidpromptrc.local &>/dev/null

@@ -7,16 +7,21 @@
 [apply]
   ignorewhitespace = change
 
+[branch]
+  sort = -committerdate
+
+[column]
+  ui = auto
+
 [commit]
   gpgsign = true
 	verbose = true
 
-[core]
-  excludesfile = ~/.gitignore_global
-
 [diff]
   tool = vimdiff
-  ; algorithm = patience
+  algorithm = histogram
+  mnemonicPrefix = true
+  renames = true
 
 [difftool]
   prompt = false
@@ -38,35 +43,44 @@
 [help]
   autocorrect = 10
 
+[init]
+  defaultBranch = main
+
 [interactive]
-  diffFilter = diff-highlight | less -X
+  diffFilter = diff-highlight | less
 
 [merge]
   tool = vimdiff
-  conflictstyle = diff3
+  conflictstyle = zdiff3
 
 [mergetool "vimdiff"]
   keepbackup = false
   trustexitcode = true
 
 [pager]
-  log = diff-highlight | less -X
-  show = diff-highlight | less -X
-  diff = diff-highlight | less -X
+  log = diff-highlight | less
+  show = diff-highlight | less
+  diff = diff-highlight | less
 
 [pull]
   rebase = true
 
 [push]
-  default = current
+  default = upstream
   gpgSign = if-asked
+  autoSetupRemote = true
 
 [rebase]
   autostash = true
+  updateRefs = true
+
+[rerere]
+  enabled = true
+  autoupdate = true
 
 [tag]
-  ; forceSignAnnotated = true
-  ; gpgSign = true
+  forceSignAnnotated = true
+  gpgSign = true
 
 [tig]
   ignore-space = yes
@@ -84,12 +98,11 @@
 	emptyAuth = true
 
 [include]
-  path = ./config.linux
-  path = ./config.darwin
-  path = ~/.gitconfig.local
+  path = ./config.Linux
+  path = ./config.Darwin
+  path = ./config.local
 
 [svn]
   logWindowSize = 500000
-
 
 # vim: set ft=gitconfig:

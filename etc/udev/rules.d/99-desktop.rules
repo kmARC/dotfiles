@@ -1,1 +1,0 @@
-ACTION=="change", KERNEL=="card0", SUBSYSTEM=="drm", RUN+="/bin/systemctl start kmarc-monitor"

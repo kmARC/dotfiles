@@ -1,20 +1,23 @@
-# Example SSH config
+Compression yes
+ConnectTimeout 5
+ServerAliveCountMax 5
+ServerAliveInterval 10
 
-Include ~/.ssh/all_hosts.conf
+AddKeysToAgent confirm
 
-# Host jumphost
-#     Hostname <IP ADDRESS>
-#     User <USERNAME>
+##############
+#  Examples  #
+##############
+# Only forward agent to trusted servers (not to git serves, etc)
 #
-#     # SOCKS Proxy
-#     DynamicForward [bind_address:]port
-#     DynamicForward 8800
+#ForwardAgent yes
+
+# Only enable mux on exclusively managed environments
 #
-#     # Forward
-#     LocalForward [bind_address:]port host:port
-#     LocalForward 8801 127.0.0.1:80
+#ControlMaster auto
+#ControlPath ~/.ssh/controlmasters/%r@%h:%p
+#ControlPersist 10m
 
-# Host host-behind-jumphost
-#     ProxyCommand ssh -q -W %h:%p jumphost
+Include ~/.ssh/config.d/*
 
-# vim: set ft=sshconfig:
+

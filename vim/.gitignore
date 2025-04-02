@@ -1,8 +1,5 @@
-vimbackup/*
-vimswap/*
-vimundo/*
 spell/*
-misc/*
+state/*
 sessions/*
 !*/.gitkeep
 plugged

@@ -1,219 +1,65 @@
 #!/usr/bin/env bash
-# shellcheck disable=SC2016,SC1090
+# shellcheck disable=SC2016,SC1090,SC2155
 
+####################
+#  Initialization  #
+####################
+# Unset any funny command that would be executed before the prompt is shown
 unset PROMPT_COMMAND
+
+# Set a fallback terminal if there is no infocmp entry. This helps on older
+# systems with no alacritty
+if ! infocmp "$TERM" >/dev/null 2>&1; then
+  export TERM=xterm-256color
+fi
 
 ###########################
 #  Environment variables  #
 ###########################
-if [[ $OSTYPE == 'darwin'* ]]; then
-  HOMEBREW_PREFIX="${HOMEBREW_PREFIX:-$(brew --prefix)}"
-fi
+for _c in "$HOME"/.config/environment.d/*.conf; do
+  source "$_c"
+done
+unset _c
 
-source "$HOME"/.config/environment.d/*.conf
-
-export HISTSIZE=65536
-export HISTCONTROL=ignorespace
-
-#########
-#  FZF  #
-#########
-# ALT-O opens selected file with xdg-open
-function __fzf_open__() {
-  local cmd file
-  cmd="${FZF_ALT_O_COMMAND:-"command find -L . \\( -path '*/\\.*' -o -fstype 'devfs' -o -fstype 'devtmpfs' -o -fstype 'proc' \\) -prune \
-    -o -type f -print 2> /dev/null | sed 1d | cut -b3-"}"
-  file=$(eval "$cmd | $(__fzfcmd) +m $FZF_ALT_O_OPTS") && printf '/usr/bin/xdg-open %q/%q' "$PWD" "$file"
-}
-
-# bind \M-o to __fzf_open__()
-if [[ ! -o vi ]]; then
-  # ALT-O - open file
-  bind '"\eo": " \C-e\C-u`__fzf_open__`\e\C-e\er\C-m"'
-else
-  # ALT-O - open file
-  bind '"\eo": "\C-x\C-addi`__fzf_open__`\C-x\C-e\C-x\C-r\C-m"'
-  bind -m vi-command '"\eo": "ddi`__fzf_open__`\C-x\C-e\C-x\C-r\C-m"'
-fi
-
-if [ -f "$HOME/.fzf.bash" ]; then
-  source "$HOME/.fzf.bash"
-elif [ -f /usr/share/fzf/completion.bash ]; then
-  source /usr/share/fzf/key-bindings.bash
-  source /usr/share/fzf/completion.bash
-else
-  source /usr/local/share/fzf/shell/key-bindings.bash
-  source /usr/local/share/fzf/shell/completion.bash
-fi
-
-if [ -f "$HOME/.local/opt/fzf-git/fzf-git.sh" ]; then
-  source "$HOME/.local/opt/fzf-git/fzf-git.sh"
-fi
-
-###################
-#  NODE.JS - NVM  #
-###################
-export NVM_DIR="${NVM_DIR:-$XDG_DATA_HOME/nvm}"
-# shellcheck source=/dev/null
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" --no-use  # This loads nvm
-# shellcheck source=/dev/null
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-
-##########
-#  TMUX  #
-##########
-alias tmux-session="tmux attach -t Session || tmux new -s Session"
-function ssh-tmux() { ssh "$1" -t 'tmux attach'; }
-if [[ $OSTYPE == 'darwin'* ]]; then
-  source "$HOMEBREW_PREFIX"/etc/profile.d/bash_completion.sh
-else
-  _completion_loader ssh
-  complete -F _ssh ssh ssh-tmux
-fi
-
-[ -n "$TMUX" ] && export PANE_ID=$(tmux display-message -p '#P')
-
-############
-#  DIRENV  #
-############
-eval "$(direnv hook bash)"
-
-################
-#  Journaling  #
-################
-NOTES_DIR="$HOME/Documents/Notes"
-alias notes='(cd $NOTES_DIR && vim index.md)'
-alias   did='(cd $NOTES_DIR && vim did.txt +"normal ggO" +"r!date +\%Y-\%m-\%d\ \%a")'
-
-function minutes() {
-  if [ -n "$1" ]; then local topic="-$1"; else local topic=""; fi
-  (cd "$NOTES_DIR/meetings" && exec vim "minutes-$(date --iso-8601)$topic.md" -s <(echo 'iTHIS IS BROKEN NOW') )
-}
-
-alias t="todo.sh"
-if [[ $OSTYPE != 'darwin'* ]]; then
-  _completion_loader todo.sh
-fi
-complete -F _todo todo.sh t
-
-alias home="(cd \$HOME/Documents/Home/ && vim index.md)"
-#############
-#  THEMING  #
-#############
-# Colorized less / man / pydoc
-export LESS=-R
-export LESS_TERMCAP_mb=$'\e[0;49;39m'
-export LESS_TERMCAP_md=$'\e[1;49;35m'
-export LESS_TERMCAP_me=$'\e[0;49;39m'
-export LESS_TERMCAP_so=$'\e[1;46;97m'
-export LESS_TERMCAP_se=$'\e[0;49;39m'
-export LESS_TERMCAP_us=$'\e[1;49;36m'
-export LESS_TERMCAP_ue=$'\e[0;49;39m'
-
-[[ -s "/etc/profile.d/grc.sh" ]] && source /etc/profile.d/grc.sh
-
-# fix dircolors for Selenized
-# (https://github.com/jan-warchol/selenized/tree/master/other-apps/dircolors)
-export LS_COLORS="$LS_COLORS:ow=1;7;34:st=30;44:su=30;41"
-
-#########################
-#  EXPORTS AND ALIASES  #
-#########################
-export PAGER=less
-export EDITOR=vim
 export GPG_TTY=$(tty)
 
+#############################
+#  Host-specific overrides  #
+#############################
+# Supposedly a link to .pdotfiles/.../bashrc
+if [ -f "$HOME"/.bashrc.local ]; then
+  # shellcheck disable=SC1091
+  source "$HOME"/.bashrc.local
+fi
+
+###################################
+#  Autostart graphical interface  #
+###################################
+if [[ -z $DISPLAY ]] && [[ $(tty) = /dev/tty1 ]]; then
+  #  https://wiki.archlinux.org/title/KDE
+  exec /usr/lib/plasma-dbus-run-session-if-needed startplasma-wayland
+fi
+
+# Only continue if this is an interactive shell
+if ! [[ $- = *i* ]]; then
+  return 0
+fi
+
+###########################
+#  Functions and aliases  #
+###########################
 alias ls="ls --color --group-directories-first"
 alias diff='diff --color=auto'
 alias grep='grep --color=auto'
 alias mutt='neomutt'
-alias sudo='sudo '
-alias monerod="monerod --data-dir ${XDG_DATA_HOME}/bitmonero"
+alias teams-up='systemctl --user set-property teams.slice CPUQuota=$(( `nproc` * 100 ))%'
+alias teams-down='systemctl --user set-property teams.slice CPUQuota=$(( `nproc` / 2 * 100 ))%'
 
-git-recursive-pull() {
+function git-recursive-pull() {
     find . -type d -path '*/.git' -prune -printf "%h\n" \
       | xargs -n1 -P4 bash -c \
           'cd $1; if ! git pull --all &>/dev/null; then echo "ERROR:   $1"; else echo "SUCCESS: $1"; fi' --
 }
-
-if command -v kubectl >/dev/null; then
-  alias k=kubectl
-
-  if [[ $OSTYPE != 'darwin'* ]]; then
-    _completion_loader kubectl
-  fi
-  complete -o default -F __start_kubectl k
-
-  if command -v kubecolor >/dev/null; then
-    alias k=kubecolor
-  fi
-fi
-
-
-if command -v helm >/dev/null; then
-  source <(helm completion bash)
-fi
-
-if command -v mvn >/dev/null; then
-  mvnrun() {
-    echo mvn "$@"
-    mvn "$@"
-    echo mvn "$@"
-  }
-  alias mci='mvnrun clean install'
-  alias mcin='mvnrun clean install -DskipTest'
-  alias mjacoco='mvnrun jacoco:report'
-  alias mjavadoc='mvnrun javadoc:aggregate'
-  alias me='mvnrun exec:java'
-  alias mcie='mvnrun clean install exec:java'
-  alias med='MAVEN_OPTS=-agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=5005 mvn exec:java'
-  complete -o default -o nospace -F _mvn mci mcis mjacoco mjavadoc me mcie
-fi
-
-cheat() { curl -m10 "http://cheat.sh/$1"; }
-
-##################
-#  LIQUIDPROMPT  #
-##################
-# Enable liquidprompt only in interactive and non-mc shells
-if [[ -z "$MC_SID" && $- = *i* ]]; then
-  if [[ $OSTYPE == 'darwin'* ]]; then
-    source "$HOMEBREW_PREFIX"/share/liquidprompt
-  else
-    source `which liquidprompt`
-  fi
-fi
-
-
-##################################################################
-#  AutoStart                                                     #
-#  https://wiki.archlinux.org/index.php/Sway#Autostart_on_login  #
-##################################################################
-if [[ -z $DISPLAY ]] && [[ $(tty) = /dev/tty1 ]]; then
-  eval $(gnome-keyring-daemon --start)
-  export SSH_AUTH_SOCK
-  # XKB_DEFAULT_LAYOUT=us exec sway
-  exec startplasma-wayland
-fi
-
-if [ -f "$HOME"/.bashrc.local ]; then
-  source "$HOME"/.bashrc.local
-fi
-
-#######################
-#  Homebrew prefixes  #
-#######################
-if [[ $OSTYPE == 'darwin'* ]]; then
-  for tool in \
-    coreutils \
-    findutils \
-    gnu-sed \
-    grep \
-  ; do
-    export PATH="$HOMEBREW_PREFIX/opt/$tool/libexec/gnubin:$PATH"
-  done
-fi
-
 
 function git-worktree() {
   if [ ${#*} -lt 2 ]; then
@@ -236,14 +82,122 @@ function git-worktree() {
   fi
 }
 
+if type -p mvn >/dev/null; then
+  _mvn_run() {
+    echo mvn "$@"
+    mvn "$@"
+    echo mvn "$@"
+  }
+  alias mci='_mvn_run clean install'
+  alias mcin='_mvn_run clean install -DskipTest'
+  alias mjacoco='_mvn_run jacoco:report'
+  alias mjavadoc='_mvn_run javadoc:aggregate'
+  alias me='_mvn_run exec:java'
+  alias mcie='_mvn_run clean install exec:java'
+  alias med='MAVEN_OPTS=-agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=5005 mvn exec:java'
+  complete -o default -o nospace -F _mvn mci mcis mjacoco mjavadoc me mcie
+fi
 
-###############
-#  dark mode  #
-###############
-if [[ $OSTYPE == 'darwin'* ]]; then
-  if [[ "$(defaults read -g AppleInterfaceStyle 2>/dev/null)" == "Dark" ]]; then
-    sed --follow-symlinks -i 's/\(alacritty\.\)light\(\.toml\)/\1dark\2/g' "$HOME/.config/alacritty.toml"
-  else
-    sed --follow-symlinks -i 's/\(alacritty\.\)dark\(\.toml\)/\1light\2/g' "$HOME/.config/alacritty.toml"
+function cheat() {
+  curl --max-time 10 "http://cheat.sh/$1?style=stata-light"
+}
+
+##########
+#  tmux  #
+##########
+if type -p tmux &>/dev/null; then
+  alias tmux-session="tmux attach -t Session || tmux new -s Session"
+
+  function ssh-tmux() { ssh "$1" -t 'tmux attach'; }
+
+  if [ -n "$TMUX" ]; then
+    # shellcheck disable=SC2034
+    PANE_ID=$(tmux display-message -p '#P')
   fi
 fi
+
+#########
+#  fzf  #
+#########
+if type -p fzf &>/dev/null; then
+  FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS --border"
+  FZF_DEFAULT_COMMAND="rg --files --hidden --follow --glob '!{.git,.svn,node_modules}'"
+
+  # FZF keybindings are only sourced after the first bash-completion is used
+  if [ -f  "$XDG_DATA_HOME/bash-completion/completions/fzf" ]; then
+    source "$XDG_DATA_HOME/bash-completion/completions/fzf"
+  fi
+
+  # Arch fzf package doesn't register the completion and key-bingings scripts
+  if [ -f /usr/share/fzf/completion.bash ]; then
+    source /usr/share/fzf/completion.bash
+  fi
+  if [ -f /usr/share/fzf/key-bindings.bash ]; then
+    source /usr/share/fzf/key-bindings.bash
+  fi
+
+  # # ALT-O opens selected file with xdg-open
+  # function __fzf_open__() {
+  #   local cmd file
+  #   cmd="${FZF_ALT_O_COMMAND:-"command find -L . \\( -path '*/\\.*' -o -fstype 'devfs' -o -fstype 'devtmpfs' -o -fstype 'proc' \\) -prune \
+  #     -o -type f -print 2> /dev/null | sed 1d | cut -b3-"}"
+  #   file=$(eval "$cmd | $(__fzfcmd) +m $FZF_ALT_O_OPTS") && printf '/usr/bin/xdg-open %q/%q' "$PWD" "$file"
+  # }
+
+  # # bind \M-o to __fzf_open__()
+  # if [[ ! -o vi ]]; then
+  #   # ALT-O - open file
+  #   bind '"\eo": " \C-e\C-u`__fzf_open__`\e\C-e\er\C-m"'
+  # else
+  #   # ALT-O - open file
+  #   bind '"\eo": "\C-x\C-addi`__fzf_open__`\C-x\C-e\C-x\C-r\C-m"'
+  #   bind -m vi-command '"\eo": "ddi`__fzf_open__`\C-x\C-e\C-x\C-r\C-m"'
+  # fi
+
+  # fzf-git.sh installed via submodule
+  source "$HOME"/.local/opt/fzf-git/fzf-git.sh
+fi
+
+#############
+#  kubectl  #
+#############
+if type -p kubectl >/dev/null; then
+  alias k=kubectl
+fi
+
+###############
+#  kubecolor  #
+###############
+if type -p kubecolor >/dev/null; then
+  alias k=kubecolor
+fi
+
+#########
+#  grc  #
+#########
+if type -p grc >/dev/null; then
+  if [[ -s "/etc/profile.d/grc.sh" ]]; then
+    GRC_ALIASES=true
+    source /etc/profile.d/grc.sh
+    # This alias enables colorized pipe (to less, etc)
+    alias colourify='grc -s --colour=on'
+  fi
+fi
+
+############
+#  direnv  #
+############
+if type -p direnv &>/dev/null && ! type -t _direnv_hook &>/dev/null; then
+  eval "$(direnv hook bash)"
+fi
+
+##################
+#  liquidprompt  #
+##################
+if type -p liquidprompt &>/dev/null; then
+  # Enable liquidprompt only in interactive and non-mc shells
+  if [[ -z "$MC_SID" && $- = *i* ]]; then
+    source "$(type -p liquidprompt)"
+  fi
+fi
+

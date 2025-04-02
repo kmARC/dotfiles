@@ -1,0 +1,1 @@
+__load_completion kubectl && complete -o default -F __start_kubectl kubecolor
