@@ -10,8 +10,11 @@
 - create:
     - $HOME/.ssh/controlmasters
     - $XDG_DATA_HOME/tig
-    - $XDG_CACHE_HOME/bash
+    - $XDG_STATE_HOME/bash
     - $XDG_CACHE_HOME/less
+    - $HOME/.cache/vim/backup
+    - $HOME/.cache/vim/swap
+    - $HOME/.cache/vim/undo
 
 - link:
     # Explicit paths
@@ -92,8 +95,6 @@
       path: local/share/gnupg/gpg-agent.$PLATFORM.conf
     $XDG_CONFIG_HOME/newsboat/config:
       path: config/newsboat/config
-    $HOME/.rtorrent.rc:
-      path: config/rtorrent/rtorrent.rc
     $XDG_CONFIG_HOME/rtorrent/rtorrent.rc:
       path: config/rtorrent/rtorrent.rc
     $XDG_DATA_HOME/terminfo:
@@ -111,8 +112,9 @@
     $HOME/.mutt/:
       glob: true
       path: mutt/*
-    $HOME/.ssh/all_hosts.conf:
-      path: ssh/all_hosts.conf
+    $HOME/.ssh/config:
+      mode: 0700
+      path: ssh/config
     $XDG_DATA_HOME/todo.actions.d:
       path: todo.actions.d
     $HOME/bin:

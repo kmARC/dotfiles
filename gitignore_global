@@ -27,4 +27,7 @@ __pycache__
 # vim
 /.vim-lsp-settings/
 
+# Aider
+.aider*
+
 # vim :set ft=gitignore:

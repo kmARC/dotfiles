@@ -3,6 +3,18 @@
 
 unset PROMPT_COMMAND
 
+# Set a fallback terminal if there is no infocmp entry. This helps on older
+# systems with no alacritty
+if ! infocmp "$TERM" >/dev/null 2>&1; then
+  export TERM=xterm-256color
+fi
+
+# Host-specific configuration. Supposedly a link to .pdotfiles/.../bashrc
+if [ -f "$HOME"/.bashrc.local ]; then
+  # shellcheck disable=SC1091
+  source "$HOME"/.bashrc.local
+fi
+
 ###########################
 #  Environment variables  #
 ###########################
@@ -66,9 +78,6 @@ alias tmux-session="tmux attach -t Session || tmux new -s Session"
 function ssh-tmux() { ssh "$1" -t 'tmux attach'; }
 if [[ $OSTYPE == 'darwin'* ]]; then
   source "$HOMEBREW_PREFIX"/etc/profile.d/bash_completion.sh
-else
-  _completion_loader ssh
-  complete -F _ssh ssh ssh-tmux
 fi
 
 [ -n "$TMUX" ] && export PANE_ID=$(tmux display-message -p '#P')
@@ -101,14 +110,14 @@ alias home="(cd \$HOME/Documents/Home/ && vim index.md)"
 #  THEMING  #
 #############
 # Colorized less / man / pydoc
-export LESS=-R
-export LESS_TERMCAP_mb=$'\e[0;49;39m'
-export LESS_TERMCAP_md=$'\e[1;49;35m'
-export LESS_TERMCAP_me=$'\e[0;49;39m'
-export LESS_TERMCAP_so=$'\e[1;46;97m'
-export LESS_TERMCAP_se=$'\e[0;49;39m'
-export LESS_TERMCAP_us=$'\e[1;49;36m'
-export LESS_TERMCAP_ue=$'\e[0;49;39m'
+export LESS="-R -X -F"
+# export LESS_TERMCAP_mb=$'\e[0;49;39m'
+# export LESS_TERMCAP_md=$'\e[1;49;35m'
+# export LESS_TERMCAP_me=$'\e[0;49;39m'
+# export LESS_TERMCAP_so=$'\e[1;46;97m'
+# export LESS_TERMCAP_se=$'\e[0;49;39m'
+# export LESS_TERMCAP_us=$'\e[1;49;36m'
+# export LESS_TERMCAP_ue=$'\e[0;49;39m'
 
 [[ -s "/etc/profile.d/grc.sh" ]] && source /etc/profile.d/grc.sh
 
@@ -128,7 +137,6 @@ alias diff='diff --color=auto'
 alias grep='grep --color=auto'
 alias mutt='neomutt'
 alias sudo='sudo '
-alias monerod="monerod --data-dir ${XDG_DATA_HOME}/bitmonero"
 
 git-recursive-pull() {
     find . -type d -path '*/.git' -prune -printf "%h\n" \
@@ -170,7 +178,7 @@ if command -v mvn >/dev/null; then
   complete -o default -o nospace -F _mvn mci mcis mjacoco mjavadoc me mcie
 fi
 
-cheat() { curl -m10 "http://cheat.sh/$1"; }
+cheat() { curl -m10 "http://cheat.sh/$1?style=stata-light"; }
 
 ##################
 #  LIQUIDPROMPT  #
@@ -187,9 +195,10 @@ fi
 
 ##################################################################
 #  AutoStart                                                     #
-#  https://wiki.archlinux.org/index.php/Sway#Autostart_on_login  #
+#  https://wiki.archlinux.org/title/KDE                          #
 ##################################################################
 if [[ -z $DISPLAY ]] && [[ $(tty) = /dev/tty1 ]]; then
+  exec /usr/lib/plasma-dbus-run-session-if-needed startplasma-wayland
   eval $(gnome-keyring-daemon --start)
   export SSH_AUTH_SOCK
   # XKB_DEFAULT_LAYOUT=us exec sway
@@ -235,6 +244,10 @@ function git-worktree() {
     cp user.bazelrc "$new_dir/user.bazelrc"
   fi
 }
+
+for c in "$HOME"/.local/share/bash-completions/*; do
+  source "$c"
+done
 
 
 ###############
