@@ -1,12 +1,19 @@
 # vim: ft=conf
 directory = ~/Torrents/
-session = ~/Torrents/.rtorrent.session
+session = ~/.local/state/rtorrent
 schedule = watch_directory,5,5,"load.start=~/Downloads/*.torrent"
 schedule = low_diskspace,5,60,close_low_diskspace=2000M
 dht = auto
 dht_port = 6881
 protocol.pex.set = yes
 encryption = allow_incoming,try_outgoing,enable_retry,prefer_plaintext
-method.set_key = event.download.erased,remove_file,"execute={rm,-drf,--,$d.base_path=}"
 throttle.global_down.max_rate.set_kb = 1500
 throttle.global_up.max_rate.set_kb = 500
+network.scgi.open_local = (cat,(session.path),/rpc.sock)
+
+# Delete the torrent file after the download starts
+method.set_key = event.download.inserted,delete_torrent,"execute={rm,-f,--,$d.tied_to_file=}"
+
+# Delete downloaded files when the torrent is removed from the session
+method.set_key = event.download.erased,remove_file,"execute={rm,-drf,--,$d.base_path=}"
+

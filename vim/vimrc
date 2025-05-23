@@ -1,12 +1,9 @@
-" {{{ --- Plugins --- 
-
-" Some plugins, notably DelimitMate leaves insert mode silently, which
-" triggers ale's linting, unnecessarily. This setting also has to be disabled
+" --- Plugins --- {{{
+" Some plugins, notably DelimitMate leave insert mode silently, which
+" triggers ale's linting, unnecessarily. These settings also has to be disabled
 " before ALE is loaded
 let g:ale_lint_on_insert_leave = 0
 let g:ale_lint_on_text_changed = 0
-let g:ale_open_list = 1
-" let g:ale_lint_delay = 2000
 
 call plug#begin(environ()->get("VIMPLUG", '~/.vim/plugged'))
 "--- Look&Feel ---
@@ -16,15 +13,16 @@ Plug 'rhysd/vim-healthcheck'
 "--- Tools ---
 Plug 'direnv/direnv.vim'
 Plug 'gcmt/taboo.vim'
-Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf'                 , {'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 Plug 'tpope/vim-obsession'
 Plug 'tpope/vim-unimpaired'
 Plug 'preservim/nerdtree'
-Plug 'will133/vim-dirdiff'
-Plug 'Exafunction/codeium.vim'
+Plug 'will133/vim-dirdiff'          , {'on': 'DirDiff'}
+Plug 'ojroques/vim-oscyank'         , {'on': 'OSCYankRegister'}
+" --- AI ---
+Plug 'Exafunction/windsurf.vim'
 Plug 'madox2/vim-ai'
-Plug 'dense-analysis/neural'
 "--- Editing ---
 Plug 'Raimondi/delimitMate'
 Plug 'godlygeek/tabular'            , {'on': 'Tabularize'}
@@ -33,7 +31,7 @@ Plug 'tpope/vim-surround'
 Plug 'tpope/vim-abolish'
 Plug 'mbbill/undotree'
 "--- Git ---
-Plug 'mattn/gist-vim'                , {'on': 'Gist'}
+Plug 'mattn/gist-vim'               , {'on': 'Gist'}
 Plug 'shumphrey/fugitive-gitlab.vim'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-rhubarb'
@@ -46,41 +44,41 @@ if has_key(environ(), 'TMUX')
   Plug 'benmills/vimux'
   Plug 'christoomey/vim-tmux-navigator'
 endif
+"--- DevOps ---
+Plug 'andrewstuart/vim-kubernetes'
+Plug 'hashivim/vim-terraform'       , {'for': 'terraform'}
+Plug 'pearofducks/ansible-vim'
+" Plug 'bazelbuild/vim-bazel'
 "--- Programming ---
 Plug 'AndrewRadev/splitjoin.vim'
-Plug 'SirVer/ultisnips'
 Plug 'andymass/vim-matchup'
 Plug 'dense-analysis/ale'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'honza/vim-snippets'
-Plug 'vim-test/vim-test'
 Plug 'ludovicchabant/vim-gutentags'
 Plug 'majutsushi/tagbar'
 Plug 'mattn/vim-lsp-settings'
-Plug 'mkalinski/vim-lightline_tagbar'
+Plug 'micchy326/lightline-lsp-progress'
 Plug 'prabirshrestha/asyncomplete-file.vim'
 Plug 'prabirshrestha/asyncomplete-lsp.vim'
 Plug 'prabirshrestha/asyncomplete-ultisnips.vim'
 Plug 'prabirshrestha/asyncomplete.vim'
 Plug 'prabirshrestha/vim-lsp'
-" Plug 'rhysd/vim-lsp-ale'
+Plug 'rhysd/vim-lsp-ale'
+Plug 'SirVer/ultisnips'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-endwise'
-Plug 'micchy326/lightline-lsp-progress'
-Plug 'puremourning/vimspector'
+Plug 'vim-test/vim-test'
 "--- Java ---
 Plug 'mikelue/vim-maven-plugin'     , {'for': 'java'}
-Plug 'udalov/javap-vim'
-Plug 'uiiaoo/java-syntax.vim'
-" Plug 'udalov/kotlin-vim'
-"--- CPP ---
-Plug 'bfrg/vim-cpp-modern'
-Plug 'alepez/vim-gtest'
-"--- Markdown, Wiki, Todo ---
-Plug 'freitass/todo.txt-vim'        , {'for': 'todo'}
+Plug 'udalov/javap-vim'             , {'for': 'java'}
+Plug 'uiiaoo/java-syntax.vim'       , {'for': 'java'}
+"--- C++ ---
+Plug 'bfrg/vim-cpp-modern'          , {'for': 'cpp'}
+Plug 'alepez/vim-gtest'             , {'for': 'cpp'}
+"--- Text & Markdown ---
 Plug 'plasticboy/vim-markdown'      , {'for': 'markdown'}
-Plug 'iamcco/markdown-preview.nvim' , {'for': ['markdown', 'vim-plug'], 'do': { -> mkdp#util#install() }}
-Plug 'tenfyzhong/joplin.vim'        , {'on': ['Joplin', 'JoplinWinOpen']}
+Plug 'iamcco/markdown-preview.nvim' , {'for': 'markdown', 'do': { -> mkdp#util#install() }}
 Plug 'jamessan/vim-gnupg'
 "--- HTML ---
 Plug 'mattn/emmet-vim'              , {'for': ['html', '*jsx', 'xml']}
@@ -92,32 +90,22 @@ Plug 'heavenshell/vim-jsdoc'        , {'for': 'javascript*'}
 Plug 'moll/vim-node'                , {'for': 'javascript*'}
 Plug 'othree/yajs.vim'              , {'for': 'javascript*'}
 Plug 'pangloss/vim-javascript'      , {'for': 'javascript*'}
-"--- React ---
-Plug 'mxw/vim-jsx'                  , {'for': '*jsx'}
 "--- TypeScript ---
 Plug 'leafgarland/typescript-vim'   , {'for': 'typescript*'}
-"--- DB
+"--- React ---
+Plug 'mxw/vim-jsx'                  , {'for': '*jsx'}
+"--- Databases ---
 Plug 'kristijanhusak/vim-dadbod-ui'
 Plug 'tpope/vim-dadbod'
-"--- DevOps ---
-Plug 'andrewstuart/vim-kubernetes'
-Plug 'hashivim/vim-terraform'       , {'for': 'terraform'}
-Plug 'pearofducks/ansible-vim'
-Plug 'bazelbuild/vim-bazel'
 "--- Dependencies ---
 Plug 'mattn/webapi-vim'             " for: gist-vim
 Plug 'tpope/vim-repeat'             " for: surround.vim, unimpaired.vim
-Plug 'google/vim-maktaba'           " for: vim-bazel
+" Plug 'google/vim-maktaba'           " for: vim-bazel
 Plug 'tpope/vim-dispatch'           " for: gtest
-Plug 'junegunn/vim-plug'
-Plug 'ojroques/vim-oscyank'
-Plug 'micchy326/lightline-lsp-progress'
-Plug 'jamessan/vim-gnupg'
 "--- Local plugins, if any
 if filereadable(expand('~/.vimrc.plugs'))
   source ~/.vimrc.plugs
 endif
-" packadd termdebug
 Plug 'kmARC/fugitive-gerrit.vim'
 Plug 'kmARC/asyncomplete-bazel'
 Plug 'kmARC/vim-basler'
@@ -129,7 +117,7 @@ function! s:plug_gx()
   let line = getline('.')
   let name = matchstr(line, "^Plug '[^']\\+/\\zs[^']\\+\\ze'")
   let uri  = get(get(g:plugs, name, {}), 'uri', '')
-  if uri !~# 'github.com' 
+  if uri !~# 'github.com'
     return
   endif
   let repo = matchstr(uri, '[^:/]*/'.name)
@@ -137,10 +125,8 @@ function! s:plug_gx()
   call netrw#BrowseX(url, 0)
 endfunction
 " }}}
-"
-"--- Functions --- {{{
-let s:sess = fnamemodify($MYVIMRC, ':h') . '/sessions/' . substitute($PWD, '\/', '%', 'g')
 
+"--- Functions --- {{{
 function! Project()
   if filereadable(s:sess)
     exec 'source' . fnameescape(s:sess)
@@ -160,18 +146,6 @@ function! CheckProject()
   if argc() == 0 && &g:errorfile ==# 'errors.err' && filereadable(s:sess)
       call Project()
     endif
-endfunction
-
-function! CheckDebug()
-  if filereadable(g:vimspector_session_file_name)
-    VimspectorLoadSession()
-  endif
-endfunction
-
-function! DebugVimLeave()
-  if filereadable(g:vimspector_session_file_name)
-    VimspectorMkSession()
-  endif
 endfunction
 
 function! DockerHelp(keyword)
@@ -250,19 +224,42 @@ endfunction
 
 function! ChangeColorScheme()
   if has('macunix') && system('defaults read -g AppleInterfaceStyle') =~? '^Dark'
-\ || has('linux')   && system('gsettings get org.gnome.desktop.interface gtk-theme') =~? 'Dark'
+\ || $XDG_CURRENT_DESKTOP == "KDE" && system('kreadconfig6 --file kdeglobals --key widgetStyle') =~? 'Dark'
+\ || system('gsettings get org.gnome.desktop.interface gtk-theme') =~? 'Dark'
     set background=dark
   else
     set background=light
   endif
-  let g:lightline['colorscheme']=g:colors_name
-  exec 'runtime! plugged/iceberg.vim/autoload/lightline/colorscheme/' . g:colors_name . '.vim'
-  if exists('*hlget')
-    let _h = hlget("VertSplit", v:true)[0]
-    let g:lightline#colorscheme#iceberg#palette.inactive.middle = [[_h->get("guifg", "NONE"), _h->get("guibg", "NONE"), _h->get("ctermfg", "NONE"), _h->get("ctermbg", "NONE")]]
+  if g:colors_name == 'iceberg'
+    let g:lightline['colorscheme'] = g:colors_name
+    exec 'runtime! plugged/iceberg.vim/autoload/lightline/colorscheme/' . g:colors_name . '.vim'
+    if exists('*hlget')
+      let l:h = hlget("VertSplit", v:true)[0]
+      let g:lightline#colorscheme#iceberg#palette.inactive.middle = [[l:h->get("guifg", "NONE"), l:h->get("guibg", "NONE"), l:h->get("ctermfg", "NONE"), l:h->get("ctermbg", "NONE")]]
+    endif
   endif
   call lightline#enable()
 endfunction
+
+function! AIPromptCommitMessageFn()
+  let l:range = 0
+  let l:diff = system('git --no-pager diff -U100 --staged')
+  let l:prompt =
+        \ "Generate a short commit message from the diff below. " .
+        \ "Focus on why the change was made, not what the changes are. " .
+        \ "Start the message with 'This patch'. " .
+        \ "\n" .
+        \ l:diff
+  let l:config = {
+        \  "engine": "chat",
+        \  "options": {
+        \    "initial_prompt": ">>> system\nyou are a code assistant",
+        \    "temperature": 1,
+        \  },
+        \}
+  call vim_ai#AIRun(l:range, l:config, l:prompt)
+endfunction
+command! AIPromptCommitMessage call AIPromptCommitMessageFn()
 " }}}
 
 " --- Default configurations --- {{{
@@ -358,11 +355,12 @@ function! s:on_lsp_buffer_enabled() abort
     " setlocal foldmethod=expr
     "   \ foldexpr=lsp#ui#vim#folding#foldexpr()
     "   \ foldtext=lsp#ui#vim#folding#foldtext()
-   
+
     " refer to doc to add more commands
 endfunction
 
 let s:dir_state = expand('~/.vim/state')
+let s:sess = s:dir_state . '/sessions/' . substitute($PWD, '\/', '%', 'g')
 let g:UltiSnipsEditSplit = 'vertical'
 let g:UltiSnipsExpandTrigger = '<c-j>'
 let g:UltiSnipsListSnippets = '<c-h>'
@@ -424,9 +422,10 @@ let g:gtest#highlight_failing_tests = 1
 let g:gutentags_cache_dir = '~/.cache/vim/gutentags'
 let g:gutentags_generate_on_new = 0
 let g:jsdoc_enable_es6 = 1
-let g:lightline_tagbar#flags = 'f'
 let g:lsp_code_action_ui = 'float'
-let g:lsp_diagnostics_enabled = v:false
+" let g:lsp_diagnostics_enabled = v:false
+let g:lsp_diagnostics_float_cursor = v:true
+let g:lsp_diagnostics_virtual_text_align = 'after'
 let g:lsp_document_symbol_detail = 1
 let g:lsp_experimental_workspace_folders = 1
 let g:lsp_float_max_width = 150
@@ -435,15 +434,15 @@ let g:lsp_semantic_enabled = 1
 let g:lsp_preview_fixup_conceal = 0
 " capabilities required for document_symbol_detail
 let g:lsp_settings = {
-      \ 'kotlin-language-server': {
-      \    'root_uri_patterns': ['pom.xml'],
-      \ },
       \ 'capabilities': {
       \     'textDocument': {
       \         'documentSymbol': {
       \             'hierarchicalDocumentSymbolSupport': v:true,
       \         },
       \     },
+      \ },
+      \ 'kotlin-language-server': {
+      \    'root_uri_patterns': ['pom.xml'],
       \ },
       \ 'pylsp-all': {
       \    'workspace_config': {
@@ -455,13 +454,6 @@ let g:lsp_settings = {
       \      }
       \    }
       \  },
-      \ 'bash-language-server': {
-      \    'workspace_config': {
-      \      'bashIde': {
-      \        'explainshellEndpoint': 'http://localhost:5000'
-      \      }
-      \    }
-      \ },
       \ 'starpls': {
       \     'args': ['server', '--experimental_infer_ctx_attributes']
       \ },
@@ -480,11 +472,10 @@ let g:netrw_browse_split = 4
 let g:netrw_home = s:dir_state
 let g:netrw_liststyle = 0
 let g:netrw_winsize = -40
-" let g:neural = {'source': { 'openai': {'api_key': readfile(expand('~/.config/openai.token'))[0],},},}
 let g:slime_paste_file = tempname()
 let g:sh_fold_enabled = 7
-let g:taboo_renamed_tab_format =' %N %l%m '
-let g:taboo_tab_format = ' %N %f%m '
+let g:taboo_renamed_tab_format =' %N %U%m%l %x '
+let g:taboo_tab_format = ' %N %U%m%F %x '
 let g:tagbar_autofocus = 1
 let g:tagbar_type_bzl = {
   \   'ctagstype': 'python',
@@ -521,111 +512,6 @@ if executable("ripper-tags")
 endif
 let g:vim_markdown_folding_disabled = 1
 let g:vim_markdown_frontmatter = 1
-let g:vimspector_session_file_name = s:dir_state . '/' . substitute(getcwd(), '/', '%', 'g') . '%.vimspector.session'
-function! CustomPickProcess( ... ) abort
-  let ps = $HOME .. '/.vim/plugged/vimspector/support/vimspector_process_list/vimspector_process_list'
-  " a:0 is number of args
-  " a:1 is the optional binary name
-  if a:0 > 0
-    let ps .= ' ^' . a:1 . '$'
-  endif
-
-  let line_selected = fzf#run( {
-      \ 'source': ps,
-      \ 'options': '--header-lines=1  '
-      \          . '--prompt="Select Process: " '
-      \ ,
-      \
-      \ } )[ 0 ]
-  if empty( line_selected)
-    return 0
-  endif
-  let pid = split( line_selected )[ 0 ]
-  return str2nr( pid )
-endfunction
-
-
-let g:vimspector_custom_process_picker_func = 'CustomPickProcess'
-let g:vimspector_configurations = {
-      \ "python run": {
-      \   "adapter": "debugpy",
-      \   "filetypes": [ "python" ],
-      \   "configuration": {
-      \     "request": "launch",
-      \     "type": "python",
-      \     "cwd": "${workspaceRoot}",
-      \     "args": [],
-      \     "program": "${file}",
-      \     "stopOnEntry": v:true,
-      \     "console": "integratedTerminal",
-      \   },
-      \   "breakpoints": {
-      \     "exception": {
-      \       "raised": "N",
-      \       "uncaught": "",
-      \       "userUnhandled": ""
-      \     }
-      \   }
-      \ },
-      \ "python run - manual": {
-      \   "adapter": "debugpy",
-      \   "filetypes": [ "python" ],
-      \   "configuration": {
-      \     "request": "launch",
-      \     "type": "python",
-      \     "cwd": "${workspaceRoot}",
-      \     "args#json": "${args:[]}",
-      \     "program": "${program:${file\\}}",
-      \     "stopOnEntry": v:true,
-      \     "console": "integratedTerminal",
-      \     "python": "${python:python}"
-      \   },
-      \   "breakpoints": {
-      \     "exception": {
-      \       "raised": "N",
-      \       "uncaught": "",
-      \       "userUnhandled": ""
-      \     }
-      \   }
-      \ },
-      \ "python attach": {
-      \   "adapter": "multi-session",
-      \   "filetypes": [ "python" ],
-      \   "configuration": {
-      \     "request": "attach",
-      \     "host": "${host:localhost}",
-      \     "port": "${port:5678}",
-      \   },
-      \   "breakpoints": {
-      \     "exception": {
-      \       "raised": "N",
-      \       "uncaught": "",
-      \       "userUnhandled": ""
-      \     }
-      \   }
-      \ },
-      \ "rust attach": {
-      \   "adapter": "CodeLLDB",
-      \   "filetypes": [ "rust", "c", "cpp", "jai" ],
-      \   "configuration": {
-      \     "request": "attach",
-      \     "program": "${workspaceRoot}/${fileBasenameNoExtension}",
-      \     "PID": "${PID}",
-      \     "sourceLanguages": [ "rust", "c", "cpp", "jai" ]
-      \   }
-      \ },
-      \ "launch": {
-      \   "adapter": "CodeLLDB",
-      \   "filetypes": [ "rust" ],
-      \   "configuration": {
-      \     "request": "launch",
-      \     "program": "${workspaceRoot}/../target/debug/${program:${file\\}}",
-      \     "cwd": "${workspaceRoot}/..",
-      \     "args#json": "${args:[]}",
-      \     "sourceLanguages": [ "rust" ]
-      \   }
-      \ },
-      \}
 let g:xml_syntax_folding = 1
 let test#strategy = 'vimux'
 let NERDTreeBookmarksFile = $HOME .. '/.vim/.NERDTreeBookmarks'
@@ -633,8 +519,8 @@ let NERDTreeBookmarksFile = $HOME .. '/.vim/.NERDTreeBookmarks'
 
 "--- Integrations --- {{{
 " Wayland {{{
-if has_key(environ(), 'WAYLAND_DISPLAY')
-  " Fix copy-paste
+if has_key(environ(), 'WAYLAND_DISPLAY') && !has('wayland')
+  " Fix copy-paste until https://github.com/vim/vim/pull/17097 is merged
   xnoremap "+y y:call system("wl-copy",           @")<cr>
   xnoremap "*y y:call system("wl-copy --primary", @")<cr>
   nnoremap "+p :let @+=substitute(system("wl-paste --no-newline"),           '<C-v><C-m>', '', 'g')<cr>"+p
@@ -644,48 +530,54 @@ end
 
 " Tmux {{{
 if has_key(environ(), 'TMUX')
-  "Set tmux-compatible title
+  " Set tmux-compatible title
   set t_ts=]2;
   set t_fs=\\
-  "Configure slime to use tmux
+  " Configure slime to use tmux
   let g:slime_target = 'tmux'
+endif
+" }}}
+
+" SSH {{{
+if environ()->has_key('SSH_CLIENT')
+  " Set browser to be invoked via reverse-ssh
+  let g:netrw_browsex_viewer = expand('$HOME/.vim/reverse-ssh-browser.sh')
+  let g:mkdp_browser = g:netrw_browsex_viewer
+
+  augroup ssh
+    autocmd!
+    autocmd TextYankPost *
+          \   if v:event.operator is 'y'
+          \ |   execute 'OSCYankRegister ""'
+          \ | endif
+  augroup ssh END
 endif
 " }}}
 " }}}
 
-"--- Mappings ---- {{{
-cmap w!!                   w !sudo tee > /dev/null %
+"--- Mappings --- {{{
+" normal mode overrides {{{
+nnoremap <space> :ls<CR>:sbuffer 
+nnoremap j       gj
+nnoremap k       gk
+nnoremap gj      j
+nnoremap gk      k
+" }}}
 
-nnoremap <expr> <C-p>      g:FugitiveIsGitDir() ? ':GFiles<CR>' : ':Files<CR>'
+" command mode overrides {{{
+cmap w!! w !sudo tee > /dev/null %
+" }}}
 
-nnoremap <expr> <F7>       expand('%')=='' ? ':NERDTree<CR>' : ':NERDTreeFind<CR>'
-nnoremap <F8>              :TagbarToggle<CR>
-nnoremap <F9>              :lclose<CR>:cclose<CR>:pclose<CR>
+" shortcuts {{{
+nnoremap <expr> <C-p> g:FugitiveIsGitDir() ? ':GFiles<CR>' : ':Files<CR>'
+nnoremap <expr> <F7> expand('%')=='' ? ':NERDTree<CR>' : ':NERDTreeFind<CR>'
+nnoremap        <F8> :TagbarToggle<CR>
+nnoremap        <F9> :lclose<CR>:cclose<CR>:pclose<CR>
+" }}}
 
-nnoremap <space>           :ls<CR>:sbuffer 
-nnoremap <leader><space>   :edit **/*.<C-r>=expand('%:e')<return><C-z><C-p><C-u>edit **/*
-
-" FZF files with the same extension as current
-nnoremap <leader>fp        :call fzf#vim#files(
-  \   0, {'options':'--query=' . expand('%:e') . '$\ '}
-  \ )<CR>
-" FZF grep only in file content, not in file name
-nnoremap <leader>fg        :call fzf#vim#grep(
-  \   'rg --column --line-number --no-heading --color=always --smart-case ""',
-  \   1, {'options':'--delimiter : --nth 4..'}
-  \ )<CR>
-" FZF grep current word only in file content
-nnoremap <leader>fG        :Rg <C-r><C-w><CR>
-vnoremap <leader>t,        :Tabularize /^[^,]*,/l0l1<CR>
-vnoremap <leader>t:        :Tabularize /^[^:]*:/l0l1<CR>
-vnoremap <leader>t=        :Tabularize /^[^=]*\zs/l1c1l1<CR>
-vnoremap <leader>t<Space>  :Tabularize /\S\+/l1l0<CR>
-vnoremap <leader>t<bar>    :Tabularize /<bar>\+/l1c1<CR>
-
+" shortcuts with <leader> {{{
 nnoremap <leader>K         :DevdocsHelp <C-r><C-w><CR>
-
 nnoremap <leader>d         :echom strftime("%c", <C-r><C-w>)<CR>
-
 nnoremap <leader>1         1gt
 nnoremap <leader>2         2gt
 nnoremap <leader>3         3gt
@@ -696,24 +588,33 @@ nnoremap <leader>7         7gt
 nnoremap <leader>8         8gt
 nnoremap <leader>9         9gt
 nnoremap <leader>0         0gt
+" }}}
 
-" nnoremap j                 gj
-" nnoremap k                 gk
-" nnoremap gj                j
-" nnoremap gk                k
-
-" AI
+" plugin: <leader>a vim-ai {{{
 nnoremap <leader>ai        :AIChat<CR>
 vnoremap <leader>ae        :AIChat explain<CR>
+" }}}
 
-" AI
-nnoremap <leader>ai        :AIChat<CR>
-vnoremap <leader>ae        :AIChat explain<CR>
+" plugin: <leader>f fzf-vim {{{
+" FZF files with the same extension as current
+nnoremap <leader>fp :call fzf#vim#files(
+  \   0, {'options':'--query=' . expand('%:e') . '$\ '}
+  \ )<CR>
+" FZF grep only in file content, not in file name
+nnoremap <leader>fg :call fzf#vim#grep(
+  \   'rg --column --line-number --no-heading --color=always --smart-case ""',
+  \   1, {'options':'--delimiter : --nth 4..'}
+  \ )<CR>
+" FZF grep current word only in file content
+nnoremap <leader>fG :Rg <C-r><C-w><CR>
+" }}}
 
-" nnoremap <leader>aa        :!xdg-open https://docs.ansible.com/ansible/latest/list_of_all_modules.html<CR>
-" nnoremap <leader>am        :!xdg-open https://docs.ansible.com/ansible/latest/<C-R><C-W>_module.html\#options<CR>
-" nnoremap <leader>as        :!xdg-open https://docs.ansible.com/ansible/latest/reference_appendices/playbooks_keywords.html?highlight=<C-R><C-W><CR>
-
+" plugin: <leader>t tabular {{{
+vnoremap <leader>t,       :Tabularize /^[^,]*,/l0l1<CR>
+vnoremap <leader>t:       :Tabularize /^[^:]*:/l0l1<CR>
+vnoremap <leader>t=       :Tabularize /^[^=]*\zs/l1c1l1<CR>
+vnoremap <leader>t<Space> :Tabularize /\S\+/l1l0<CR>
+vnoremap <leader>t<bar>   :Tabularize /<bar>\+/l1c1<CR>
 " }}}
 
 "--- Autocommands --- {{{
@@ -723,10 +624,11 @@ augroup filetypes
   " add an autocommand that runs :AIChat when leaving insert mode
   autocmd FileType aichat
     \   setlocal wrap
+    \ | autocmd InsertLeave <buffer> execute('AIChat')
 
   autocmd FileType cpp
-    \   nnoremap <silent> t<C-n> :GTestRunUnderCursor<CR>
-    \ | nnoremap <silent> t<C-f> :GTestRun<CR>
+    \   nnoremap <buffer> <silent> t<C-n> :GTestRunUnderCursor<CR>
+    \ | nnoremap <buffer> <silent> t<C-f> :GTestRun<CR>
 
   autocmd FileType css,less,scss
     \   setlocal keywordprg=:DevdocsHelp
@@ -745,14 +647,14 @@ augroup filetypes
     \     | 80 wincmd |
     \     | setlocal winfixwidth
 
-  autocmd FileType html 
+  autocmd FileType html
     \   autocmd BufWritePost <buffer> normal! mH
 
   autocmd FileType java
     \   setlocal softtabstop=4 tabstop=4 shiftwidth=4
     \ | setlocal foldmethod=syntax foldlevel=1
-    \ | nnoremap gP :exec "vsplit " . findfile('pom.xml', ".;")<CR><ESC>
-    \ | nnoremap gC :exec "vsplit " . findfile(expand("%:r")->split("/")[-1] . ".class", "**")<CR><ESC>
+    \ | nnoremap <buffer> gP :exec "vsplit " . findfile('pom.xml', ".;")<CR><ESC>
+    \ | nnoremap <buffer> gC :exec "vsplit " . findfile(expand("%:r")->split("/")[-1] . ".class", "**")<CR><ESC>
     \ | if maven#isBufferUnderMavenProject(bufnr("%"))
     \ |   let b:mvn_exec_cmd =  "Mvn! compile exec:java -Dexec.mainClass=" . maven#getJavaPackageOfBuffer('%') . '.' . expand('%:t:r')
     \ |   command! MvnExec exec b:mvn_exec_cmd
@@ -766,7 +668,7 @@ augroup filetypes
     \ | setlocal define=export.\\{-\\}\\(interface\\\|function\\\|const\\\|type\\\|class\\\|var\\)
     \ | autocmd BufWritePost <buffer> normal! mJ
 
-  autocmd FileType mail 
+  autocmd FileType mail
     \   setlocal formatoptions+=watqc
     \ | setlocal nojoinspaces
     \ | setlocal spell
@@ -787,57 +689,45 @@ augroup filetypes
     \   setlocal textwidth=100 formatprg=par\ -jw100
     \ | autocmd BufWritePost <buffer> normal! mT
 
-  autocmd FileType python 
+  autocmd FileType python
     \   setlocal keywordprg=pydoc
     \ | setlocal softtabstop=4 tabstop=4 shiftwidth=4
     \ | autocmd BufWritePost <buffer> normal! mP
 
-  autocmd FileType terraform 
+  autocmd FileType terraform
     \   setlocal commentstring=#%s
     \ | autocmd BufWritePost <buffer> normal! mT
-
-  autocmd FileType todo
-    \   set nospell
-    \ | hi TodoProject cterm=bold ctermfg=5
-    \ | hi TodoContext cterm=bold ctermfg=2
-    \ | hi TodoPriorityA ctermfg=1
-    \ | hi TodoPriorityB ctermfg=3
-    \ | hi TodoPriorityC ctermfg=6
 
   autocmd FileType vim
     \   setlocal keywordprg=:help
     \ | nnoremap <buffer> <silent> gx :call <sid>plug_gx()<cr>
     \ | autocmd BufWritePost <buffer> normal! mV
 
+  autocmd FileType xml
+    \   setlocal foldmethod=syntax
+    \ | silent! %foldopen!
+    \ | autocmd BufWritePost <buffer> normal! mX
+
   autocmd FileType yaml.ansible
     \   setlocal keywordprg=:DevdocsHelp
+    \ | nnoremap <buffer> <leader>aa :!xdg-open https://docs.ansible.com/ansible/latest/list_of_all_module>.html<CR>
+    \ | nnoremap <buffer> <leader>am :!xdg-open https://docs.ansible.com/ansible/latest/<C-R><C-W>_module.html\#options<CR>
+    \ | nnoremap <buffer> <leader>as :!xdg-open https://docs.ansible.com/ansible/latest/reference_appendices/playbooks_keywords.html?highlight=<C-R><C-W><CR>
     \ | autocmd BufWritePost <buffer> normal! mA
+" }}}
+
 
   autocmd FileType yaml.kubernetes,*gotexttmpl
     \   setlocal keywordprg=:KubeHelp
     \ | autocmd BufWritePost <buffer> normal! mK
 
-  autocmd FileType xml 
-    \   setlocal foldmethod=syntax
-    \ | silent! %foldopen!
-    \ | autocmd BufWritePost <buffer> normal! mX
-
-augroup END
+augroup filetypes END
 
 augroup autocommands
   autocmd!
 
   autocmd VimEnter *
     \   call CheckProject()
-
-  " autocmd VimLeave *
-  "   \   call DebugVimLeave()
-
-  " autocmd VimEnter *
-  "   \   if ! &l:diff && expand('%') == ''
-  "   \ |   :NERDTree
-  "   \ |   execute "normal \<c-w>p"
-  "   \ | endif
 
   autocmd BufNewFile *
     \   let s:skel = expand('~/.vim/skeleton/skeleton.') . expand('%:e')
@@ -846,7 +736,7 @@ augroup autocommands
     \ | endif
 
   autocmd BufReadPost *
-    \   if test#exists() 
+    \   if test#exists()
     \ |   nnoremap <buffer> t<C-n> :TestNearest<CR>
     \ |   nnoremap <buffer> t<C-f> :TestFile<CR>
     \ |   nnoremap <buffer> t<C-s> :TestSuite<CR>
@@ -857,26 +747,25 @@ augroup autocommands
   autocmd BufReadPost *.bazelrc
     \   setlocal filetype=conf
 
-  autocmd BufEnter NERD_tree_* 
+  autocmd BufReadPost *.bzl
+    \   setlocal keywordprg=:DevdocsHelp
+
+  autocmd BufEnter NERD_tree_*
     \   nnoremap <buffer> <F7> :q<CR>
 
-  autocmd BufWritePost ~/Documents/Home/index.md
-    \   silent !pandoc --output ~/Documents/Home/index.html
-    \                  --css github-pandoc.css --standalone %
-
-  autocmd WinEnter * 
+  autocmd WinEnter *
     \   if &l:buftype == "" && &l:filetype != "netrw"
     \ |   setlocal nu rnu
     \ | endif
     \ | setlocal cursorline
 
-  autocmd WinLeave * 
-    \   if &l:buftype == "" && &l:filetype != "netrw" 
+  autocmd WinLeave *
+    \   if &l:buftype == "" && &l:filetype != "netrw"
     \ |   setlocal nu nornu
     \ | endif
     \ | setlocal nocursorline
 
-  autocmd User TermdebugStartPost 
+  autocmd User TermdebugStartPost
     \   call TermDebugSendCommand('vim-dashboard-profile')
 
   autocmd User lsp_buffer_enabled
@@ -904,134 +793,59 @@ augroup autocommands
 
   autocmd ColorScheme *
     \   call ChangeColorScheme()
-    \ | hi VertSplit                       guibg=NONE
-    \ | hi LineNr                          guibg=NONE
-    \ | hi SignColumn                      guibg=NONE
-    \ | hi link ExtraWhitespace   SpellBad
-    \ | match ExtraWhitespace /\s\+$/
-    \ | hi link javaFunction      Text
-    \ | hi link javaString        Special
-    \ | hi link lspInlayHintsType Comment
-    \ | hi link TagbarSignature   Comment
-    \ | hi ALEVirtualTextError             ctermfg=1 gui=italic cterm=italic
-    \ | hi ALEVirtualTextWarning           ctermfg=3 gui=italic cterm=italic
-    \ | hi ALEVirtualTextInfo              ctermfg=6 gui=italic cterm=italic
+    \ | hi link ExtraWhitespace        SpellBad
+    \ | match   ExtraWhitespace        /\s\+$/
+    \ | hi link javaFunction           Text
+    \ | hi link javaString             Special
+    \ | hi link lspInlayHintsType      Comment
+    \ | hi link TagbarSignature        Comment
+    \ | hi      ALEVirtualTextError    ctermfg=1 gui=italic cterm=italic
+    \ | hi      ALEVirtualTextInfo     ctermfg=6 gui=italic cterm=italic
+    \ | hi      ALEVirtualTextWarning  ctermfg=3 gui=italic cterm=italic
+    \ | hi      LineNr                 guibg=NONE
+    \ | hi      SignColumn             guibg=NONE
+    \ | hi      VertSplit              guibg=NONE
+    \ | hi      TabLineSel             cterm=bold
     \ | if exists("*hlget")
     \ |     call hlset([hlget("ALEWarningSign", v:true)[0]
     \              ->extend(#{ name: "ALEInfoSign" })
-    \              ->extend(#{ guifg:   hlget("DiagnosticInfo", v:true)[0]["guifg"] })
-    \              ->extend(#{ ctermfg: hlget("DiagnosticInfo", v:true)[0]["ctermfg"] })
+    \              ->extend(#{ guifg:   hlget("DiagnosticInfo", v:true)[0]->get("guifg", "") })
+    \              ->extend(#{ ctermfg: hlget("DiagnosticInfo", v:true)[0]->get("ctermfg", "") })
     \              ])
     \ |     call hlset([hlget("CursorLineNr", v:true)[0]
-    \              ->extend(#{ guibg:   hlget("CursorLine", v:true)[0]["guibg"] })
-    \              ->extend(#{ ctermbg: hlget("CursorLine", v:true)[0]["ctermbg"] })
+    \              ->extend(#{ guibg:   hlget("CursorLine", v:true)[0]->get("guibg", "") })
+    \              ->extend(#{ ctermbg: hlget("CursorLine", v:true)[0]->get("ctermbg", "") })
     \              ])
     \ | endif
-
-  autocmd TextYankPost * if v:event.operator is 'y' && environ()->has_key("SSH_CLIENT") | execute 'OSCYankRegister ""' | endif
-
-  autocmd BufReadPost *.bzl 
-    \   setlocal keywordprg=:DevdocsHelp
 
 augroup END
 " }}}
 
-"--- Look & Feel ---- {{{
-let g:tagbar_status_func = 'TagbarStatusFunc'
-function! TagbarStatusFunc(current, sort, fname, ...) abort
-  return lightline#statusline(0)
-endfunction
-
+"--- Look & Feel --- {{{
 let g:lightline = {
       \   'active': {
       \     'left': [ [ 'preview', 'mode', 'paste' ],
-      \               [ 'gitbranch', 'readonly', 'filename', 'modified' ],
-      \               [ 'tagbar'] ],
-      \     'right': [ ['percent', 'lineinfo'],
-      \                ['filetype'],
-      \                ['lsp_status'] ],
+      \               [ 'readonly', 'relativepath', 'modified' ],
+      \                ],
+      \     'right': [ ['lineinfo'],
+      \                ['percent'],
+      \                ['fileformat', 'fileencoding', 'filetype', 'lsp_status'] ],
       \   },
       \   'inactive': {
-      \     'left': [ [],
-      \               [ 'absolutepath', 'modified' ],
-      \               [] ],
-      \     'right': [ ],
+      \     'left': [ [ 'relativepath' ] ],
+      \     'right': [ [ 'lineinfo' ],
+      \                [ 'percent' ] ],
       \   },
-      \   'component': { 'filetype' : '%<%{&ft!=#""?&ft:"no ft"}', 'preview': '%{&previewwindow?"PREVIEW":""}'},
       \   'component_function': {
-      \     'gitbranch': 'FugitiveStatusline',
-      \     'tagbar': 'lightline_tagbar#component',
       \     'lsp_status': 'lightline_lsp_progress#progress',
       \     'codeium': 'codeium#GetStatusString',
-      \     'mode': 'LightlineMode',
-      \     'filename': 'LightlineFilename',
       \   },
       \   'component_visible_condition': {
       \     'preview': '&previewwindow',
       \   },
       \ }
 
-function! LightlineMode()
-  let fname = expand('%:t')
-  return fname =~# '^__Tagbar__' ? 'Tagbar' :
-        \ fname =~# 'NERD_tree' ? 'NERDTree' :
-        \ winwidth(0) > 60 ? lightline#mode() : ''
-endfunction
-
-function! LightlineFilename()
-  let fname = expand('%:t')
-  return fname =~# '^__Tagbar__\|__Gundo\|NERD_tree' ? '' :
-        \ (LightlineReadonly() !=# '' ? LightlineReadonly() . ' ' : '') .
-        \ (fname !=# '' ? fname : '[No Name]') .
-        \ (LightlineModified() !=# '' ? ' ' . LightlineModified() : '')
-endfunction
-
-function! LightlineModified()
-  return &ft ==# 'help' ? '' : &modified ? '+' : &modifiable ? '' : '-'
-endfunction
-
-function! LightlineReadonly()
-  return &ft !~? 'help' && &readonly ? 'RO' : ''
-endfunction
-
-
 silent colorscheme iceberg
-
-" :help tmux-integration
-if !has('gui_running') && &term =~# '^\%(screen\|tmux\|alacritty\)'
-  " Better mouse support, see  :help 'ttymouse'
-  set ttymouse=sgr
-
-  " Enable true colors, see  :help xterm-true-color
-  let &termguicolors = v:true
-  let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
-  let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
-
-  " Enable bracketed paste mode, see  :help xterm-bracketed-paste
-  let &t_BE = "\<Esc>[?2004h"
-  let &t_BD = "\<Esc>[?2004l"
-  let &t_PS = "\<Esc>[200~"
-  let &t_PE = "\<Esc>[201~"
-
-  " Enable focus event tracking, see  :help xterm-focus-event
-  let &t_fe = "\<Esc>[?1004h"
-  let &t_fd = "\<Esc>[?1004l"
-  execute "set <FocusGained>=\<Esc>[I"
-  execute "set <FocusLost>=\<Esc>[O"
-
-  " Enable modified arrow keys, see  :help arrow_modifiers
-  execute "silent! set <xUp>=\<Esc>[@;*A"
-  execute "silent! set <xDown>=\<Esc>[@;*B"
-  execute "silent! set <xRight>=\<Esc>[@;*C"
-  execute "silent! set <xLeft>=\<Esc>[@;*D"
-endif
-" }}}
-
-"--- Remote ---- {{{
-if environ()->has_key('SSH_CLIENT')
-  let g:netrw_browsex_viewer = expand('$HOME/.vim/reverse-ssh-browser.sh')
-  let g:mkdp_browser = g:netrw_browsex_viewer
-endif
 " }}}
 
 "--- Debugging --- {{{
@@ -1053,32 +867,7 @@ if $LOG == 'verbose'
 endif
 " }}}
 
-" custom command suggesting git commit message, takes no arguments
-function! GitCommitMessageFn()
-  let l:diff = system('git --no-pager diff -U100 --staged')
-  let l:prompt = 
-        \ "Generate a short commit message from the diff below." .
-        \ "Focus on why the change was made, not what the changes are." .
-        \ "Start the message with 'This patch'" .
-        \ "\n" . l:diff
-  let l:range = 0
-  let l:config = g:vim_ai_chat
-  let l:config.options.initial_prompt =  ">>> system\nyou are a code assistant"
-  call vim_ai#AIRun(l:config, l:prompt)
-endfunction
-command! GitCommitMessage call GitCommitMessageFn()
-
-" {{{ --- Startup ---
-if ! v:vim_did_enter
-  call ChangeColorScheme()
-endif
-
-" Fix delimitMate - endwise integration
-" see: https://github.com/tpope/vim-endwise/issues/133
-if empty(maparg('<CR>', 'i'))
-  imap <CR> <Plug>delimitMateCR
-endif
-
+" --- Startup --- {{{
 if filereadable(expand('~/.vimrc.local'))
   source ~/.vimrc.local
 endif
@@ -1086,5 +875,4 @@ endif
 set modeline
 set exrc
 set secure
-
 " vim: fdm=marker fdl=0 fen
