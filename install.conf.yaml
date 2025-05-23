@@ -50,6 +50,8 @@
       path: config/git/config.$PLATFORM
     $XDG_CONFIG_HOME/htop/htoprc:
       path: config/htop/htoprc
+    $XDG_CONFIG_HOME/irb/irbrc:
+      path: config/irb/irbrc
     $XDG_CONFIG_HOME/k9s/skin.yml:
       path: config/k9s/skin.yml
     $XDG_CONFIG_HOME/mopidy/mopidy.conf:
@@ -85,9 +87,6 @@
       path: config/urlscan/config.json
     $XDG_CONFIG_HOME/waybar:
       path: config/waybar
-    $XDG_CONFIG_HOME/weechat/:
-      glob: true
-      path: config/weechat/*
     $XDG_CONFIG_HOME/wgetrc:
       path: config/wgetrc
     $XDG_CONFIG_HOME/yay/config.json:
@@ -144,11 +143,3 @@
       - Installing new TMUX plugins
     - - $XDG_CONFIG_HOME/tmux/plugins/tpm/bin/update_plugins all
       - Upgrading TMUX plugins
-    - - >-2
-        git config filter.cleanWeechat.clean
-        "awk '/^\[(layout|notify)\]\$/{ STRIP=1; print; next } \
-              /^\[/{ STRIP=0; print; next } \
-              /(slack_api_token|bitlbee.autojoin)/{ next } \
-              "'!'"STRIP{ print \$0 }' \
-            | sed 's/\(_password\s\+=\s\+\)\".*/\1<REDACTED>/g'"
-      - Adding git cleanup filter

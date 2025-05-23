@@ -4,8 +4,10 @@ set -Eeuo pipefail
 trap "echo Error in: \${FUNCNAME:-top level}, line \${LINENO}" ERR
 
 # Constants
-domain="https://gastro.migros.ch"
-url="$domain/de/genossenschaften/zuerich/migros-restaurants.html"
+DOMAIN="https://gastro.migros.ch"
+URL="$DOMAIN/de/genossenschaften/zuerich/migros-restaurants.html"
+
+out="${XDG_CACHE_HOME:-$HOME/.cache}/lunch-menu.pdf"
 
 if [ "$(uname)" == 'Darwin' ]; then
   open=open
@@ -13,22 +15,12 @@ else
   open=xdg-open
 fi
 
-# Calculate week number
-week=$(( $(date +%W) ))
+# Determine regex for the title string "Menü ab <day>. <month>"
+regex_menu=$(LC_ALL=de_CH.UTF-8 date -d "last Monday" +'%d\.\s*%B')
+
 # Determine pdf link
-pdf=$(curl -L $url | grep "<a.*W%20$week.*pdf" | awk -F'"' '{ print $2; exit}')
-
-TMPFILE="$(mktemp -t --suffix=.pdf lunch_menu_sh.XXXXXX)"
-trap "rm -f '$TMPFILE'" 0               # EXIT
-trap "rm -f '$TMPFILE'; exit 1" 2       # INT
-trap "rm -f '$TMPFILE'; exit 1" 1 15    # HUP TERM
-
-# Debug
-echo $domain$pdf on $TMPFILE
+pdf=$(curl -L $URL | sed -n  's/.*<a.*href=.\([^"'"'""]\+\)..*title=.*$regex_menu.*/\1/gp")
 
 # Download and open
-curl -o "$TMPFILE" "$domain$pdf"
-$open "$TMPFILE"
-
-# Ensure xdg-open sucessfully opened the file
-sleep 2
+curl -o "$out" "$DOMAIN/$pdf"
+$open "$out"

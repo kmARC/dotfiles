@@ -1,9 +1,11 @@
 Compression yes
 ConnectTimeout 5
-ServerAliveCountMax 5
-ServerAliveInterval 10
+ServerAliveCountMax 3
+ServerAliveInterval 5
 
-AddKeysToAgent confirm
+Include config.d/*
+
+# !!! Only Host / Match directives below this line !!!
 
 ##############
 #  Examples  #
@@ -18,6 +20,8 @@ AddKeysToAgent confirm
 #ControlPath ~/.ssh/controlmasters/%r@%h:%p
 #ControlPersist 10m
 
-Include ~/.ssh/config.d/*
-
-
+Host gitlab.com github.com
+  AddKeysToAgent confirm 5s
+  ControlMaster auto
+  ControlPath ~/.ssh/controlmasters/%r@%h:%p
+  ControlPersist 10m

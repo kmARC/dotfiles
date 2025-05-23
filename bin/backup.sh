@@ -18,7 +18,7 @@ check() {
   fi
 
   if [ -z "$BORG_PASSPHRASE" ]; then
-      >&2 echo "No password specified. Check your secrets. Seahorse, secret-tool"
+      >&2 echo "No password specified. Check your secrets. Seahorse/KDE Wallet, secret-tool"
       >&2 echo "Exiting."
       exit 1
   fi
@@ -56,9 +56,12 @@ backup() {
       fi
   fi
 
-  # Create excludes file, add larger than 1G files
-  printf '%s\n' "${EXCLUDES[@]}" > "$EXCLUDES_FILE"
-  (find "$HOME" -type f -size +1G 2>/dev/null || true) >> "$EXCLUDES_FILE"
+  # Create pattern file
+  {
+    printf -- '+ %s\n' "${INCLUDES[@]}"
+    printf -- '- %s\n' "${EXCLUDES[@]}"
+    (find "$HOME" -type f -size +"$EXCLUDE_LARGERTHAN" -printf "- %h/%f\n" 2>/dev/null || true)
+  } >> "$PATTERN_FILE"
 
   touch "$LOCK_FILE"
 
@@ -70,7 +73,7 @@ backup() {
                   --progress \
                   --stats \
                   --compression auto,lzma \
-                  --exclude-from "$EXCLUDES_FILE" \
+                  --patterns-from "$PATTERN_FILE" \
                   --list \
                   --filter=AME \
                   "$DEST"::'{now}' \
@@ -106,7 +109,6 @@ prune() {
              "$DEST"
 }
 
-
 list() {
   borg list "$DEST"
   borg info "$DEST"
@@ -120,7 +122,7 @@ compact() {
 
 mount_repo() {
   MOUNT_DIR=$(mktemp -d /tmp/backup.mount.XXX)
-  borg mount "$DEST" "$MOUNT_DIR"
+  borg mount -o x-gvfs-show "$DEST" "$MOUNT_DIR"
   echo "======"
   echo "    Backup repository mounted at '$MOUNT_DIR'"
   echo "    To unmount:"
@@ -132,12 +134,12 @@ umount_repo() {
   echo "======"
   echo "    Backup repositori(es) unmounted:"
   for d in /tmp/backup.mount.*; do
+    echo "    - $d"
     if type -t fusermount >/dev/null; then
-      fusermount -u "$d" &>/dev/null || true
+      fusermount -u "$d" &>/dev/null
     else
       umount "$d"
     fi
-    echo "    - $d"
     rm -rf "$d"
   done
   echo "======"
@@ -176,7 +178,7 @@ repair() {
 }
 
 cleanup() {
-  rm -f "$LOCK_FILE" "$EXCLUDES_FILE"
+  rm -f "$LOCK_FILE" "$PATTERN_FILE"
 }
 
 # Error handling
@@ -213,11 +215,13 @@ DEST=${DEST:-$_DEST}
 RCLONE_REMOTE=${RCLONE_REMOTE:-$_RCLONE_REMOTE}
 S3_BUCKET=${S3_BUCKET:-$_S3_BUCKET}
 EXCLUDES=${EXCLUDES:-}
+INCLUDES=${INCLUDES:-}
+EXCLUDE_LARGERTHAN="${EXCLUDE_LARGERTHAN:-1G}"
 # Opts
 SYNC=${SYNC:-false}
 FORCE=${FORCE:-false}
 # Defaults
-EXCLUDES_FILE=$(mktemp /tmp/backup.excludes.XXXXX.txt)
+PATTERN_FILE=$(mktemp /tmp/backup.pattern.XXXXX.lst)
 LOCK_FILE="/tmp/backup.lock"
 
 # Check if all configuration needed is properly set

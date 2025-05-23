@@ -503,19 +503,22 @@ let g:tagbar_type_bzl = {
     \   '?:unknown',
     \ ],
   \ }
-let g:tagbar_type_ruby = {
-  \   'ctagsbin': 'ripper-tags',
-  \   'ctagsargs': ['-f', '-', '--excmd=pattern', '--fields=+ln', '--append=no', '-V'],
-  \   'kinds' : [
-  \     'm:modules',
-  \     'c:classes',
-  \     'f:methods',
-  \     'F:singleton methods',
-  \     'C:constants',
-  \     'a:aliases',
-  \     '?:unknown',
-  \   ],
-  \ }
+if executable("ripper-tags")
+  let g:gutentags_ctags_executable_ruby = 'ripper-tags'
+  let g:tagbar_type_ruby = {
+    \   'ctagsbin': 'ripper-tags',
+    \   'ctagsargs': ['-f', '-', '--excmd=pattern', '--fields=+ln', '--append=no', '-V'],
+    \   'kinds' : [
+    \     'm:modules',
+    \     'c:classes',
+    \     'f:methods',
+    \     'F:singleton methods',
+    \     'C:constants',
+    \     'a:aliases',
+    \     '?:unknown',
+    \   ],
+    \ }
+endif
 let g:vim_markdown_folding_disabled = 1
 let g:vim_markdown_frontmatter = 1
 let g:vimspector_session_file_name = s:dir_state . '/' . substitute(getcwd(), '/', '%', 'g') . '%.vimspector.session'
