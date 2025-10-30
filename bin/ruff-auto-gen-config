@@ -1,0 +1,56 @@
+#!/usr/bin/env bash
+set -Eeuo pipefail
+
+trap "echo Error in: \${FUNCNAME:-top level}, line \${LINENO}" ERR
+
+if [ -t 0 ]; then
+  echo "Usage: rg --type python --files | $0 > .ruff_todo.toml"
+  echo ""
+  echo "make sure your .ruff.toml references the todo list:"
+  echo "  extend = \".ruff_todo.toml\""
+  exit 0
+fi
+
+echo "[lint.per-file-ignores]"
+
+block_filename=""
+shopt -s lastpipe
+xargs ruff check -q --exit-zero --output-format concise \
+    | sed 's/^\(\S\+\):[0-9]\+:[0-9]\+: \(\S\+\) \(.*\)/\1:  "\2",  # \3/g' \
+    | sort -u \
+    | while IFS="" read -r res
+do
+  # Create entries in ruff toml format.
+  # From this:
+  #
+  #     <filename>:  "E000",  # Problem comment
+  #     <filename>:  "E001",  # Other problem
+  #
+  # To this:
+  #
+  #     "filename" = [
+  #         "E000",  # Problem comment
+  #         "E001",  # Other problem
+  #     ]
+
+  filename="${res%%:*}"
+
+  if [ "$block_filename" != "$filename" ]; then
+    # start new block, since file changed
+
+    if [ "$block_filename" != "" ]; then
+      echo "]"
+    fi
+    echo "\"$filename\" = ["
+
+    block_filename="$filename"
+  fi
+
+  entry="${res#*:}"
+  echo "$entry"
+done
+shopt -u lastpipe
+
+if [ "$block_filename" != "" ]; then
+  echo "]"
+fi
