@@ -1,0 +1,2 @@
+install: --bindir ~/.local/bin --no-user-install
+uninstall: --bindir ~/.local/bin

@@ -3,7 +3,7 @@
 ###########
 --map-python=+.bzl
 
---langdef=Bazel{base=python}
+--langdef=Bazel
 --map-Bazel=+.bazel
 --map-Bazel=+(WORKSPACE)
 --map-Bazel=+(BUILD)
@@ -14,16 +14,16 @@
 --mline-regex-Bazel=/^\s*alias\s*\((\s*name\s*=\s*("([^"]+)",|([^,]+),)|\s*actual\s*=\s*"([^"]+)",?)*/\3\4/a/{mgroup=0}{_field=signature: => \5}p"
 
 --kinddef-Bazel=D,bazeldep,"Bazel module dependency"
---mline-regex-Bazel=/^\s*bazel_dep\s*\((\s*name\s*=\s*("([^"]+)",|([^,]+),)|\s*version\s*=\s*"([^"]+)",?)*/\3/D/{mgroup=0}{_field=signature: : \5}p"
+--mline-regex-Bazel=/^\s*bazel_dep\s*\((\s*name\s*=\s*("([^"]+)"|([^,]+))|\s*version\s*=\s*"([^"]+)",?)*/\3/D/{mgroup=0}{_field=signature: : \5}p"
 
 --kinddef-Bazel=b,binary,"Bazel binary target label"
---mline-regex-Bazel=/(\w+_binary(?>_\w+)?)\s*\(\s*name\s*=\s*("([^"]+)",|([^,]+),?)/\3\4/b/{mgroup=0}{_field=signature: : \1}p"
+--mline-regex-Bazel=/(\w+_binary(?>_\w+)?)\s*\(\s*name\s*=\s*("([^"]+)"|([^,]+)),?/\3\4/b/{mgroup=0}{_field=signature: : \1}p"
 
 --kinddef-Bazel=L,library,"Bazel library target label"
---mline-regex-Bazel=/(\w+_library(?>_\w+)?)\s*\(\s*name\s*=\s*("([^"]+)",|([^,]+),?)/\3\4/L/{mgroup=0}{_field=signature: : \1}p"
+--mline-regex-Bazel=/(\w+_library(?>_\w+)?)\s*\(\s*name\s*=\s*("([^"]+)"|([^,]+)),?/\3\4/L/{mgroup=0}{_field=signature: : \1}p"
 
 --kinddef-Bazel=t,test,"Bazel test target label"
---mline-regex-Bazel=/(\w+_test(?>_\w+)?)\s*\(\s*name\s*=\s*("([^"]+)",|([^,]+),?)/\3\4/t/{mgroup=0}{_field=signature: : \1}p"
+--mline-regex-Bazel=/(\w+_test(?>_\w+)?)\s*\(\s*name\s*=\s*("([^"]+)"|([^,]+)),?/\3\4/t/{mgroup=0}{_field=signature: : \1}p"
 
 --kinddef-Bazel=o,other,"Bazel other target label"
 --mline-regex-Bazel=/(^|\s+)((?!alias|bazel_dep|\w+_binary|\w+_library|\w+_test)\w+)\s*\(\s*name\s*=\s*("([^"]+)",|([^,]+),?)/\4/o/{mgroup=0}{_field=signature: : \2}p"
@@ -33,6 +33,9 @@
 
 --kinddef-Bazel=R,repositoryrule,"Bazel repository rule"
 --regex-Bazel=/(\w+)\s*=\s*repository_rule\(/\1/R/
+
+--kinddef-Bazel=M,moduleextension,"Bazel module extension"
+--regex-Bazel=/(\w+)\s*=\s*module_extension\(/\1/M/
 
 --languages=+Bazel
 

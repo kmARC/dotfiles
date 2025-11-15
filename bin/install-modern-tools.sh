@@ -2,12 +2,15 @@
 
 set -Eeuo pipefail
 
-TMUX_VERSION=3.5a           # https://github.com/tmux/tmux/releases/
-VIM_VERSION=9.1.1236        # https://github.com/vim/vim/tags
+VIM_VERSION=9.1.1376        # https://github.com/vim/vim/tags
 VIM_URL=https://github.com/vim/vim/archive/refs/tags/v$VIM_VERSION.tar.gz
+
+TMUX_VERSION=3.5a           # https://github.com/tmux/tmux/releases/
 TMUX_URL=https://github.com/tmux/tmux/releases/download/$TMUX_VERSION/tmux-$TMUX_VERSION.tar.gz
+
 LIBEVENT_VERSION=2.1.12     # LIBEVENT_VERSION=2.0.21 is the same as in EL7
 LIBEVENT_URL=https://github.com/libevent/libevent/archive/refs/tags/release-$LIBEVENT_VERSION-stable.tar.gz
+
 DIRENV_VERSION=2.35.0       # https://github.com/direnv/direnv/releases/
 DIRENV_URL=https://github.com/direnv/direnv/releases/download/v$DIRENV_VERSION/direnv.linux-amd64
 

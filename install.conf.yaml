@@ -42,6 +42,8 @@
       path: config/environment.d/10-main.conf
     $XDG_CONFIG_HOME/fontconfig:
       path: config/fontconfig
+    $XDG_CONFIG_HOME/gem/gemrc:
+      path: config/gem/gemrc
     $XDG_CONFIG_HOME/git/config:
       path: config/git/config
     $XDG_CONFIG_HOME/git/ignore:

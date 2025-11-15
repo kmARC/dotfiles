@@ -21,7 +21,7 @@ Include config.d/*
 #ControlPersist 10m
 
 Host gitlab.com github.com
-  AddKeysToAgent confirm 5s
+  AddKeysToAgent confirm
   ControlMaster auto
   ControlPath ~/.ssh/controlmasters/%r@%h:%p
   ControlPersist 10m
