@@ -4,6 +4,9 @@
 .kubeconfig.yaml
 .venv
 
+# ruby
+.ruby-version
+
 # clangd
 compile_flags.txt
 

@@ -47,7 +47,7 @@ backup() {
         >&2 echo -n "    Recent backup found (on $last)"
         if [ "${FORCE}" == false ]; then
           >&2 echo ", exiting"
-          exit 1
+          exit 0
         else
           >&2 echo ", force creating new backup"
         fi
@@ -107,6 +107,7 @@ prune() {
              --progress \
              --verbose \
              "$DEST"
+  compact
 }
 
 list() {
@@ -116,7 +117,6 @@ list() {
 
 compact() {
   borg compact --progress \
-               --cleanup-commits \
                "$DEST"
 }
 
@@ -181,6 +181,10 @@ cleanup() {
   rm -f "$LOCK_FILE" "$PATTERN_FILE"
 }
 
+shell() {
+  bash -i
+}
+
 # Error handling
 trap "cleanup" INT TERM HUP EXIT
 trap "echo Error in: \${FUNCNAME:-top level}, line \${LINENO}" ERR
@@ -212,6 +216,7 @@ CONFFILE=${CONFFILE:-$HOME/.config/backuprc}
 source "$CONFFILE" || (>&2 echo "File '$CONFFILE' cannot be opened" && exit 1)
 # Override configuration
 DEST=${DEST:-$_DEST}
+export BORG_REPO=$DEST
 RCLONE_REMOTE=${RCLONE_REMOTE:-$_RCLONE_REMOTE}
 S3_BUCKET=${S3_BUCKET:-$_S3_BUCKET}
 EXCLUDES=${EXCLUDES:-}
@@ -221,7 +226,7 @@ EXCLUDE_LARGERTHAN="${EXCLUDE_LARGERTHAN:-1G}"
 SYNC=${SYNC:-false}
 FORCE=${FORCE:-false}
 # Defaults
-PATTERN_FILE=$(mktemp /tmp/backup.pattern.XXXXX.lst)
+export PATTERN_FILE=$(mktemp /tmp/backup.pattern.XXXXX.lst)
 LOCK_FILE="/tmp/backup.lock"
 
 # Check if all configuration needed is properly set
@@ -237,5 +242,6 @@ case "$ACTION" in
   'prune')    prune ;;
   'repair')   repair ;;
   'compact')  compact ;;
-  *)          usage ;;
+  'shell')    shell ;;
+  *)          usage
 esac

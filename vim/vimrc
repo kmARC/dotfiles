@@ -5,6 +5,8 @@
 let g:ale_lint_on_insert_leave = 0
 let g:ale_lint_on_text_changed = 0
 
+let s:lsp_provider = 'coc'
+
 call plug#begin(environ()->get("VIMPLUG", '~/.vim/plugged'))
 "--- Look&Feel ---
 Plug 'itchyny/lightline.vim'
@@ -21,8 +23,10 @@ Plug 'preservim/nerdtree'
 Plug 'will133/vim-dirdiff'          , {'on': 'DirDiff'}
 Plug 'ojroques/vim-oscyank'         , {'on': 'OSCYankRegister'}
 " --- AI ---
-Plug 'Exafunction/windsurf.vim'
-Plug 'madox2/vim-ai'
+if environ()->get("VIM_DISABLE_AI", '0') == '0'
+  Plug 'Exafunction/windsurf.vim'
+  Plug 'madox2/vim-ai'
+endif
 "--- Editing ---
 Plug 'Raimondi/delimitMate'
 Plug 'godlygeek/tabular'            , {'on': 'Tabularize'}
@@ -36,7 +40,6 @@ Plug 'shumphrey/fugitive-gitlab.vim'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-rhubarb'
 Plug 'tommcdo/vim-fubitive'
-Plug 'vim-scripts/gitignore'
 "--- TMUX ---
 Plug 'tmux-plugins/vim-tmux'        , {'for': 'tmux'}
 if has_key(environ(), 'TMUX')
@@ -53,18 +56,22 @@ Plug 'pearofducks/ansible-vim'
 Plug 'AndrewRadev/splitjoin.vim'
 Plug 'andymass/vim-matchup'
 Plug 'dense-analysis/ale'
-Plug 'editorconfig/editorconfig-vim'
+" Plug 'editorconfig/editorconfig-vim'
 Plug 'honza/vim-snippets'
 Plug 'ludovicchabant/vim-gutentags'
 Plug 'majutsushi/tagbar'
-Plug 'mattn/vim-lsp-settings'
-Plug 'micchy326/lightline-lsp-progress'
-Plug 'prabirshrestha/asyncomplete-file.vim'
-Plug 'prabirshrestha/asyncomplete-lsp.vim'
-Plug 'prabirshrestha/asyncomplete-ultisnips.vim'
-Plug 'prabirshrestha/asyncomplete.vim'
-Plug 'prabirshrestha/vim-lsp'
-Plug 'rhysd/vim-lsp-ale'
+if s:lsp_provider == 'vim-lsp'
+  Plug 'mattn/vim-lsp-settings'
+  Plug 'micchy326/lightline-lsp-progress'
+  Plug 'prabirshrestha/asyncomplete-file.vim'
+  Plug 'prabirshrestha/asyncomplete-lsp.vim'
+  Plug 'prabirshrestha/asyncomplete-ultisnips.vim'
+  Plug 'prabirshrestha/asyncomplete.vim'
+  Plug 'prabirshrestha/vim-lsp'
+  Plug 'rhysd/vim-lsp-ale'
+elseif s:lsp_provider == 'coc'
+  Plug 'neoclide/coc.nvim', {'branch': 'release'}
+endif
 Plug 'SirVer/ultisnips'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-endwise'
@@ -232,7 +239,7 @@ function! ChangeColorScheme()
   endif
   if g:colors_name == 'iceberg'
     let g:lightline['colorscheme'] = g:colors_name
-    exec 'runtime! plugged/iceberg.vim/autoload/lightline/colorscheme/' . g:colors_name . '.vim'
+    exec 'source ' . environ()->get("VIMPLUG", '~/.vim/plugged') . '/iceberg.vim/autoload/lightline/colorscheme/' . g:colors_name . '.vim'
     if exists('*hlget')
       let l:h = hlget("VertSplit", v:true)[0]
       let g:lightline#colorscheme#iceberg#palette.inactive.middle = [[l:h->get("guifg", "NONE"), l:h->get("guibg", "NONE"), l:h->get("ctermfg", "NONE"), l:h->get("ctermbg", "NONE")]]
@@ -243,11 +250,15 @@ endfunction
 
 function! AIPromptCommitMessageFn()
   let l:range = 0
-  let l:diff = system('git --no-pager diff -U100 --staged')
+  let l:diff = system('git --no-pager diff HEAD^ -U100 --staged')
+  let l:past = system('git --no-pager log -n10')
   let l:prompt =
+        \ "These are some example commit messages in my repository:\n" .
+        \ l:past .
+        \ "\n\n" .
         \ "Generate a short commit message from the diff below. " .
         \ "Focus on why the change was made, not what the changes are. " .
-        \ "Start the message with 'This patch'. " .
+        \ "Format the message according to the examples above. " .
         \ "\n" .
         \ l:diff
   let l:config = {
@@ -300,6 +311,7 @@ set sessionoptions+=tabpages,globals,localoptions
 set shiftwidth=2
 set showbreak=↵
 set signcolumn=number
+set shortmess-=S
 set smartcase
 set smarttab
 set softtabstop=2
@@ -359,6 +371,36 @@ function! s:on_lsp_buffer_enabled() abort
     " refer to doc to add more commands
 endfunction
 
+function! s:on_buffer_entered_coc() abort
+  if !exists('*coc#rpc#ready') || !coc#rpc#ready()
+    return
+  endif
+  if CocHasProvider('rename')
+    nmap <buffer> <leader>lR <Plug>(coc-rename)
+  endif
+  if CocHasProvider('hover')
+    nmap <buffer> <leader>lK :call CocActionAsync('doHover')<CR>
+    nmap <buffer>          K :call CocActionAsync('doHover')<CR>
+  endif
+  if CocHasProvider('definition')
+    nmap <buffer> <leader>ld <Plug>(coc-definition)
+    nmap <buffer>         gd <Plug>(coc-definition)
+  endif
+  if CocHasProvider('codeAction')
+    nmap <buffer> <leader>ac <Plug>(coc-codeaction-cursor)
+    nmap <buffer> <leader>as <Plug>(coc-codeaction-source)
+    xmap <buffer> <leader>a  <Plug>(coc-codeaction-selected)
+    nmap <buffer> <leader>a  <Plug>(coc-codeaction-selected)
+  endif
+endfunction
+
+if $TERM == 'alacritty'
+  " Enable Focus* events. See :help xterm-focus-event
+  let &t_fe = "\<Esc>[?1004h"
+  let &t_fd = "\<Esc>[?1004l"
+  execute "set <FocusGained>=\<Esc>[I"
+  execute "set <FocusLost>=\<Esc>[O"
+endif
 let s:dir_state = expand('~/.vim/state')
 let s:sess = s:dir_state . '/sessions/' . substitute($PWD, '\/', '%', 'g')
 let g:UltiSnipsEditSplit = 'vertical'
@@ -377,19 +419,16 @@ let g:ale_fixers['json'] = ['jq']
 let g:ale_fixers['python'] = ['black', 'isort']
 let g:ale_fixers['ruby'] = ['rubocop']
 let g:ale_fixers['rust'] = ['rustfmt']
-let g:ale_fixers['starlark'] = ['buildifier']
 let g:ale_fixers['xml'] = ['xmllint']
 " }}}
 let g:ale_linters = {} " {{{
+let g:ale_linters['cpp'] = ['cc']
 let g:ale_linters['json'] = 'all'
 let g:ale_linters['mail'] = ['languagetool']
-let g:ale_linters['starlark'] = ['buildifier']
 let g:ale_linters['text'] = ['languagetool']
-let g:ale_linters['cpp'] = ['cc']
 " }}}
 let g:ale_awk_gawk_options = '--lint=no-ext'
 let g:ale_c_parse_compile_commands = 0
-let g:ale_c_uncrustify_options = '-c ' . findfile('uncrustify.cfg', ';')
 let g:ale_cpp_cc_options = environ()->get('CXXFLAGS', '')
 let g:ale_languagetool_options = '--language en-US'
 let g:ale_sh_shellcheck_options = '--external-sources'
@@ -444,16 +483,6 @@ let g:lsp_settings = {
       \ 'kotlin-language-server': {
       \    'root_uri_patterns': ['pom.xml'],
       \ },
-      \ 'pylsp-all': {
-      \    'workspace_config': {
-      \      'pylsp': {
-      \        'plugins': {
-      \          'pycodestyle': { 'enabled': v:false },
-      \          'pyflakes': { 'enabled': v:false },
-      \         }
-      \      }
-      \    }
-      \  },
       \ 'starpls': {
       \     'args': ['server', '--experimental_infer_ctx_attributes']
       \ },
@@ -475,10 +504,9 @@ let g:netrw_winsize = -40
 let g:slime_paste_file = tempname()
 let g:sh_fold_enabled = 7
 let g:taboo_renamed_tab_format =' %N %U%m%l %x '
-let g:taboo_tab_format = ' %N %U%m%F %x '
+let g:taboo_tab_format = ' %N %U%m%f %x '
 let g:tagbar_autofocus = 1
 let g:tagbar_type_bzl = {
-  \   'ctagstype': 'python',
     \ 'kinds' : [
     \   'a:aliases',
     \   'b:binaries',
@@ -487,6 +515,7 @@ let g:tagbar_type_bzl = {
     \   't:tests',
     \   'r:rules',
     \   'R:repository_rules',
+    \   'M:module_extensions',
     \   'o:other',
     \   'f:macros',
     \   'm:members',
@@ -509,6 +538,9 @@ if executable("ripper-tags")
     \     '?:unknown',
     \   ],
     \ }
+  augroup ruby
+    autocmd!
+  augroup ruby end
 endif
 let g:vim_markdown_folding_disabled = 1
 let g:vim_markdown_frontmatter = 1
@@ -570,51 +602,47 @@ cmap w!! w !sudo tee > /dev/null %
 
 " shortcuts {{{
 nnoremap <expr> <C-p> g:FugitiveIsGitDir() ? ':GFiles<CR>' : ':Files<CR>'
-nnoremap <expr> <F7> expand('%')=='' ? ':NERDTree<CR>' : ':NERDTreeFind<CR>'
-nnoremap        <F8> :TagbarToggle<CR>
-nnoremap        <F9> :lclose<CR>:cclose<CR>:pclose<CR>
+nnoremap <expr> <F7>  expand('%')=='' ? ':NERDTree<CR>' : ':NERDTreeFind<CR>'
+nnoremap        <F8>  :TagbarToggle<CR>
+nnoremap        <F9>  :lclose<CR>:cclose<CR>:pclose<CR>
 " }}}
 
 " shortcuts with <leader> {{{
-nnoremap <leader>K         :DevdocsHelp <C-r><C-w><CR>
-nnoremap <leader>d         :echom strftime("%c", <C-r><C-w>)<CR>
-nnoremap <leader>1         1gt
-nnoremap <leader>2         2gt
-nnoremap <leader>3         3gt
-nnoremap <leader>4         4gt
-nnoremap <leader>5         5gt
-nnoremap <leader>6         6gt
-nnoremap <leader>7         7gt
-nnoremap <leader>8         8gt
-nnoremap <leader>9         9gt
-nnoremap <leader>0         0gt
+nnoremap <leader>K    :DevdocsHelp <C-r><C-w><CR>
+nnoremap <leader>d    :echom strftime("%c", <C-r><C-w>)<CR>
+nnoremap <leader>1    1gt
+nnoremap <leader>2    2gt
+nnoremap <leader>3    3gt
+nnoremap <leader>4    4gt
+nnoremap <leader>5    5gt
+nnoremap <leader>6    6gt
+nnoremap <leader>7    7gt
+nnoremap <leader>8    8gt
+nnoremap <leader>9    9gt
+nnoremap <leader>0    0gt
 " }}}
 
 " plugin: <leader>a vim-ai {{{
-nnoremap <leader>ai        :AIChat<CR>
-vnoremap <leader>ae        :AIChat explain<CR>
+nnoremap <leader>ai   :AIChat<CR>
+vnoremap <leader>ae   :AIChat explain<CR>
 " }}}
 
 " plugin: <leader>f fzf-vim {{{
 " FZF files with the same extension as current
-nnoremap <leader>fp :call fzf#vim#files(
-  \   0, {'options':'--query=' . expand('%:e') . '$\ '}
-  \ )<CR>
+nnoremap <leader>fp    :call fzf#vim#files(0, {'options' : '--query=' . expand('%:e') . '$\ '})<CR>
 " FZF grep only in file content, not in file name
-nnoremap <leader>fg :call fzf#vim#grep(
-  \   'rg --column --line-number --no-heading --color=always --smart-case ""',
-  \   1, {'options':'--delimiter : --nth 4..'}
-  \ )<CR>
+nnoremap <leader>fg    :call fzf#vim#grep('rg --column --line-number --no-heading --color=always --smart-case ""', 1, {'options':'--delimiter : --nth 4..'})<CR>
 " FZF grep current word only in file content
-nnoremap <leader>fG :Rg <C-r><C-w><CR>
+nnoremap <leader>fG    :Rg <C-r><C-w><CR>
 " }}}
 
 " plugin: <leader>t tabular {{{
-vnoremap <leader>t,       :Tabularize /^[^,]*,/l0l1<CR>
-vnoremap <leader>t:       :Tabularize /^[^:]*:/l0l1<CR>
-vnoremap <leader>t=       :Tabularize /^[^=]*\zs/l1c1l1<CR>
-vnoremap <leader>t<Space> :Tabularize /\S\+/l1l0<CR>
-vnoremap <leader>t<bar>   :Tabularize /<bar>\+/l1c1<CR>
+vnoremap <leader>t,          :Tabularize /^[^,]*,/l0l1<CR>
+vnoremap <leader>t:          :Tabularize /^[^:]*:/l0l1<CR>
+vnoremap <leader>t=          :Tabularize /^[^=]*\zs/l1c1l1<CR>
+vnoremap <leader>t<Space>    :Tabularize /\S\+/l1l0<CR>
+vnoremap <leader>t<bar>      :Tabularize /<bar>\+/l1c1<CR>
+" }}}
 " }}}
 
 "--- Autocommands --- {{{
@@ -627,7 +655,8 @@ augroup filetypes
     \ | autocmd InsertLeave <buffer> execute('AIChat')
 
   autocmd FileType cpp
-    \   nnoremap <buffer> <silent> t<C-n> :GTestRunUnderCursor<CR>
+    \   let b:ale_c_uncrustify_options = '-c ' . findfile('uncrustify.cfg', ';')
+    \ | nnoremap <buffer> <silent> t<C-n> :GTestRunUnderCursor<CR>
     \ | nnoremap <buffer> <silent> t<C-f> :GTestRun<CR>
 
   autocmd FileType css,less,scss
@@ -694,6 +723,15 @@ augroup filetypes
     \ | setlocal softtabstop=4 tabstop=4 shiftwidth=4
     \ | autocmd BufWritePost <buffer> normal! mP
 
+  autocmd BufReadPost python,ruby
+    \   if test#exists()
+    \ |   nnoremap <buffer> t<C-n> :TestNearest<CR>
+    \ |   nnoremap <buffer> t<C-f> :TestFile<CR>
+    \ |   nnoremap <buffer> t<C-s> :TestSuite<CR>
+    \ |   nnoremap <buffer> t<C-l> :TestLast<CR>
+    \ |   nnoremap <buffer> t<C-g> :TestVisit<CR>
+    \ | endif
+
   autocmd FileType terraform
     \   setlocal commentstring=#%s
     \ | autocmd BufWritePost <buffer> normal! mT
@@ -714,14 +752,13 @@ augroup filetypes
     \ | nnoremap <buffer> <leader>am :!xdg-open https://docs.ansible.com/ansible/latest/<C-R><C-W>_module.html\#options<CR>
     \ | nnoremap <buffer> <leader>as :!xdg-open https://docs.ansible.com/ansible/latest/reference_appendices/playbooks_keywords.html?highlight=<C-R><C-W><CR>
     \ | autocmd BufWritePost <buffer> normal! mA
-" }}}
-
 
   autocmd FileType yaml.kubernetes,*gotexttmpl
     \   setlocal keywordprg=:KubeHelp
     \ | autocmd BufWritePost <buffer> normal! mK
 
 augroup filetypes END
+
 
 augroup autocommands
   autocmd!
@@ -744,11 +781,18 @@ augroup autocommands
     \ |   nnoremap <buffer> t<C-g> :TestVisit<CR>
     \ | endif
 
+
+  autocmd FocusGained,BufEnter * checktime
+
   autocmd BufReadPost *.bazelrc
     \   setlocal filetype=conf
 
   autocmd BufReadPost *.bzl
     \   setlocal keywordprg=:DevdocsHelp
+
+  autocmd User CocNvimInit
+    \   autocmd BufEnter *
+    \       call s:on_buffer_entered_coc()
 
   autocmd BufEnter NERD_tree_*
     \   nnoremap <buffer> <F7> :q<CR>
@@ -829,7 +873,7 @@ let g:lightline = {
       \                ],
       \     'right': [ ['lineinfo'],
       \                ['percent'],
-      \                ['fileformat', 'fileencoding', 'filetype', 'lsp_status'] ],
+      \                [ 'lsp_status', 'fugitive', 'fileformat', 'fileencoding', 'filetype' ] ],
       \   },
       \   'inactive': {
       \     'left': [ [ 'relativepath' ] ],
@@ -839,9 +883,11 @@ let g:lightline = {
       \   'component_function': {
       \     'lsp_status': 'lightline_lsp_progress#progress',
       \     'codeium': 'codeium#GetStatusString',
+      \     'fugitive': 'fugitive#statusline',
       \   },
       \   'component_visible_condition': {
       \     'preview': '&previewwindow',
+      \     'fileformat': 'winwidth(0) > 60',
       \   },
       \ }
 
@@ -851,7 +897,7 @@ silent colorscheme iceberg
 "--- Debugging --- {{{
 if $LOG == 'verbose'
   " - asyncomplete -
-  let g:asyncomplete_log_file = expand('/tmp/asyncomplete-$USER.log')
+  let g:asyncomplete_log_file = expand('/tmp/vim-asyncomplete-$USER.log')
 
   " - gutentags -
   let g:gutentags_define_advanced_commands = 1
@@ -862,8 +908,8 @@ if $LOG == 'verbose'
   let g:lsp_log_file = expand('/tmp/vim-lsp-$USER.log')
 
   " - codeium -
-  let g:codeium_log_file='/tmp/vim-codeium.log'
-  let g:codeium_log_level='TRACE'
+  let g:codeium_log_file = expand('/tmp/vim-codeium-$USER.log')
+  let g:codeium_log_level = 'TRACE'
 endif
 " }}}
 
@@ -871,6 +917,10 @@ endif
 if filereadable(expand('~/.vimrc.local'))
   source ~/.vimrc.local
 endif
+if !empty($PROJECT_VIMRC)
+  source $PROJECT_VIMRC
+endif
+
 
 set modeline
 set exrc

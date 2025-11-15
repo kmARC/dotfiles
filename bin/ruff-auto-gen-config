@@ -15,7 +15,7 @@ echo "[lint.per-file-ignores]"
 
 block_filename=""
 shopt -s lastpipe
-xargs ruff check -q --exit-zero --output-format concise \
+xargs ruff check -q --exit-zero --output-format concise "$@" \
     | sed 's/^\(\S\+\):[0-9]\+:[0-9]\+: \(\S\+\) \(.*\)/\1:  "\2",  # \3/g' \
     | sort -u \
     | while IFS="" read -r res

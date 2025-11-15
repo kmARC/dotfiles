@@ -13,15 +13,30 @@
 [column]
   ui = auto
 
+[core]
+  editor = vim
+
 [commit]
   gpgsign = true
 	verbose = true
+
+[core]
+  pager = delta
+
+[delta]
+  navigate = true    # use n and N to move between diff sections
+  side-by-side = true
+  hyperlinks = true
+  ; diff-highlight = true
+
 
 [diff]
   tool = vimdiff
   algorithm = histogram
   mnemonicPrefix = true
   renames = true
+  colorMoved = default
+
 
 [difftool]
   prompt = false
@@ -47,7 +62,8 @@
   defaultBranch = main
 
 [interactive]
-  diffFilter = diff-highlight | less
+  ; diffFilter = diff-highlight | less
+  diffFilter = delta --color-only
 
 [merge]
   tool = vimdiff
@@ -57,10 +73,12 @@
   keepbackup = false
   trustexitcode = true
 
-[pager]
-  log = diff-highlight | less
-  show = diff-highlight | less
-  diff = diff-highlight | less
+; [pager]
+;   log = diff-highlight | less
+;   show = diff-highlight | less
+;   diff = diff-highlight | less
+; [pager]
+;   diff = delta --diff-highlight
 
 [pull]
   rebase = true

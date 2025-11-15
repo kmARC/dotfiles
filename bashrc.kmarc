@@ -16,12 +16,12 @@ fi
 ###########################
 #  Environment variables  #
 ###########################
+set -a # export all declared variables
 for _c in "$HOME"/.config/environment.d/*.conf; do
   source "$_c"
 done
 unset _c
-
-export GPG_TTY=$(tty)
+set +a
 
 #############################
 #  Host-specific overrides  #
@@ -52,8 +52,8 @@ alias ls="ls --color --group-directories-first"
 alias diff='diff --color=auto'
 alias grep='grep --color=auto'
 alias mutt='neomutt'
-alias teams-up='systemctl --user set-property teams.slice CPUQuota=$(( `nproc` * 100 ))%'
-alias teams-down='systemctl --user set-property teams.slice CPUQuota=$(( `nproc` / 2 * 100 ))%'
+alias teams-up='systemctl --user set-property teams.slice CPUQuota=$(( `nproc` * 100 ))% MemoryMax=4G'
+alias teams-down='systemctl --user set-property teams.slice CPUQuota=$(( (`nproc` / 2) * 100 ))% MemoryMax=2.5G'
 
 function git-recursive-pull() {
     find . -type d -path '*/.git' -prune -printf "%h\n" \
@@ -101,6 +101,16 @@ fi
 function cheat() {
   curl --max-time 10 "http://cheat.sh/$1?style=stata-light"
 }
+
+function osc-copy() {
+  base64 | tr -d '\n' | awk '{printf "\033]52;c;%s\007", $0}' >/dev/tty
+}
+
+if type -p bazelisk >/dev/null; then
+  alias bqob='bazelisk query --output=build '
+  alias bqol='bazelisk query --output=label_kind  '
+  complete -o nospace -F _bazel__complete bqob
+fi
 
 ##########
 #  tmux  #
@@ -199,5 +209,15 @@ if type -p liquidprompt &>/dev/null; then
   if [[ -z "$MC_SID" && $- = *i* ]]; then
     source "$(type -p liquidprompt)"
   fi
+fi
+
+#########
+#  nvm  #
+#########
+if [ -s "$NVM_DIR/nvm.sh" ]; then
+  source "$NVM_DIR/nvm.sh"
+fi
+if [ -s "$NVM_DIR/bash_completion" ]; then
+  source "$NVM_DIR/bash_completion"
 fi
 
