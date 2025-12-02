@@ -1,12 +1,12 @@
 ###########
 #  Bazel  #
 ###########
---map-python=+.bzl
-
 --langdef=Bazel
+--languages=+Bazel
 --map-Bazel=+.bazel
 --map-Bazel=+(WORKSPACE)
 --map-Bazel=+(BUILD)
+
 --_fielddef-Bazel=signature,signatures
 --fields-Bazel=+{signature}
 
@@ -28,16 +28,27 @@
 --kinddef-Bazel=o,other,"Bazel other target label"
 --mline-regex-Bazel=/(^|\s+)((?!alias|bazel_dep|\w+_binary|\w+_library|\w+_test)\w+)\s*\(\s*name\s*=\s*("([^"]+)",|([^,]+),?)/\4/o/{mgroup=0}{_field=signature: : \2}p"
 
---kinddef-Bazel=r,rule,"Bazel rule"
---regex-Bazel=/(\w+)\s*=\s*rule\(/\1/r/
+# TODO:
+# The x flag ({exclusive}) should "Skip testing the other patterns if a line is matched to this pattern" - doesn't seem to work
 
---kinddef-Bazel=R,repositoryrule,"Bazel repository rule"
---regex-Bazel=/(\w+)\s*=\s*repository_rule\(/\1/R/
+##############
+#  Starlark  #
+##############
+--langdef=Starlark{base=python}{dedicated}
+--languages=+Starlark
+--map-Starlark=+.bzl
 
---kinddef-Bazel=M,moduleextension,"Bazel module extension"
---regex-Bazel=/(\w+)\s*=\s*module_extension\(/\1/M/
+--kinddef-Starlark=r,rule,"Starlark rule"
+--regex-Starlark=/(\w+)\s*=\s*rule\(/\1/r/x
 
---languages=+Bazel
+--kinddef-Starlark=r,rule,"Starlark symbolic macro"
+--regex-Starlark=/(\w+)\s*=\s*macro\(/\1/r/x
+
+--kinddef-Starlark=R,repositoryrule,"Starlark repository rule"
+--regex-Starlark=/(\w+)\s*=\s*repository_rule\(/\1/R/x
+
+--kinddef-Starlark=M,moduleextension,"Starlark module extension"
+--regex-Starlark=/(\w+)\s*=\s*module_extension\(/\1/M/x
 
 #########
 #  C++  #
