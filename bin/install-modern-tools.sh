@@ -14,6 +14,9 @@ LIBEVENT_URL=https://github.com/libevent/libevent/archive/refs/tags/release-$LIB
 DIRENV_VERSION=2.35.0       # https://github.com/direnv/direnv/releases/
 DIRENV_URL=https://github.com/direnv/direnv/releases/download/v$DIRENV_VERSION/direnv.linux-amd64
 
+CTAGS_VERSION=6.2.1
+CTAGS_URL=https://github.com/universal-ctags/ctags/releases/download/v$CTAGS_VERSION/universal-ctags-$CTAGS_VERSION.tar.gz
+
 LOCAL_CHECKOUTS="${MODERN_TOOLS_LOCAL_CHECKOUTS:-$HOME/src}"
 
 PREFIX="${MODERN_TOOLS_PREFIX:-$HOME/.local}"

@@ -6,6 +6,8 @@ let g:ale_lint_on_insert_leave = 0
 let g:ale_lint_on_text_changed = 0
 
 let s:lsp_provider = 'coc'
+" let s:lsp_provider = 'vim-lsp'
+" let s:lsp_provider = 'yegappan/lsp'
 
 call plug#begin(environ()->get("VIMPLUG", '~/.vim/plugged'))
 "--- Look&Feel ---
@@ -53,6 +55,9 @@ Plug 'hashivim/vim-terraform'       , {'for': 'terraform'}
 Plug 'pearofducks/ansible-vim'
 " Plug 'bazelbuild/vim-bazel'
 "--- Programming ---
+Plug 'google/vim-maktaba'
+Plug 'google/vim-coverage'
+Plug 'umaumax/vim-lcov'
 Plug 'AndrewRadev/splitjoin.vim'
 Plug 'andymass/vim-matchup'
 Plug 'dense-analysis/ale'
@@ -63,14 +68,16 @@ Plug 'majutsushi/tagbar'
 if s:lsp_provider == 'vim-lsp'
   Plug 'mattn/vim-lsp-settings'
   Plug 'micchy326/lightline-lsp-progress'
-  Plug 'prabirshrestha/asyncomplete-file.vim'
-  Plug 'prabirshrestha/asyncomplete-lsp.vim'
-  Plug 'prabirshrestha/asyncomplete-ultisnips.vim'
   Plug 'prabirshrestha/asyncomplete.vim'
+  Plug 'prabirshrestha/asyncomplete-lsp.vim'
+  Plug 'prabirshrestha/asyncomplete-file.vim'
+  Plug 'prabirshrestha/asyncomplete-ultisnips.vim'
   Plug 'prabirshrestha/vim-lsp'
   Plug 'rhysd/vim-lsp-ale'
 elseif s:lsp_provider == 'coc'
   Plug 'neoclide/coc.nvim', {'branch': 'release'}
+elseif s:lsp_provider == 'yegappan/lsp'
+  Plug 'yegappan/lsp'
 endif
 Plug 'SirVer/ultisnips'
 Plug 'tpope/vim-commentary'
@@ -115,14 +122,17 @@ if filereadable(expand('~/.vimrc.plugs'))
 endif
 Plug 'kmARC/fugitive-gerrit.vim'
 Plug 'kmARC/asyncomplete-bazel'
-Plug 'kmARC/vim-basler'
+" Plug 'kmARC/vim-basler'
 Plug 'kana/vim-vspec'
+
+" test:
+Plug 'thinca/vim-themis'
 call plug#end() " }}}
 
 "--- Vim-Plug --- {{{
 function! s:plug_gx()
   let line = getline('.')
-  let name = matchstr(line, "^Plug '[^']\\+/\\zs[^']\\+\\ze'")
+  let name = matchstr(line, "^\s*Plug '[^']\\+/\\zs[^']\\+\\ze'")
   let uri  = get(get(g:plugs, name, {}), 'uri', '')
   if uri !~# 'github.com'
     return
@@ -231,13 +241,13 @@ endfunction
 
 function! ChangeColorScheme()
   if has('macunix') && system('defaults read -g AppleInterfaceStyle') =~? '^Dark'
-\ || $XDG_CURRENT_DESKTOP == "KDE" && system('kreadconfig6 --file kdeglobals --key widgetStyle') =~? 'Dark'
+\ || $XDG_CURRENT_DESKTOP == "KDE" && system('kreadconfig6 --file kdeglobals --group General --key ColorScheme') =~? 'Dark'
 \ || system('gsettings get org.gnome.desktop.interface gtk-theme') =~? 'Dark'
     set background=dark
   else
     set background=light
   endif
-  if g:colors_name == 'iceberg'
+  if g:->get('colors_name', '') == 'iceberg'
     let g:lightline['colorscheme'] = g:colors_name
     exec 'source ' . environ()->get("VIMPLUG", '~/.vim/plugged') . '/iceberg.vim/autoload/lightline/colorscheme/' . g:colors_name . '.vim'
     if exists('*hlget')
@@ -330,7 +340,9 @@ set wildignore+=__pycache__,.mypy_cache,*.pyc " Python
 set wildignore+=*.o,*.so,*.a                  " C/C++
 set wildignore+=*.class                       " Java
 set wildignore+=.direnv,build                 " Misc
-set wildignore+=*/bazel-*/*                   " Bazel
+set wildignore+=*/bazel-bin/*                 " Bazel
+set wildignore+=*/bazel-out/*                 " Bazel
+set wildignore+=*/bazel-testlogs/*            " Bazel
 set wildignorecase
 set wildmenu
 set wildmode=list:full
@@ -376,21 +388,23 @@ function! s:on_buffer_entered_coc() abort
     return
   endif
   if CocHasProvider('rename')
-    nmap <buffer> <leader>lR <Plug>(coc-rename)
+    nmap <buffer> <silent><nowait><leader>lR <Plug>(coc-rename)
   endif
   if CocHasProvider('hover')
-    nmap <buffer> <leader>lK :call CocActionAsync('doHover')<CR>
-    nmap <buffer>          K :call CocActionAsync('doHover')<CR>
+    nmap <buffer> <silent><nowait><leader>lK :call CocActionAsync('doHover')<CR>
+    nmap <buffer> <silent><nowait>         K :call CocActionAsync('doHover')<CR>
   endif
   if CocHasProvider('definition')
-    nmap <buffer> <leader>ld <Plug>(coc-definition)
-    nmap <buffer>         gd <Plug>(coc-definition)
+    nmap <buffer> <silent><nowait><leader>ld <Plug>(coc-definition)
+  endif
+  if CocHasProvider('reference')
+    nmap <buffer> <leader>lr <Plug>(coc-references)
   endif
   if CocHasProvider('codeAction')
-    nmap <buffer> <leader>ac <Plug>(coc-codeaction-cursor)
-    nmap <buffer> <leader>as <Plug>(coc-codeaction-source)
-    xmap <buffer> <leader>a  <Plug>(coc-codeaction-selected)
-    nmap <buffer> <leader>a  <Plug>(coc-codeaction-selected)
+    nmap <buffer> <silent><nowait><leader>ac <Plug>(coc-codeaction-cursor)
+    nmap <buffer> <silent><nowait><leader>as <Plug>(coc-codeaction-source)
+    xmap <buffer> <silent><nowait><leader>a  <Plug>(coc-codeaction-selected)
+    nmap <buffer> <silent><nowait><leader>a  <Plug>(coc-codeaction-selected)
   endif
 endfunction
 
@@ -408,6 +422,7 @@ let g:UltiSnipsExpandTrigger = '<c-j>'
 let g:UltiSnipsListSnippets = '<c-h>'
 let g:UltiSnipsSnippetsDir = '~/.vim/UltiSnips'
 let g:ale_detail_to_floating_preview=0
+let g:ale_disable_lsp = 1
 let g:ale_fix_on_save = 1
 let g:ale_linters_ignore = ['clangtidy', 'cc', 'flake8']
 " -- ALE language-dependent
@@ -416,7 +431,6 @@ let g:ale_fixers['bzl'] = ['buildifier']
 let g:ale_fixers['cpp'] = ['clangtidy', 'clang-format']
 let g:ale_fixers['java'] = ['uncrustify']
 let g:ale_fixers['json'] = ['jq']
-let g:ale_fixers['python'] = ['black', 'isort']
 let g:ale_fixers['ruby'] = ['rubocop']
 let g:ale_fixers['rust'] = ['rustfmt']
 let g:ale_fixers['xml'] = ['xmllint']
@@ -489,6 +503,9 @@ let g:lsp_settings = {
       \ 'vscode-json-language-server': {
       \     'workspace_config': {"json": {"schemaDownload.enable": v:true}}
       \ },
+      \ 'ruby-lsp': {
+      \     'workspace_config': {"indexing": { "excludedPatterns": [ ".direnv/**" ] } }
+      \ },
       \}
 let g:lsp_work_done_progress_enabled = 1
 let g:lsp_use_native_client = 1
@@ -516,12 +533,25 @@ let g:tagbar_type_bzl = {
     \   'r:rules',
     \   'R:repository_rules',
     \   'M:module_extensions',
+    \   'U:use_repos',
     \   'o:other',
     \   'f:macros',
     \   'm:members',
     \   'v:variables:0:0',
     \   '?:unknown',
     \ ],
+  \ }
+let g:tagbar_type_ruby = {
+  \   'kinds' : [
+  \     'i:it',
+  \     'd:describe',
+  \   ],
+  \   'kind2scope': {
+  \     'd': 'describe',
+  \   },
+  \   'scope2kind': {
+  \     'describe': 'd',
+  \   }
   \ }
 if executable("ripper-tags")
   let g:gutentags_ctags_executable_ruby = 'ripper-tags'
@@ -538,12 +568,10 @@ if executable("ripper-tags")
     \     '?:unknown',
     \   ],
     \ }
-  augroup ruby
-    autocmd!
-  augroup ruby end
 endif
 let g:vim_markdown_folding_disabled = 1
 let g:vim_markdown_frontmatter = 1
+let g:vim_ai_chat_markdown = 1
 let g:xml_syntax_folding = 1
 let test#strategy = 'vimux'
 let NERDTreeBookmarksFile = $HOME .. '/.vim/.NERDTreeBookmarks'
@@ -652,7 +680,6 @@ augroup filetypes
   " add an autocommand that runs :AIChat when leaving insert mode
   autocmd FileType aichat
     \   setlocal wrap
-    \ | autocmd InsertLeave <buffer> execute('AIChat')
 
   autocmd FileType cpp
     \   let b:ale_c_uncrustify_options = '-c ' . findfile('uncrustify.cfg', ';')
@@ -762,6 +789,9 @@ augroup filetypes END
 
 augroup autocommands
   autocmd!
+
+  autocmd ColorSchemePre *
+    \   call ChangeColorScheme()
 
   autocmd VimEnter *
     \   call CheckProject()
@@ -907,11 +937,128 @@ if $LOG == 'verbose'
   let g:lsp_log_verbose = 1
   let g:lsp_log_file = expand('/tmp/vim-lsp-$USER.log')
 
+  let $NVIM_COC_LOG_LEVEL='trace'
+  let $NVIM_COC_LOG_FILE=expand("/tmp/coc-$USER.log")
+
   " - codeium -
   let g:codeium_log_file = expand('/tmp/vim-codeium-$USER.log')
   let g:codeium_log_level = 'TRACE'
 endif
 " }}}
+
+let lspOpts = #{
+      \   aleSupport: v:true,
+      \   autoComplete: v:true,
+      \   autoHighlight: v:false,
+      \   autoHighlightDiags: v:true,
+      \   autoPopulateDiags: v:false,
+      \   completionMatcher: 'case',
+      \   completionMatcherValue: 1,
+      \   diagSignErrorText: 'E>',
+      \   diagSignHintText: 'H>',
+      \   diagSignInfoText: 'I>',
+      \   diagSignWarningText: 'W>',
+      \   echoSignature: v:false,
+      \   hideDisabledCodeActions: v:false,
+      \   highlightDiagInline: v:true,
+      \   hoverInPreview: v:false,
+      \   ignoreMissingServer: v:false,
+      \   keepFocusInDiags: v:true,
+      \   keepFocusInReferences: v:true,
+      \   completionTextEdit: v:true,
+      \   diagVirtualTextAlign: 'above',
+      \   diagVirtualTextWrap: 'default',
+      \   noNewlineInCompletion: v:false,
+      \   omniComplete: v:null,
+      \   omniCompleteAllowBare: v:false,
+      \   outlineOnRight: v:false,
+      \   outlineWinSize: 20,
+      \   popupBorder: v:true,
+      \   popupBorderHighlight: 'Title',
+      \   popupBorderHighlightPeek: 'Special',
+      \   popupBorderSignatureHelp: v:false,
+      \   popupHighlightSignatureHelp: 'Pmenu',
+      \   popupHighlight: 'Normal',
+      \   semanticHighlight: v:true,
+      \   showDiagInBalloon: v:true,
+      \   showDiagInPopup: v:true,
+      \   showDiagOnStatusLine: v:false,
+      \   showDiagWithSign: v:true,
+      \   showDiagWithVirtualText: v:false,
+      \   showInlayHints: v:false,
+      \   showSignature: v:true,
+      \   snippetSupport: v:true,
+      \   ultisnipsSupport: v:true,
+      \   useBufferCompletion: v:false,
+      \   usePopupInCodeAction: v:false,
+      \   useQuickfixForLocations: v:false,
+      \   vsnipSupport: v:false,
+      \   bufferCompletionTimeout: 100,
+      \   customCompletionKinds: v:false,
+      \   completionKinds: {},
+      \   filterCompletionDuplicates: v:false,
+      \   condensedCompletionMenu: v:false,
+  \ }
+autocmd User LspSetup call LspOptionsSet(lspOpts)
+
+let lspServers = [#{
+  \   name: 'ruby-lsp',
+  \   filetype: ['rb', 'ruby'],
+  \   path: 'ruby-lsp',
+  \   args: [],
+  \   initializationOptions: {
+  \     "enabledFeatures": {
+  \       "codeActions": v:true,
+  \       "codeLens": v:true,
+  \       "completion": v:true,
+  \       "definition": v:true,
+  \       "diagnostics": v:true,
+  \       "documentHighlights": v:true,
+  \       "documentLink": v:true,
+  \       "documentSymbols": v:true,
+  \       "foldingRanges": v:true,
+  \       "formatting": v:true,
+  \       "hover": v:true,
+  \       "inlayHint": v:true,
+  \       "onTypeFormatting": v:true,
+  \       "selectionRanges": v:true,
+  \       "semanticHighlighting": v:true,
+  \       "signatureHelp": v:true,
+  \       "typeHierarchy": v:true,
+  \       "workspaceSymbol": v:true
+  \     },
+  \     "featuresConfiguration": {
+  \       "inlayHint": {
+  \         "implicitHashValue": v:true,
+  \         "implicitRescue": v:true
+  \       }
+  \     },
+  \     "indexing": {
+  \       "excludedPatterns": [
+  \         ".direnv/**"
+  \       ],
+  \       "includedPatterns": [
+  \       ],
+  \       "excludedGems": [
+  \       ],
+  \       "excludedMagicComments": [
+  \         "compiled:v:true"
+  \       ]
+  \     },
+  \     "formatter": "auto",
+  \     "linters": [],
+  \     "experimentalFeaturesEnabled": v:false
+  \   }
+  \ }]
+autocmd User LspSetup call LspAddServer(lspServers)
+
+" function! s:ruby_lsp_open_file(context)
+"     let l:command = get(a:context, 'command', {})
+"     let l:filename = lsp#utils#uri_to_path(l:command['arguments'][0][0])
+"     execute 'edit' l:filename
+" endfunction
+" call lsp#register_command('rubyLsp.openFile', function('s:ruby_lsp_open_file'))
+
 
 " --- Startup --- {{{
 if filereadable(expand('~/.vimrc.local'))
@@ -926,3 +1073,4 @@ set modeline
 set exrc
 set secure
 " vim: fdm=marker fdl=0 fen
+

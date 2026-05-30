@@ -3,7 +3,7 @@ ConnectTimeout 5
 ServerAliveCountMax 3
 ServerAliveInterval 5
 
-Include config.d/*
+Include config.d/*.conf
 
 # !!! Only Host / Match directives below this line !!!
 

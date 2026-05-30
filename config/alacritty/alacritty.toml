@@ -7,9 +7,6 @@ duration = 100
 [env]
 # TERM = "xterm-256color"
 
-[font]
-# size = 12
-
 [font.normal]
 family = "Fira Code"
 style = "Medium"
@@ -19,8 +16,9 @@ y = 0
 
 [keyboard]
 bindings = [
-{ action = "CreateNewWindow", key = "N", mods = "Command" },
-{ mods = "Alt", key = "]", chars = "\u00dd" },
+{ mods = "Command",   key = "Enter", action = "ToggleFullscreen" },
+{ mods = "Command", key = "N",     action = "CreateNewWindow" },
+{ mods = "Alt",     key = "]",     chars = "\u00dd" },
 ]
 
 
@@ -32,4 +30,4 @@ option_as_alt = "OnlyLeft"
 
 [general]
 live_config_reload = true
-import = ["alacritty.light.toml", "alacritty.vars.toml"]
+import = ["alacritty.dark.toml", "alacritty.vars.toml"]

@@ -13,9 +13,6 @@
 --kinddef-Bazel=a,alias,"Bazel alias"
 --mline-regex-Bazel=/^\s*alias\s*\((\s*name\s*=\s*("([^"]+)",|([^,]+),)|\s*actual\s*=\s*"([^"]+)",?)*/\3\4/a/{mgroup=0}{_field=signature: => \5}p"
 
---kinddef-Bazel=D,bazeldep,"Bazel module dependency"
---mline-regex-Bazel=/^\s*bazel_dep\s*\((\s*name\s*=\s*("([^"]+)"|([^,]+))|\s*version\s*=\s*"([^"]+)",?)*/\3/D/{mgroup=0}{_field=signature: : \5}p"
-
 --kinddef-Bazel=b,binary,"Bazel binary target label"
 --mline-regex-Bazel=/(\w+_binary(?>_\w+)?)\s*\(\s*name\s*=\s*("([^"]+)"|([^,]+)),?/\3\4/b/{mgroup=0}{_field=signature: : \1}p"
 
@@ -27,6 +24,16 @@
 
 --kinddef-Bazel=o,other,"Bazel other target label"
 --mline-regex-Bazel=/(^|\s+)((?!alias|bazel_dep|\w+_binary|\w+_library|\w+_test)\w+)\s*\(\s*name\s*=\s*("([^"]+)",|([^,]+),?)/\4/o/{mgroup=0}{_field=signature: : \2}p"
+
+--kinddef-Bazel=D,bazeldep,"Bazel module dependency"
+--mline-regex-Bazel=/^\s*bazel_dep\s*\(((\s*name\s*=\s*["']([^"']+)["'],?)(\s*version\s*=\s*["']([^"']+)["'],?))*/\3/D/{mgroup=0}{_field=signature: : \5}p"
+
+--kinddef-Bazel=M,useextension,"Bazel module extension"
+--regex-Bazel=/(\w+)\s*=\s*use_extension\([^,]*,\s*["']([^"']*)["']/\1/M/p
+
+--kinddef-Bazel=U,useextension,"Bazel use repo"
+--regex-Bazel=/use_repo\s*\([^,]*,\s*["']([^"']+)['"]/\1/U/p
+
 
 # TODO:
 # The x flag ({exclusive}) should "Skip testing the other patterns if a line is matched to this pattern" - doesn't seem to work

@@ -6,6 +6,7 @@
 
 # ruby
 .ruby-version
+.solargraph.yml
 
 # clangd
 compile_flags.txt
@@ -32,5 +33,11 @@ __pycache__
 
 # Aider
 .aider*
+!.aider.model.settings.yml
+!.aider.conf.yml
+
+# PI
+.mcp.json
+.pi/
 
 # vim :set ft=gitignore:

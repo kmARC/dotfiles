@@ -13,7 +13,6 @@
     - $XDG_DATA_HOME/bash-completion/completions
     - $XDG_STATE_HOME/bash
     - $XDG_CACHE_HOME/less
-    - $HOME/.vim/state
     - $HOME/.cache/vim/backup
     - $HOME/.cache/vim/swap
     - $HOME/.cache/vim/undo
@@ -34,13 +33,23 @@
       path: config/bpython/config
     $XDG_CONFIG_HOME/clight.conf:
       path: config/clight.conf
+    $XDG_CONFIG_HOME/chrome-flags.conf:
+      path: config/chromium-flags.conf
+    $XDG_CONFIG_HOME/microsoft-edge-stable-flags.conf:
+      path: config/chromium-flags.conf
     $XDG_CONFIG_HOME/chromium-flags.conf:
+      path: config/chromium-flags.conf
+    $XDG_CONFIG_HOME/electron-flags.conf:
+      path: config/chromium-flags.conf
+    $XDG_CONFIG_HOME/obsidian/user-flags.conf:
+      path: config/chromium-flags.conf
+    $XDG_CONFIG_HOME/Slack/user-flags.conf:
       path: config/chromium-flags.conf
     $XDG_CONFIG_HOME/environment.d/30-$PLATFORM.conf:
       path: config/environment.d/30-$PLATFORM.conf
     $XDG_CONFIG_HOME/environment.d/10-main.conf:
       path: config/environment.d/10-main.conf
-    $XDG_CONFIG_HOME/fontconfig:
+    $XDG_DATA_HOME/fontconfig:
       path: config/fontconfig
     $XDG_CONFIG_HOME/gem/gemrc:
       path: config/gem/gemrc
@@ -133,7 +142,7 @@
       path: vim
 
     # Top levels
-    $HOME/.bashrc.$USER:
+    $HOME/.aider.conf.yml:
     $HOME/.liquidpromptrc:
     $HOME/.mailcap:
     $HOME/.muttrc:
