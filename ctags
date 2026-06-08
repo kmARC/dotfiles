@@ -44,12 +44,13 @@
 --langdef=Starlark{base=python}{dedicated}
 --languages=+Starlark
 --map-Starlark=+.bzl
+--map-Starlark=+(*.bzl.tpl)
 
 --kinddef-Starlark=r,rule,"Starlark rule"
 --regex-Starlark=/(\w+)\s*=\s*rule\(/\1/r/x
 
---kinddef-Starlark=r,rule,"Starlark symbolic macro"
---regex-Starlark=/(\w+)\s*=\s*macro\(/\1/r/x
+--kinddef-Starlark=m,macro,"Starlark symbolic macro"
+--regex-Starlark=/(\w+)\s*=\s*macro\(/\1/m/x
 
 --kinddef-Starlark=R,repositoryrule,"Starlark repository rule"
 --regex-Starlark=/(\w+)\s*=\s*repository_rule\(/\1/R/x

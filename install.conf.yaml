@@ -77,8 +77,6 @@
       path: config/ncmpcpp/config
     $XDG_CONFIG_HOME/networkmanager-dmenu/config.ini:
       path: config/networkmanager-dmenu/config.ini
-    $XDG_CONFIG_HOME/npm/npmrc:
-      path: config/npm/npmrc
     $XDG_CONFIG_HOME/ranger/rc.conf:
       path: config/ranger/rc.conf
     $XDG_CONFIG_HOME/readline/inputrc:
