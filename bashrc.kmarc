@@ -45,6 +45,14 @@ if ! [[ $- = *i* ]]; then
   return 0
 fi
 
+#########
+#  SSH  #
+#########
+# see ~/.ssh/rc
+if [ -S "$HOME/.ssh/ssh_auth_sock" ]; then
+  export SSH_AUTH_SOCK="$HOME/.ssh/ssh_auth_sock"
+fi
+
 ###########################
 #  Functions and aliases  #
 ###########################
