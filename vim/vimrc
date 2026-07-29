@@ -5,15 +5,15 @@
 let g:ale_lint_on_insert_leave = 0
 let g:ale_lint_on_text_changed = 0
 
-let s:lsp_provider = 'coc'
-" let s:lsp_provider = 'vim-lsp'
-" let s:lsp_provider = 'yegappan/lsp'
+let s:lsp_provider = environ()->get('VIM_LSP_PROVIDER', 'coc')
+let s:vim_dir = environ()->get('VIMDIR', '~/.vim')
+let s:dir_state = s:vim_dir . '/state'
 
-call plug#begin(environ()->get("VIMPLUG", '~/.vim/plugged'))
+call plug#begin(environ()->get("VIMPLUG", s:vim_dir . '/plugged'))
 "--- Look&Feel ---
 Plug 'itchyny/lightline.vim'
 Plug 'cocopon/iceberg.vim'
-Plug 'rhysd/vim-healthcheck'
+
 "--- Tools ---
 Plug 'direnv/direnv.vim'
 Plug 'gcmt/taboo.vim'
@@ -21,7 +21,7 @@ Plug 'junegunn/fzf'                 , {'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 Plug 'tpope/vim-obsession'
 Plug 'tpope/vim-unimpaired'
-Plug 'preservim/nerdtree'
+Plug 'preservim/nerdtree'           , {'on': ['NERDTree', 'NERDTreeFind']}
 Plug 'will133/vim-dirdiff'          , {'on': 'DirDiff'}
 Plug 'ojroques/vim-oscyank'         , {'on': 'OSCYankRegister'}
 " --- AI ---
@@ -35,7 +35,7 @@ Plug 'godlygeek/tabular'            , {'on': 'Tabularize'}
 Plug 'michaeljsmith/vim-indent-object'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-abolish'
-Plug 'mbbill/undotree'
+Plug 'mbbill/undotree'              , {'on': 'UndotreeToggle'}
 "--- Git ---
 Plug 'mattn/gist-vim'               , {'on': 'Gist'}
 Plug 'shumphrey/fugitive-gitlab.vim'
@@ -64,7 +64,7 @@ Plug 'dense-analysis/ale'
 " Plug 'editorconfig/editorconfig-vim'
 Plug 'honza/vim-snippets'
 Plug 'ludovicchabant/vim-gutentags'
-Plug 'majutsushi/tagbar'
+Plug 'majutsushi/tagbar'            , {'on': 'TagbarToggle'}
 if s:lsp_provider == 'vim-lsp'
   Plug 'mattn/vim-lsp-settings'
   Plug 'micchy326/lightline-lsp-progress'
@@ -86,9 +86,7 @@ Plug 'vim-test/vim-test'
 "--- Java ---
 Plug 'mikelue/vim-maven-plugin'     , {'for': 'java'}
 Plug 'udalov/javap-vim'             , {'for': 'java'}
-Plug 'uiiaoo/java-syntax.vim'       , {'for': 'java'}
 "--- C++ ---
-Plug 'bfrg/vim-cpp-modern'          , {'for': 'cpp'}
 Plug 'alepez/vim-gtest'             , {'for': 'cpp'}
 "--- Text & Markdown ---
 Plug 'plasticboy/vim-markdown'      , {'for': 'markdown'}
@@ -96,18 +94,12 @@ Plug 'iamcco/markdown-preview.nvim' , {'for': 'markdown', 'do': { -> mkdp#util#i
 Plug 'jamessan/vim-gnupg'
 "--- HTML ---
 Plug 'mattn/emmet-vim'              , {'for': ['html', '*jsx', 'xml']}
-Plug 'othree/html5.vim'             , {'for': ['html', '*jsx', 'xml']}
-"--- CSS ---
-Plug 'groenewege/vim-less'          , {'for': 'css'}
 "--- JavaScript ---
 Plug 'heavenshell/vim-jsdoc'        , {'for': 'javascript*'}
-Plug 'moll/vim-node'                , {'for': 'javascript*'}
 Plug 'othree/yajs.vim'              , {'for': 'javascript*'}
-Plug 'pangloss/vim-javascript'      , {'for': 'javascript*'}
 "--- TypeScript ---
 Plug 'leafgarland/typescript-vim'   , {'for': 'typescript*'}
-"--- React ---
-Plug 'mxw/vim-jsx'                  , {'for': '*jsx'}
+
 "--- Databases ---
 Plug 'kristijanhusak/vim-dadbod-ui'
 Plug 'tpope/vim-dadbod'
@@ -128,6 +120,144 @@ Plug 'kana/vim-vspec'
 " test:
 Plug 'thinca/vim-themis'
 call plug#end() " }}}
+
+"--- Shared LSP server definitions --- {{{
+let s:lsp_servers = {}
+
+let s:lsp_servers['ruby-lsp'] = {
+    \ 'command': 'ruby-lsp',
+    \ 'filetypes': ['ruby'],
+    \ 'initializationOptions': {
+    \   'enabledFeatures': {
+    \     'codeActions': v:true,
+    \     'codeLens': v:true,
+    \     'completion': v:true,
+    \     'definition': v:true,
+    \     'diagnostics': v:true,
+    \     'documentHighlights': v:true,
+    \     'documentLink': v:true,
+    \     'documentSymbols': v:true,
+    \     'foldingRanges': v:true,
+    \     'formatting': v:true,
+    \     'hover': v:true,
+    \     'inlayHint': v:true,
+    \     'onTypeFormatting': v:true,
+    \     'selectionRanges': v:true,
+    \     'semanticHighlighting': v:true,
+    \     'signatureHelp': v:true,
+    \     'typeHierarchy': v:true,
+    \     'workspaceSymbol': v:true,
+    \   },
+    \   'featuresConfiguration': {
+    \     'inlayHint': {
+    \       'implicitHashValue': v:true,
+    \       'implicitRescue': v:true,
+    \     },
+    \   },
+    \   'indexing': {
+    \     'excludedMagicComments': ['compiled:true'],
+    \     'excludedPatterns': ['.direnv/**'],
+    \   },
+    \   'formatter': 'auto',
+    \   'linters': [],
+    \   'experimentalFeaturesEnabled': v:false,
+    \ },
+\}
+
+let s:lsp_servers['starpls'] = {
+    \ 'command': 'starpls',
+    \ 'args': ['server',
+    \   '--experimental_enable_label_completions',
+    \   '--experimental_infer_ctx_attributes',
+    \   '--experimental_use_code_flow_analysis'],
+    \ 'filetypes': ['bzl', 'starlark'],
+\}
+
+let s:lsp_servers['kotlin-language-server'] = {
+    \ 'command': 'kotlin-language-server',
+    \ 'root_uri_patterns': ['pom.xml'],
+\}
+
+let s:lsp_servers['vscode-json-language-server'] = {
+    \ 'command': 'vscode-json-language-server',
+    \ 'filetypes': ['json'],
+    \ 'workspace_config': {
+    \   'json': { 'schemaDownload.enable': v:true },
+    \ },
+\}
+
+"--- rubyLsp.openFile: helpers ---
+" Opens path and optionally jumps to line (file:///path#L42 => path + line 42)
+function! s:open_file(path, line) abort
+  execute 'edit' fnameescape(a:path)
+  if a:line > 0
+    execute a:line
+    normal! zz
+  endif
+endfunction
+
+" Shared URI-to-fragment split for both providers
+function! s:split_uri(uri) abort
+  let l:parts = split(a:uri, '#')
+  let l:line = 0
+  if len(l:parts) >= 2 && l:parts[1] =~ '^L\d\+'
+    let l:line = strpart(l:parts[1], 1) + 0
+  endif
+  return [l:parts[0], l:line]
+endfunction
+
+"--- coc adapter ---
+if s:lsp_provider == 'coc'
+  " Register language servers from shared definitions
+  for [name, cfg] in items(s:lsp_servers)
+    if executable(cfg['command'])
+      let server = { 'command': cfg['command'] }
+      for key in ['args', 'filetypes', 'initializationOptions']
+        if has_key(cfg, key)
+          let server[key] = cfg[key]
+        endif
+      endfor
+      if has_key(cfg, 'workspace_config')
+        let server['settings'] = cfg['workspace_config']
+      endif
+      call coc#config('languageserver.' . name, server)
+    endif
+  endfor
+  call coc#config('diagnostic.displayByAle', v:true)
+
+  " rubyLsp.openFile is handled by coc-extensions/ruby.js via commands.registerCommand
+endif
+
+"--- vim-lsp adapter ---
+if s:lsp_provider == 'vim-lsp'
+  " capabilities required for document_symbol_detail
+  let g:lsp_settings = {
+        \ 'capabilities': {
+        \     'textDocument': {
+        \         'documentSymbol': {
+        \             'hierarchicalDocumentSymbolSupport': v:true,
+        \         },
+        \     },
+        \ },
+  \ }
+  for [name, cfg] in items(s:lsp_servers)
+    if executable(cfg['command'])
+      let g:lsp_settings[name] = cfg
+    endif
+  endfor
+
+  " Handle rubyLsp.openFile (context.command.arguments = [[uri1, uri2, ...]])
+  function! s:vimlsp_ruby_lsp_open_file(context) abort
+    let l:uris = get(get(a:context, 'command', {}), 'arguments', [[]])[0]
+    if !empty(l:uris)
+      let [path, line] = s:split_uri(l:uris[0])
+      let path = lsp#utils#uri_to_path(path)
+      call s:open_file(path, line)
+    endif
+  endfunction
+  " Registration is deferred to User lsp_setup autocmd in the config section
+endif
+" }}}
 
 "--- Vim-Plug --- {{{
 function! s:plug_gx()
@@ -196,10 +326,8 @@ function! KubeHelp(keyword)
   if l:path == l:versionLine
     let l:path = substitute(l:versionLine, '\v.*apiVersion:\s+([^/ ]+)\s*$', '\1-core', 'g')
   endif
-  let l:hash = '\\#' . tolower(l:kind) . '-' . l:path
-  exec 'silent !xdg-open https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.16/'
-        \ . l:hash
-  exec 'redraw!'
+  let l:url = 'https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.16/' . l:hash
+  call netrw#BrowseX(l:url, 0)
 endfunction
 command! -nargs=1 KubeHelp :call KubeHelp(<f-args>)
 
@@ -249,7 +377,7 @@ function! ChangeColorScheme()
   endif
   if g:->get('colors_name', '') == 'iceberg'
     let g:lightline['colorscheme'] = g:colors_name
-    exec 'source ' . environ()->get("VIMPLUG", '~/.vim/plugged') . '/iceberg.vim/autoload/lightline/colorscheme/' . g:colors_name . '.vim'
+    exec 'source ' . environ()->get("VIMPLUG", s:vim_dir . '/plugged') . '/iceberg.vim/autoload/lightline/colorscheme/' . g:colors_name . '.vim'
     if exists('*hlget')
       let l:h = hlget("VertSplit", v:true)[0]
       let g:lightline#colorscheme#iceberg#palette.inactive.middle = [[l:h->get("guifg", "NONE"), l:h->get("guibg", "NONE"), l:h->get("ctermfg", "NONE"), l:h->get("ctermbg", "NONE")]]
@@ -281,6 +409,10 @@ function! AIPromptCommitMessageFn()
   call vim_ai#AIRun(l:range, l:config, l:prompt)
 endfunction
 command! AIPromptCommitMessage call AIPromptCommitMessageFn()
+
+function! s:indent(n) abort
+  let &l:shiftwidth = a:n | let &l:tabstop = a:n | let &l:softtabstop = a:n
+endfunction
 " }}}
 
 " --- Default configurations --- {{{
@@ -296,7 +428,6 @@ set diffopt+=vertical,algorithm:patience
 set directory=~/.cache/vim/swap//
 set expandtab
 set encoding=utf-8
-set grepprg=rg\ --vimgrep
 set fillchars+=vert:│,stlnc:\─
 set formatoptions+=j
 set grepprg=rg\ --vimgrep
@@ -306,11 +437,11 @@ set hlsearch
 set ignorecase
 set incsearch
 set laststatus=2
-set lazyredraw
 set linebreak
 set list
 set listchars=trail:·,nbsp:·,tab:»\ ,
 set mouse+=a
+set ttymouse=sgr
 " set noshowmode showcmd
 set nowrap
 set nrformats-=octal
@@ -333,7 +464,7 @@ set tabstop=2
 set tagcase=match
 set undodir=~/.cache/vim/undo//
 set undofile
-set viminfo+=n~/.vim/state/viminfo
+exec 'set viminfo+=n' . s:dir_state . '/viminfo'
 set virtualedit=block,onemore
 set wildcharm=<C-z>
 set wildignore+=__pycache__,.mypy_cache,*.pyc " Python
@@ -415,12 +546,12 @@ if $TERM == 'alacritty'
   execute "set <FocusGained>=\<Esc>[I"
   execute "set <FocusLost>=\<Esc>[O"
 endif
-let s:dir_state = expand('~/.vim/state')
+
 let s:sess = s:dir_state . '/sessions/' . substitute($PWD, '\/', '%', 'g')
 let g:UltiSnipsEditSplit = 'vertical'
 let g:UltiSnipsExpandTrigger = '<c-j>'
 let g:UltiSnipsListSnippets = '<c-h>'
-let g:UltiSnipsSnippetsDir = '~/.vim/UltiSnips'
+let g:UltiSnipsSnippetsDir = s:vim_dir . '/UltiSnips'
 let g:ale_detail_to_floating_preview=0
 let g:ale_disable_lsp = 1
 let g:ale_fix_on_save = 1
@@ -431,12 +562,14 @@ let g:ale_fixers['bzl'] = ['buildifier']
 let g:ale_fixers['cpp'] = ['clangtidy', 'clang-format']
 let g:ale_fixers['java'] = ['uncrustify']
 let g:ale_fixers['json'] = ['jq']
+let g:ale_fixers['python'] = ['ruff_format', 'ast-grep']
 let g:ale_fixers['ruby'] = ['rubocop']
 let g:ale_fixers['rust'] = ['rustfmt']
 let g:ale_fixers['xml'] = ['xmllint']
 " }}}
 let g:ale_linters = {} " {{{
 let g:ale_linters['cpp'] = ['cc']
+let g:ale_linters['python'] = ['astgrep']
 let g:ale_linters['json'] = 'all'
 let g:ale_linters['mail'] = ['languagetool']
 let g:ale_linters['text'] = ['languagetool']
@@ -475,40 +608,19 @@ let g:gtest#highlight_failing_tests = 1
 let g:gutentags_cache_dir = '~/.cache/vim/gutentags'
 let g:gutentags_generate_on_new = 0
 let g:jsdoc_enable_es6 = 1
-let g:lsp_code_action_ui = 'float'
-" let g:lsp_diagnostics_enabled = v:false
-let g:lsp_diagnostics_float_cursor = v:true
-let g:lsp_diagnostics_virtual_text_align = 'after'
-let g:lsp_document_symbol_detail = 1
-let g:lsp_experimental_workspace_folders = 1
-let g:lsp_float_max_width = 150
-let g:lsp_inlay_hints_enabled = 1
-let g:lsp_semantic_enabled = 1
-let g:lsp_preview_fixup_conceal = 0
-" capabilities required for document_symbol_detail
-let g:lsp_settings = {
-      \ 'capabilities': {
-      \     'textDocument': {
-      \         'documentSymbol': {
-      \             'hierarchicalDocumentSymbolSupport': v:true,
-      \         },
-      \     },
-      \ },
-      \ 'kotlin-language-server': {
-      \    'root_uri_patterns': ['pom.xml'],
-      \ },
-      \ 'starpls': {
-      \     'args': ['server', '--experimental_infer_ctx_attributes']
-      \ },
-      \ 'vscode-json-language-server': {
-      \     'workspace_config': {"json": {"schemaDownload.enable": v:true}}
-      \ },
-      \ 'ruby-lsp': {
-      \     'workspace_config': {"indexing": { "excludedPatterns": [ ".direnv/**" ] } }
-      \ },
-      \}
-let g:lsp_work_done_progress_enabled = 1
-let g:lsp_use_native_client = 1
+if s:lsp_provider == 'vim-lsp'
+  let g:lsp_code_action_ui = 'float'
+  let g:lsp_diagnostics_float_cursor = v:true
+  let g:lsp_diagnostics_virtual_text_align = 'after'
+  let g:lsp_document_symbol_detail = 1
+  let g:lsp_experimental_workspace_folders = 1
+  let g:lsp_float_max_width = 150
+  let g:lsp_inlay_hints_enabled = 1
+  let g:lsp_semantic_enabled = 1
+  let g:lsp_preview_fixup_conceal = 0
+  let g:lsp_work_done_progress_enabled = 1
+  let g:lsp_use_native_client = 1
+endif
 let g:maven_keymaps = 1
 let g:maven_auto_set_path = 0
 let g:mkdp_port = 8545
@@ -541,20 +653,7 @@ let g:tagbar_type_bzl = {
     \   '?:unknown',
     \ ],
   \ }
-let g:tagbar_type_ruby = {
-  \   'kinds' : [
-  \     'i:it',
-  \     'd:describe',
-  \   ],
-  \   'kind2scope': {
-  \     'd': 'describe',
-  \   },
-  \   'scope2kind': {
-  \     'describe': 'd',
-  \   }
-  \ }
 if executable("ripper-tags")
-  let g:gutentags_ctags_executable_ruby = 'ripper-tags'
   let g:tagbar_type_ruby = {
     \   'ctagsbin': 'ripper-tags',
     \   'ctagsargs': ['-f', '-', '--excmd=pattern', '--fields=+ln', '--append=no', '-V'],
@@ -568,13 +667,26 @@ if executable("ripper-tags")
     \     '?:unknown',
     \   ],
     \ }
+else
+  let g:tagbar_type_ruby = {
+    \   'kinds' : [
+    \     'i:it',
+    \     'd:describe',
+    \   ],
+    \   'kind2scope': {
+    \     'd': 'describe',
+    \   },
+    \   'scope2kind': {
+    \     'describe': 'd',
+    \   }
+    \ }
 endif
 let g:vim_markdown_folding_disabled = 1
 let g:vim_markdown_frontmatter = 1
 let g:vim_ai_chat_markdown = 1
 let g:xml_syntax_folding = 1
 let test#strategy = 'vimux'
-let NERDTreeBookmarksFile = $HOME .. '/.vim/.NERDTreeBookmarks'
+let NERDTreeBookmarksFile = expand(s:vim_dir . '/.NERDTreeBookmarks')
 " }}}
 
 "--- Integrations --- {{{
@@ -601,7 +713,7 @@ endif
 " SSH {{{
 if environ()->has_key('SSH_CLIENT')
   " Set browser to be invoked via reverse-ssh
-  let g:netrw_browsex_viewer = expand('$HOME/.vim/reverse-ssh-browser.sh')
+  let g:netrw_browsex_viewer = expand(s:vim_dir . '/reverse-ssh-browser.sh')
   let g:mkdp_browser = g:netrw_browsex_viewer
 
   augroup ssh
@@ -625,7 +737,7 @@ nnoremap gk      k
 " }}}
 
 " command mode overrides {{{
-cmap w!! w !sudo tee > /dev/null %
+cnoremap w!! w !sudo tee > /dev/null <C-r>=shellescape(expand('%'))<CR>
 " }}}
 
 " shortcuts {{{
@@ -707,7 +819,7 @@ augroup filetypes
     \   autocmd BufWritePost <buffer> normal! mH
 
   autocmd FileType java
-    \   setlocal softtabstop=4 tabstop=4 shiftwidth=4
+    \   call s:indent(4)
     \ | setlocal foldmethod=syntax foldlevel=1
     \ | nnoremap <buffer> gP :exec "vsplit " . findfile('pom.xml', ".;")<CR><ESC>
     \ | nnoremap <buffer> gC :exec "vsplit " . findfile(expand("%:r")->split("/")[-1] . ".class", "**")<CR><ESC>
@@ -734,7 +846,7 @@ augroup filetypes
     \   nnoremap <buffer> <F6> :LivedownToggle<CR>
     \ | nnoremap <buffer> <F8> :Toc<CR><C-w>L<C-w>50<bar>:setlocal winfixwidth<CR>
     \ | setlocal spell
-    \ | setlocal softtabstop=4 tabstop=4 shiftwidth=4
+    \ | call s:indent(4)
     \ | setlocal textwidth=100 formatprg=par\ -jw100
     \ | autocmd BufWritePost <buffer> normal! mM
 
@@ -747,7 +859,7 @@ augroup filetypes
 
   autocmd FileType python
     \   setlocal keywordprg=pydoc
-    \ | setlocal softtabstop=4 tabstop=4 shiftwidth=4
+    \ | call s:indent(4)
     \ | autocmd BufWritePost <buffer> normal! mP
 
   autocmd BufReadPost python,ruby
@@ -775,9 +887,9 @@ augroup filetypes
 
   autocmd FileType yaml.ansible
     \   setlocal keywordprg=:DevdocsHelp
-    \ | nnoremap <buffer> <leader>aa :!xdg-open https://docs.ansible.com/ansible/latest/list_of_all_module>.html<CR>
-    \ | nnoremap <buffer> <leader>am :!xdg-open https://docs.ansible.com/ansible/latest/<C-R><C-W>_module.html\#options<CR>
-    \ | nnoremap <buffer> <leader>as :!xdg-open https://docs.ansible.com/ansible/latest/reference_appendices/playbooks_keywords.html?highlight=<C-R><C-W><CR>
+    \ | nnoremap <buffer> <leader>aa :<C-u>call netrw#BrowseX('https://docs.ansible.com/ansible/latest/list_of_all_module>.html', 0)<CR>
+    \ | nnoremap <buffer> <leader>am :<C-u>call netrw#BrowseX('https://docs.ansible.com/ansible/latest/' . expand('<cword>') . '_module.html#options', 0)<CR>
+    \ | nnoremap <buffer> <leader>as :<C-u>call netrw#BrowseX('https://docs.ansible.com/ansible/latest/reference_appendices/playbooks_keywords.html?highlight=' . expand('<cword>'), 0)<CR>
     \ | autocmd BufWritePost <buffer> normal! mA
 
   autocmd FileType yaml.kubernetes,*gotexttmpl
@@ -797,7 +909,7 @@ augroup autocommands
     \   call CheckProject()
 
   autocmd BufNewFile *
-    \   let s:skel = expand('~/.vim/skeleton/skeleton.') . expand('%:e')
+    \   let s:skel = expand(s:vim_dir . '/skeleton/skeleton.') . expand('%:e')
     \ | if filereadable(s:skel) && ! &l:readonly
     \ |   exec '0r ' . s:skel
     \ | endif
@@ -811,7 +923,6 @@ augroup autocommands
     \ |   nnoremap <buffer> t<C-g> :TestVisit<CR>
     \ | endif
 
-
   autocmd FocusGained,BufEnter * checktime
 
   autocmd BufReadPost *.bazelrc
@@ -819,10 +930,6 @@ augroup autocommands
 
   autocmd BufReadPost *.bzl
     \   setlocal keywordprg=:DevdocsHelp
-
-  autocmd User CocNvimInit
-    \   autocmd BufEnter *
-    \       call s:on_buffer_entered_coc()
 
   autocmd BufEnter NERD_tree_*
     \   nnoremap <buffer> <F7> :q<CR>
@@ -842,6 +949,24 @@ augroup autocommands
   autocmd User TermdebugStartPost
     \   call TermDebugSendCommand('vim-dashboard-profile')
 
+if s:lsp_provider == 'coc'
+  autocmd User CocNvimInit
+    \   autocmd BufEnter *
+    \       call s:on_buffer_entered_coc()
+endif
+
+function! s:register_ruby_lsp_open_file() abort
+  try
+    call lsp#register_command('rubyLsp.openFile',
+          \ function('s:vimlsp_ruby_lsp_open_file'))
+  catch /already registered/
+    echom 'vim-lsp: ' . substitute(v:exception, '\n', ' ', 'g')
+  endtry
+endfunction
+
+if s:lsp_provider == 'vim-lsp'
+  autocmd User lsp_setup
+    \   call s:register_ruby_lsp_open_file()
   autocmd User lsp_buffer_enabled
     \   call s:on_lsp_buffer_enabled()
 
@@ -861,6 +986,7 @@ augroup autocommands
     \            'completor': function('asyncomplete#sources#ultisnips#completor'),
     \          })
     \        )
+endif
 
   autocmd SigUSR1 *
     \   call ChangeColorScheme()
@@ -926,139 +1052,28 @@ silent colorscheme iceberg
 
 "--- Debugging --- {{{
 if $LOG == 'verbose'
-  " - asyncomplete -
-  let g:asyncomplete_log_file = expand('/tmp/vim-asyncomplete-$USER.log')
-
   " - gutentags -
   let g:gutentags_define_advanced_commands = 1
   let g:gutentags_trace = 1
 
+  if s:lsp_provider == 'vim-lsp'
+  " - asyncomplete -
+  let g:asyncomplete_log_file = expand('/tmp/vim-asyncomplete-$USER.log')
   " - lsp -
   let g:lsp_log_verbose = 1
   let g:lsp_log_file = expand('/tmp/vim-lsp-$USER.log')
+  endif
 
+  if s:lsp_provider == 'coc'
   let $NVIM_COC_LOG_LEVEL='trace'
   let $NVIM_COC_LOG_FILE=expand("/tmp/coc-$USER.log")
+  endif
 
   " - codeium -
   let g:codeium_log_file = expand('/tmp/vim-codeium-$USER.log')
   let g:codeium_log_level = 'TRACE'
 endif
 " }}}
-
-let lspOpts = #{
-      \   aleSupport: v:true,
-      \   autoComplete: v:true,
-      \   autoHighlight: v:false,
-      \   autoHighlightDiags: v:true,
-      \   autoPopulateDiags: v:false,
-      \   completionMatcher: 'case',
-      \   completionMatcherValue: 1,
-      \   diagSignErrorText: 'E>',
-      \   diagSignHintText: 'H>',
-      \   diagSignInfoText: 'I>',
-      \   diagSignWarningText: 'W>',
-      \   echoSignature: v:false,
-      \   hideDisabledCodeActions: v:false,
-      \   highlightDiagInline: v:true,
-      \   hoverInPreview: v:false,
-      \   ignoreMissingServer: v:false,
-      \   keepFocusInDiags: v:true,
-      \   keepFocusInReferences: v:true,
-      \   completionTextEdit: v:true,
-      \   diagVirtualTextAlign: 'above',
-      \   diagVirtualTextWrap: 'default',
-      \   noNewlineInCompletion: v:false,
-      \   omniComplete: v:null,
-      \   omniCompleteAllowBare: v:false,
-      \   outlineOnRight: v:false,
-      \   outlineWinSize: 20,
-      \   popupBorder: v:true,
-      \   popupBorderHighlight: 'Title',
-      \   popupBorderHighlightPeek: 'Special',
-      \   popupBorderSignatureHelp: v:false,
-      \   popupHighlightSignatureHelp: 'Pmenu',
-      \   popupHighlight: 'Normal',
-      \   semanticHighlight: v:true,
-      \   showDiagInBalloon: v:true,
-      \   showDiagInPopup: v:true,
-      \   showDiagOnStatusLine: v:false,
-      \   showDiagWithSign: v:true,
-      \   showDiagWithVirtualText: v:false,
-      \   showInlayHints: v:false,
-      \   showSignature: v:true,
-      \   snippetSupport: v:true,
-      \   ultisnipsSupport: v:true,
-      \   useBufferCompletion: v:false,
-      \   usePopupInCodeAction: v:false,
-      \   useQuickfixForLocations: v:false,
-      \   vsnipSupport: v:false,
-      \   bufferCompletionTimeout: 100,
-      \   customCompletionKinds: v:false,
-      \   completionKinds: {},
-      \   filterCompletionDuplicates: v:false,
-      \   condensedCompletionMenu: v:false,
-  \ }
-autocmd User LspSetup call LspOptionsSet(lspOpts)
-
-let lspServers = [#{
-  \   name: 'ruby-lsp',
-  \   filetype: ['rb', 'ruby'],
-  \   path: 'ruby-lsp',
-  \   args: [],
-  \   initializationOptions: {
-  \     "enabledFeatures": {
-  \       "codeActions": v:true,
-  \       "codeLens": v:true,
-  \       "completion": v:true,
-  \       "definition": v:true,
-  \       "diagnostics": v:true,
-  \       "documentHighlights": v:true,
-  \       "documentLink": v:true,
-  \       "documentSymbols": v:true,
-  \       "foldingRanges": v:true,
-  \       "formatting": v:true,
-  \       "hover": v:true,
-  \       "inlayHint": v:true,
-  \       "onTypeFormatting": v:true,
-  \       "selectionRanges": v:true,
-  \       "semanticHighlighting": v:true,
-  \       "signatureHelp": v:true,
-  \       "typeHierarchy": v:true,
-  \       "workspaceSymbol": v:true
-  \     },
-  \     "featuresConfiguration": {
-  \       "inlayHint": {
-  \         "implicitHashValue": v:true,
-  \         "implicitRescue": v:true
-  \       }
-  \     },
-  \     "indexing": {
-  \       "excludedPatterns": [
-  \         ".direnv/**"
-  \       ],
-  \       "includedPatterns": [
-  \       ],
-  \       "excludedGems": [
-  \       ],
-  \       "excludedMagicComments": [
-  \         "compiled:v:true"
-  \       ]
-  \     },
-  \     "formatter": "auto",
-  \     "linters": [],
-  \     "experimentalFeaturesEnabled": v:false
-  \   }
-  \ }]
-autocmd User LspSetup call LspAddServer(lspServers)
-
-" function! s:ruby_lsp_open_file(context)
-"     let l:command = get(a:context, 'command', {})
-"     let l:filename = lsp#utils#uri_to_path(l:command['arguments'][0][0])
-"     execute 'edit' l:filename
-" endfunction
-" call lsp#register_command('rubyLsp.openFile', function('s:ruby_lsp_open_file'))
-
 
 " --- Startup --- {{{
 if filereadable(expand('~/.vimrc.local'))
